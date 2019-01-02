@@ -1,98 +1,72 @@
-<!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layouts.wmaster')
 
-        <title>Laravel</title>
+@section('title','welcome')
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">
+@section('modal-content')
+    <div class="text-center mb-3">
+        <img src="{{ asset('/img/icon/user/green.svg')}}" alt="" style="width: 90px; height: 90px;">
+    </div>
+    <form method="POST" action="{{ route('login') }}">
+        @csrf
+        <div class="form-group">
+            <label for="email" class="text-md-right text-primary">帳號/信箱</label>
+            <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" placeholder="請輸入信箱" value="{{ old('email') }}" required autofocus>
 
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Nunito', sans-serif;
-                font-weight: 200;
-                height: 100vh;
-                margin: 0;
-            }
+                @if ($errors->has('email'))
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $errors->first('email') }}</strong>
+                    </span>
+                @endif
+        </div>
+        <div class="form-group">
+            <label for="password" class="text-md-right text-primary">密碼</label>
+            <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" placeholder="請輸入密碼" required>
 
-            .full-height {
-                height: 100vh;
-            }
-
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
-
-            .position-ref {
-                position: relative;
-            }
-
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
-
-            .content {
-                text-align: center;
-            }
-
-            .title {
-                font-size: 84px;
-            }
-
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 13px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
-
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}">Register</a>
-                        @endif
-                    @endauth
-                </div>
+            @if ($errors->has('password'))
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $errors->first('password') }}</strong>
+                </span>
             @endif
-
-            <div class="content">
-                <div class="title m-b-md">
-                    Laravel
-                </div>
-
-                <div class="links">
-                    <a href="https://laravel.com/docs">Documentation</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://nova.laravel.com">Nova</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
+        </div>
+        <div class="row">
+            <div class="col-md-6 form-group">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+        
+                    <label class="form-check-label text-muted" for="remember">
+                      {{ __('Remember Me') }}
+                    </label>
                 </div>
             </div>
+            
+            @if (Route::has('password.request'))
+            <div class="col-md-6 text-right">
+                <a class="text-primary" href="{{ route('password.request') }}">忘記密碼</a>
+            </div>
+            @endif
+
         </div>
-    </body>
-</html>
+
+        <div class="row form-group mt-5 mb-5">
+            <div class="col-md-6">
+                <button type="submit" class="btn btn-primary w-100">登入</button>
+            </div>
+            <div class="col-md-6">
+                <button class="btn btn-primary w-100 btn-cmoney">
+                    <span style="color:crimson;">ＣM</span>oney
+                </button>
+            </div>
+        </div>
+
+        <div class="text-center mb-4">
+            <a class="text-primary" href="{{ route('register') }}">註冊會員</a>
+        </div>
+    </form>
+    @if ($errors->has('email') || $errors->has('password'))
+        <script src="{{ asset('js/modal.js') }}" defer></script>
+    @endif
+@endsection
+
+        
+    
+
