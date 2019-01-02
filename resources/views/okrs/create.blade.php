@@ -9,7 +9,7 @@
          <h2>我的OKR</h2>
          <a href="{{route('okrs.index')}}" class="btn btn-info btn-sm">返回</a>
     </div>
-    <form method="POST" action="{{route('okrs.store')}}">
+    <form method="POST" action="{{route('okrs.storeObjective')}}">
         @csrf
         <div class="form-row ml-5">
         <div class="form-group col-md-4">

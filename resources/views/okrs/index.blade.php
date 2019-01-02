@@ -1,13 +1,3 @@
-{{-- @extends('layouts.master')
-@section('title','My OKR')
-@section('content') --}}
-
-{{--Action、History、Msg--}}
-{{-- @yield('content') --}}
-
-{{-- @endsection --}}
-
-
 @extends('layouts.master')
 @section('title','My OKR')
 @section('content')
@@ -32,21 +22,21 @@
         </div>
     </div>
     
-    @foreach($objectives as $objective)
+    @foreach($okrs as $okr)
         <div class="card shadow-sm p-2">
             <div class="row">
                 <div class="col-md-7 text-right"></div>
-                <div class="col-md-2 font-weight-light">起始日:{{$objective->started_at}}</div>
-                <div class="col-md-2 font-weight-light">結算日:{{$objective->finished_at}}</div>
+                <div class="col-md-2 font-weight-light">起始日:{{ $okr['objective']->started_at }}</div>
+                <div class="col-md-2 font-weight-light">結算日:{{ $okr['objective']->finished_at }}</div>
                 <div class="col-md-1">
                     <div class="col-md-2 btn-group">
                         <button type="button" class="btn btn-light btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <img src="http://www.haipic.com/icon/53922/53922.png" width="25" height="25">
                         </button>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="{{route('okrs.edit',$objective->id)}}"><img src="https://img.icons8.com/metro/1600/edit.png" width="20" height="20">編輯</a>
-                            <a class="dropdown-item" href="#" onclick="document.getElementById('delete{{$objective->id}}').submit()"><img src="https://img.icons8.com/metro/1600/delete.png" width="20" height="20">刪除</a>
-                            <form method="POST" id="delete{{$objective->id}}" action="{{route('okrs.destroy',$objective->id)}}">
+                            <a class="dropdown-item" href="{{route('okrs.edit',$okr['objective']->id)}}"><img src="https://img.icons8.com/metro/1600/edit.png" width="20" height="20">編輯</a>
+                            <a class="dropdown-item" href="#" onclick="document.getElementById('delete{{$okr['objective']->id}}').submit()"><img src="https://img.icons8.com/metro/1600/delete.png" width="20" height="20">刪除</a>
+                            <form method="POST" id="delete{{$okr['objective']->id}}" action="{{route('okrs.destroyObjective',$okr['objective']->id)}}">
                                 @csrf
                                 {{ method_field('DELETE') }}
                             </form>
@@ -56,61 +46,57 @@
     
                 <div class="col-md-2 font-weight-light text-center"> <h3>Objectives</h3> </div>
                 <div class="col-md-7 font-weight-light">
-                        {{$objective->title}}
+                        {{$okr['objective']->title}}
                 </div>
                 <div class="col-md-2">
                     @php
-                    $sum=0; $item=0;
-                    foreach($keyresults as $keyresult){
-                        if($keyresult->owner==$objective->id){
-                            $item+=$keyresult->weight;
-                            $sum+=$keyresult->average*$keyresult->weight;
-                        }
+                    $sum = 0; $totalWeight = 0;
+                    foreach($okr['keyresults'] as $kr){
+                        $totalWeight += $kr->weight;
+                        $sum += $kr->accomplishRate() * $kr->weight;
                     }
-                    if($item>0)
-                        $avg=round($sum/$item,0);
+                    if($totalWeight > 0)
+                        $scoreOfObj=round($sum/$totalWeight, 0);
                     else
-                        $avg=0;
+                        $scoreOfObj=0;
                     @endphp
                         
                 <div class="progress">
-                        <div class="progress-bar" role="progressbar" style="width:{{$avg}}%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{$avg}}%</div>
+                        <div class="progress-bar" role="progressbar" style="width:{{ $scoreOfObj }}%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{ $scoreOfObj }}%</div>
                 </div>
                 </div>
                 <div class="col-md-2 font-weight-light text-center "> <h3>Key Results</h3> </div>
                 <div class="col-md-10">
                     <div class="row">
-                        @foreach($keyresults as $keyresult)
-                        @if($keyresult->owner==$objective->id)
+                        @foreach ($okr['keyresults'] as $kr)
                             <span class="bg-info col-md-1"></span>
-                            <span class="col-md-6"> {{$keyresult->title}} </span>
+                            <span class="col-md-6"> {{$kr->title}} </span>
                             <div class="col-md-3">
                                 <div class="progress">
-                                    <div class="progress-bar" role="progressbar" style="width:{{$keyresult->average}}%" aria-valuenow="25" aria-valuemin="{{$keyresult->initial}}" aria-valuemax="{{$keyresult->target}}">
-                                        {{$keyresult->average}}%</div>
+                                    <div class="progress-bar" role="progressbar" style="width:{{ $kr->accomplishRate() }}%" aria-valuenow="25" aria-valuemin="{{$kr->initial}}" aria-valuemax="{{$kr->target}}">
+                                        {{ $kr->accomplishRate() }}%</div>
                                 </div>
                             </div>
-                            <span class="col-md-1 text-right">{{$keyresult->confidence}}/10 </span>
-                            <a class="dropdown-item col-md-1" href="#" onclick="document.getElementById('delete{{$keyresult->id}}').submit()"><img src="https://img.icons8.com/metro/1600/delete.png" width="20" height="20"></a>
-                            <form method="POST" id="delete{{$keyresult->id}}" action="{{route('okrs.destroy2',$keyresult->id)}}">
+                            <span class="col-md-1 text-right">{{$kr->confidence}}/10 </span>
+                            <a class="dropdown-item col-md-1" href="#" onclick="document.getElementById('deleteKR{{$kr->id}}').submit()"><img src="https://img.icons8.com/metro/1600/delete.png" width="20" height="20"></a>
+                            <form method="POST" id="deleteKR{{$kr->id}}" action="{{route('okrs.destroyKR',$kr->id)}}">
                                 @csrf
                                 {{ method_field('DELETE') }}
                             </form>
-                            
+                             
                             <span class="col-md-12"></span>
-                        @endif
-                        @endforeach
-                        
-                        <form method="POST" action="{{route('okrs.store2')}}">
+                            @endforeach
+
+                        <form method="POST" action="{{route('okrs.storeKR')}}">
                                 @csrf
                         <div class="form-row  mr-5">
-                        <input type="hidden" class="form-control" name="krs_owner" id="keyresult_owner" value="{{$objective->id}}">
+                        <input type="hidden" class="form-control" name="krs_owner" id="keyresult_owner" value="{{$okr['objective']->id}}">
                         <div class="form-group col-md-12">
-                            <label for="keyresult_title">關鍵指標(Keyresult)</label>
+                            <label for="keyresult_title">關鍵指標(KeyResult)</label>
                             <input type="text" class="form-control" name="krs_title" id="keyresult_title" value="">
                         </div>
                         <div class="form-group col-md-1">
-                            <label for="keyresult_weight">權重值</label>
+                            <label for="keyresult_weight">權重</label>
                             <input type="number" class="form-control" name="krs_weight" id="keyresult_weight" value="">
                         </div>
                         <div class="form-group col-md-1">

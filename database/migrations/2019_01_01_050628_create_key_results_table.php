@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateKeyresultsTable extends Migration
+class CreateKeyResultsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,16 @@ class CreateKeyresultsTable extends Migration
      */
     public function up()
     {
-        Schema::create('keyresults', function (Blueprint $table) {
+        Schema::create('key_results', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('owner')->unsigned();
-            $table->foreign('owner')->references('id')->on('objectives')->onDelete('cascade');
+            $table->integer('objective_id')->unsigned();
+            $table->foreign('objective_id')->references('id')->on('objectives')->onDelete('cascade');
             $table->string('title');
             $table->tinyInteger('confidence');
-            $table->float('initial');
-            $table->float('target');
-            $table->float('now');
+            $table->float('initial_value');
+            $table->float('target_value');
+            $table->float('current_value');
             $table->tinyInteger('weight');
-            $table->tinyInteger('average');
             $table->timestamps();
         });
     }

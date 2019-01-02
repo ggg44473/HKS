@@ -4,21 +4,26 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Keyresult extends Model
+class KeyResult extends Model
 {
-    protected $fillable = [ //新增的欄位名稱
-        'owner',
+    protected $fillable = [
+        'objective_id',
         'title',
         'confidence',
-        'initial',
-        'target',
-        'now',
+        'initial_value',
+        'target_value',
+        'current_value',
         'weight',
-        'average',
     ];
 
     public function objective()
     {
         return $this->belongsTo(Objective::class);
+    }
+
+    public function accomplishRate()
+    {
+        // TODO: 達成率有可能遞增或遞減，也可能想遞增但遞減了
+        return abs(round(($this->current_value - $this->initial_value) * 100 / ($this->target_value - $this->initial_value), 0));
     }
 }

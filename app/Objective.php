@@ -2,15 +2,14 @@
 
 namespace App;
 
-use App\Keyresult;
 use Illuminate\Database\Eloquent\Model;
 
 class Objective extends Model
 {
-    // protected $table = "objectives"; //指定資料表名稱(默認是複數型，所以可不打)
+    // protected $table = "objectives"; // $table預設是複數
     // public $timestamps = false; //若要取消時間戳記
     protected $fillable = [ //新增的欄位名稱
-        'owner',
+        'user_id',
         'title',
         'started_at',
         'finished_at'
@@ -23,20 +22,6 @@ class Objective extends Model
 
     public function keyresults()
     {
-        return $this->hasMany(Keyresult::class);
+        return $this->hasMany(KeyResult::class);
     }
-
-    // public static function boot() {
-    //     echo 'rrtt';
-    //     parent::boot();
-    //     static::deleting(function($objective) { // before delete() method call this
-    //          $keyresults = $objective->keyresults();
-    //         //  dd($keyresults);
-    //          foreach($keyresults as $keyresult){
-    //             $keyresult->delete();
-    //          }
-    //          // do the rest of the cleanup...
-    //     });
-    // }
-
 }

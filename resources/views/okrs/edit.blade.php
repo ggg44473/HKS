@@ -25,7 +25,7 @@
         </div>
         @foreach($keyresults as $keyresult)
             <div class="form-group col-md-12">
-                <label for="keyresult_title">關鍵指標(Keyresult)</label>
+                <label for="keyresult_title">關鍵指標(KeyResult)</label>
                 <input type="text" class="form-control" name="krs_title{{$keyresult->id}}" id="keyresult_title" value="{{$keyresult->title}}">
             </div>
             <div class="form-group col-md-2">
@@ -38,15 +38,15 @@
                 </div>
             <div class="form-group col-md-2">
                 <label for="keyresult_initaial">起始值</label>
-                <input type="number" class="form-control" name="krs_init{{$keyresult->id}}" id="keyresult_initaial" value="{{$keyresult->initial}}">
+                <input type="number" class="form-control" name="krs_init{{$keyresult->id}}" id="keyresult_initaial" value="{{$keyresult->initial_value}}">
             </div>
             <div class="form-group col-md-2">
                 <label for="keyresult_target">目標值</label>
-                <input type="number" class="form-control" name="krs_tar{{$keyresult->id}}" id="keyresult_target" value="{{$keyresult->target}}">
+                <input type="number" class="form-control" name="krs_tar{{$keyresult->id}}" id="keyresult_target" value="{{$keyresult->target_value}}">
             </div>
             <div class="form-group col-md-2">
                 <label for="keyresult_target">當前值</label>
-                <input type="number" class="form-control" name="krs_now{{$keyresult->id}}" id="keyresult_now" value="{{$keyresult->now}}">
+                <input type="number" class="form-control" name="krs_now{{$keyresult->id}}" id="keyresult_now" value="{{$keyresult->current_value}}">
             </div>
         @endforeach
         <button class="btn btn-info btn-sm col-md-12" type="submit">修改</button>  

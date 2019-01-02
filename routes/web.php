@@ -35,16 +35,16 @@ Route::post('password/reset', 'Auth\ResetPasswordController@reset');
 
 ######  OKR  ######
 // 顯示個人當季OKR
-Route::get('okrs/', 'OKRsController@index')->name('okrs.index');
+Route::get('okrs/', 'MyOKRsController@index')->name('okrs.index');
 // 新增個人當季OKR
-Route::get('okrs/creat', 'OKRsController@create')->name('okrs.create');
+Route::get('okrs/creat', 'MyOKRsController@create')->name('okrs.create');
 // 儲存個人當季OKR
-Route::post('okrs/store', 'OKRsController@store')->name('okrs.store');
-Route::post('okrs/store2', 'OKRsController@store2')->name('okrs.store2');
+Route::post('okrs/storeObjective', 'MyOKRsController@storeObjective')->name('okrs.storeObjective');
+Route::post('okrs/storeKR', 'MyOKRsController@storeKR')->name('okrs.storeKR');
 // 編輯個人當季OKR
-Route::get('okrs/{objective}/edit', 'OKRsController@edit')->name('okrs.edit');
+Route::get('okrs/{objective}/edit', 'MyOKRsController@edit')->name('okrs.edit');
 // 儲存修改好的個人當季OKR
-Route::patch('okrs/{objective}/update', 'OKRsController@update')->name('okrs.update');
+Route::patch('okrs/{objective}/update', 'MyOKRsController@update')->name('okrs.update');
 // 刪除個人當季OKR
-Route::delete('okrs/{objective}/destroy', 'OKRsController@destroy')->name('okrs.destroy');
-Route::delete('okrs/{keyresult}/destroy2', 'OKRsController@destroy2')->name('okrs.destroy2');
+Route::delete('okrs/{objective}/destroyObjective', 'MyOKRsController@destroyObjective')->name('okrs.destroyObjective');
+Route::delete('okrs/{keyresult}/destroyKR', 'MyOKRsController@destroyKR')->name('okrs.destroyKR');
