@@ -34,6 +34,6 @@ class CreateKeyResultsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('keyresults');
+        Schema::dropIfExists('key_results');
     }
 }

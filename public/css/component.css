@@ -1,3 +1,17 @@
+/* ---------------------- */
+/* Catalog */
+/* ---------------------- */
+/**
+ * Catalog
+ * Navbar
+ * Icon
+ * Main
+ * Footer
+ * Modal
+ * Button
+ * Form
+**/
+
 /*-------------------------*/
 /* Navbar */
 /*-------------------------*/
@@ -144,8 +158,12 @@ main{
     border-bottom: none;
 }
 .modal-body{
+    padding-top: 0;
     padding-left: 45px;
     padding-right: 45px;
+}
+#register{
+    display: none;
 }
 /*-------------------------*/
 /* Button */

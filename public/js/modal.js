@@ -1,12 +1,16 @@
-$(document).ready(function(){
-    $('#loginModal').removeClass('fade');
-    $('#loginModal').modal('show');
-    $('#loginModal').addClass('fade');
 
-});
-$(function() {
-    $('#loginModal').on('hide.bs.modal',
-    function() {
-        window.location.href = '/';
-    })
-});
+function showRegister(){
+    $('#register').css('display','inline-block');
+    $('#login').css('display','none');
+}
+
+function showLogin(){
+    $('#login').css('display','inline-block');
+    $('#register').css('display','none');
+}
+
+function showModal(){
+    $('#modal').removeClass('fade');
+    $('#modal').modal('show');
+    $('#modal').addClass('fade');
+}
