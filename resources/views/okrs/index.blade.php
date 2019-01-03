@@ -62,19 +62,28 @@
                     @endphp
                         
                 <div class="progress">
+                        @if($scoreOfObj<0)  
+                        <div class="progress-bar bg-danger" role="progressbar" style="width:{{ abs($scoreOfObj) }}%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{ $scoreOfObj }}%</div>
+                        @else
                         <div class="progress-bar" role="progressbar" style="width:{{ $scoreOfObj }}%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{ $scoreOfObj }}%</div>
+                        @endif
                 </div>
                 </div>
                 <div class="col-md-2 font-weight-light text-center "> <h3>Key Results</h3> </div>
                 <div class="col-md-10">
                     <div class="row">
                         @foreach ($okr['keyresults'] as $kr)
-                            <span class="bg-info col-md-1"></span>
-                            <span class="col-md-6"> {{$kr->title}} </span>
+          
+                            <span class="col-md-7" style="border-left: 3px solid red"> {{$kr->title}} </span>
                             <div class="col-md-3">
                                 <div class="progress">
-                                    <div class="progress-bar" role="progressbar" style="width:{{ $kr->accomplishRate() }}%" aria-valuenow="25" aria-valuemin="{{$kr->initial}}" aria-valuemax="{{$kr->target}}">
+                                    @if($kr->accomplishRate()<0)
+                                        <div class="progress-bar bg-danger" role="progressbar" style="width:{{ abs($kr->accomplishRate()) }}%" aria-valuenow="25" aria-valuemin="{{$kr->initial}}" aria-valuemax="{{$kr->target}}">
                                         {{ $kr->accomplishRate() }}%</div>
+                                    @else
+                                        <div class="progress-bar" role="progressbar" style="width:{{ $kr->accomplishRate() }}%" aria-valuenow="25" aria-valuemin="{{$kr->initial}}" aria-valuemax="{{$kr->target}}">
+                                        {{ $kr->accomplishRate() }}%</div>
+                                    @endif
                                 </div>
                             </div>
                             <span class="col-md-1 text-right">{{$kr->confidence}}/10 </span>
@@ -87,33 +96,47 @@
                             <span class="col-md-12"></span>
                             @endforeach
 
+                            @if ($errors->any())
+                                <div class="alert alert-danger alert-dismissible col-md-10" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    <strong>警告！</strong> 請修正以下表單錯誤：
+                                    <ul>
+                                        @foreach($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+
                         <form method="POST" action="{{route('okrs.storeKR')}}">
                                 @csrf
                         <div class="form-row  mr-5">
                         <input type="hidden" class="form-control" name="krs_owner" id="keyresult_owner" value="{{$okr['objective']->id}}">
                         <div class="form-group col-md-12">
                             <label for="keyresult_title">關鍵指標(KeyResult)</label>
-                            <input type="text" class="form-control" name="krs_title" id="keyresult_title" value="">
+                            <input type="text" class="form-control" name="krs_title" id="keyresult_title" value="{{old('krs_title')}}">
                         </div>
                         <div class="form-group col-md-1">
                             <label for="keyresult_weight">權重</label>
-                            <input type="number" class="form-control" name="krs_weight" id="keyresult_weight" value="">
+                            <input type="number" class="form-control" name="krs_weight" id="keyresult_weight" value="{{old('krs_weight')}}">
                         </div>
                         <div class="form-group col-md-1">
                             <label for="keyresult_confidence">信心值</label>
-                            <input type="number" class="form-control" name="krs_conf" id="keyresult_confidence" value="">
+                            <input type="number" class="form-control" name="krs_conf" id="keyresult_confidence" value="{{old('krs_conf')}}">
                         </div>
                         <div class="form-group col-md-3">
                             <label for="keyresult_initaial">起始值</label>
-                            <input type="number" class="form-control" name="krs_init" id="keyresult_initaial" value="">
+                            <input type="number" class="form-control" name="krs_init" id="keyresult_initaial" value="{{old('krs_init')}}">
                         </div>
                         <div class="form-group col-md-3">
                             <label for="keyresult_target">目標值</label>
-                            <input type="number" class="form-control" name="krs_tar" id="keyresult_target" value="">
+                            <input type="number" class="form-control" name="krs_tar" id="keyresult_target" value="{{old('krs_tar')}}">
                         </div>
                         <div class="form-group col-md-3">
                             <label for="keyresult_target">當前值</label>
-                            <input type="number" class="form-control" name="krs_now" id="keyresult_now" value="">
+                            <input type="number" class="form-control" name="krs_now" id="keyresult_now" value="{{old('krs_now')}}">
                         </div>
                         <button class="btn btn-info btn-sm col-md-1" type="submit">新增</button>  
                         </div>    

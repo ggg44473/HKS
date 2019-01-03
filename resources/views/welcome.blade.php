@@ -180,7 +180,7 @@
                                     <label for="name" class="col-md-12 text-primary">姓名</label>
                         
                                     <div class="col-md-12">
-                                        <input id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{ old('name') }}" required autofocus>
+                                        <input id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="請輸入姓名" name="name" value="{{ old('name') }}" required autofocus>
                         
                                         @if ($errors->has('name'))
                                             <span class="invalid-feedback" role="alert">
@@ -194,7 +194,7 @@
                                     <label for="registerEmail" class="col-md-12 text-primary">信箱</label>
                         
                                     <div class="col-md-12">
-                                        <input id="registerEmail" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required>
+                                        <input id="registerEmail" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="請輸入信箱" name="email" value="{{ old('email') }}" required>
                         
                                         @if ($errors->has('email'))
                                             <span class="invalid-feedback" role="alert">
@@ -208,7 +208,7 @@
                                     <label for="password" class="col-md-12 text-primary">密碼</label>
                         
                                     <div class="col-md-12">
-                                        <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
+                                        <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" placeholder="請輸入密碼" name="password" required>
                         
                                         @if ($errors->has('password'))
                                             <span class="invalid-feedback" role="alert">
@@ -222,7 +222,7 @@
                                     <label for="password-confirm" class="col-md-12 text-primary">密碼確認</label>
                         
                                     <div class="col-md-12">
-                                        <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
+                                        <input id="password-confirm" type="password" class="form-control" placeholder="請確認密碼" name="password_confirmation" required>
                                     </div>
                                 </div>
                         

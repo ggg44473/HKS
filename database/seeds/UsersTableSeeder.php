@@ -1,5 +1,6 @@
 <?php
 
+use App\User;
 use Illuminate\Database\Seeder;
 
 class UsersTableSeeder extends Seeder
@@ -11,8 +12,11 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        \App\User::truncate(); //清空資料庫
-        \App\User::create([
+        User::truncate(); //清空資料庫
+        User::unguard();
+        factory(User::class, 3)->create();
+        User::reguard(); 
+        User::create([
             'name' => 'hks',
             'password' => bcrypt('hkshks'),
             'email' => 'hks@mail.com',

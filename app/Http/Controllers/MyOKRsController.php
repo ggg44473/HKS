@@ -4,11 +4,22 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Http\Requests\KeyresultRequest;
+use App\Http\Requests\ObjectiveRequest;
+use App\Http\Requests\OKRsRequest;
 use App\Objective;
 use App\KeyResult;
 
 class MyOKRsController extends Controller
 {
+    
+    /**
+     * 要登入才能用的Controller
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -48,7 +59,7 @@ class MyOKRsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function storeObjective(Request $request)
+    public function storeObjective(ObjectiveRequest $request)
     {
         $attr['user_id'] = auth()->user()->id;
         $attr['title'] = $request->input('obj_title');
@@ -59,7 +70,7 @@ class MyOKRsController extends Controller
 
         return redirect()->route('okrs.index');
     }
-    public function storeKR(Request $request)
+    public function storeKR(KeyresultRequest $request)
     {
         $attr['objective_id'] = $request->input('krs_owner');
         $attr['title'] = $request->input('krs_title');
@@ -99,7 +110,7 @@ class MyOKRsController extends Controller
      */
     public function update(Request $request, Objective $objective)
     {
-        $objAttr['title'] = $request->input('obj_title');
+        $objAttr['title'] =  $request->input('obj_title');
         $objAttr['started_at'] = $request->input('st_date');
         $objAttr['finished_at'] = $request->input('fin_date');
         $objective->update($objAttr);
@@ -126,8 +137,6 @@ class MyOKRsController extends Controller
      */
     public function destroyObjective(Objective $objective)
     {
-        //$objids = Objective::where('owner','=',auth()->user()->id)->pluck('id');
-        // KeyResult::where('owner','=',$objective->id)->delete();
         $objective->delete();
         return redirect()->route('okrs.index');
     }

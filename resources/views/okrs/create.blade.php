@@ -9,6 +9,19 @@
          <h2>我的OKR</h2>
          <a href="{{route('okrs.index')}}" class="btn btn-info btn-sm">返回</a>
     </div>
+    @if ($errors->any())
+    <div class="alert alert-danger alert-dismissible col-md-10" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <strong>警告！</strong> 請修正以下表單錯誤：
+        <ul>
+            @foreach($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
     <form method="POST" action="{{route('okrs.storeObjective')}}">
         @csrf
         <div class="form-row ml-5">
