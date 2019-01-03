@@ -15,7 +15,7 @@ var s;
 // if (sys.opera) return { broswer : "Opera", version : sys.opera };
 // if (sys.safari) return { broswer : "Safari", version : sys.safari };
 
-if (!sys.chrome){
+if (sys.safari){
     $('.datepicker').on('click',function(){
         $(this).datepicker({
             uiLibrary: 'bootstrap4'

@@ -37,7 +37,7 @@ Route::post('password/reset', 'Auth\ResetPasswordController@reset');
 // 顯示個人當季OKR
 Route::get('okrs/', 'MyOKRsController@index')->name('okrs.index');
 // 新增個人當季OKR
-Route::get('okrs/creat', 'MyOKRsController@create')->name('okrs.create');
+Route::get('okrs/create', 'MyOKRsController@create')->name('okrs.create');
 // 儲存個人當季OKR
 Route::post('okrs/storeObjective', 'MyOKRsController@storeObjective')->name('okrs.storeObjective');
 Route::post('okrs/storeKR', 'MyOKRsController@storeKR')->name('okrs.storeKR');

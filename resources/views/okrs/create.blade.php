@@ -1,5 +1,3 @@
-
- 
 @extends('layouts.master')
 @section('title','My OKR')
 @section('content')
@@ -42,9 +40,3 @@
     </form>
 </div>
 @endsection
-
-
-            
-    
-            
-    
