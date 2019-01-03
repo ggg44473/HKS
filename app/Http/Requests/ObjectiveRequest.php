@@ -26,7 +26,7 @@ class ObjectiveRequest extends FormRequest
         return [
             'obj_title' => 'required',
             'st_date' => 'required',
-            'fin_date' => 'required|different:krs_init',
+            'fin_date' => 'required|different:st_date',
         ];
     }
 

@@ -31,11 +31,11 @@
         </div>
         <div class="form-group col-md-4">
             <label for="started_at">起始日</label>
-            <input type="date" class="form-control" name="st_date" id="started_at" value="">
+            <input type="date" class="form-control datepicker" name="st_date" id="started_at" value="">
             </div>
         <div class="form-group col-md-4">
             <label for="finished_at">完成日</label>
-            <input type="date" class="form-control" name="fin_date" id="finished_at" value="">
+            <input type="date" class="form-control datepicker" name="fin_date" id="finished_at" value="">
         </div>
         <button class="btn btn-info btn-sm" type="submit">新增</button>
     </div>  
