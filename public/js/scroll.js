@@ -25,3 +25,6 @@ function moveScol()
         window.scrollTo(100, scrollo_y);
     }
 }
+
+$('body').on('load', moveScol);
+$('body').on('unload', getScrollPosition);
