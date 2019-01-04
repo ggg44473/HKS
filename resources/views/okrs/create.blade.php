@@ -4,8 +4,8 @@
 <div class="container">
  <div class="row">
      <div class="col-12">
-         <h2>我的OKR</h2>
-         <a href="{{route('okrs.index')}}" class="btn btn-primary btn-sm">返回</a>
+         <h4>我的OKR</h4>
+         <a href="{{route('okrs.index')}}" class="btn btn-info btn-sm">返回</a>
     </div>
     @if ($errors->any())
     <div class="alert alert-danger alert-dismissible col-md-10" role="alert">
@@ -33,7 +33,7 @@
             </div>
         <div class="form-group col-md-4">
             <label for="finished_at">完成日</label>
-            <input type="date" class="form-control datepicker" name="fin_date" id="finished_at" value="">
+            <input type="date" class="form-control" name="fin_date" id="finished_at" value="">
         </div>
         <button class="btn btn-primary btn-sm" type="submit">新增</button>
     </div>  
