@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateHistoryRatesTable extends Migration
+class CreateKeyResultRecordsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreateHistoryRatesTable extends Migration
      */
     public function up()
     {
-        Schema::create('history_rates', function (Blueprint $table) {
+        Schema::create('key_result_records', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('key_results_id')->unsigned();
             $table->foreign('key_results_id')->references('id')->on('key_results')->onDelete('cascade');
-            $table->float('current_value');
-            $table->tinyInteger('confidence');
+            $table->float('history_value');
+            $table->tinyInteger('history_confidence');
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ class CreateHistoryRatesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('history_rates');
+        Schema::dropIfExists('key_result_records');
     }
 }

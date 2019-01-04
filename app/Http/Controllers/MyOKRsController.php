@@ -4,11 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Http\Requests\KeyresultRequest;
+use App\Http\Requests\KeyResultRequest;
 use App\Http\Requests\ObjectiveRequest;
 use App\Objective;
 use App\KeyResult;
-use App\HistoryRate;
+use App\KeyResultRecord;
 
 class MyOKRsController extends Controller
 {
@@ -70,7 +70,7 @@ class MyOKRsController extends Controller
 
         return redirect()->route('okrs.index');
     }
-    public function storeKR(KeyresultRequest $request)
+    public function storeKR(KeyResultRequest $request)
     {
         $attr['objective_id'] = $request->input('krs_owner');
         $attr['title'] = $request->input('krs_title');
@@ -124,10 +124,10 @@ class MyOKRsController extends Controller
             $krAttr['current_value'] = $request->input('krs_now'.$keyresult->id);
             $krAttr['weight'] = $request->input('krs_weight'.$keyresult->id);
             if( $krAttr['current_value']!=$keyresult->current_value ||$krAttr['confidence']!=$keyresult->confidence){
-                $oldattr['key_results_id'] = $keyresult->id;
-                $oldattr['confidence'] = $keyresult->confidence;
-                $oldattr['current_value'] = $keyresult->current_value;
-                HistoryRate::create($oldattr);
+                $oldAttr['key_results_id'] = $keyresult->id;
+                $oldAttr['history_confidence'] = $keyresult->confidence;
+                $oldAttr['history_value'] = $keyresult->current_value;
+                KeyResultRecord::create($oldAttr);
             }
             $keyresult->update($krAttr);
         }

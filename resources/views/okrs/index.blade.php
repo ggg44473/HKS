@@ -21,5 +21,5 @@
             </div>                        
         </div>
     </div>
-    @include('okrs.myokr',$okrs)
+    @include('okrs.okr',$okrs)
 @endsection

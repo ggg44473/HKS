@@ -20,14 +20,13 @@ class KeyResult extends Model
     {
         return $this->belongsTo(Objective::class);
     }
-    public function historyrates()
+    public function  keyResultRecords()
     {
-        return $this->hasMany(HistoryRate::class);
+        return $this->hasMany(KeyResultRecord::class);
     }
 
     public function accomplishRate()
     {
-        // TODO: 達成率有可能遞增或遞減，也可能想遞增但遞減了
         if($this->target_value == $this->initial_value) 
             return 0;
         else if ($this->target_value > $this->initial_value)
