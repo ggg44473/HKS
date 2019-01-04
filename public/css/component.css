@@ -61,6 +61,7 @@
 /* btn-menu */
 .btn-menu{
     border-radius: 50%;
+    background-color: transparent;
 }
 .btn-menu:hover{
     background-color: #F2F2F2;
@@ -87,6 +88,7 @@
     color: #868686;
     border-radius: 50%;
     border: 1px solid #d6d6d6;
+    background-color: transparent;
 }
 .btn.btn-search:hover {
     color: #fff;

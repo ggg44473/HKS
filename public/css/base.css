@@ -115,47 +115,35 @@ h1{
 font-size: 80px;
 font-weight: 800;
 font-family: 'Helvetica', 'Noto Sans TC', 'roboto', arial, sans-serif;
-margin-top: 24px;
-margin-bottom: 24px;
 }
 h2{
 font-size: 48px;
 font-weight: 600;
 font-family: 'Helvetica', 'Noto Sans TC', 'roboto', arial, sans-serif;
-margin-top: 24px;
-margin-bottom: 24px;
 }
 h3{
 font-size: 40px;
 font-weight: 600;
 font-family: 'Helvetica', 'Noto Sans TC', 'roboto', arial, sans-serif;
 line-height: 48px;
-margin-top: 24px;
-margin-bottom: 24px;
 }
 h4{
 font-size: 24px;
 font-weight: 600;
 font-family: 'Helvetica', 'Noto Sans TC', 'roboto', arial, sans-serif;
 line-height: 32px;
-margin-top: 24px;
-margin-bottom: 24px;
 }
 h5{
 font-size: 20px;
 font-weight: 400;
 font-family: 'Helvetica', 'Noto Sans TC', 'roboto', arial, sans-serif;
 line-height: 1;
-margin-top: 24px;
-margin-bottom: 16px;
 }
 h6{
 font-size: 18px;
 font-weight: 400;
 font-family: 'Helvetica', 'Noto Sans TC', 'roboto', arial, sans-serif;
 line-height: 32px;
-margin-top: 24px;
-margin-bottom: 16px;
 }
 p{
 font-size: 16px;

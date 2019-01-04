@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row m-3">
-        <div class="col-md-2 font-weight-light text-center"> <h2>My OKR</h2> </div>
+        <div class="col-md-2 font-weight-light text-center"> <h4>My OKR</h4> </div>
         <div class="col-md-6 "></div>
         <div class="col-md-1 "><a href="{{route('okrs.create')}}" class="btn btn-info">新增目標</a></div>
         <div class="col-md-1 text-right"><img src="https://img.icons8.com/windows/1600/time-search.png" width="30" height="30"></div>          
@@ -44,7 +44,7 @@
                     </div>                   
                 </div>
     
-                <div class="col-md-2 font-weight-light text-center"> <h3>Objectives</h3> </div>
+                <div class="col-md-2 font-weight-light text-center"> <h5>Objectives</h5> </div>
                 <div class="col-md-7 font-weight-light">
                         {{$okr['objective']->title}}
                 </div>
@@ -69,7 +69,7 @@
                         @endif
                 </div>
                 </div>
-                <div class="col-md-2 font-weight-light text-center "> <h3>Key Results</h3> </div>
+                <div class="col-md-2 font-weight-light text-center pt-3"> <h5>Key Results</h5> </div>
                 <div class="col-md-10">
                     <div class="row">
                         @foreach ($okr['keyresults'] as $kr)

@@ -16,10 +16,13 @@ var s;
 // if (sys.safari) return { broswer : "Safari", version : sys.safari };
 
 if (sys.safari){
-    $('.datepicker').on('click',function(){
-        $(this).datepicker({
-            uiLibrary: 'bootstrap4'
-        });
+    $('#started_at').datepicker({
+        uiLibrary: 'bootstrap4',
+        format: 'yyyy / mm / dd',
+    });
+    $('#finished_at').datepicker({
+        uiLibrary: 'bootstrap4',
+        format: 'yyyy / mm / dd',
     });
 }
     
