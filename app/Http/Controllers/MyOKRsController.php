@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\KeyresultRequest;
 use App\Http\Requests\ObjectiveRequest;
-use App\Http\Requests\OKRsRequest;
 use App\Objective;
 use App\KeyResult;
 use App\HistoryRate;
@@ -124,7 +123,6 @@ class MyOKRsController extends Controller
             $krAttr['target_value'] = $request->input('krs_tar'.$keyresult->id);
             $krAttr['current_value'] = $request->input('krs_now'.$keyresult->id);
             $krAttr['weight'] = $request->input('krs_weight'.$keyresult->id);
-
             if( $krAttr['current_value']!=$keyresult->current_value ||$krAttr['confidence']!=$keyresult->confidence){
                 $oldattr['key_results_id'] = $keyresult->id;
                 $oldattr['confidence'] = $keyresult->confidence;

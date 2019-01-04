@@ -25,11 +25,11 @@ class KeyresultRequest extends FormRequest
     {
         return [
             'krs_title' => 'required',
-            'krs_conf' => 'required|numeric|min::0|max:10',
+            'krs_conf' => 'required|numeric|min:0|max:10',
             'krs_init' => 'required',
             'krs_tar' => 'required|different:krs_init',
             'krs_now' => 'required',
-            'krs_weight' => 'required|numeric|min::0.1|max:2',
+            'krs_weight' => 'required|numeric|min:0.1|max:2',
         ];
     }
 
@@ -48,12 +48,17 @@ class KeyresultRequest extends FormRequest
     public function messages()
     {
         return [
-            'krs_title.required' => ':attribute 不可空白',
-            'krs_conf.required' => ':attribute 不可空白',
-            'krs_init.required' => ':attribute 不可空白',
-            'krs_tar.required' => ':attribute 不可空白',
-            'krs_now.required' => ':attribute 不可空白',
-            'krs_weight.required' => ':attribute 不可空白',
+            'krs_title.required' => '不可空白!',
+            'krs_conf.required' => '不可空白!',
+            'krs_init.required' => '不可空白!',
+            'krs_tar.required' => '不可空白!',
+            'krs_now.required' => '不可空白!',
+            'krs_weight.required' => '不可空白!',
+            'krs_tar.different' => '與起始值需不同',
+            'krs_conf.min' =>'須大於 0',
+            'krs_conf.max' =>'須小於 10',
+            'krs_weight.min' =>'須大於 0.1',
+            'krs_weight.max' =>'須小於 2',
         ];
     }
 

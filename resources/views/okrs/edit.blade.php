@@ -37,6 +37,7 @@
             <input type="date" class="form-control" name="fin_date" id="finished_at" value="{{$objective->finished_at}}" required>
         </div>
         @foreach($keyresults as $keyresult)
+        
             <div class="form-group col-md-12">
                 <label for="keyresult_title">關鍵指標(KeyResult)</label>
                 <input type="text" class="form-control" name="krs_title{{$keyresult->id}}" id="keyresult_title" value="{{$keyresult->title}}" required>

@@ -23,17 +23,16 @@ class OKRsRequest extends FormRequest
      */
     public function rules()
     {
-        dd($this);
         return [
             'obj_title' => 'required',
             'st_date' => 'required',
             'fin_date' => 'required|different:st_date',
-            'krs_title' => 'required',
-            // 'krs_conf' => 'required',
-            // 'krs_init' => 'required',
-            // 'krs_tar' => 'required|different:krs_init',
-            // 'krs_now' => 'required',
-            // 'krs_weight' => 'required',
+            'krs_title.*.id' => 'required',
+            'krs_conf.*.id'=> 'required',
+            'krs_init.*id' => 'required',
+            'krs_tar.*.id' => 'required|different:krs_init.*',
+            'krs_now.*.id' => 'required',
+            'krs_weight.*.id' => 'required',
         ];
     }
 
