@@ -5,7 +5,7 @@
  <div class="row">
      <div class="col-12">
          <h2>我的OKR</h2>
-         <a href="{{route('okrs.index')}}" class="btn btn-info btn-sm">返回</a>
+         <a href="{{route('okrs.index')}}" class="btn btn-primary btn-sm">返回</a>
     </div>
     @if ($errors->any())
     <div class="alert alert-danger alert-dismissible col-md-10" role="alert">
@@ -29,13 +29,13 @@
         </div>
         <div class="form-group col-md-4">
             <label for="started_at">起始日</label>
-            <input type="date" class="form-control datepicker" name="st_date" id="started_at" value="">
+            <input type="date" class="form-control datepicker" name="st_date" id="started_at" value="<?php echo date('Y-m-d'); ?>">
             </div>
         <div class="form-group col-md-4">
             <label for="finished_at">完成日</label>
             <input type="date" class="form-control datepicker" name="fin_date" id="finished_at" value="">
         </div>
-        <button class="btn btn-info btn-sm" type="submit">新增</button>
+        <button class="btn btn-primary btn-sm" type="submit">新增</button>
     </div>  
     </form>
 </div>

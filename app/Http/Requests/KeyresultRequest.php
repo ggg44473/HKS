@@ -25,11 +25,11 @@ class KeyresultRequest extends FormRequest
     {
         return [
             'krs_title' => 'required',
-            'krs_conf' => 'required',
+            'krs_conf' => 'required|numeric|min::0|max:10',
             'krs_init' => 'required',
             'krs_tar' => 'required|different:krs_init',
             'krs_now' => 'required',
-            'krs_weight' => 'required',
+            'krs_weight' => 'required|numeric|min::0.1|max:2',
         ];
     }
 

@@ -20,6 +20,10 @@ class KeyResult extends Model
     {
         return $this->belongsTo(Objective::class);
     }
+    public function historyrates()
+    {
+        return $this->hasMany(HistoryRate::class);
+    }
 
     public function accomplishRate()
     {

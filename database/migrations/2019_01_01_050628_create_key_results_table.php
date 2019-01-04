@@ -22,7 +22,7 @@ class CreateKeyResultsTable extends Migration
             $table->float('initial_value');
             $table->float('target_value');
             $table->float('current_value');
-            $table->tinyInteger('weight');
+            $table->float('weight');
             $table->timestamps();
         });
     }

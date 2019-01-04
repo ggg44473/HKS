@@ -5,7 +5,7 @@
  <div class="row">
      <div class="col-12">
          <h2>我的OKR</h2>
-         <a href="{{route('okrs.index')}}" class="btn btn-info btn-sm">返回</a>
+         <a href="{{route('okrs.index')}}" class="btn btn-primary btn-sm">返回</a>
     </div>
     @if ($errors->any())
     <div class="alert alert-danger alert-dismissible col-md-10" role="alert">
@@ -62,7 +62,7 @@
                 <input type="number" class="form-control" name="krs_now{{$keyresult->id}}" id="keyresult_now" value="{{$keyresult->current_value}}"  required>
             </div>
         @endforeach
-        <button class="btn btn-info btn-sm col-md-12" type="submit">修改</button>  
+        <button class="btn btn-primary btn-sm col-md-12" type="submit">修改</button>  
         </div>
     </form>
 </div>

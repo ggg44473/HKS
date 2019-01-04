@@ -5,10 +5,10 @@
     <div class="row m-3">
         <div class="col-md-2 font-weight-light text-center"> <h2>My OKR</h2> </div>
         <div class="col-md-6 "></div>
-        <div class="col-md-1 "><a href="{{route('okrs.create')}}" class="btn btn-info">新增目標</a></div>
+        <div class="col-md-1 "><a href="{{route('okrs.create')}}" class="btn btn-primary">新增目標</a></div>
         <div class="col-md-1 text-right"><img src="https://img.icons8.com/windows/1600/time-search.png" width="30" height="30"></div>          
         <div class="col-md-2 btn-group">
-            <button type="button" class="btn btn-info dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <button type="button" class="btn btn-primary dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 歷史紀錄
             </button>
             <div class="dropdown-menu">
@@ -120,15 +120,15 @@
                         </div>
                         <div class="form-group col-md-1">
                             <label for="keyresult_weight">權重</label>
-                            <input type="number" class="form-control" name="krs_weight" id="keyresult_weight" value="{{old('krs_weight')}}">
+                            <input type="number" class="form-control" name="krs_weight" id="keyresult_weight" value="{{old('krs_weight') ? old('krs_weight') : '1'}}">
                         </div>
                         <div class="form-group col-md-1">
                             <label for="keyresult_confidence">信心值</label>
-                            <input type="number" class="form-control" name="krs_conf" id="keyresult_confidence" value="{{old('krs_conf')}}">
+                            <input type="number" class="form-control" name="krs_conf" id="keyresult_confidence" value="{{old('krs_conf') ? old('krs_conf') : '5'}}">
                         </div>
                         <div class="form-group col-md-3">
                             <label for="keyresult_initaial">起始值</label>
-                            <input type="number" class="form-control" name="krs_init" id="keyresult_initaial" value="{{old('krs_init')}}">
+                            <input type="number" class="form-control" name="krs_init" id="keyresult_initaial" value="{{old('krs_init') ? old('krs_init') : '0'}}">
                         </div>
                         <div class="form-group col-md-3">
                             <label for="keyresult_target">目標值</label>
@@ -136,9 +136,9 @@
                         </div>
                         <div class="form-group col-md-3">
                             <label for="keyresult_target">當前值</label>
-                            <input type="number" class="form-control" name="krs_now" id="keyresult_now" value="{{old('krs_now')}}">
+                            <input type="number" class="form-control" name="krs_now" id="keyresult_now" value="{{old('krs_now') ? old('krs_now') : '0'}}">
                         </div>
-                        <button class="btn btn-info btn-sm col-md-1" type="submit">新增</button>  
+                        <button class="btn btn-primary btn-sm col-md-1" type="submit">新增</button>  
                         </div>    
                         </form>
                         
@@ -150,17 +150,17 @@
                 <div class="row text-center mb-3">
                     <span class="col-md-4">
                     
-                    <button class="btn btn-outline-info border-0" type="button" data-toggle="collapse" data-target="#Action" aria-expanded="false" aria-controls="Action">
+                    <button class="btn btn-outline-primary border-0" type="button" data-toggle="collapse" data-target="#Action" aria-expanded="false" aria-controls="Action">
                             <img src="https://img.icons8.com/ios/1600/goal.png" width="20" height="20"> 查看 Actions
                     </button>
                     </span><span class="col-md-4">
                     
-                    <button class="btn btn-outline-info border-0" type="button" data-toggle="collapse" data-target="#Msg" aria-expanded="false" aria-controls="Msg">
+                    <button class="btn btn-outline-primary border-0" type="button" data-toggle="collapse" data-target="#Msg" aria-expanded="false" aria-controls="Msg">
                             <img src="http://icon.chrafz.com/uploads/allimg/160421/1-1604211620090-L.png" width="20" height="20"> 查看留言
                     </button>
                     </span><span class="col-md-4">
                     
-                    <button class="btn btn-outline-info border-0" type="button" data-toggle="collapse" data-target="#History" aria-expanded="false" aria-controls="History">
+                    <button class="btn btn-outline-primary border-0" type="button" data-toggle="collapse" data-target="#History" aria-expanded="false" aria-controls="History">
                             <img src="http://icon.chrafz.com/uploads/allimg/170119/1-1F1191352440-L.png" width="20" height="20"> 歷史數據
                     </button>
                 </div>
