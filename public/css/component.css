@@ -51,7 +51,7 @@
     transition: all 0.5s ease-in;
 }
 #sidebar-text .nav-link {   
-    padding-top: 1.1rem;
+    padding-top: 1.3rem;
     padding-left: 0;
 }
 .content{
@@ -163,9 +163,6 @@ main{
     padding-top: 0;
     padding-left: 45px;
     padding-right: 45px;
-}
-#register{
-    display: none;
 }
 /*-------------------------*/
 /* Button */

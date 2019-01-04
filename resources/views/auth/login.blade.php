@@ -1,5 +1,10 @@
-<!-- Login -->
-<div class="modal-body" id="login">
+@extends('welcome')
+
+@section('title','登入')
+
+@section('modal')
+    <!-- Login -->
+    <div class="modal-body" id="login">
         <div class="text-center mb-3">
             <img src="{{ asset('/img/icon/user/green.svg')}}" alt="" style="width: 90px; height: 90px;">
         </div>
@@ -53,7 +58,9 @@
             </div>
     
             <div class="text-center mb-2">
-                <a class="text-primary" href="#!" onclick="showRegister()">註冊會員</a>
+                <a class="text-primary" href="{{ route('register') }}">註冊會員</a>
             </div>
         </form>
     </div>
+    <script src="{{ asset('js/modal.js') }}" defer></script>
+@endsection

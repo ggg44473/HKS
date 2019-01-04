@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/', 'WelcomeController@index');
+Route::get('/', ['middleware' => 'guest', function(){ return view('welcome'); }]);
 
 //Auth::routes();
 
