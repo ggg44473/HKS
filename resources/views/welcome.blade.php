@@ -7,12 +7,11 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>@yield('title')</title>
+    <title>@yield('title','welcome')</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="{{ asset('js/scroll.js') }}" defer></script>
-    <script src="{{ asset('js/modal.js') }}" defer></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -27,8 +26,8 @@
     <link href="{{ asset('css/component.css') }}" rel="stylesheet">
 
 </head>
-<body>
-    <div id="app" onload="moveScol()" onunload="getScrollPosition()">
+<body onload="moveScol()" onunload="getScrollPosition()">
+    <div id="app">
         <nav class="navbar navbar-expand-md navbar-dark navbar-laravel bg-primary">
             <!-- LOGO --> 
             <a class="navbar-brand font-weight-bold text-white ml-3" href="{{ url('/') }}">
@@ -53,9 +52,7 @@
                 </ul>
                 <ul class="navbar-nav">
                     @guest
-                    <button type="button" class="btn btn-login" data-toggle="modal" data-target="#modal">
-                        會員登入
-                    </button>
+                    <a href="{{ route('login') }}" class="btn btn-login" >會員登入</a>
                     @endguest          
                 </ul>
             </div>
@@ -90,156 +87,17 @@
         </footer>
     </div>
 
-    <!-- 若登入/註冊有錯誤，顯示Modal -->
-    @if (count($errors) > 0)
-    <script>
-        window.onload = function(){showModal();};
-    </script>
-    @endif
-
     <!-- Modal -->
     <div id='app'>
-        <div class="modal fade" id="modal" tabindex="-1" role="dialog">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-
-                        <!-- Login -->
-                        <div class="modal-body" id="login">
-                            <div class="text-center mb-3">
-                                <img src="{{ asset('/img/icon/user/green.svg')}}" alt="" style="width: 90px; height: 90px;">
-                            </div>
-                            <form method="POST" action="{{ route('login') }}">
-                                @csrf
-                                <div class="form-group">
-                                    <label for="loginEmail" class="text-md-right text-primary">信箱</label>
-                                    <input id="loginEmail" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" placeholder="請輸入信箱" value="{{ old('email') }}" required autofocus>
-                        
-                                        @if ($errors->has('email'))
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('email') }}</strong>
-                                            </span>
-                                        @endif
-                                </div>
-                                <div class="form-group">
-                                    <label for="loginPassword" class="text-md-right text-primary">密碼</label>
-                                    <input id="loginPassword" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" placeholder="請輸入密碼" required>
-                        
-                                    @if ($errors->has('password'))
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('password') }}</strong>
-                                        </span>
-                                    @endif
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6 form-group">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-                                            <label class="form-check-label text-muted" for="remember">Remember Me</label>
-                                        </div>
-                                    </div>
-                                    
-                                    @if (Route::has('password.request'))
-                                    <div class="col-md-6 text-right">
-                                        <a class="text-primary" href="{{ route('password.request') }}">忘記密碼</a>
-                                    </div>
-                                    @endif
-                        
-                                </div>
-                        
-                                <div class="row form-group mt-5 mb-5">
-                                    <div class="col-md-6">
-                                        <button type="submit" class="btn btn-primary w-100">登入</button>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <button class="btn btn-primary w-100 btn-cmoney">
-                                            <span style="color:crimson;">ＣM</span>oney
-                                        </button>
-                                    </div>
-                                </div>
-                        
-                                <div class="text-center mb-2">
-                                    <a class="text-primary" href="#!" onclick="showRegister()">註冊會員</a>
-                                </div>
-                            </form>
-                        </div>
-
-                        <!-- Register -->
-                        <div class="modal-body" id="register">
-                            <div class="text-center mb-3">
-                                <img src="{{ asset('/img/icon/user/green.svg')}}" alt="" style="width: 90px; height: 90px;">
-                            </div>
-                            <form method="POST" action="{{ route('register') }}">
-                                @csrf
-                        
-                                <div class="form-group row">
-                                    <label for="name" class="col-md-12 text-primary">姓名</label>
-                        
-                                    <div class="col-md-12">
-                                        <input id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="請輸入姓名" name="name" value="{{ old('name') }}" required autofocus>
-                        
-                                        @if ($errors->has('name'))
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('name') }}</strong>
-                                            </span>
-                                        @endif
-                                    </div>
-                                </div>
-                        
-                                <div class="form-group row">
-                                    <label for="registerEmail" class="col-md-12 text-primary">信箱</label>
-                        
-                                    <div class="col-md-12">
-                                        <input id="registerEmail" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="請輸入信箱" name="email" value="{{ old('email') }}" required>
-                        
-                                        @if ($errors->has('email'))
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('email') }}</strong>
-                                            </span>
-                                        @endif
-                                    </div>
-                                </div>
-                        
-                                <div class="form-group row">
-                                    <label for="password" class="col-md-12 text-primary">密碼</label>
-                        
-                                    <div class="col-md-12">
-                                        <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" placeholder="請輸入密碼" name="password" required>
-                        
-                                        @if ($errors->has('password'))
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('password') }}</strong>
-                                            </span>
-                                        @endif
-                                    </div>
-                                </div>
-                        
-                                <div class="form-group row">
-                                    <label for="password-confirm" class="col-md-12 text-primary">密碼確認</label>
-                        
-                                    <div class="col-md-12">
-                                        <input id="password-confirm" type="password" class="form-control" placeholder="請確認密碼" name="password_confirmation" required>
-                                    </div>
-                                </div>
-                        
-                                <div class="form-group row mt-4 mb-4 justify-content-center">
-                                    <div class="col-md-6">
-                                        <button type="submit" class="btn btn-primary w-100">
-                                            註冊
-                                        </button>
-                                    </div>
-                                </div>
-                        
-                                <div class="text-center mb-2">
-                                    <a class="text-primary" href="#!" onclick="showLogin()">登入會員</a>
-                                </div>
-                            </form>
-                        </div>
+        <div class="modal {{ count($errors) == 0 ? 'fade' : '' }}" id="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span>&times;</span>
+                        </button>
                     </div>
+                    @yield('modal')
                 </div>
             </div>
         </div>
