@@ -113,6 +113,8 @@
         </div>
     </div>
     <br/>
+    @comments(['model' => $okr['objective']])
+    @endcomments
 @endforeach
 
 <!-- Button trigger modal -->

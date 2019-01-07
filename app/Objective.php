@@ -3,9 +3,13 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Laravelista\Comments\Commentable;
 
 class Objective extends Model
 {
+
+    use Commentable;
+
     // protected $table = "objectives"; // $table預設是複數
     // public $timestamps = false; //若要取消時間戳記
     protected $fillable = [ //新增的欄位名稱
