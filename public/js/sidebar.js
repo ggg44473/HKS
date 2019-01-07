@@ -46,4 +46,6 @@ $(document).ready(function(){
             $('.navbar').css('padding-left','76px');
         }
     });
+
+    
 });

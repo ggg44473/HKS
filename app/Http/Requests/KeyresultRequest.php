@@ -3,10 +3,11 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use \Illuminate\Validation\Validator;
 
 class KeyResultRequest extends FormRequest
 {
-  /**
+    /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
@@ -36,12 +37,12 @@ class KeyResultRequest extends FormRequest
     public function attributes()
     {
         return [
-            'krs_title' => $this->validationData()['krs_owner'],
-            'krs_conf' => $this->validationData()['krs_owner'],
-            'krs_init' => $this->validationData()['krs_owner'],
-            'krs_tar' => $this->validationData()['krs_owner'],
-            'krs_now' => $this->validationData()['krs_owner'],
-            'krs_weight' => $this->validationData()['krs_owner'],
+            'krs_title' => '關鍵指標',
+            'krs_conf' => '信心值',
+            'krs_init' => '起始值',
+            'krs_tar' => '目標值',
+            'krs_now' => '當前值',
+            'krs_weight' => '權重',
         ];
     }
 
@@ -49,18 +50,32 @@ class KeyResultRequest extends FormRequest
     {
         // dd($this->validationData()['krs_owner']);
         return [
-            'krs_title.required' => ':attribute 不可空白!',
-            'krs_conf.required' => ':attribute 不可空白!',
-            'krs_init.required' => ':attribute 不可空白!',
-            'krs_tar.required' => ':attribute 不可空白!',
-            'krs_now.required' => ':attribute 不可空白!',
-            'krs_weight.required' => ':attribute 不可空白!',
-            'krs_tar.different' => ':attribute 與起始值需不同',
-            'krs_conf.min' =>':attribute 須大於0',
-            'krs_conf.max' =>':attribute 須小於10',
-            'krs_weight.min' =>':attribute 須大於0.1',
-            'krs_weight.max' =>':attribute 須小於2',
+            'krs_title.required' => '不可空白!',
+            'krs_conf.required' => '不可空白!',
+            'krs_init.required' => '不可空白!',
+            'krs_tar.required' => '不可空白!',
+            'krs_now.required' => '不可空白!',
+            'krs_weight.required' => '不可空白!',
+            'krs_tar.different' => '與起始值需不同',
+            'krs_conf.min' =>'須大於0',
+            'krs_conf.max' =>'須小於10',
+            'krs_weight.min' =>'須大於0.1',
+            'krs_weight.max' =>'須小於2',
         ];
     }
 
+    /**
+     *  辨識Kr持有者。
+     *
+     * @param  \Illuminate\Validation\Validator  $validator
+     * @return void
+     */
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+            if (count($validator->errors())) {
+                $validator->errors()->add('field', $this->validationData()['krs_owner']);
+            }         
+        });
+    }
 }

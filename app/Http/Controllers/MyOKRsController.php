@@ -7,9 +7,11 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Requests\KeyResultRequest;
 use App\Http\Requests\ObjectiveRequest;
 use App\User;
+use App\Action;
 use App\Objective;
 use App\KeyResult;
 use App\KeyResultRecord;
+use Illuminate\Support\Facades\File;
 
 class MyOKRsController extends Controller
 {
@@ -26,20 +28,23 @@ class MyOKRsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(User $user)
-    {       
+    public function index()
+    {
+        $colors =['#06d6a0','#ef476f','#ffd166','#6eeb83','#f7b32b','#fcf6b1','#a9e5bb','#59c3c3','#d81159'];
         $okrs = [];
         $objectives = Objective::where('user_id','=',auth()->user()->id)->orderBy('finished_at')->get();
         foreach ($objectives as $obj) {
             $okrs[] = [
                 "objective" => $obj,
                 "keyresults" => $obj->keyresults()->getResults(),
+                "actions" => $obj->actions()->getResults(),
             ];
         }
         
         $data = [
             'user' => $user,
             'okrs' => $okrs,
+            'colors' => $colors,
         ];
 
         return view('okrs.index', $data);
