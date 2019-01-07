@@ -16,16 +16,9 @@ class LoginController extends Controller
     | redirecting them to your home screen. The controller uses a trait
     | to conveniently provide its functionality to your applications.
     |
-    */
+     */
 
     use AuthenticatesUsers;
-
-    /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/okrs';
 
     /**
      * Create a new controller instance.
@@ -35,5 +28,17 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    /**
+     * Where to redirect users after login.
+     * 如果沒有定義此方法，會使用$redirectTo
+     * 詳見 RedirectsUsers
+     *
+     * @return string
+     */
+    public function redirectTo()
+    {
+        return "user/" . auth()->user()->id . "/okr";
     }
 }

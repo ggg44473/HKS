@@ -74,7 +74,7 @@ class KeyResultRequest extends FormRequest
     {
         $validator->after(function ($validator) {
             if (count($validator->errors())) {
-                $validator->errors()->add('field', $this->validationData()['krs_owner']);
+                $validator->errors()->add('krs_owner', $this->validationData()['krs_owner']);
             }         
         });
     }

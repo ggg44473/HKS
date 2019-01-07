@@ -6,7 +6,7 @@
     </button>
 
     <!-- LOGO --> 
-    <a class="navbar-brand font-weight-bold text-primary ml-3" href="{{ route('okrs.index', auth()->user()->id) }}">
+    <a class="navbar-brand font-weight-bold text-primary ml-3" href="{{ route('user.okr', auth()->user()->id) }}">
         <img src="{{ asset('/img/logo/g.svg') }}" alt="">
         Goal Care
     </a>

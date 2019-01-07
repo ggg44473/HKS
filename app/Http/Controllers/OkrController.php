@@ -3,19 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use App\Http\Requests\KeyResultRequest;
 use App\Http\Requests\ObjectiveRequest;
+use App\Http\Requests\KeyResultRequest;
 use App\User;
-use App\Action;
 use App\Objective;
 use App\KeyResult;
 use App\KeyResultRecord;
-use Illuminate\Support\Facades\File;
 
-class MyOKRsController extends Controller
+class OkrController extends Controller
 {
-    
     /**
      * 要登入才能用的Controller
      */
@@ -23,6 +19,7 @@ class MyOKRsController extends Controller
     {
         $this->middleware('auth');
     }
+    
     /**
      * Display a listing of the resource.
      *
@@ -30,24 +27,7 @@ class MyOKRsController extends Controller
      */
     public function index()
     {
-        $colors =['#06d6a0','#ef476f','#ffd166','#6eeb83','#f7b32b','#fcf6b1','#a9e5bb','#59c3c3','#d81159'];
-        $okrs = [];
-        $objectives = Objective::where('user_id','=',auth()->user()->id)->orderBy('finished_at')->get();
-        foreach ($objectives as $obj) {
-            $okrs[] = [
-                "objective" => $obj,
-                "keyresults" => $obj->keyresults()->getResults(),
-                "actions" => $obj->actions()->getResults(),
-            ];
-        }
-        
-        $data = [
-            'user' => $user,
-            'okrs' => $okrs,
-            'colors' => $colors,
-        ];
-
-        return view('okrs.index', $data);
+        //
     }
 
     /**
@@ -57,11 +37,7 @@ class MyOKRsController extends Controller
      */
     public function create()
     {
-        $data = [
-            'user' => $user,
-        ];
-
-        return view('okrs.create', $data);
+        //
     }
 
     /**
@@ -70,42 +46,35 @@ class MyOKRsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function storeObjective(ObjectiveRequest $request)
+    public function store(Request $request)
     {
-        $attr['user_id'] = auth()->user()->id;
-        $attr['title'] = $request->input('obj_title');
-        $attr['started_at'] = $request->input('st_date');
-        $attr['finished_at'] = $request->input('fin_date');
-
-        Objective::create($attr);
-
-        return redirect()->route('okrs.index');
+        //
     }
-    public function storeKR(KeyResultRequest $request)
-    {
-        $attr['objective_id'] = $request->input('krs_owner');
-        $attr['title'] = $request->input('krs_title');
-        $attr['confidence'] = $request->input('krs_conf');
-        $attr['initial_value'] = $request->input('krs_init');
-        $attr['target_value'] = $request->input('krs_tar');
-        $attr['current_value'] = $request->input('krs_now');
-        $attr['weight'] = $request->input('krs_weight');
 
-        KeyResult::create($attr);
-        return redirect()->route('okrs.index');
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  Objective $objective
      * @return \Illuminate\Http\Response
      */
     public function edit(Objective $objective)
     {
+        $user = User::where('id','=',auth()->user()->id)->first();        
         //使用者的krs
         $keyresults = KeyResult::where('objective_id','=',$objective->id)->get();  
         $data = [
+            'user' => $user,
             'objective' => $objective,
             'keyresults'=> $keyresults,
         ];
@@ -143,7 +112,7 @@ class MyOKRsController extends Controller
             $keyresult->update($krAttr);
         }
        
-        return redirect()->route('okrs.index');
+        return redirect()->route('user.okr', auth()->user()->id);
     }
 
     /**
@@ -152,14 +121,8 @@ class MyOKRsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroyObjective(Objective $objective)
+    public function destroy($id)
     {
-        $objective->delete();
-        return redirect()->route('okrs.index');
-    }
-    public function destroyKR(KeyResult $keyresult)
-    {
-        $keyresult->delete();
-        return redirect()->route('okrs.index');
+        //
     }
 }

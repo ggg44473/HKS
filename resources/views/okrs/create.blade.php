@@ -5,7 +5,7 @@
  <div class="row">
      <div class="col-12">
          <h4>我的OKR</h4>
-         <a href="{{route('okrs.index', auth()->user()->id) }}" class="btn btn-info btn-sm">返回</a>
+         <a href="{{ route('user.okr', auth()->user()->id) }}" class="btn btn-info btn-sm">返回</a>
     </div>
     @if ($errors->any())
     <div class="alert alert-danger alert-dismissible col-md-10" role="alert">
@@ -20,7 +20,7 @@
         </ul>
     </div>
     @endif
-    <form method="POST" action="{{route('okrs.storeObjective')}}">
+    <form method="POST" action="{{ route('objective.store') }}">
         @csrf
         <div class="form-row ml-5">
         <div class="form-group col-md-4">
