@@ -20,9 +20,13 @@ class KeyResult extends Model
     {
         return $this->belongsTo(Objective::class);
     }
-    public function  keyResultRecords()
+    public function keyResultRecords()
     {
         return $this->hasMany(KeyResultRecord::class);
+    }
+    public function actions()
+    {
+        return $this->hasMany(Action::class);
     }
 
     public function accomplishRate()

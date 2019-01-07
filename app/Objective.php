@@ -24,4 +24,9 @@ class Objective extends Model
     {
         return $this->hasMany(KeyResult::class);
     }
+
+    public function actions()
+    {
+        return $this->hasManyThrough('App\Action', 'App\KeyResult', 'objective_id', 'related_kr');
+    }
 }

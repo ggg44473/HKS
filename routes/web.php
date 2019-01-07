@@ -48,3 +48,23 @@ Route::patch('okrs/{objective}/update', 'MyOKRsController@update')->name('okrs.u
 // 刪除個人當季OKR
 Route::delete('okrs/{objective}/destroyObjective', 'MyOKRsController@destroyObjective')->name('okrs.destroyObjective');
 Route::delete('okrs/{keyresult}/destroyKR', 'MyOKRsController@destroyKR')->name('okrs.destroyKR');
+
+###### Action ######
+// 新增Action
+Route::get('actions/{keyresult}/create', 'ActionsController@create')->name('actions.create');
+// 儲存Action
+Route::post('actions/store', 'ActionsController@store')->name('actions.store');
+Route::post('actions/{action}/done', 'ActionsController@done')->name('actions.done');
+// 編輯Action
+Route::get('actions/{action}/edit', 'ActionsController@edit')->name('actions.edit');
+// 更新Action
+Route::patch('actions/{action}/update', 'ActionsController@update')->name('actions.update');
+// 顯示指定的Action
+Route::get('actions/{action}/show','ActionsController@show')->where('action','[0-9]+')->name('actions.show');
+//下載上傳的檔案
+Route::get('file/{file}/actions/{post_id}', 'ActionsController@download')->name('download');
+//顯示上傳圖片
+Route::get('img/{file_path}', 'ActionsController@getImg')->name('img');
+//刪除個人Action
+Route::delete('actions/{action}/destroyAct', 'ActionsController@destroyAct')->name('actions.destroyAct');
+Route::get('actions/{action}/destroyFile/{file_path}', 'ActionsController@destroyFile')->name('actions.destroyFile');
