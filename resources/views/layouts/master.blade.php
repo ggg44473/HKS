@@ -15,7 +15,8 @@
     <script src="{{ asset('js/scroll.js') }}" defer></script>
     <script src="https://unpkg.com/gijgo@1.9.11/js/gijgo.min.js" type="text/javascript" defer></script>
     <script src="{{ asset('js/datepicker.js') }}" defer></script>
-
+    <script src="{{ asset('js/avatar.js') }}" defer></script>
+    <script src="{{ asset('js/slider.js') }}" defer></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">

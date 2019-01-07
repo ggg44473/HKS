@@ -6,7 +6,7 @@
     </button>
 
     <!-- LOGO --> 
-    <a class="navbar-brand font-weight-bold text-primary ml-3" href="{{ route('okrs.index') }}">
+    <a class="navbar-brand font-weight-bold text-primary ml-3" href="{{ route('okrs.index', auth()->user()->id) }}">
         <img src="{{ asset('/img/logo/g.svg') }}" alt="">
         Goal Care
     </a>
@@ -22,17 +22,20 @@
             <li class="nav-item active">
                 <a class="nav-link text-muted" href="#"><i class="fas fa-bell"></i><span class="sr-only">(current)</span></a>
             </li>
+            <li class="nav-item active pl-3">
+                <a href="{{ route('profile.index', auth()->user()->id) }}"><img src="{{ $user->avatar? asset('storage/avatar/'.$user->id.'/'.$user->avatar):asset('/img/icon/user/green.svg') }}" class="avatar"></a>
+            </li>
             <li class="nav-item dropdown">
-                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>     
                     {{ Auth::user()->name }} <span class="caret"></span>
                 </a>
 
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="">個人綜覽</a>
+                    <a class="dropdown-item" href="{{ route('profile.index', auth()->user()->id) }}">個人綜覽</a>
                     <a class="dropdown-item" href="">帳號設定</a>
                     <a class="dropdown-item" href="{{ route('logout') }}"
                         onclick="event.preventDefault();
-                                        document.getElementById('logout-form').submit();">
+                            document.getElementById('logout-form').submit();">
                         登出
                     </a>
 

@@ -13,13 +13,15 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         User::truncate(); //清空資料庫
-        User::unguard();
-        factory(User::class, 3)->create();
-        User::reguard(); 
         User::create([
             'name' => 'hks',
             'password' => bcrypt('hkshks'),
             'email' => 'hks@mail.com',
+            'position' => '董事長',
         ]);
+        User::unguard();
+        factory(User::class, 3)->create();
+        User::reguard(); 
+        
     }
 }

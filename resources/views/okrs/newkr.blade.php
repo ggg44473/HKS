@@ -24,7 +24,11 @@
                 </div>
                 <div class="form-group col-md-2">
                     <label for="keyresult_weight">權重  <strong class="text-danger">{{ ($isError && $errors->has('krs_weight'))? explode(" ",$errors->first('krs_weight'))[1] : '' }}</strong> </label>
-                    <input type="number" class="form-control" name="krs_weight" id="keyresult_weight" value="{{old('krs_weight') ? old('krs_weight') : '1'}}">
+                    <div class="slidecontainer">
+                        <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
+                    </div>
+                    {{-- <input id="keyresult_weight" name="krs_weight"> --}}
+                    {{-- <input type="number" class="form-control" name="krs_weight" id="keyresult_weight" value="{{old('krs_weight') ? old('krs_weight') : '1'}}"> --}}
                 </div>
                 <div class="form-group col-md-2">
                     <label for="keyresult_confidence">信心值 <strong class="text-danger">{{ ($isError && $errors->has('krs_conf'))? explode(" ",$errors->first('krs_conf'))[1] : '' }}</strong></label>
@@ -46,5 +50,6 @@
             </div>
         </form>
     </div>
-</div>  
+</div>
+
 

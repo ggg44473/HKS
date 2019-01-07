@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\KeyResultRequest;
 use App\Http\Requests\ObjectiveRequest;
+use App\User;
 use App\Objective;
 use App\KeyResult;
 use App\KeyResultRecord;
@@ -25,8 +26,8 @@ class MyOKRsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
+    public function index(User $user)
+    {       
         $okrs = [];
         $objectives = Objective::where('user_id','=',auth()->user()->id)->orderBy('finished_at')->get();
         foreach ($objectives as $obj) {
@@ -35,8 +36,9 @@ class MyOKRsController extends Controller
                 "keyresults" => $obj->keyresults()->getResults(),
             ];
         }
-
+        
         $data = [
+            'user' => $user,
             'okrs' => $okrs,
         ];
 
@@ -50,7 +52,11 @@ class MyOKRsController extends Controller
      */
     public function create()
     {
-        return view('okrs.create');
+        $data = [
+            'user' => $user,
+        ];
+
+        return view('okrs.create', $data);
     }
 
     /**

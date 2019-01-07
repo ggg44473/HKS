@@ -5,7 +5,7 @@
  <div class="row">
      <div class="col-12">
          <h2>我的OKR</h2>
-         <a href="{{route('okrs.index')}}" class="btn btn-primary btn-sm">返回</a>
+         <a href="{{ route('okrs.index', auth()->user()->id) }}" class="btn btn-primary btn-sm">返回</a>
     </div>
     @if ($errors->any())
     <div class="alert alert-danger alert-dismissible col-md-10" role="alert">
