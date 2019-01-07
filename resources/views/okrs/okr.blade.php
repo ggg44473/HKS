@@ -167,8 +167,8 @@
         </div>
     </div>
     <br/>
-
-
+    @comments(['model' => $okr['objective']])
+    @endcomments
 @endforeach
 
 
