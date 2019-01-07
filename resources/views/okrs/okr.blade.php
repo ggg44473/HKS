@@ -50,8 +50,8 @@
                 <div class="row">
                     @foreach ($okr['keyresults'] as $kr)
                     
-                        <span class="col-md-7" style="border-left: 5px solid {{$colors[($kr->id)%9]}} "> {{$kr->title}} </span>
-                        <div class="col-md-3">
+                        <span class="col-md-7 pt-2" style="border-left: 5px solid {{$colors[($kr->id)%9]}} "> {{$kr->title}} </span>
+                        <div class="col-md-3 pt-3">
                             <div class="progress">
                                 @if($kr->accomplishRate()<0)
                                     <div class="progress-bar bg-danger" role="progressbar" style="width:{{ abs($kr->accomplishRate()) }}%" aria-valuenow="25" aria-valuemin="{{$kr->initial}}" aria-valuemax="{{$kr->target}}">
@@ -62,7 +62,7 @@
                                 @endif
                             </div>
                         </div>
-                        <span class="col-md-1 text-right">{{$kr->confidence}}/10 </span>
+                        <span class="col-md-1 text-right  pt-3">{{$kr->confidence}}/10 </span>
                         <div class="col-md-1 btn-group">
                             <button type="button" class="btn btn-light btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <i class="fas fa-pencil-alt"></i>
@@ -108,7 +108,7 @@
                     @foreach($okr['actions'] as $action)
                     @if(!$action->isdone)
                         <div class="col-md-2 text-center"> {{$action->finished_at}}</div>
-                        <div class="col-md-6 mb-1" style="border-left: 5px solid {{$colors[($action->related_kr)%9]}} ">
+                        <div class="col-md-6 mb-1 pt-1" style="border-left: 5px solid {{$colors[($action->related_kr)%9]}} ">
                             <a href="{{route('actions.show',$action->id)}}"  data-toggle="modal" data-target="#action{{$action->id}}">{{$action->title}}</a>                    
                         </div>
                             <!-- Modal -->

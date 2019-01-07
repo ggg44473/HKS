@@ -38,5 +38,6 @@
                 @endif
             </div>
         </div>
-    {{-- </div> --}}
+        @comments(['model' => $action])
+        @endcomments
 </div>

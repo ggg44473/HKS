@@ -4,9 +4,13 @@ namespace App;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Laravelista\Comments\Commentable;
 
 class Action extends Model
 {
+
+    use Commentable;
+
     protected $fillable = [
         'user_id',
         'related_kr',
