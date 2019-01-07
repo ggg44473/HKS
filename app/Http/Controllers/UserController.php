@@ -14,7 +14,7 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(User $user)
+    public function listOKR(User $user)
     {
         $colors =['#06d6a0','#ef476f','#ffd166','#6eeb83','#f7b32b','#fcf6b1','#a9e5bb','#59c3c3','#d81159'];
         $okrs = [];
@@ -34,6 +34,33 @@ class UserController extends Controller
         ];
 
         return view('okrs.index', $data);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function settings(User $user)
+    {
+        $colors =['#06d6a0','#ef476f','#ffd166','#6eeb83','#f7b32b','#fcf6b1','#a9e5bb','#59c3c3','#d81159'];        
+        $okrs = [];
+        $objectives = Objective::where('user_id','=',auth()->user()->id)->orderBy('finished_at')->get();
+        foreach ($objectives as $obj) {
+            $okrs[] = [
+                "objective" => $obj,
+                "keyresults" => $obj->keyresults()->getResults(),
+                "actions" => $obj->actions()->getResults(),
+            ];
+        }
+        
+        $data = [
+            'user' => $user,
+            'okrs' => $okrs,
+            'colors' => $colors,
+        ];
+
+        return view('okrs.settings', $data);
     }
 
     /**
@@ -83,12 +110,20 @@ class UserController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  User $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, User $user)
     {
-        //
+        if($request->hasFile('avatar')){
+            $file = $request->file('avatar');
+            $filename = date('YmdHis').'.'.$file->getClientOriginalExtension();
+            $file->storeAs('public/avatar/'.auth()->user()->id, $filename);
+            
+            $user->update(['avatar'=>$filename]);
+        }
+
+        return redirect()->route('user.settings', auth()->user()->id);
     }
 
     /**

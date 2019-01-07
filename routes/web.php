@@ -33,12 +33,12 @@ Auth::routes();
 // Route::post('password/reset', 'Auth\ResetPasswordController@reset');
 
 ######  個人綜覽  ######
-// 顯示個人當季OKR
-Route::get('user/{user}/okr', 'UserController@index')->name('user.okr');
-// 顯示個人主頁-->合併
-Route::get('profile/{user}', 'ProfilesController@index')->name('profile.index');
-// 更新個人照片-->合併
-Route::patch('profile/{user}/update', 'ProfilesController@update')->name('profile.update');
+// 顯示個人OKR
+Route::get('user/{user}/okr', 'UserController@listOKR')->name('user.okr');
+// 顯示個人帳號設定
+Route::get('user/{user}', 'UserController@settings')->name('user.settings');
+// 更新個人照片
+Route::patch('user/{user}/update', 'UserController@update')->name('user.update');
 
 ######  OKR  ######
 // 新增O頁面

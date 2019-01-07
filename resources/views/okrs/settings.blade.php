@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row m-3">
         <div class="ml-4 mr-4">
-            <form name="form" method="POST" action="{{ route('profile.update', auth()->user()->id) }}" enctype="multipart/form-data">
+            <form name="form" method="POST" action="{{ route('user.update', auth()->user()->id) }}" enctype="multipart/form-data">
                 @csrf
                 {{ method_field('PATCH') }}
                 <input type="file" name="avatar" id="fileSelect" style="display:none;" accept="image/gif, image/jpeg, image/png">
