@@ -156,7 +156,8 @@
             </div>
             <div class="collapse" id="Msg{{$okr['objective']->id}}">
                 <div class="card card-body">
-                        X
+                        @comments(['model' => $okr['objective']])
+                        @endcomments
                 </div>
             </div>
             <div class="collapse" id="History{{$okr['objective']->id}}">
@@ -167,8 +168,6 @@
         </div>
     </div>
     <br/>
-    @comments(['model' => $okr['objective']])
-    @endcomments
 @endforeach
 
 
