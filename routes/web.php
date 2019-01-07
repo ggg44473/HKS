@@ -72,7 +72,7 @@ Route::patch('actions/{action}/update', 'ActionsController@update')->name('actio
 // 顯示指定的Action
 Route::get('actions/{action}/show','ActionsController@show')->where('action','[0-9]+')->name('actions.show');
 //刪除個人Action
-Route::delete('actions/{action}/destroy', 'ActionsController@destroyAct')->name('actions.destroy');
+Route::delete('actions/{action}/destroy', 'ActionsController@destroy')->name('actions.destroy');
 
 
 //下載上傳的檔案

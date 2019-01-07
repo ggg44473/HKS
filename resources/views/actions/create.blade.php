@@ -5,12 +5,12 @@
     <div class="row">
         <div class="col-12">
             <h4>新增 Action</h4>
-            <a href="{{route('okrs.index')}}" class="btn btn-info btn-sm">返回</a>
+            <a href="{{ route('user.okr', auth()->user()->id) }}" class="btn btn-info btn-sm">返回</a>
         </div>
-        <form method="POST" action="{{route('actions.store')}}" enctype="multipart/form-data">
+        <form method="POST" action="{{ route('actions.store') }}" enctype="multipart/form-data">
             @csrf
             <div class="form-row ml-5">
-                    <input type="hidden" class="form-control" name="krs_id" id="keyresult" value="{{$keyresult->id}}">
+                    <input type="hidden" class="form-control" name="krs_id" id="keyresult" value="{{ $keyresult->id }}">
                 <div class="form-group col-md-4">
                     <label for="action_title">Action 具體作為</label>
                     <input type="text" class="form-control" name="act_title" id="action_title" value="">

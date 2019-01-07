@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Storage;
+use App\User;
 use App\Action;
 use App\KeyResult;
 use Illuminate\Http\Request;
@@ -22,10 +23,12 @@ class ActionsController extends Controller
 
     public function create(KeyResult $keyresult)
     {
+        $user = User::where('id','=',auth()->user()->id)->first();
         $data = [
+            'user' => $user,
             'keyresult'=>$keyresult,
         ];
-        return view('actions.create',$data);
+        return view('actions.create', $data);
     }
 
     public function store(Request $request)
@@ -55,12 +58,11 @@ class ActionsController extends Controller
             }
         }
         
-        return redirect()->route('okrs.index');
+        return redirect()->route('user.okr', auth()->user()->id);
     }
 
     public function show(Action $action)
     {
-        
          $files = get_files(storage_path('app/public/actions/'.$action->id)); 
          $data = [
              'action'=>$action,
@@ -72,6 +74,7 @@ class ActionsController extends Controller
 
     public function edit(Action $action)
     {
+        $user = User::where('id','=',auth()->user()->id)->first();
         //使用者的krs
         $actions = Action::where('id','=',$action->id)->get();  
         foreach ($actions as $act) {
@@ -81,11 +84,12 @@ class ActionsController extends Controller
         $files = get_files(storage_path('app/public/actions/'.$action->id)); 
         $keyresults = KeyResult::where('objective_id','=',$obj_id)->get();
         $data = [
+            'user' => $user,
             'actions' => $actions,
             'keyresults' => $keyresults,
             'files'=>$files,
         ];
-        return view('actions.edit',$data);
+        return view('actions.edit', $data);
     }
 
     public function update(Request $request, Action $action)
@@ -115,13 +119,13 @@ class ActionsController extends Controller
             }
         }
         
-        return redirect()->route('okrs.index');
+        return redirect()->route('user.okr', auth()->user()->id);
     }
 
-    public function destroyAct(Action $action)
+    public function destroy(Action $action)
     {
         $action->delete();
-        return redirect()->route('okrs.index');
+        return redirect()->route('user.okr', auth()->user()->id);
     }
 
     public function destroyFile($id , $file_path)
@@ -150,7 +154,7 @@ class ActionsController extends Controller
         $act = Action::find($action->id);  
         $act->isdone = 'true';
         $act->save();
-        return redirect()->route('okrs.index');
+        return redirect()->route('user.okr', auth()->user()->id);
     }
 
 
