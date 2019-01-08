@@ -24,11 +24,16 @@ class RegisterController extends Controller
     use RegistersUsers;
 
     /**
-     * Where to redirect users after registration.
+     * Where to redirect users after login.
+     * 如果沒有定義此方法，會使用$redirectTo
+     * 詳見 RedirectsUsers
      *
-     * @var string
+     * @return string
      */
-    protected $redirectTo = '/home';
+    public function redirectTo()
+    {
+        return "user/" . auth()->user()->id . "/okr";
+    }
 
     /**
      * Create a new controller instance.

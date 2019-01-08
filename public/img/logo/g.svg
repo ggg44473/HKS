@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 51.2 (57519) - http://www.bohemiancoding.com/sketch -->
+    <title>logo/color</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="logo/color" transform="translate(0.000000, -3.000000)">
+            <g id="Group">
+                <rect id="Rectangle-3" x="0" y="0" width="48" height="24"></rect>
+                <path d="M12,18.6585886 C13.7048269,18.0560187 15.0560187,16.7048269 15.6585886,15 L17.747965,15 C17.0244084,17.8112146 14.8112146,20.0244084 12,20.747965 L12,18.6585886 Z M8,18.6585886 L8,20.747965 C5.18878542,20.0244084 2.97559159,17.8112146 2.25203497,15 L4.34141142,15 C4.94398126,16.7048269 6.2951731,18.0560187 8,18.6585886 Z M4.34141142,11 L2.25203497,11 C2.97559159,8.18878542 5.18878542,5.97559159 8,5.25203497 L8,7.34141142 C6.2951731,7.94398126 4.94398126,9.2951731 4.34141142,11 Z M12,7.34141142 L12,5.25203497 C14.8112146,5.97559159 17.0244084,8.18878542 17.747965,11 L15.6585886,11 C15.0560187,9.2951731 13.7048269,7.94398126 12,7.34141142 Z" id="Combined-Shape" fill="#3BA99C"></path>
+                <rect id="Rectangle-2" fill="#3BA99C" x="9" y="4" width="2" height="4"></rect>
+                <rect id="Rectangle-2-Copy" fill="#3BA99C" x="9" y="18" width="2" height="4"></rect>
+                <rect id="Rectangle-2-Copy-2" fill="#3BA99C" transform="translate(17.057129, 13.000000) rotate(-90.000000) translate(-17.057129, -13.000000) " x="16.0571289" y="10.9428711" width="2" height="4.11425781"></rect>
+                <rect id="Rectangle-2-Copy-3" fill="#3BA99C" transform="translate(3.000000, 13.000000) rotate(-90.000000) translate(-3.000000, -13.000000) " x="2" y="11" width="2" height="4"></rect>
+                <circle id="Oval-3" fill="#3BA99C" cx="10" cy="13" r="1"></circle>
+            </g>
+        </g>
+    </g>
+</svg>
