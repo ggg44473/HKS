@@ -63,5 +63,5 @@
             <input type="file" class="form-group" name="files[]" id="files" multiple>
         </div>
 
-        <button class="btn btn-primary btn-sm mb-1 mt-1 " type="submit">修改</button>
+        <button class="btn btn-primary btn-sm mb-1 mt-1 " type="submit">送出</button>
     </div> 

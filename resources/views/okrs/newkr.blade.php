@@ -6,8 +6,8 @@
     }
 @endphp
 
-<a class="btn btn-success mb-3" data-toggle="collapse" href="#collapse{{ $okr['objective']->id }}" role="button" aria-expanded="false" aria-controls="collapse{{ $okr['objective']->id }}">
-    新增KR
+<a class="btn btn-success mb-3 mt-3" data-toggle="collapse" href="#collapse{{ $okr['objective']->id }}" role="button" aria-expanded="false" aria-controls="collapse{{ $okr['objective']->id }}">
+     <i class="fa fa-plus fa-sm"></i> KR
 </a>
 
 <div class="collapse {{ $isError? 'show' : '' }}" id="collapse{{ $okr['objective']->id }}">
