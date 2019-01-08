@@ -68,7 +68,7 @@
                                     <i class="fas fa-pencil-alt"></i>
                             </button>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="{{ route('actions.create',$kr->id) }}"><i class="fas fa-pencil-alt"></i>新增 Action</a>
+                                <a class="dropdown-item" href="{{ route('actions.create',$okr['objective']->id) }}"><i class="fas fa-pencil-alt"></i>新增 Action</a>
                                 <a class="dropdown-item" href="#" onclick="document.getElementById('deleteKR{{ $kr->id }}').submit()"><i class="fas fa-trash"></i>刪除 KR</a>
                                 <form method="POST" id="deleteKR{{ $kr->id }}" action="{{ route('kr.destroy', $kr->id) }}">
                                     @csrf
@@ -77,8 +77,8 @@
                             </div>                        
                         </div>      
                         <span class="col-md-12"></span>
-                        @endforeach
-                        @include('okrs.newkr',$okr['objective'])
+                    @endforeach
+                    @include('okrs.newkr',$okr['objective'])
                 </div>
             </div>
         </div>
@@ -106,8 +106,11 @@
             <div class="card card-body">
                 <div class="row">
                     @foreach($okr['actions'] as $action)
-                    @if(!$action->isdone)
-                        <div class="col-md-2 text-center"> {{ $action->finished_at }}</div>
+                        @if(!$action->isdone)
+                        <div class="col-md-2"> 
+                            {{ $action->finished_at }}
+                            <span class="badge badge-pill badge-{{$action->priority()->getResults()->color}}">{{$action->priority()->getResults()->priority}}</span>
+                        </div>
                         <div class="col-md-6 mb-1 pt-1" style="border-left: 5px solid {{ $colors[($action->related_kr)%9] }} ">
                             <a href="{{ route('actions.show',$action->id) }}"  data-toggle="modal" data-target="#action{{ $action->id }}">{{ $action->title }}</a>                    
                         </div>

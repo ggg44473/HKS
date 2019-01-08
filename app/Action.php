@@ -28,7 +28,12 @@ class Action extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function keyreult()
+    public function assignee()
+    {
+        return $this->belongsTo('App\User', 'assignee');
+    }
+
+    public function keyresult()
     {
         return $this->belongsTo('App\KeyResult', 'related_kr');
     }
@@ -36,6 +41,11 @@ class Action extends Model
     public function getUpdatedAtAttribute($date)
     {
         return Carbon::parse($date)->diffForHumans();
+    }
+
+    public function priority()
+    {
+        return $this->belongsTo('App\Priority', 'priority');
     }
     // public function getFinishedAtAttribute($date)
     // {
