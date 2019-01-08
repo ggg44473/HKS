@@ -1,6 +1,6 @@
 @foreach($okrs as $okr)
     <div class="card shadow-sm p-2">
-        <div class="row">
+        <div class="row align-items-center">
             {{-- 卡片時間 --}}
             <div class="col-md-10 font-weight-light text-right">起始日:{{ $okr['objective']->started_at }}</div>
             <div class="col-md-2 font-weight-light">結算日:{{ $okr['objective']->finished_at }}</div>
