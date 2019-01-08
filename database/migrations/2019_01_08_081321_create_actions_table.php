@@ -21,7 +21,7 @@ class CreateActionsTable extends Migration
             $table->foreign('related_kr')->references('id')->on('key_results')->onDelete('cascade');
             $table->integer('assignee')->references('id')->on('users')->onDelete('cascade');
             $table->boolean('isdone')->default('false');
-            $table->string('priority');
+            $table->integer('priority')->references('id')->on('priorities')->nullable();
             $table->string('title');
             $table->text('content');
             $table->date('started_at');
