@@ -77,6 +77,7 @@ class OkrController extends Controller
             'user' => $user,
             'objective' => $objective,
             'keyresults'=> $keyresults,
+            'avatar' => $user->avatar,
         ];
         return view('okrs.edit',$data);
     }

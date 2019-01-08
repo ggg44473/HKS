@@ -33,6 +33,7 @@ class ActionsController extends Controller
             'user' => $user,
             'keyresults'=>$keyresults,
             'priorities'=>$priorities,
+            'avatar' => $user->avatar,
         ];
         return view('actions.create', $data);
     }
@@ -69,11 +70,13 @@ class ActionsController extends Controller
 
     public function show(Action $action)
     {
-         $files = get_files(storage_path('app/public/actions/'.$action->id)); 
-         $data = [
-             'action'=>$action,
-             'files'=>$files,
-         ];
+        $avatar = User::where('id','=',auth()->user()->id)->first()->avatar;
+        $files = get_files(storage_path('app/public/actions/'.$action->id)); 
+        $data = [
+            'action'=>$action,
+            'files'=>$files,
+            'avatar' => $avatar,
+        ];
          
          return view('actions.show',$data);
     }
@@ -96,6 +99,7 @@ class ActionsController extends Controller
             'keyresults' => $keyresults,
             'files'=>$files,
             'priorities'=>$priorities,
+            'avatar' => $user->avatar,
         ];
         return view('actions.edit', $data);
     }

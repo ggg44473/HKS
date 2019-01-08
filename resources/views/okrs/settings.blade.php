@@ -31,6 +31,5 @@
         </div>
 
     </div>
-    @include('okrs.okr',$okrs)
 
 @endsection

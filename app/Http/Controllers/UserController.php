@@ -10,15 +10,24 @@ use App\Objective;
 class UserController extends Controller
 {
     /**
+     * 要登入才能用的Controller
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function listOKR(User $user)
     {
-        $colors =['#06d6a0','#ef476f','#ffd166','#6eeb83','#f7b32b','#fcf6b1','#a9e5bb','#59c3c3','#d81159'];
+        $avatar = User::where('id','=',auth()->user()->id)->first();
+        $colors = ['#06d6a0','#ef476f','#ffd166','#6eeb83','#f7b32b','#fcf6b1','#a9e5bb','#59c3c3','#d81159'];
         $okrs = [];
-        $objectives = Objective::where('user_id','=',auth()->user()->id)->orderBy('finished_at')->get();
+        $objectives = Objective::where('user_id','=',$user->id)->orderBy('finished_at')->get();
         foreach ($objectives as $obj) {
             $okrs[] = [
                 "objective" => $obj,
@@ -31,6 +40,7 @@ class UserController extends Controller
             'user' => $user,
             'okrs' => $okrs,
             'colors' => $colors,
+            'avatar' => $avatar->avatar,
         ];
 
         return view('okrs.index', $data);
@@ -43,21 +53,13 @@ class UserController extends Controller
      */
     public function settings(User $user)
     {
-        $colors =['#06d6a0','#ef476f','#ffd166','#6eeb83','#f7b32b','#fcf6b1','#a9e5bb','#59c3c3','#d81159'];        
-        $okrs = [];
-        $objectives = Objective::where('user_id','=',auth()->user()->id)->orderBy('finished_at')->get();
-        foreach ($objectives as $obj) {
-            $okrs[] = [
-                "objective" => $obj,
-                "keyresults" => $obj->keyresults()->getResults(),
-                "actions" => $obj->actions()->getResults(),
-            ];
-        }
+        if($user->id != auth()->user()->id) return redirect()->to(url()->previous());
+        
+        $avatar = User::where('id','=',auth()->user()->id)->first();        
         
         $data = [
             'user' => $user,
-            'okrs' => $okrs,
-            'colors' => $colors,
+            'avatar' => $avatar->avatar,
         ];
 
         return view('okrs.settings', $data);

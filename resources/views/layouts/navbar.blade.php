@@ -23,7 +23,7 @@
                 <a class="nav-link text-muted" href="#"><i class="fas fa-bell"></i><span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item active pl-3">
-                <a href="{{ route('user.okr', auth()->user()->id) }}"><img src="{{ $user->avatar? asset('storage/avatar/'.$user->id.'/'.$user->avatar):asset('/img/icon/user/green.svg') }}" class="avatar"></a>
+                <a href="{{ route('user.okr', auth()->user()->id) }}"><img src="{{ $avatar? asset('storage/avatar/'.auth()->user()->id.'/'.$avatar):asset('/img/icon/user/green.svg') }}" class="avatar"></a>
             </li>
             <li class="nav-item dropdown">
                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>     
