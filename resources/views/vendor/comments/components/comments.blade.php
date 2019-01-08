@@ -1,6 +1,6 @@
 @auth
     @if($model->comments->count() < 1)
-        <p class="lead">There are no comments yet.</p>
+        <p class="lead">目前沒有任何回饋</p>
     @endif
 
     <ul class="list-unstyled">
@@ -12,7 +12,7 @@
     @include('comments::_form')
 @else
     @if($model->comments->count() < 1)
-        <p class="lead">There are no comments yet.</p>
+        <p class="lead">目前沒有任何回饋</p>
     @endif
 
     <ul class="list-unstyled">

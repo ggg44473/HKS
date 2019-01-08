@@ -60,7 +60,7 @@ Route::delete('kr/{keyresult}/destroy', 'KrController@destroy')->name('kr.destro
 
 ###### Action ######
 // 新增Action頁面
-Route::get('keyresult/{keyresult}/action/create', 'ActionsController@create')->name('actions.create');
+Route::get('objective/{objective}/action/create', 'ActionsController@create')->name('actions.create');
 // 儲存Action
 Route::post('actions/store', 'ActionsController@store')->name('actions.store');
 // 完成Action

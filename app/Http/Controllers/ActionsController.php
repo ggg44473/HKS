@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use Storage;
 use App\User;
 use App\Action;
+use App\Objective;
 use App\KeyResult;
+use App\Priority;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use App\Http\Requests\ActionRequest;
 
 class ActionsController extends Controller
 {
@@ -21,17 +24,20 @@ class ActionsController extends Controller
 
     }
 
-    public function create(KeyResult $keyresult)
+    public function create(Objective $objective)
     {
+        $priorities = Priority::all();
         $user = User::where('id','=',auth()->user()->id)->first();
+        $keyresults = KeyResult::where('objective_id','=',$objective->id)->get();
         $data = [
             'user' => $user,
-            'keyresult'=>$keyresult,
+            'keyresults'=>$keyresults,
+            'priorities'=>$priorities,
         ];
         return view('actions.create', $data);
     }
 
-    public function store(Request $request)
+    public function store(ActionRequest $request)
     {
         $attr['user_id'] = auth()->user()->id;
         $attr['related_kr'] = $request->input('krs_id');
@@ -74,11 +80,12 @@ class ActionsController extends Controller
 
     public function edit(Action $action)
     {
+        $priorities = Priority::all();
         $user = User::where('id','=',auth()->user()->id)->first();
         //使用者的krs
         $actions = Action::where('id','=',$action->id)->get();  
         foreach ($actions as $act) {
-          $obj_id = $act->keyreult()->getResults()->objective_id;
+          $obj_id = $act->keyresult()->getResults()->objective_id;
         }
 
         $files = get_files(storage_path('app/public/actions/'.$action->id)); 
@@ -88,11 +95,12 @@ class ActionsController extends Controller
             'actions' => $actions,
             'keyresults' => $keyresults,
             'files'=>$files,
+            'priorities'=>$priorities,
         ];
         return view('actions.edit', $data);
     }
 
-    public function update(Request $request, Action $action)
+    public function update(ActionRequest $request, Action $action)
     {
         $attr['user_id'] = auth()->user()->id;
         $attr['related_kr'] = $request->input('krs_id');
@@ -131,7 +139,7 @@ class ActionsController extends Controller
     public function destroyFile($id , $file_path)
     {
         Storage::delete('public/actions/'.$id."/".$file_path);
-        return redirect()->route('actions.show', $id);
+        return redirect()->route('actions.edit', $id);
     }
 
     public function download($file,$action_id)

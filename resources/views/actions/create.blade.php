@@ -3,13 +3,15 @@
 @section('content')
 <div class="container">
     <div class="row">
-        <div class="col-12">
+        <div class="col-md-12">
             <h4>新增 Action</h4>
             <a href="{{ route('user.okr', auth()->user()->id) }}" class="btn btn-info btn-sm">返回</a>
         </div>
+        @include('actions.error',[$errors]) 
         <form method="POST" action="{{ route('actions.store') }}" enctype="multipart/form-data">
             @csrf
-            <div class="form-row ml-5">
+            @include('actions.form',[$user,$keyresults,$priorities,$action=false,]) 
+            {{-- <div class="form-row ml-5">
                     <input type="hidden" class="form-control" name="krs_id" id="keyresult" value="{{ $keyresult->id }}">
                 <div class="form-group col-md-4">
                     <label for="action_title">Action 具體作為</label>
@@ -24,13 +26,11 @@
                     <input autocomplete="off" class="form-control" name="fin_date" id="finished_at" value="">
                 </div>
                 <div class="form-group col-md-2">
-                <label for="priority">標籤</label>
+                <label for="priority">優先度</label>
                 <select id="priority" class="form-control" name="priority" >
-                    <option selected>Normal</option>
-                    <option>Immediate</option>
-                    <option>Urgent</option>
-                    <option>Low</option>
-                    <option>Postponed</option>
+                    @foreach($priorities as $priority)
+                    <option value="{{$priority->id}}">{{$priority->priority}}</option>
+                    @endforeach
                 </select>
                 </div>
                 <div class="form-group col-md-12">
@@ -42,7 +42,7 @@
                     <input type="file" class="form-group" name="files[]" id="files" multiple>
                 </div>
                 <button class="btn btn-primary btn-sm" type="submit">新增</button>
-            </div>  
+            </div>   --}}
         </form>
     </div>
 </div>
