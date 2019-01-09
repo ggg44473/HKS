@@ -33,7 +33,6 @@ class ActionsController extends Controller
             'user' => $user,
             'keyresults'=>$keyresults,
             'priorities'=>$priorities,
-            'avatar' => $user->avatar,
         ];
         return view('actions.create', $data);
     }
@@ -76,7 +75,6 @@ class ActionsController extends Controller
             'user' => $user,
             'action'=>$action,
             'files'=>$files,
-            'avatar' => $user->avatar,
         ];
          
         return view('actions.show',$data);
@@ -100,7 +98,6 @@ class ActionsController extends Controller
             'keyresults' => $keyresults,
             'files'=>$files,
             'priorities'=>$priorities,
-            'avatar' => $user->avatar,
         ];
         return view('actions.edit', $data);
     }

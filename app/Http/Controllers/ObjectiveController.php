@@ -37,7 +37,6 @@ class ObjectiveController extends Controller
         $user = User::where('id','=',auth()->user()->id)->first();
         $data = [
             'user' => $user,
-            'avatar' => $user->avatar,
         ];
 
         return view('okrs.create', $data);
