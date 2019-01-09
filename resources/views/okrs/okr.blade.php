@@ -28,12 +28,12 @@
                 </div>
             </div>
             <div class="col-md-1 btn-group">
-                <button type="button" class="btn btn-light btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <button type="button" class="btn btn-sm btn-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="fas fa-pencil-alt"></i>
                 </button>
                 <div class="dropdown-menu">
                     <a class="dropdown-item" href="#" onclick="document.getElementById('delete{{ $okr['objective']->id }}').submit()"><i class="fas fa-trash"></i>刪除OKR</a>
-                    <a class="dropdown-item" href="{{ route('okr.edit', $okr['objective']->id) }}"><i class="fas fa-pencil-alt"></i>修改Objective</a>
+                    <a class="dropdown-item" href="{{ route('okr.edit', $okr['objective']->id) }}"><i class="fas fa-pencil-alt"></i>修改OKR</a>
                     <form method="POST" id="delete{{ $okr['objective']->id }}" action="{{ route('objective.destroy',$okr['objective']->id) }}">
                         @csrf
                         {{ method_field('DELETE') }}
@@ -59,19 +59,7 @@
                                 @endif
                             </div>
                         </div>
-                        <span class="col-md-1 text-right  pt-3">{{ $kr->confidence }}/10 </span>
-                        <div class="col-md-1 btn-group">
-                            <button type="button" class="btn btn-light btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="fas fa-pencil-alt"></i>
-                            </button>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#" onclick="document.getElementById('deleteKR{{ $kr->id }}').submit()"><i class="fas fa-trash"></i>刪除 KR</a>
-                                <form method="POST" id="deleteKR{{ $kr->id }}" action="{{ route('kr.destroy', $kr->id) }}">
-                                    @csrf
-                                    {{ method_field('DELETE') }}
-                                </form>
-                            </div>                        
-                        </div>
+                        <span class="col-md-2 text-center  pt-3">{{ $kr->confidence }}/10 </span>
                     @endforeach
                     @include('okrs.newkr',$okr['objective'])
                 </div>

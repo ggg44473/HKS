@@ -4,13 +4,11 @@
 <div class="container">
     <div class="row m-3">
         <div class="col-md-2 font-weight-light text-center"> <h4>My OKR</h4> </div>
-        <div class="col-md-8 "></div>
-        <div class="col-md1">
-            <a href="{{ route('objective.create') }}" class="btn btn-primary" data-toggle="modal" data-target="#objective"><i class="fa fa-plus fa-sm"></i> 新增目標</a>                    
-        </div>   
-        <div class="col-md-1 btn-group">
-            <button type="button" class="btn btn-primary dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fa fa-history fa-sm"></i> 歷史紀錄
+        <div class="col-md-2 btn-group offset-8">
+            <a href="{{ route('objective.create') }}" class="btn btn-primary" data-toggle="modal" data-target="#objective"><i class="fa fa-plus fa-sm"></i> 目標</a>                    
+
+            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fa fa-history fa-sm"></i> 歷史
             </button>
             <div class="dropdown-menu">
                 <a class="dropdown-item" href="#">2018  Q1</a>
