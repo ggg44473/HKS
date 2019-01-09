@@ -1,5 +1,7 @@
+<script src="{{ asset('js/editbtn.js') }}" defer></script>   
+
 @foreach($okrs as $okr)
-    <div class="card shadow-sm m-4">
+    <div class="card shadow-sm m-4 okr-card">
         <div class="card-header bg-transparent" style="border-bottom: none;">
             {{-- 卡片時間 --}}
             <div class="row">
@@ -7,7 +9,7 @@
                     <span class="font-weight-light pl-2 pr-2">起始日:{{ $okr['objective']->started_at }}</span>
                     <span class="font-weight-light pl-2 pr-2">結算日:{{ $okr['objective']->finished_at }}</span>
                     @if (auth()->user() == $user)
-                        <a class="close">
+                        <a id="okr-close-btn" class="close">
                             <i class="far fa-edit"></i>
                         </a>
                     @endif
@@ -139,7 +141,4 @@
         </div>
     </div>
     <br/>
-@endforeach
-
-
-
+@endforeach 
