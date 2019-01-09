@@ -24,7 +24,6 @@ class UserController extends Controller
      */
     public function listOKR(User $user)
     {
-        $avatar = User::where('id','=',auth()->user()->id)->first();
         $colors = ['#06d6a0','#ef476f','#ffd166','#6eeb83','#f7b32b','#fcf6b1','#a9e5bb','#59c3c3','#d81159'];
         $okrs = [];
         $objectives = Objective::where('user_id','=',$user->id)->orderBy('finished_at')->get();
@@ -40,7 +39,6 @@ class UserController extends Controller
             'user' => $user,
             'okrs' => $okrs,
             'colors' => $colors,
-            'avatar' => $avatar->avatar,
         ];
 
         return view('okrs.index', $data);
@@ -59,7 +57,6 @@ class UserController extends Controller
         
         $data = [
             'user' => $user,
-            'avatar' => $avatar->avatar,
         ];
 
         return view('okrs.settings', $data);
