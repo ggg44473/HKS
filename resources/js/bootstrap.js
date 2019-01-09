@@ -12,6 +12,7 @@ try {
     window.$ = window.jQuery = require('jquery');
 
     require('bootstrap');
+    require('cropperjs');
 } catch (e) {}
 
 /**
