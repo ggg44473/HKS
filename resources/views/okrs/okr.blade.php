@@ -1,52 +1,59 @@
 @foreach($okrs as $okr)
     <div class="card shadow-sm m-4">
         <div class="card-header bg-transparent" style="border-bottom: none;">
-            <button type="button" class="close">
-                <i class="far fa-edit"></i>
-            </button>
-        </div>
-        <div class="card-body">
             {{-- 卡片時間 --}}
             <div class="row">
-                <div class="col-md-10 font-weight-light text-right">起始日:{{ $okr['objective']->started_at }}</div>
-                <div class="col-md-2 font-weight-light">結算日:{{ $okr['objective']->finished_at }}</div>        
+                <div class="col-md-4 offset-md-8">
+                    <span class="font-weight-light pl-2 pr-2">起始日:{{ $okr['objective']->started_at }}</span>
+                    <span class="font-weight-light pl-2 pr-2">結算日:{{ $okr['objective']->finished_at }}</span>
+                    @if (auth()->user() == $user)
+                        <a class="close">
+                            <i class="far fa-edit"></i>
+                        </a>
+                    @endif
+                </div>
             </div>
+           
+        </div>
+        <div class="card-body u-pl-48 u-pr-48">
+            
             {{-- 卡片目標 --}}
             <div class="row">
                 <div class="col-md-2 font-weight-bold text-right"> <h4 style="font-size:20px;">Objectives</h4> </div>
-                <div class="col-md-6" style="line-height: 32px;">{{ $okr['objective']->title }}</div>
-                <div class="col-md-3 pt-3 pr-5">
-                    @php
-                        $sum = 0; $totalWeight = 0;
-                        foreach($okr['keyresults'] as $kr){
-                            $totalWeight += $kr->weight;
-                            $sum += $kr->accomplishRate() * $kr->weight;
-                        }
-                        if($totalWeight > 0)
-                            $scoreOfObj=round($sum/$totalWeight, 0);
-                        else
-                            $scoreOfObj=0;
-                    @endphp
-                    <div class="progress">
-                        @if($scoreOfObj<0)  
-                        <div class="progress-bar bg-danger" role="progressbar" style="width:{{ abs($scoreOfObj) }}%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{ $scoreOfObj }}%</div>
-                        @else
-                        <div class="progress-bar" role="progressbar" style="width:{{ $scoreOfObj }}%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{ $scoreOfObj }}%</div>
-                        @endif
+                <div class="col-md-10">
+                    <div class="row">
+                        <div class="col-md-5" style="line-height: 32px; font-size: 16px;">{{ $okr['objective']->title }}</div>
+                        <div class="col-md-7 row justify-content-end">
+                            <div class="pt-2" style="display:inline-block; width:60%;">
+                                @php
+                                    $sum = 0; $totalWeight = 0;
+                                    foreach($okr['keyresults'] as $kr){
+                                        $totalWeight += $kr->weight;
+                                        $sum += $kr->accomplishRate() * $kr->weight;
+                                    }
+                                    if($totalWeight > 0)
+                                        $scoreOfObj=round($sum/$totalWeight, 0);
+                                    else
+                                        $scoreOfObj=0;
+                                @endphp
+                                <div class="progress" style="height:20px;">
+                                    @if($scoreOfObj<0)  
+                                    <div class="progress-bar bg-danger" role="progressbar" style="width:{{ abs($scoreOfObj) }}%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{ $scoreOfObj }}%</div>
+                                    @else
+                                    <div class="progress-bar" role="progressbar" style="width:{{ $scoreOfObj }}%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{ $scoreOfObj }}%</div>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="pt-2 pl-3 pr-2 btn-edit-group" style="display:inline-block;">
+                                <a class="pl-2 pr-2 text-success" href="{{ route('okr.edit', $okr['objective']->id) }}"><i class="fas fa-pencil-alt"></i></a>
+                                <a class="pl-2 pr-2 text-danger" href="#" onclick="document.getElementById('deleteKR{{ $okr['objective']->id }}').submit()"><i class="fas fa-trash"></i></a>
+                                <form method="POST" id="deleteKR{{ $okr['objective']->id }}" action="{{ route('objective.destroy', $okr['objective']->id) }}">
+                                    @csrf
+                                    {{ method_field('DELETE') }}
+                                </form>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-1 btn-group">
-                    <button type="button" class="btn btn-light btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fas fa-pencil-alt"></i>
-                    </button>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#" onclick="document.getElementById('delete{{ $okr['objective']->id }}').submit()"><i class="fas fa-trash"></i>刪除OKR</a>
-                        <a class="dropdown-item" href="{{ route('okr.edit', $okr['objective']->id) }}"><i class="fas fa-pencil-alt"></i>修改Objective</a>
-                        <form method="POST" id="delete{{ $okr['objective']->id }}" action="{{ route('objective.destroy',$okr['objective']->id) }}">
-                            @csrf
-                            {{ method_field('DELETE') }}
-                        </form>
-                    </div>                        
                 </div>
             </div>
             <hr class="u-mb-16">
@@ -72,7 +79,7 @@
                                         @endif
                                     </div>
                                 </div>
-                                <div class="pt-2 pl-3 pr-2" style="display:inline-block;">
+                                <div class="pt-2 pl-3 pr-2 btn-edit-group" style="display:inline-block;">
                                     <a class="pl-2 pr-2 text-success" href="{{ route('okr.edit', $okr['objective']->id) }}"><i class="fas fa-pencil-alt"></i></a>
                                     <a class="pl-2 pr-2 text-danger" href="#" onclick="document.getElementById('deleteKR{{ $kr->id }}').submit()"><i class="fas fa-trash"></i></a>
                                     <form method="POST" id="deleteKR{{ $kr->id }}" action="{{ route('kr.destroy', $kr->id) }}">

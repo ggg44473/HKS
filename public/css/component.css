@@ -24,7 +24,6 @@
     z-index: 999;
     padding-left: 76px;
     padding-right: 76px;
-    transition: all 0.5s ease-in;
 }
 /* Side-menu */
 .sidebar{
@@ -33,7 +32,6 @@
     top: 0;
     left: 0;
     background-color: #21897E;
-    transition: all 0.5s ease-in;
     height: 100%;
     padding-top: 60px;
 }
@@ -56,7 +54,6 @@
     padding-left: 0;
 }
 .content{
-    transition: all 0.5s ease-in;
     margin-left: 60px;
 }
 /* btn-menu */
