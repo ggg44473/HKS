@@ -78,9 +78,15 @@ class ObjectiveController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Objective $objective)
     {
-        //
+        // $user = User::where('id','=',auth()->user()->id)->first();        
+        // //使用者的krs
+        // $data = [
+        //     'user' => $user,
+        //     'objective' => $objective,
+        // ];
+        // return view('okrs.edit_objective',$data);
     }
 
     /**
@@ -90,9 +96,14 @@ class ObjectiveController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ObjectiveRequest $request, Objective $objective)
     {
-        //
+        // $objAttr['title'] =  $request->input('obj_title');
+        // $objAttr['started_at'] = $request->input('st_date');
+        // $objAttr['finished_at'] = $request->input('fin_date');
+        // $objective->update($objAttr);
+       
+        // return redirect()->route('user.okr', auth()->user()->id);
     }
 
     /**

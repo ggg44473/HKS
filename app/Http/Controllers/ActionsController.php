@@ -70,15 +70,16 @@ class ActionsController extends Controller
 
     public function show(Action $action)
     {
-        $avatar = User::where('id','=',auth()->user()->id)->first()->avatar;
+        $user = User::where('id','=',auth()->user()->id)->first();
         $files = get_files(storage_path('app/public/actions/'.$action->id)); 
         $data = [
+            'user' => $user,
             'action'=>$action,
             'files'=>$files,
-            'avatar' => $avatar,
+            'avatar' => $user->avatar,
         ];
          
-         return view('actions.show',$data);
+        return view('actions.show',$data);
     }
 
     public function edit(Action $action)

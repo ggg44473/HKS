@@ -7,24 +7,7 @@
             <span class="badge badge-pill badge-{{$action->priority()->getResults()->color}}">{{$action->priority()->getResults()->priority}}</span>
         </div>
         <div class="col-md-6 mb-1 pt-1" style="border-left: 5px solid {{ $colors[($action->related_kr)%9] }} ">
-            <a href="{{ route('actions.show',$action->id) }}"  data-toggle="modal" data-target="#action{{ $action->id }}">{{ $action->title }}</a>                    
-        </div>
-            <!-- Modal -->
-        <div id='app'>
-            <div class="modal {{ count($errors) == 0 ? 'fade' : '' }}" id="action{{ $action->id }}" tabindex="-1" role="dialog">
-                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">
-                                <span>&times;</span>
-                            </button>
-                        </div>
-                        @if(count($okrs[0]['actions'])>0)
-                        @include('actions.show',$action) 
-                        @endif
-                    </div>
-                </div>
-            </div>
+            <a href="{{ route('actions.show',$action->id) }}">{{ $action->title }}</a>                    
         </div>
         <div class="col-md-2">
                 <i class="fas fa-file"></i>

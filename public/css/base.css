@@ -285,3 +285,10 @@ padding: 0;
     height: 0;
     visibility: hidden;
 }
+
+/* pre */
+pre{
+  font-size:16px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  }

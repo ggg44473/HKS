@@ -3,23 +3,11 @@
 @section('content')
 <div class="container">
  <div class="row">
-     <div class="col-12">
-         <h2>我的OKR</h2>
-         <a href="{{ route('user.okr', auth()->user()->id) }}" class="btn btn-primary btn-sm">返回</a>
+    <div class="col-12">
+         <h4><a href="{{ route('user.okr', auth()->user()->id) }}" class="btn btn-primary btn-sm">返回</a>
+         修改 OKR</h4>
     </div>
-    @if ($errors->any())
-    <div class="alert alert-danger alert-dismissible col-md-10" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-            <strong>警告！</strong> 請修正以下表單錯誤：
-            <ul>
-                @foreach($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
+    @include('actions.error',[$errors]) 
     <form method="POST" action="{{route('okr.update',$objective->id)}}">
         @csrf
         {{ method_field('PATCH') }}
@@ -112,8 +100,14 @@
                 <input type="number" class="form-control" name="krs_now{{$keyresult->id}}" id="keyresult_now" value="{{$keyresult->current_value}}"  required>
             </div> --}}
         @endforeach
-        <button class="btn btn-primary btn-sm col-md-12" type="submit">修改</button>  
+        <button class="btn btn-primary btn-sm col-md-12 mt-3" type="submit">修改</button>  
         </div>
     </form>
+    @foreach ($keyresults as $keyresult)
+        <form method="POST" id="deleteKR{{ $keyresult->id }}" action="{{ route('kr.destroy', $keyresult->id) }}">
+            @csrf
+            {{ method_field('DELETE') }}
+        </form>
+    @endforeach
 </div>
 @endsection
