@@ -32,21 +32,6 @@
     <link href="{{ asset('css/component.css') }}" rel="stylesheet">
     <link href="https://unpkg.com/gijgo@1.9.11/css/gijgo.min.css" rel="stylesheet" type="text/css" />
     <link href="{{ asset('css/ion.rangeSlider.css') }}" rel="stylesheet" />
-    <style>
-            .label {
-              cursor: pointer;
-            }
-            .progress {
-              display: none;
-              margin-bottom: 1rem;
-            }
-            .alert {
-              display: none;
-            }
-            .img-container img {
-              max-width: 100%;
-            }
-          </style>
 </head>
 <body>
     @include('layouts.sidebar')

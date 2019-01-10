@@ -2,7 +2,6 @@ window.addEventListener('DOMContentLoaded', function () {
     var avatar = document.getElementById('avatar');
     var image = document.getElementById('image');
     var input = document.getElementById('input');
-    var $alert = $('.alert');
     var $modal = $('#modal');
     var cropper;
 
@@ -57,8 +56,8 @@ window.addEventListener('DOMContentLoaded', function () {
         avatar.src = canvas.toDataURL();
         canvas.toBlob(function (blob) {
             // var formData = new FormData();
-            $('.avatarForm').append('avatar', blob, 'avatar.jpg');
-            $('.avatarForm').submit();
+          $('#avatarForm').append('avatar', blob, 'avatar.jpg');
+          $('#avatarForm').submit();
         });
       }
     });
