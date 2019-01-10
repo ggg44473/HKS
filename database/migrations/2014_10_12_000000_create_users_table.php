@@ -22,7 +22,9 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->timestamps();
             $table->string('avatar')->nullable();
+            $table->integer('department_id');
             $table->string('position')->nullable();
+            $table->boolean('enable')->default(true);
         });
     }
 

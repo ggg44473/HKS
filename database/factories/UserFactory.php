@@ -18,6 +18,7 @@ $factory->define(App\User::class, function (Faker $faker) {
         'name' => $faker->name,
         'email' => $faker->unique()->safeEmail,
         'password' => bcrypt('123456'), // secret
+        'department_id'=> $faker->numberBetween($min = 1, $max = 5),
         'position' => $faker->realText($maxNbChars = 10),
     ];
 });
