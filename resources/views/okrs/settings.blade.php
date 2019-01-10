@@ -4,11 +4,13 @@
 <div class="container">
     <div class="row m-3">
         <div class="ml-4 mr-4">
-            <form name="form" method="POST" action="{{ route('user.update', auth()->user()->id) }}" enctype="multipart/form-data">
+            <form id="avatarForm" name="form" method="POST" action="{{ route('user.update', auth()->user()->id) }}" enctype="multipart/form-data">
                 @csrf
                 {{ method_field('PATCH') }}
-                <input type="file" name="avatar" id="fileSelect" style="display:none;" accept="image/gif, image/jpeg, image/png">
-                <img id="avatarImg" class="avatar" src="{{ $user->avatar? asset('storage/avatar/'.$user->id.'/'.$user->avatar):asset('/img/icon/user/green.svg') }}" onclick="onloadphoto()">    
+                <label class="label" data-toggle="tooltip" title="Change your avatar">
+                    <img id="avatar" class="avatar" src="{{ $user->avatar? asset('storage/avatar/'.$user->id.'/'.$user->avatar):asset('/img/icon/user/green.svg') }}">    
+                    <input type="file" name="avatar" id="input" class="sr-only" accept="image/*">
+                </label>
                 <input name="submitAvatar" type="submit" style="display:none;">
             </form>
         </div>
@@ -16,20 +18,27 @@
             <h4>{{ $user->name }}</h4>
             <p>{{ $user->position.'   '.$user->created_at }}</p>
         </div>
-        <div>
-            <div class="dropdown">
-                <i class="fas fa-award"></i>
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Dropdown button
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="#">Action</a>
-                    <a class="dropdown-item" href="#">Another action</a>
-                    <a class="dropdown-item" href="#">Something else here</a>
-                </div>
-            </div>
-        </div>
-
     </div>
-
+</div>
+<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title" id="modalLabel">Crop the image</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <div class="modal-body">
+        <div class="img-container">
+            <img id="image" src="https://avatars0.githubusercontent.com/u/3456749">
+        </div>
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" id="crop">Crop</button>
+        </div>
+    </div>
+    </div>
+</div>
 @endsection
