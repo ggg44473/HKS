@@ -26,6 +26,7 @@ class UserController extends Controller
     {
         $colors = ['#06d6a0','#ef476f','#ffd166','#6eeb83','#f7b32b','#fcf6b1','#a9e5bb','#59c3c3','#d81159'];
         $okrs = [];
+
         $objectives = Objective::where('user_id','=',$user->id)->orderBy('finished_at')->get();
         foreach ($objectives as $obj) {
             $okrs[] = [

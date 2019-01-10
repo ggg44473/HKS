@@ -38,7 +38,6 @@ class ObjectiveController extends Controller
         $data = [
             'user' => $user,
         ];
-
         return view('okrs.create', $data);
     }
 

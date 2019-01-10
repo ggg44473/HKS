@@ -104,9 +104,9 @@ class ActionsController extends Controller
 
     public function update(ActionRequest $request, Action $action)
     {
-        $attr['user_id'] = auth()->user()->id;
+        // $attr['user_id'] = auth()->user()->id;
         $attr['related_kr'] = $request->input('krs_id');
-        $attr['assignee'] = auth()->user()->id;
+        // $attr['assignee'] = auth()->user()->id;
         $attr['priority'] = $request->input('priority');
         $attr['title'] = $request->input('act_title');
         $attr['content'] = $request->input('act_content');

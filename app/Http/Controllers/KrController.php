@@ -101,6 +101,6 @@ class KrController extends Controller
     {
         //要刪除的Krs
         $keyresult->delete();
-        return redirect()->route('okr.edit', $keyresult->objective_id);
+        return redirect()->route('user.okr', auth()->user()->id);
     }
 }
