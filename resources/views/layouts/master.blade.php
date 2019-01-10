@@ -16,8 +16,6 @@
     <script src="{{ asset('js/datepicker.js') }}" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.0/js/ion.rangeSlider.min.js" defer></script>
     <script src="{{ asset('js/slider.js') }}" defer></script>
-    <script src="{{ asset('js/cropper.js') }}" defer></script>
-    <script src="{{ asset('js/avatar.js') }}" defer></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">

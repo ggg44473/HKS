@@ -61,7 +61,7 @@
             <hr class="u-mb-16">
             {{-- 卡片指標 --}}
             <div class="row">
-                <div class="col-md-2 font-weight-bold text-right"> <h4 style="font-size:20px;">Key Results</h4> </div>
+                <div class="col-md-2 font-weight-bold text-right align-self-center"> <h4 style="font-size:20px;">Key Results</h4> </div>
                 <div class="col-md-10">
                     @foreach ($okr['keyresults'] as $kr)
                         <div class="row pt-2">
@@ -94,12 +94,13 @@
                     @endforeach
                 </div>
             </div>
-            
+            @if (auth()->user() == $user)
             <div class="col-md-10 offset-md-2">
                 <div class="row">  
                     @include('okrs.newkr',$okr['objective'])
                 </div>
             </div>
+            @endif
         </div>
         
         <div class="card-footer text-muted mt-3">
