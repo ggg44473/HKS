@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\KeyResultRequest;
 use App\KeyResult;
+use App\User;
 
 class KrController extends Controller
 {
@@ -98,6 +99,7 @@ class KrController extends Controller
      */
     public function destroy(KeyResult $keyresult)
     {
+        //要刪除的Krs
         $keyresult->delete();
         return redirect()->route('user.okr', auth()->user()->id);
     }

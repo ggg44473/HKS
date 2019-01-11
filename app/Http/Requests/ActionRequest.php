@@ -25,7 +25,7 @@ class ActionRequest extends FormRequest
     {
         return [
             'act_title' => 'required',
-            'st_date' => 'required',
+            'st_date' => 'required|date',
             'fin_date' => 'required|date|after:st_date',
             'act_content' => 'required',
         ];

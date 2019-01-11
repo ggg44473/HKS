@@ -1,46 +1,40 @@
 $(".js-range-slider").ionRangeSlider();
 
-var $krSlider = $('#keyresult_slider');    
-var krSlider_instance = $krSlider.data("ionRangeSlider");
-
-$('#keyresult_initaial').on('change',function(){
+$('.kr-init').on('change',function(){
   var min = $(this).val();
-  var max = $('#keyresult_target').val();
-  var from = $('#keyresult_now').val();
-  krSlider_instance.update({
+  var max = $(this).parents('.form-row').find('.kr-target').val();
+  var from = $(this).parents('.form-row').find('.kr-now').val();
+  $(this).parents('.form-row').find('.kr-slider').data("ionRangeSlider").update({
     min: min,
     max: max,
     from: from,
   });
-  $('#keyresult_now').val(from);
 });
 
-$('#keyresult_target').on('change', function(){
-  var min = $('#keyresult_initaial').val();
+$('.kr-target').on('change', function(){
+  var min = $(this).parents('.form-row').find('.kr-init').val();
   var max = $(this).val();
-  var from = $('#keyresult_now').val();
-  krSlider_instance.update({
+  var from = $(this).parents('.form-row').find('.kr-now').val();
+  $(this).parents('.form-row').find('.kr-slider').data("ionRangeSlider").update({
     min: min,
     max: max,
     from: from,
   });
-  $('#keyresult_now').val(from);
 });
 
-$('#keyresult_now').on('change', function(){
-  var min = $('#keyresult_initaial').val();
-  var max = $('#keyresult_target').val();
+$('.kr-now').on('change', function(){
+  var min = $(this).parents('.form-row').find('.kr-init').val();
+  var max = $(this).parents('.form-row').find('.kr-target').val();
   var from = $(this).val();
-  krSlider_instance.update({
+  $(this).parents('.form-row').find('.kr-slider').data("ionRangeSlider").update({
     min: min,
     max: max,
     from: from,
   });
-  $('#keyresult_now').val(from);
 });
 
-$krSlider.on("change", function () {
+$('.kr-slider').on("change", function () {
   var $inp = $(this);
   var from = $inp.prop("value");
-  $('#keyresult_now').val(from);
+  $(this).parents('.form-row').find('.kr-now').val(from);
 });

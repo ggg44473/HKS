@@ -22,7 +22,7 @@
                 </div>
                 <div class="form-group col-md-6">
                     <label for="keyresult_confidence">達成率 <strong class="text-danger">{{ $isError ? $errors->first('krs_now'): '' }}</strong></label>
-                    <input type="text" class="js-range-slider" id="keyresult_slider" name="krs_now" value="{{ old('krs_now') ? old('krs_now') : '0' }}"
+                    <input type="text" class="js-range-slider kr-slider" id="keyresult_slider" name="krs_now" value="{{ old('krs_now') ? old('krs_now') : '0' }}"
                         data-min="{{ old('krs_init') ? old('krs_init') : '0' }}"
                         data-max="{{ old('krs_tar') }}"
                         data-from="{{ old('krs_now') ? old('krs_now') : '0' }}"
@@ -51,15 +51,15 @@
                 </div>
                 <div class="form-group col-md-2">
                     <label for="keyresult_initaial">起始值  <strong class="text-danger">{{ $isError ? $errors->first('krs_init'): '' }}</strong></label>
-                    <input type="number" class="form-control" name="krs_init" id="keyresult_initaial" value="{{ old('krs_init') ? old('krs_init') : '0' }}">
+                    <input type="number" class="form-control kr-init" name="krs_init" id="keyresult_initaial" value="{{ old('krs_init') ? old('krs_init') : '0' }}">
                 </div>
                 <div class="form-group col-md-2">
                     <label class="text-primary" for="keyresult_target">當前值 <strong class="text-danger">{{ $isError ? $errors->first('krs_now'): '' }}</strong></label>
-                    <input type="number" class="form-control" name="krs_now" id="keyresult_now" value="{{ old('krs_now') ? old('krs_now') : '0' }}">
+                    <input type="number" class="form-control kr-now" name="krs_now" id="keyresult_now" value="{{ old('krs_now') ? old('krs_now') : '0' }}">
                 </div>
                 <div class="form-group col-md-2">
                     <label for="keyresult_target">目標值 <strong class="text-danger">{{ $isError ? $errors->first('krs_tar'): '' }}</strong></label>
-                    <input type="number" class="form-control" name="krs_tar" id="keyresult_target" value="{{ old('krs_tar') ? old('krs_tar') : '100' }}">
+                    <input type="number" class="form-control kr-target" name="krs_tar" id="keyresult_target" value="{{ old('krs_tar') ? old('krs_tar') : '100' }}">
                 </div>
                 <div class="form-group col-md-6 u-text-right">
                     <button class="btn btn-primary u-mt-16" type="submit" style="width:100px;">新增</button>   

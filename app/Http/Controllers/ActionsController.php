@@ -69,13 +69,15 @@ class ActionsController extends Controller
 
     public function show(Action $action)
     {
-         $files = get_files(storage_path('app/public/actions/'.$action->id)); 
-         $data = [
-             'action'=>$action,
-             'files'=>$files,
-         ];
+        $user = User::where('id','=',auth()->user()->id)->first();
+        $files = get_files(storage_path('app/public/actions/'.$action->id)); 
+        $data = [
+            'user' => $user,
+            'action'=>$action,
+            'files'=>$files,
+        ];
          
-         return view('actions.show',$data);
+        return view('actions.show',$data);
     }
 
     public function edit(Action $action)
@@ -102,9 +104,9 @@ class ActionsController extends Controller
 
     public function update(ActionRequest $request, Action $action)
     {
-        $attr['user_id'] = auth()->user()->id;
+        // $attr['user_id'] = auth()->user()->id;
         $attr['related_kr'] = $request->input('krs_id');
-        $attr['assignee'] = auth()->user()->id;
+        // $attr['assignee'] = auth()->user()->id;
         $attr['priority'] = $request->input('priority');
         $attr['title'] = $request->input('act_title');
         $attr['content'] = $request->input('act_content');
@@ -153,9 +155,7 @@ class ActionsController extends Controller
         $file_path = str_replace('&','/',$file_path); //斜線不可以在URL中傳
         $file = File::get($file_path);
         $type = File::mimeType($file_path);
-
         return response($file)->header("Content-Type", $type);
-
     }
     public function done(Action $action)
     {

@@ -14,6 +14,9 @@ $(document).ready(function(){
             $('#sidebar-text').css('left','60px');
             $('.content').css('margin-left','150px');
             $('.navbar').css('padding-left','166px');
+            $('.navbar').css('transition','all 0.5s ease-in');
+            $('.sidebar').css('transition','all 0.5s ease-in');
+            $('.content').css('transition','all 0.5s ease-in');
             $(this).removeClass('text-primary');
             $(this).addClass('text-white');
             $(this).css('background-color','#3BA99C');
@@ -24,6 +27,9 @@ $(document).ready(function(){
     $('#sidebar').hover(function(){
         if(isClick == true){
             $('#sidebar-text').css('left','60px');
+            $('.navbar').css('transition','all 0.5s ease-in');
+            $('.sidebar').css('transition','all 0.5s ease-in');
+            $('.content').css('transition','all 0.5s ease-in');
             $('.content').css('margin-left','150px');
             $('.navbar').css('padding-left','166px');
         }},function(){
@@ -46,6 +52,4 @@ $(document).ready(function(){
             $('.navbar').css('padding-left','76px');
         }
     });
-
-    
 });
