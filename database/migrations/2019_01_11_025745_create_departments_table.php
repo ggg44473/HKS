@@ -17,12 +17,12 @@ class CreateDepartmentsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('description')->nullable();
-            $table->integer('parent_department_id')->nullable();
+            $table->integer('parent_department_id')->unsigned()->nullable();
             $table->foreign('parent_department_id')->references('id')->on('departments')->onDelete('cascade');
-            $table->integer('company_id');
+            $table->integer('company_id')->unsigned();
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
-            $table->integer('owner');
-            $table->foreign('owner')->references('id')->on('users')->onDelete('cascade');
+            $table->integer('admin')->unsigned();
+            $table->foreign('admin')->references('id')->on('users');
             $table->timestamps();
         });
     }

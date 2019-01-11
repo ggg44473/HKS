@@ -7,6 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Company extends Model
 {
     protected $fillable = [
-        'name', 'description', 'password', 'avatar', 'department_id', 'position'
+        'name', 'description', 'owner'
     ];
+
+    public function owner()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
