@@ -9,9 +9,9 @@
                 {{ method_field('PATCH') }}
                 <label class="label" data-toggle="tooltip" title="Change your avatar">
                     <img id="avatar" class="avatar" src="{{ $user->avatar? asset($user->avatar):asset('/img/icon/user/green.svg') }}">    
-                    <input type="file" name="avatar" id="input" class="sr-only" accept="image/*">
+                    <input type="file" name="avatar" id="input" class="sr-only" accept="image/*"/>
                 </label>
-                <input name="submitAvatar" type="submit" style="display:none;">
+                <input name="submitAvatar" type="submit" style="display:none;"/>
             </form>
         </div>
         <div class="ml-2 pt-3">
@@ -31,7 +31,7 @@
         </div>
         <div class="modal-body">
         <div class="img-container">
-            <img id="image" src="https://avatars0.githubusercontent.com/u/3456749">
+            <img id="image" src="">
         </div>
         </div>
         <div class="modal-footer">

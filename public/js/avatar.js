@@ -1,3 +1,11 @@
+// function onloadphoto(){
+//   form.avatar.click();
+// }
+
+// $("#fileSelect").on('change',function(){
+//   form.submitAvatar.click();
+// });
+
 window.addEventListener('DOMContentLoaded', function () {
     var avatar = document.getElementById('avatar');
     var image = document.getElementById('image');
@@ -13,7 +21,6 @@ window.addEventListener('DOMContentLoaded', function () {
       var files = e.target.files;
       var reader;
       var file;
-      var url;
       var done = function (url) {
         // input.value = '';
         image.src = url;
@@ -46,6 +53,8 @@ window.addEventListener('DOMContentLoaded', function () {
 
     //點按crop btn
     document.getElementById('crop').addEventListener('click', function () {
+
+      $('#submitAvatar').click();
       var canvas;
       $modal.modal('hide');
       if (cropper) {
@@ -56,8 +65,7 @@ window.addEventListener('DOMContentLoaded', function () {
         avatar.src = canvas.toDataURL();
         canvas.toBlob(function (blob) {
             // var formData = new FormData();
-          $('#avatarForm').append('avatar', blob, 'avatar.jpg');
-          $('#avatarForm').submit();
+          // $('#avatarForm').append('avatar', blob, 'avatar.jpg');
         });
       }
     });
