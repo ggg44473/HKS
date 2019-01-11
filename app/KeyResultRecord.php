@@ -14,6 +14,12 @@ class KeyResultRecord extends Model
 
     public function keyresult()
     {
-        return $this->belongsTo(keyresult::class);
+        return $this->belongsTo('App\KeyResult', 'key_results_id');
     }
+
+    public function accomplishRate()
+    {
+        return $this->keyresult()->getResults()->historyAcpRate($this->history_value);
+    }
+    
 }

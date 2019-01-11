@@ -20,54 +20,26 @@ class OkrController extends Controller
         $this->middleware('auth');
     }
     
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         //
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         //
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  Objective $objective
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Objective $objective)
     {
         $user = User::where('id','=',auth()->user()->id)->first();        
@@ -80,14 +52,6 @@ class OkrController extends Controller
         ];
         return view('okrs.edit',$data);
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Objective $objective)
     {
         $objAttr['title'] =  $request->input('obj_title');
@@ -103,24 +67,17 @@ class OkrController extends Controller
             $krAttr['target_value'] = $request->input('krs_tar'.$keyresult->id);
             $krAttr['current_value'] = $request->input('krs_now'.$keyresult->id);
             $krAttr['weight'] = $request->input('krs_weight'.$keyresult->id);
-            if( $krAttr['current_value']!=$keyresult->current_value ||$krAttr['confidence']!=$keyresult->confidence){
+            // if( $krAttr['current_value']!=$keyresult->current_value ||$krAttr['confidence']!=$keyresult->confidence){
                 $oldAttr['key_results_id'] = $keyresult->id;
                 $oldAttr['history_confidence'] = $keyresult->confidence;
                 $oldAttr['history_value'] = $keyresult->current_value;
                 KeyResultRecord::create($oldAttr);
-            }
             $keyresult->update($krAttr);
         }
        
         return redirect()->route('user.okr', auth()->user()->id);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         //

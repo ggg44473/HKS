@@ -14,14 +14,14 @@
                     <small>Updated : {{$action->updated_at}}</small><br/>
                 |   <small>
                         執行者:
-                        <a href="{{ route('user.settings',$action->user()->getResults()->id) }}">
+                        <a href="{{ route('user.okr',$action->user()->getResults()->id) }}">
                             <img src="{{ $action->user()->getResults()->avatar? asset('storage/avatar/'.$action->user()->getResults()->id.'/'.$action->user()->getResults()->avatar):asset('/img/icon/user/green.svg') }}" class="avatar">
                         </a>
                         {{$action->user()->getResults()->name}}
                     </small> | 
                     <small>
                         指派者:
-                        <a href="{{ route('user.settings',$action->assignee()->getResults()->id) }}">
+                        <a href="{{ route('user.okr',$action->assignee()->getResults()->id) }}">
                             <img src="{{ $action->assignee()->getResults()->avatar? asset('storage/avatar/'.$action->assignee()->getResults()->id.'/'.$action->assignee()->getResults()->avatar):asset('/img/icon/user/green.svg') }}" class="avatar">
                         </a>
                         {{$action->assignee()->getResults()->name}}
@@ -43,10 +43,8 @@
             <div class="col-md-11">
                 @if(!empty($files))
                     @foreach($files as $file)
-                        <a href="{{ route('download',['file'=>$file,'action_id'=>$action->id]) }}" >
-                        {{$file}}
-                        </a>
-                        <a href="{{ route('actions.destroyFile',['id'=>$action->id,'file_path'=>$file])}}">[X]</a>
+                       | <a href="{{ route('download',['file'=>$file,'action_id'=>$action->id]) }}" >
+                        {{$file}}</a> |
                     @endforeach
                 @endif
             </div>

@@ -38,4 +38,14 @@ class KeyResult extends Model
         else if ($this->target_value < $this->initial_value)
             return round(($this->initial_value - $this->current_value) * 100 / ($this->initial_value - $this->target_value), 0);
     }
+
+    public function historyAcpRate($current_value)
+    {
+        if($this->target_value == $this->initial_value) 
+            return 0;
+        else if ($this->target_value > $this->initial_value)
+            return round(($current_value - $this->initial_value) * 100 / ($this->target_value - $this->initial_value), 0);
+        else if ($this->target_value < $this->initial_value)
+            return round(($this->initial_value - $current_value) * 100 / ($this->initial_value - $this->target_value), 0);
+    }
 }

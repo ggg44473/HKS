@@ -33,4 +33,13 @@ class Objective extends Model
     {
         return $this->hasManyThrough('App\Action', 'App\KeyResult', 'objective_id', 'related_kr');
     }
+
+    public function keyResultRecords()
+    {
+        return $this->hasManyThrough('App\KeyResultRecord', 'App\KeyResult', 'objective_id', 'key_results_id');
+    }
+    
+
+
+    
 }
