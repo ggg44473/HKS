@@ -18,7 +18,6 @@
                     <img id="avatar" class="avatar" src="{{ $user->avatar? asset($user->avatar):asset('/img/icon/user/green.svg') }}">    
                     <input type="file" name="avatar" id="input" class="sr-only" accept="image/*"/>
                 </label>
-                <input name="submitAvatar" type="submit" style="display:none;"/>
             </form>
         </div>
         <div class="ml-2 pt-3">
