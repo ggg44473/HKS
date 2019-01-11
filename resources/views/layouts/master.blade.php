@@ -11,11 +11,12 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="{{ asset('js/sidebar.js') }}" defer></script>
-    <script src="{{ asset('js/scroll.js') }}" defer></script>
+    {{-- <script src="{{ asset('js/scroll.js') }}" defer></script> --}}
     <script src="https://unpkg.com/gijgo@1.9.11/js/gijgo.min.js" type="text/javascript" defer></script>
     <script src="{{ asset('js/datepicker.js') }}" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.0/js/ion.rangeSlider.min.js" defer></script>
     <script src="{{ asset('js/slider.js') }}" defer></script>
+    @yield('script')
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">

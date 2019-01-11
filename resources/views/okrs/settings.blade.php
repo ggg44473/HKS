@@ -1,5 +1,12 @@
 @extends('layouts.master')
+
 @section('title','個人綜覽')
+
+@section('script')
+<script src="{{ asset('js/cropper.js') }}" defer></script>
+<script src="{{ asset('js/avatar.js') }}" defer></script>  
+@endsection
+
 @section('content')
 <div class="container">
     <div class="row m-3">
@@ -41,7 +48,4 @@
     </div>
     </div>
 </div>
-
-<script src="{{ asset('js/cropper.js') }}" defer></script>
-<script src="{{ asset('js/avatar.js') }}" defer></script>
 @endsection
