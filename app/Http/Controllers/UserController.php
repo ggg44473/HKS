@@ -136,7 +136,7 @@ class UserController extends Controller
             $filename = date('YmdHis').'.'.$file->getClientOriginalExtension();
             $file->storeAs('public/avatar/'.auth()->user()->id, $filename);
             
-            $user->update(['avatar'=>$filename]);
+            $user->update(['avatar'=>'storage/avatar/'.auth()->user()->id.'/'.$filename]);
         }
 
         return redirect()->route('user.settings', auth()->user()->id);
