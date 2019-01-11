@@ -18,7 +18,7 @@
         <div class="card-body u-pl-48 u-pr-48">
             
             {{-- 卡片目標 --}}
-            <div class="row">
+            <div class="row align-items-center">
                 <div class="col-md-2 font-weight-bold text-right"> <h4 style="font-size:20px;">Objectives</h4> </div>
                 <div class="col-md-10">
                     <div class="row">
@@ -58,12 +58,12 @@
             </div>
             <hr class="u-mb-16">
             {{-- 卡片指標 --}}
-            <div class="row">
+            <div class="row align-items-center">
                 <div class="col-md-2 font-weight-bold text-right"> <h4 style="font-size:20px;">Key Results</h4> </div>
                 <div class="col-md-10">
                     @foreach ($okr['keyresults'] as $kr)
                         <div class="row pt-2">
-                            <span class="col-md-5 pt-2" style="border-left: 5px solid {{ $colors[($kr->id)%9] }} "> {{ $kr->title }} </span>
+                            <span class="col-md-5 pt-2" style="border-left: 5px solid {{ $colors[($kr->id)%9] }} "> no.{{ $kr->id }} : {{ $kr->title }} </span>
                             <div class="col-md-7 row justify-content-end">
                                 <span class="pt-2 pr-4">{{ $kr->confidence }} / 10  <i class="fas fa-heart" style="color: #FFB5B1;"></i></span>                            
                                 <div class="pt-3" style="display:inline-block; width:60%;">
@@ -121,7 +121,7 @@
 
             <div class="collapse" id="Action{{ $okr['objective']->id }}">
                 <div class="card card-body">
-                        <a class="btn btn-success mb-3"  href="{{ route('actions.create',$okr['objective']->id) }}"><i class="fa fa-plus fa-sm"></i> Action</a>
+                    <a class="btn btn-success mb-3"  href="{{ route('actions.create',$okr['objective']->id) }}"><i class="fa fa-plus fa-sm"></i> Action</a>
                     @include('okrs.listaction',$okr)
                 </div> 
             </div>
@@ -133,7 +133,10 @@
             </div>
             <div class="collapse" id="History{{ $okr['objective']->id }}">
                 <div class="card card-body">
-                        X
+                    <div id="app">
+                        {!! $okr['chart']->container() !!}
+                    </div>
+                        {!! $okr['chart']->script() !!} 
                 </div>
             </div>
         </div>

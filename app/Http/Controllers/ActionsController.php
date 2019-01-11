@@ -155,9 +155,7 @@ class ActionsController extends Controller
         $file_path = str_replace('&','/',$file_path); //斜線不可以在URL中傳
         $file = File::get($file_path);
         $type = File::mimeType($file_path);
-
         return response($file)->header("Content-Type", $type);
-
     }
     public function done(Action $action)
     {
