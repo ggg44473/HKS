@@ -1,4 +1,6 @@
-<script src="{{ asset('js/editbtn.js') }}" defer></script>   
+@section('script')
+    <script src="{{ asset('js/editbtn.js') }}" defer></script>       
+@endsection
 
 @foreach($okrs as $okr)
     <div class="card shadow-sm m-4 okr-card">
@@ -136,10 +138,8 @@
             </div>
             <div class="collapse" id="History{{ $okr['objective']->id }}">
                 <div class="card card-body">
-                    <div id="app">
-                        {!! $okr['chart']->container() !!}
-                    </div>
-                        {!! $okr['chart']->script() !!} 
+                        {{ $okr['chart']->container() }}
+                        {{ $okr['chart']->script() }} 
                 </div>
             </div>
         </div>

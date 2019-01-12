@@ -122,10 +122,8 @@
                 <p class="copyright">Copyright © 2019 HKS</p>
             </div>
         </footer>
-    </div>
 
-    <!-- Modal -->
-    <div id='app'>
+        <!-- Modal -->
         <div class="modal {{ count($errors) == 0 ? 'fade' : '' }}" id="modal" tabindex="-1" role="dialog">
             <div class="modal-dialog modal-dialog-centered modal-md" role="document">
                 <div class="modal-content">
