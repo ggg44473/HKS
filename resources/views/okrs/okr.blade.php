@@ -9,7 +9,7 @@
                     <span class="font-weight-light pl-2 pr-2">起始日:{{ $okr['objective']->started_at }}</span>
                     <span class="font-weight-light pl-2 pr-2">結算日:{{ $okr['objective']->finished_at }}</span>
                     @if (auth()->user() == $user)
-                        <a id="okr-close-btn" class="close">
+                        <a class="close okr-close-btn">
                             <i class="far fa-edit"></i>
                         </a>
                     @endif
