@@ -11,6 +11,7 @@
  * Form
  * Profile Page
  * Pricing Table
+ * Card
 **/
 
 /*-------------------------*/
@@ -265,4 +266,13 @@ main{
 
 .okr-content{
     line-height: 18px;
+}
+
+/*-------------------------*/
+/* Card */
+/*-------------------------*/
+.card{
+    border: none;
+    border-radius: 10px;
+    box-shadow: 5px 5px 30px rgba(20%,20%,20%,0.5);
 }

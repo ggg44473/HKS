@@ -82,3 +82,6 @@ Route::get('img/{file_path}', 'ActionsController@getImg')->name('img');
 //刪除檔案
 Route::get('actions/{action}/destroyFile/{file_path}', 'ActionsController@destroyFile')->name('actions.destroyFile');
 
+
+###### 組織OKR ######
+Route::get('organization', function(){ return view('organization.index'); })->name('organization');
