@@ -19,6 +19,7 @@ class CreateCompaniesTable extends Migration
             $table->string('description')->nullable();
             $table->integer('owner')->unsigned();
             $table->foreign('owner')->references('id')->on('users')->onDelete('cascade');
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }

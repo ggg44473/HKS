@@ -12,6 +12,7 @@
  * Profile Page
  * Pricing Table
  * Card
+ * Organization Page 
 **/
 
 /*-------------------------*/
@@ -275,4 +276,39 @@ main{
     border: none;
     border-radius: 10px;
     box-shadow: 5px 5px 30px rgba(20%,20%,20%,0.5);
+}
+
+/*-------------------------*/
+/* Organization Page */
+/*-------------------------*/
+.companyIcon{
+    display: inline-block;
+    background-color: #bbb;
+    margin: 16px 16px;
+    transition: all 0.5s;
+}
+.companyIcon:hover{
+    background-color: rgb(86, 185, 174);
+}
+.companyIcon>i{
+    font-size: 30px;
+    line-height: 70px;
+}
+.companyIcon .fa-upload{
+    display: none;
+}
+.companyIcon .fa-building{
+    display: inline;
+}
+#company_description{
+    resize: none;
+    height: 70.5px;
+}
+#addMember{
+    font-size: 26px;
+    color: rgb(86, 185, 174);
+    transition: all 0.5s;
+}
+#addMember:hover{
+    color: #3BA99C;
 }
