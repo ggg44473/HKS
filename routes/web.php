@@ -44,7 +44,7 @@ Route::patch('user/{user}/update', 'UserController@update')->name('user.update')
 // 新增O頁面
 Route::get('objective/create', 'ObjectiveController@create')->name('objective.create');
 // 儲存O
-Route::post('objective/store', 'ObjectiveController@store')->name('objective.store');
+Route::post('objective/store/{type}', 'ObjectiveController@store')->name('objective.store');
 // 刪除O
 Route::delete('objective/{objective}/destroy', 'ObjectiveController@destroy')->name('objective.destroy');
 
@@ -84,4 +84,11 @@ Route::get('actions/{action}/destroyFile/{file_path}', 'ActionsController@destro
 
 
 ###### 組織OKR ######
-Route::get('organization', function(){ return view('organization.index'); })->name('organization');
+//組織OKR首頁
+Route::get('organization', 'OrganizationController@index')->name('organization');
+//新增公司
+Route::post('organization/company/store', 'CompanyController@store')->name('company.store');
+//新增部門頁面
+Route::get('organization/department/create', 'DepartmentController@create')->name('department.create');
+//顯示公司OKR
+Route::get('organization/company/okr', 'CompanyController@listOKR')->name('company.okr');

@@ -28,10 +28,10 @@ class UserController extends Controller
         $colors = ['#06d6a0','#ef476f','#ffd166','#6eeb83','#f7b32b','#fcf6b1','#a9e5bb','#59c3c3','#d81159'];
         $okrs = [];
 
-        $objectives = Objective::where('user_id','=',$user->id)->orderBy('finished_at')->get();
+        $objectives = Objective::where(['owner_type'=>'user','owner_id'=>$user->id])->orderBy('finished_at')->get();
         foreach ($objectives as $obj) {
             //  單一OKR圖表
-            $datas = $this->getRelatedKRrecord($obj);
+            $datas = $obj->getRelatedKRrecord();
             $chart = new SampleChart;
             if(!$datas){
                 $chart->labels([0]);
@@ -153,28 +153,4 @@ class UserController extends Controller
         //
     }
 
-    function getRelatedKRrecord(Objective $objective)
-    {
-        //宣告
-        $merged=collect();
-        $kr_record=array();
-        $kr_record_array=array();
-        // 抓出相關KR歷史紀錄
-        $collections = $objective->keyResultRecords()->getResults()->groupBy('key_results_id');
-        // 算出達成率並存成array(KR_ID，ACV_RATE，UPDATE)
-        foreach($collections as $collection){
-            // 需要達成率合併
-            foreach($collection as $collect){
-                $merged->push(collect($collect)->merge(['rate'=>$collect->accomplishRate()])->toArray());
-            }
-            $kr_id = $merged->pluck('key_results_id')->first();
-            $kr_date = $merged->pluck('updated_at')->all();
-            $kr_acop = $merged->pluck('history_confidence')->all();
-            $kr_conf = $merged->pluck('rate')->all();
-            $merged=collect();
-            $kr_record=array('kr_id'=>$kr_id,'update'=>$kr_date,'confidence'=>$kr_acop,'accomplish'=>$kr_conf);            
-            array_push($kr_record_array,$kr_record);
-        }      
-        return $kr_record_array;
-    }
 }

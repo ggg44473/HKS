@@ -1,8 +1,8 @@
-$(function(){
-    $.getJSON('/api/organization', function(data){
-        console.log(data);
-    });
-});
+// $(function(){
+//     $.getJSON('/api/organization', function(data){
+//         console.log(data);
+//     });
+// });
 
 $('#companyIcon').hover(function(){
     $(this).children('.fa-building').hide();

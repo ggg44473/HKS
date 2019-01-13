@@ -47,16 +47,29 @@ class ObjectiveController extends Controller
      * @param  App\Http\Requests\ObjectiveRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ObjectiveRequest $request)
+    public function store(ObjectiveRequest $request, $type)
     {
-        $attr['user_id'] = auth()->user()->id;
+        switch($type){
+            case 'user':
+                $attr['owner_id'] = auth()->user()->id;
+                break;
+            case 'company':
+                $attr['owner_id'] = auth()->user()->company_id;
+                break;
+        }
+        $attr['owner_type'] = $type;
         $attr['title'] = $request->input('obj_title');
         $attr['started_at'] = $request->input('st_date');
         $attr['finished_at'] = $request->input('fin_date');
 
         Objective::create($attr);
+        switch($type){
+            case 'user':
+                return redirect()->route('user.okr', auth()->user()->id);                
+            case 'company':
+                return redirect()->route('company.okr');
 
-        return redirect()->route('user.okr', auth()->user()->id);
+        }
     }
 
     /**

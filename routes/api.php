@@ -20,5 +20,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 ###### 組織OKR ######
 Route::get('organization', 'OrganizationController@index');
-Route::post('organization/store', 'OrganizationController@store')->name('organization.store');
 Route::post('organization/search/', 'OrganizationController@search');

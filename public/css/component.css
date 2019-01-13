@@ -290,7 +290,7 @@ main{
 .companyIcon:hover{
     background-color: rgb(86, 185, 174);
 }
-.companyIcon>i{
+.companyIcon>i, .organizationIcon>i{
     font-size: 30px;
     line-height: 70px;
 }
@@ -311,4 +311,12 @@ main{
 }
 #addMember:hover{
     color: #3BA99C;
+}
+.organizationIcon{
+    display: inline-block;
+    background-color: #fff;
+    margin: 16px 8px;
+    transition: all 0.5s;
+    -webkit-box-shadow: 0.1rem 0.1rem 0.3rem 0.1rem rgba(108, 117, 125, 0.2);
+            box-shadow: 0.1rem 0.1rem 0.3rem 0.1rem rgba(108, 117, 125, 0.2);
 }

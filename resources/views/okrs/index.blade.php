@@ -40,12 +40,12 @@
                             <span>&times;</span>
                         </button>
                     </div>
-                    @include('okrs.create') 
+                    @include('okrs.create',['type'=>'user']) 
                 </div>
             </div>
         </div>
     </div>
-    @include('okrs.okr',$okrs)
+    @include('okrs.okr', $okrs)
 @endsection
 
 

@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->timestamps();
             $table->string('avatar')->nullable();
+            $table->integer('company_id')->unsigned()->nullable();
             $table->integer('department_id')->unsigned()->nullable();
             $table->string('position')->nullable();
             $table->boolean('enable')->default(true);

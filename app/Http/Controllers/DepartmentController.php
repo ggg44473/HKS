@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\User;
-use App\Company;
 
-class OrganizationController extends Controller
+class DepartmentController extends Controller
 {
     /**
      * 要登入才能用的Controller
@@ -15,7 +13,7 @@ class OrganizationController extends Controller
     {
         $this->middleware('auth');
     }
-
+    
     /**
      * Display a listing of the resource.
      *
@@ -23,14 +21,7 @@ class OrganizationController extends Controller
      */
     public function index()
     {
-        $data = [];
-        if(auth()->user()->company_id > 0){
-            $company = Company::where('id',auth()->user()->company_id)->first();
-            $data=[
-                'company' => $company,
-            ];
-        }
-        return view('organization.index', $data);      
+        //
     }
 
     /**
@@ -40,7 +31,7 @@ class OrganizationController extends Controller
      */
     public function create()
     {
-        //
+        return view('organization.department.create');        
     }
 
     /**
@@ -51,7 +42,7 @@ class OrganizationController extends Controller
      */
     public function store(Request $request)
     {
-        
+        //
     }
 
     /**
