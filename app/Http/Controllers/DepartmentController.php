@@ -54,7 +54,7 @@ class DepartmentController extends Controller
         
         $data = [
             'user' => auth()->user(),
-            'department' => $company,
+            'department' => $departments,
             'okrs' => $okrs,
             'colors' => $colors,
         ];

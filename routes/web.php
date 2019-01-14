@@ -89,3 +89,5 @@ Route::post('organization/department/store', 'DepartmentController@store')->name
 Route::get('organization/company/okr', 'CompanyController@listOKR')->name('company.okr');
 //顯示部門OKR
 Route::get('organization/department/{department}/okr', 'DepartmentController@listOKR')->name('department.okr');
+//編輯部門頁面
+Route::get('organization/department/{department}/edit', 'DepartmentController@edit')->name('department.edit');
