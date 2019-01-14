@@ -41,7 +41,7 @@
                         <span>&times;</span>
                     </button>
                 </div>
-                @include('okrs.create',['type'=>'company']) 
+                @include('okrs.create',['type'=>get_class($company)]) 
             </div>
         </div>
     </div>

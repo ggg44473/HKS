@@ -3,14 +3,17 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\HasObjectiveTrait;
 
 class Company extends Model
 {
+    use HasObjectiveTrait;
+
     protected $fillable = [
-        'name', 'description', 'owner', 'image'
+        'name', 'description', 'user_id', 'image'
     ];
 
-    public function owner()
+    public function user()
     {
         return $this->belongsTo(User::class);
     }

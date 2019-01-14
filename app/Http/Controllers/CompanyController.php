@@ -30,10 +30,10 @@ class CompanyController extends Controller
         $colors = ['#06d6a0','#ef476f','#ffd166','#6eeb83','#f7b32b','#fcf6b1','#a9e5bb','#59c3c3','#d81159'];
         $okrs = [];
 
-        $objectives = Objective::where(['owner_type'=>'company','owner_id' => $company->id])->orderBy('finished_at')->get();
+        $objectives = $company->objectives()->get();
         foreach ($objectives as $obj) {
             //  單一OKR圖表
-            $datas = $obj->getRelatedKRrecord();
+            $datas = $obj->getRelatedKrRecord();
             $chart = new SampleChart;
             if(!$datas){
                 $chart->labels([0]);
@@ -94,7 +94,7 @@ class CompanyController extends Controller
     {
         $attr['name'] = $request->input('company_name');
         $attr['description'] = $request->input('company_description');
-        $attr['owner'] = auth()->user()->id;
+        $attr['user_id'] = auth()->user()->id;
         $company = Company::create($attr);
 
         if($request->hasFile('company_img_upload')){
@@ -168,7 +168,7 @@ class CompanyController extends Controller
         return response()->json($results);
     }
 
-    function getRelatedKRrecord(Objective $objective)
+    function getRelatedKrRecord(Objective $objective)
     {
         //宣告
         $merged=collect();

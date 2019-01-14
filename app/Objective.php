@@ -14,15 +14,15 @@ class Objective extends Model
     // public $timestamps = false; //若要取消時間戳記
     protected $fillable = [ //新增的欄位名稱
         'title',
-        'owner_id',
-        'owner_type',
+        'model_id',
+        'model_type',
         'started_at',
         'finished_at'
     ];
 
-    public function user()
+    public function model(): MorphTo
     {
-        return $this->belongsTo(User::class);
+        return $this->morphTo();
     }
 
     public function keyresults()
@@ -40,7 +40,7 @@ class Objective extends Model
         return $this->hasManyThrough('App\KeyResultRecord', 'App\KeyResult', 'objective_id', 'key_results_id');
     }
     
-    public function getRelatedKRrecord()
+    public function getRelatedKrRecord()
     {
         //宣告
         $merged=collect();

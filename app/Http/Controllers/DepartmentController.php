@@ -24,14 +24,14 @@ class DepartmentController extends Controller
      */
     public function listOKR($departmentId)
     {
-        $departments = Department::where('id', $departmentId)->first();
+        $department = Department::where('id', $departmentId)->first();
         $colors = ['#06d6a0','#ef476f','#ffd166','#6eeb83','#f7b32b','#fcf6b1','#a9e5bb','#59c3c3','#d81159'];
         $okrs = [];
 
-        $objectives = Objective::where(['owner_type'=>'department','owner_id' => $departmentId])->orderBy('finished_at')->get();
+        $objectives = $department->objectives()->get();
         foreach ($objectives as $obj) {
             //  單一OKR圖表
-            $datas = $obj->getRelatedKRrecord();
+            $datas = $obj->getRelatedKrRecord();
             $chart = new SampleChart;
             if(!$datas){
                 $chart->labels([0]);
@@ -54,7 +54,7 @@ class DepartmentController extends Controller
         
         $data = [
             'user' => auth()->user(),
-            'department' => $company,
+            'department' => $department,
             'okrs' => $okrs,
             'colors' => $colors,
         ];
@@ -105,7 +105,7 @@ class DepartmentController extends Controller
     {
         $attr['name'] = $request->input('department_name');
         $attr['description'] = $request->input('department_description');
-        $attr['admin'] = auth()->user()->id;
+        $attr['user_id'] = auth()->user()->id;
         $attr['company_id'] = auth()->user()->company_id;
         if( substr( $request->department_parent, 0, 10 ) === "department"){
             $attr['parent_department_id'] = preg_replace('/[^\d]/','',$request->department_parent);

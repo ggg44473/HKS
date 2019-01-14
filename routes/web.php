@@ -15,23 +15,6 @@ Route::get('/', ['middleware' => 'guest', function(){ return view('welcome'); }]
 
 Auth::routes();
 
-// #登入
-// Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
-// Route::post('login', 'Auth\LoginController@login');
-
-// #登出
-// Route::post('logout', 'Auth\LoginController@logout')->name('logout');
-
-// #註冊
-// Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
-// Route::post('register', 'Auth\RegisterController@register')->name('register.post');
-
-// #忘記密碼
-// Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
-// Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
-// Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
-// Route::post('password/reset', 'Auth\ResetPasswordController@reset');
-
 ######  個人綜覽  ######
 // 顯示個人OKR
 Route::get('user/{user}/okr', 'UserController@listOKR')->name('user.okr');
@@ -39,20 +22,16 @@ Route::get('user/{user}/okr', 'UserController@listOKR')->name('user.okr');
 Route::get('user/{user}', 'UserController@settings')->name('user.settings');
 // 更新個人照片
 Route::patch('user/{user}/update', 'UserController@update')->name('user.update');
+// 新增個人O
+Route::post('user/{user}/objective/store', 'UserController@storeObjective')->name('user.objective.store');
 
 ######  OKR  ######
-// 新增O頁面
-Route::get('objective/create', 'ObjectiveController@create')->name('objective.create');
-// 儲存O
-Route::post('objective/store/{type}', 'ObjectiveController@store')->name('objective.store');
 // 刪除O
 Route::delete('objective/{objective}/destroy', 'ObjectiveController@destroy')->name('objective.destroy');
-
 // 編輯OKR頁面
 Route::get('okr/{objective}/edit', 'OkrController@edit')->name('okr.edit');
 // 更新修改好的OKR
 Route::patch('okr/{objective}/update', 'OkrController@update')->name('okr.update');
-
 // 儲存KR
 Route::post('kr/store', 'KrController@store')->name('kr.store');
 // 刪除KR
@@ -76,16 +55,16 @@ Route::delete('actions/{action}/destroy', 'ActionsController@destroy')->name('ac
 //刪除Action的檔案
 Route::get('actions/{action}/media/{media}/destroy', 'ActionsController@destroyFile')->name('actions.destroyFile');
 
-###### 組織OKR ######
-//組織OKR首頁
-Route::get('organization', 'OrganizationController@index')->name('organization');
-//新增公司
-Route::post('organization/company/store', 'CompanyController@store')->name('company.store');
-//新增部門頁面
-Route::get('organization/department/create', 'DepartmentController@create')->name('department.create');
-//儲存新增部門
-Route::post('organization/department/store', 'DepartmentController@store')->name('department.store');
-//顯示公司OKR
-Route::get('organization/company/okr', 'CompanyController@listOKR')->name('company.okr');
-//顯示部門OKR
-Route::get('organization/department/{department}/okr', 'DepartmentController@listOKR')->name('department.okr');
+// ###### 組織OKR ######
+// //組織OKR首頁
+// Route::get('organization', 'OrganizationController@index')->name('organization');
+// //新增公司
+// Route::post('organization/company/store', 'CompanyController@store')->name('company.store');
+// //新增部門頁面
+// Route::get('organization/department/create', 'DepartmentController@create')->name('department.create');
+// //儲存新增部門
+// Route::post('organization/department/store', 'DepartmentController@store')->name('department.store');
+// //顯示公司OKR
+// Route::get('organization/company/okr', 'CompanyController@listOKR')->name('company.okr');
+// //顯示部門OKR
+// Route::get('organization/department/{department}/okr', 'DepartmentController@listOKR')->name('department.okr');

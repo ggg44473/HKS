@@ -28,10 +28,10 @@ class UserController extends Controller
         $colors = ['#06d6a0','#ef476f','#ffd166','#6eeb83','#f7b32b','#fcf6b1','#a9e5bb','#59c3c3','#d81159'];
         $okrs = [];
 
-        $objectives = Objective::where(['owner_type'=>'user','owner_id'=>$user->id])->orderBy('finished_at')->get();
+        $objectives = $user->objectives()->orderBy('finished_at')->get();
         foreach ($objectives as $obj) {
             //  單一OKR圖表
-            $datas = $obj->getRelatedKRrecord();
+            $datas = $obj->getRelatedKrRecord();
             $chart = new SampleChart;
             if(!$datas){
                 $chart->labels([0]);
@@ -61,6 +61,11 @@ class UserController extends Controller
         return view('okrs.index', $data);
     }
 
+    public function storeObjective(ObjectiveRequest $request, User $user) {
+        $user->addObjective($request);
+        return redirect()->back();
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -75,38 +80,6 @@ class UserController extends Controller
         ];
 
         return view('okrs.settings', $data);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
     }
 
     /**

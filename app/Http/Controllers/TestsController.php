@@ -31,7 +31,7 @@ class TestsController extends Controller
 
     public function chart(Objective $objective)
     {
-        $datas = $this->getRelatedKRrecord($objective);
+        $datas = $this->getRelatedKrRecord($objective);
         $chart = new SampleChart;
         $chart->subtitle('KR 達成率變化圖',22,'#216869',true, "'Helvetica Neue','Helvetica','Arial',sans-serif");
         foreach($datas as $data){
@@ -41,7 +41,7 @@ class TestsController extends Controller
         return view('test', ['chart' => $chart]);
     }
 
-    function getRelatedKRrecord(Objective $objective)
+    function getRelatedKrRecord(Objective $objective)
     {
         //宣告
         $merged=collect();
