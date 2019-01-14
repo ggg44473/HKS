@@ -11,7 +11,6 @@ use Spatie\MediaLibrary\Models\Media;
 
 class Action extends Model implements HasMedia
 {
-
     use Commentable, HasMediaTrait;
 
     protected $fillable = [
@@ -52,12 +51,24 @@ class Action extends Model implements HasMedia
     }
 
     public function addRelatedFiles()
-    {
+    {        
         $this->addAllMediaFromRequest()->each(function ($fileAdder) {
             $fileAdder->sanitizingFileName(function ($fileName) {
                 return strtolower(str_replace(['#', '/', '\\', ' '], '-', $fileName));
             })->toMediaCollection();
         });
+    }
+
+    public function getRelatedFileNames()
+    {
+        $file_names = [];
+
+        $media = $this->getMedia();
+        foreach ($media as $m) {
+            $file_names[] = $m->file_name;
+        }
+
+        return $file_names;
     }
 
     public function getRelatedFiles()
