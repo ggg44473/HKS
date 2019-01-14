@@ -101,7 +101,7 @@ class CompanyController extends Controller
             $file = $request->file('company_img_upload');
             $filename = date('YmdHis').'.'.$file->getClientOriginalExtension();
             $file->storeAs('public/company/'.$company->id, $filename);
-            $company->update(['image'=>'storage/company/'.$company->id.'/'.$filename]);
+            $company->update(['image'=>'/storage/company/'.$company->id.'/'.$filename]);
         }
         
         User::where('id',auth()->user()->id)->update(['company_id' => $company->id]);

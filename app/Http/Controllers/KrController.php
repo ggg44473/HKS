@@ -54,7 +54,7 @@ class KrController extends Controller
         $attr['weight'] = $request->input('krs_weight');
 
         KeyResult::create($attr);
-        return redirect()->route('user.okr', auth()->user()->id);
+        return redirect()->back();
     }
 
     /**
@@ -101,6 +101,6 @@ class KrController extends Controller
     {
         //要刪除的Krs
         $keyresult->delete();
-        return redirect()->route('user.okr', auth()->user()->id);
+        return redirect()->back();
     }
 }

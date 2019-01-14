@@ -40,7 +40,7 @@ class Objective extends Model
         return $this->hasManyThrough('App\KeyResultRecord', 'App\KeyResult', 'objective_id', 'key_results_id');
     }
     
-    function getRelatedKRrecord()
+    public function getRelatedKRrecord()
     {
         //宣告
         $merged=collect();

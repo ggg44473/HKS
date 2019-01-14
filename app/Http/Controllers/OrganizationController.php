@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\Company;
+use App\Department;
 
 class OrganizationController extends Controller
 {
@@ -24,13 +25,11 @@ class OrganizationController extends Controller
     public function index()
     {
         $data = [];
-        if(auth()->user()->company_id > 0){
-            $company = Company::where('id',auth()->user()->company_id)->first();
-            $data=[
-                'company' => $company,
-            ];
+        if (auth()->user()->company_id > 0) {
+            $data['company'] = Company::where('id', auth()->user()->company_id)->first();
+            $data['departments'] = Department::where('company_id', auth()->user()->company_id)->get();
         }
-        return view('organization.index', $data);      
+        return view('organization.index', $data);
     }
 
     /**
@@ -51,7 +50,7 @@ class OrganizationController extends Controller
      */
     public function store(Request $request)
     {
-        
+
     }
 
     /**

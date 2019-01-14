@@ -90,5 +90,7 @@ Route::get('organization', 'OrganizationController@index')->name('organization')
 Route::post('organization/company/store', 'CompanyController@store')->name('company.store');
 //新增部門頁面
 Route::get('organization/department/create', 'DepartmentController@create')->name('department.create');
+//儲存新增部門
+Route::post('organization/department/store', 'DepartmentController@store')->name('department.store');
 //顯示公司OKR
 Route::get('organization/company/okr', 'CompanyController@listOKR')->name('company.okr');

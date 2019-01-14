@@ -63,13 +63,8 @@ class ObjectiveController extends Controller
         $attr['finished_at'] = $request->input('fin_date');
 
         Objective::create($attr);
-        switch($type){
-            case 'user':
-                return redirect()->route('user.okr', auth()->user()->id);                
-            case 'company':
-                return redirect()->route('company.okr');
 
-        }
+        return redirect()->back();
     }
 
     /**
@@ -126,6 +121,6 @@ class ObjectiveController extends Controller
     public function destroy(Objective $objective)
     {
         $objective->delete();
-        return redirect()->route('user.okr', auth()->user()->id);
+        return redirect()->back();        
     }
 }

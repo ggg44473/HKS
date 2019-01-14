@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Company;
+use App\Department;
 
 class DepartmentController extends Controller
 {
@@ -31,7 +33,20 @@ class DepartmentController extends Controller
      */
     public function create()
     {
-        return view('organization.department.create');        
+        $data = [
+            'company' => '',
+            'departments' => [],
+        ];
+        if(auth()->user()->company_id > 0){
+            $company = Company::where('id',auth()->user()->company_id)->first();
+            $department = Department::where('company_id',$company->id)->get();
+            $data=[
+                'company' => $company,
+                'departments' => $department,
+            ];
+        }
+
+        return view('organization.department.create', $data);        
     }
 
     /**
@@ -42,7 +57,23 @@ class DepartmentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $attr['name'] = $request->input('department_name');
+        $attr['description'] = $request->input('department_description');
+        $attr['admin'] = auth()->user()->id;
+        $attr['company_id'] = auth()->user()->company_id;
+        if( substr( $request->department_parent, 0, 10 ) === "department"){
+            $attr['parent_department_id'] = preg_replace('/[^\d]/','',$request->department_parent);
+        }
+        $department = Department::create($attr);
+
+        if($request->hasFile('department_img_upload')){
+            $file = $request->file('department_img_upload');
+            $filename = date('YmdHis').'.'.$file->getClientOriginalExtension();
+            $file->storeAs('public/department/'.$department->id, $filename);
+            $department->update(['image'=>'/storage/department/'.$department->id.'/'.$filename]);
+        }
+
+        return redirect()->route('organization');
     }
 
     /**
