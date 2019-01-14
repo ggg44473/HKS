@@ -1,4 +1,6 @@
-<script src="{{ asset('js/editbtn.js') }}" defer></script>   
+@section('script')
+    <script src="{{ asset('js/editbtn.js') }}" defer></script>       
+@endsection
 
 @foreach($okrs as $okr)
     <div class="card shadow-sm m-4 okr-card">
@@ -9,7 +11,7 @@
                     <span class="font-weight-light pl-2 pr-2">起始日:{{ $okr['objective']->started_at }}</span>
                     <span class="font-weight-light pl-2 pr-2">結算日:{{ $okr['objective']->finished_at }}</span>
                     @if (auth()->user() == $user)
-                        <a id="okr-close-btn" class="close">
+                        <a class="close okr-close-btn">
                             <i class="far fa-edit"></i>
                         </a>
                     @endif
@@ -46,7 +48,7 @@
                                     @endif
                                 </div>
                             </div>
-                            <div class="pt-2 pl-3 pr-2 btn-edit-group" style="display:inline-block;">
+                            <div class="pt-2 pl-3 pr-2 btn-edit-group" style="display:none;">
                                 <a class="pl-2 pr-2 text-success" href="{{ route('okr.edit', $okr['objective']->id) }}"><i class="fas fa-pencil-alt"></i></a>
                                 <a class="pl-2 pr-2 text-danger" href="#" onclick="document.getElementById('deleteKR{{ $okr['objective']->id }}').submit()"><i class="fas fa-trash"></i></a>
                                 <form method="POST" id="deleteKR{{ $okr['objective']->id }}" action="{{ route('objective.destroy', $okr['objective']->id) }}">
@@ -81,7 +83,7 @@
                                         @endif
                                     </div>
                                 </div>
-                                <div class="pt-2 pl-3 pr-2 btn-edit-group" style="display:inline-block;">
+                                <div class="pt-2 pl-3 pr-2 btn-edit-group" style="display:none;">
                                     <a class="pl-2 pr-2 text-success" href="{{ route('okr.edit', $okr['objective']->id) }}"><i class="fas fa-pencil-alt"></i></a>
                                     <a class="pl-2 pr-2 text-danger" href="#" onclick="document.getElementById('deleteKR{{ $kr->id }}').submit()"><i class="fas fa-trash"></i></a>
                                     <form method="POST" id="deleteKR{{ $kr->id }}" action="{{ route('kr.destroy', $kr->id) }}">
@@ -136,9 +138,7 @@
             </div>
             <div class="collapse" id="History{{ $okr['objective']->id }}">
                 <div class="card card-body">
-                    <div id="app">
                         {!! $okr['chart']->container() !!}
-                    </div>
                         {!! $okr['chart']->script() !!} 
                 </div>
             </div>

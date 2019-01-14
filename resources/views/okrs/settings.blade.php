@@ -15,7 +15,7 @@
                 @csrf
                 {{ method_field('PATCH') }}
                 <label class="label" data-toggle="tooltip" title="Change your avatar">
-                    <img id="avatar" class="avatar" src="{{ $user->avatar? asset($user->avatar):asset('/img/icon/user/green.svg') }}">    
+                    <img id="avatar" class="avatar" src="{{ $user->avatar? $user->avatar:asset('/img/icon/user/green.svg') }}">    
                     <input type="file" name="avatar" id="input" class="sr-only" accept="image/*"/>
                 </label>
             </form>
