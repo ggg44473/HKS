@@ -1,12 +1,9 @@
-@extends('layouts.master')
-@section('title','My OKR')
-@section('content')
 <div class="container">
     <div class="row m-3">
         @if (auth()->user() == $user)
             <div class="col-md-3 font-weight-light"><h4>My OKR</h4> </div>
             <div class="col-md-5 offset-md-4 text-right">
-                <a href="{{ route('objective.create') }}" class="btn btn-primary" data-toggle="modal" data-target="#objective"><i class="fa fa-plus fa-sm"></i> 新增目標</a>
+                <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#objective"><i class="fa fa-plus fa-sm"></i> 新增目標</a>
                 <div class="btn-group">
                     <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fa fa-history fa-sm"></i> 歷史紀錄
@@ -25,9 +22,7 @@
             <div class="col-md-2 text-right">
                 <img class="avatar" src="{{ $user->avatar? asset($user->avatar):asset('/img/icon/user/green.svg') }}">    
             </div>
-            <div class="col-md-10 font-weight-light align-self-end"><h4>{{ $user->name }}</h4> </div>
-
-            
+            <div class="col-md-10 font-weight-light align-self-end"><h4>{{ $user->name }}</h4> </div>          
         @endif  
     </div>
     <!-- Modal -->
@@ -39,12 +34,12 @@
                         <span>&times;</span>
                     </button>
                 </div>
-                @include('okrs.create', ['type'=>'user']) 
+                @include('okrs.create', $route) 
             </div>
         </div>
     </div>
     @include('okrs.okr', $okrs)
-@endsection
+</div>
 
 
 

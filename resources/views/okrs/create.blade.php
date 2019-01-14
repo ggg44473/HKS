@@ -16,7 +16,7 @@
             </ul>
         </div>
         @endif
-        <form method="POST" action="{{ route('objective.store', $type) }}">
+        <form method="POST" action="{{ route( $route ) }}">
             @csrf
             <div class="form-group col-md-12">
                 <label for="objective_title">目標</label>
