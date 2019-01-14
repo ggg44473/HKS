@@ -79,7 +79,7 @@ class UserController extends Controller
             'user' => $user,
         ];
 
-        return view('okrs.settings', $data);
+        return view('user.settings', $data);
     }
 
     /**
