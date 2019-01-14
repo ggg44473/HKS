@@ -5,11 +5,14 @@ namespace App;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Laravelista\Comments\Commentable;
+use Spatie\MediaLibrary\HasMedia\HasMedia;
+use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use Spatie\MediaLibrary\Models\Media;
 
-class Action extends Model
+class Action extends Model implements HasMedia
 {
 
-    use Commentable;
+    use Commentable, HasMediaTrait;
 
     protected $fillable = [
         'user_id',
@@ -47,11 +50,29 @@ class Action extends Model
     {
         return $this->belongsTo('App\Priority', 'priority');
     }
-    // public function getFinishedAtAttribute($date)
-    // {
-    //     $time[]=explode("-",Carbon::parse($date)->toDateString());
 
-    //     return $time[0][1]."/".$time[0][2];
-    // }
+    public function addRelatedFiles()
+    {
+        $this->addAllMediaFromRequest()->each(function ($fileAdder) {
+            $fileAdder->sanitizingFileName(function ($fileName) {
+                return strtolower(str_replace(['#', '/', '\\', ' '], '-', $fileName));
+            })->toMediaCollection();
+        });
+    }
 
+    public function getRelatedFiles()
+    {
+        $files = [];
+
+        $media = $this->getMedia();
+        foreach ($media as $m) {
+            $files[] = [
+                'url' => $m->getUrl(),
+                'name' => $m->file_name,
+                'media_id' => $m->id
+            ];
+        }
+
+        return $files;
+    }
 }
