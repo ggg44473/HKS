@@ -73,12 +73,5 @@ Route::patch('actions/{action}/update', 'ActionsController@update')->name('actio
 Route::get('actions/{action}/show','ActionsController@show')->where('action','[0-9]+')->name('actions.show');
 //刪除個人Action
 Route::delete('actions/{action}/destroy', 'ActionsController@destroy')->name('actions.destroy');
-
-
-//下載上傳的檔案
-Route::get('file/{file}/actions/{post_id}', 'ActionsController@download')->name('download');
-//顯示上傳圖片
-Route::get('img/{file_path}', 'ActionsController@getImg')->name('img');
-//刪除檔案
-Route::get('actions/{action}/destroyFile/{file_path}', 'ActionsController@destroyFile')->name('actions.destroyFile');
-
+//刪除Action的檔案
+Route::get('actions/{action}/media/{media}/destroy', 'ActionsController@destroyFile')->name('actions.destroyFile');
