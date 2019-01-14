@@ -10,7 +10,7 @@ class Company extends Model
     use HasObjectiveTrait;
 
     protected $fillable = [
-        'name', 'description', 'user_id', 'image'
+        'name', 'description', 'user_id', 'avatar'
     ];
 
     public function user()

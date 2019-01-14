@@ -53,7 +53,7 @@ class UserController extends Controller
         }
         
         $data = [
-            'user' => $user,
+            'owner' => $user,
             'okrs' => $okrs,
             'colors' => $colors,
         ];

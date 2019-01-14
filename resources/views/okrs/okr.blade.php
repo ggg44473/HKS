@@ -10,7 +10,7 @@
                 <div class="col-md-4 offset-md-8">
                     <span class="font-weight-light pl-2 pr-2">起始日:{{ $okr['objective']->started_at }}</span>
                     <span class="font-weight-light pl-2 pr-2">結算日:{{ $okr['objective']->finished_at }}</span>
-                    @if (auth()->user() == $user)
+                    @if (auth()->user()->id == $admin)
                         <a class="close okr-close-btn">
                             <i class="far fa-edit"></i>
                         </a>
@@ -96,7 +96,7 @@
                     @endforeach
                 </div>
             </div>
-            @if (auth()->user() == $user)
+            @if (auth()->user()->id == $admin)
             <div class="col-md-10 offset-md-2">
                 <div class="row">  
                     @include('okrs.newkr',$okr['objective'])

@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Company;
 use App\Department;
 use App\Objective;
+use App\Http\Requests\ObjectiveRequest;
+use App\Charts\SampleChart;
 
 class DepartmentController extends Controller
 {
@@ -16,7 +18,7 @@ class DepartmentController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -25,7 +27,7 @@ class DepartmentController extends Controller
     public function listOKR($departmentId)
     {
         $department = Department::where('id', $departmentId)->first();
-        $colors = ['#06d6a0','#ef476f','#ffd166','#6eeb83','#f7b32b','#fcf6b1','#a9e5bb','#59c3c3','#d81159'];
+        $colors = ['#06d6a0', '#ef476f', '#ffd166', '#6eeb83', '#f7b32b', '#fcf6b1', '#a9e5bb', '#59c3c3', '#d81159'];
         $okrs = [];
 
         $objectives = $department->objectives()->get();
@@ -33,12 +35,12 @@ class DepartmentController extends Controller
             //  單一OKR圖表
             $datas = $obj->getRelatedKrRecord();
             $chart = new SampleChart;
-            if(!$datas){
+            if (!$datas) {
                 $chart->labels([0]);
-                $chart->dataset('None', 'line',[0]);
+                $chart->dataset('None', 'line', [0]);
             }
-            $chart->title('KR 達成率變化圖',22,'#216869',true, "'Helvetica Neue','Helvetica','Arial',sans-serif");
-            foreach($datas as $data){
+            $chart->title('KR 達成率變化圖', 22, '#216869', true, "'Helvetica Neue','Helvetica','Arial',sans-serif");
+            foreach ($datas as $data) {
                 $chart->labels($data['update']);
                 $chart->dataset($data['kr_id'], 'bar', $data['accomplish']);
             }
@@ -51,15 +53,21 @@ class DepartmentController extends Controller
                 "chart" => $chart,
             ];
         }
-        
+
         $data = [
             'user' => auth()->user(),
-            'department' => $department,
+            'owner' => $department,
             'okrs' => $okrs,
             'colors' => $colors,
         ];
 
         return view('organization.department.okr', $data);
+    }
+
+    public function storeObjective(ObjectiveRequest $request, Department $department)
+    {
+        $department->addObjective($request);
+        return redirect()->back();
     }
 
     /**
@@ -83,16 +91,16 @@ class DepartmentController extends Controller
             'company' => '',
             'departments' => [],
         ];
-        if(auth()->user()->company_id > 0){
-            $company = Company::where('id',auth()->user()->company_id)->first();
-            $department = Department::where('company_id',$company->id)->get();
-            $data=[
+        if (auth()->user()->company_id > 0) {
+            $company = Company::where('id', auth()->user()->company_id)->first();
+            $department = Department::where('company_id', $company->id)->get();
+            $data = [
                 'company' => $company,
                 'departments' => $department,
             ];
         }
 
-        return view('organization.department.create', $data);        
+        return view('organization.department.create', $data);
     }
 
     /**
@@ -107,16 +115,16 @@ class DepartmentController extends Controller
         $attr['description'] = $request->input('department_description');
         $attr['user_id'] = auth()->user()->id;
         $attr['company_id'] = auth()->user()->company_id;
-        if( substr( $request->department_parent, 0, 10 ) === "department"){
-            $attr['parent_department_id'] = preg_replace('/[^\d]/','',$request->department_parent);
+        if (substr($request->department_parent, 0, 10) === "department") {
+            $attr['parent_department_id'] = preg_replace('/[^\d]/', '', $request->department_parent);
         }
         $department = Department::create($attr);
 
-        if($request->hasFile('department_img_upload')){
+        if ($request->hasFile('department_img_upload')) {
             $file = $request->file('department_img_upload');
-            $filename = date('YmdHis').'.'.$file->getClientOriginalExtension();
-            $file->storeAs('public/department/'.$department->id, $filename);
-            $department->update(['image'=>'/storage/department/'.$department->id.'/'.$filename]);
+            $filename = date('YmdHis') . '.' . $file->getClientOriginalExtension();
+            $file->storeAs('public/department/' . $department->id, $filename);
+            $department->update(['avatar' => '/storage/department/' . $department->id . '/' . $filename]);
         }
 
         return redirect()->route('organization');

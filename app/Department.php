@@ -10,7 +10,7 @@ class Department extends Model
     use HasObjectiveTrait;
     
     protected $fillable = [
-        'name', 'description', 'parent_department_id', 'company_id', 'image', 'user_id', 
+        'name', 'description', 'parent_department_id', 'company_id', 'avatar', 'user_id', 
     ];
 
     public function company_id()

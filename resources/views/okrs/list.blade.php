@@ -1,8 +1,15 @@
 <div class="container">
     <div class="row m-3">
-        @if (auth()->user() == $user)
-            <div class="col-md-3 font-weight-light"><h4>My OKR</h4> </div>
-            <div class="col-md-5 offset-md-4 text-right">
+        @if ( auth()->user() == $owner)
+            <div class="col-md-7 font-weight-light"><h4>我的OKR</h4> </div>
+        @else
+            <div class="col-md-2 text-right">
+                <img class="avatar" src="{{ $owner->avatar? asset($owner->avatar):asset($image) }}">    
+            </div>
+            <div class="col-md-5 font-weight-light align-self-end"><h4>{{ $owner->name }}</h4> </div>          
+        @endif  
+        @if (auth()->user()->id == $admin)
+            <div class="col-md-5 text-right align-self-end">
                 <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#objective"><i class="fa fa-plus fa-sm"></i> 新增目標</a>
                 <div class="btn-group">
                     <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -18,12 +25,7 @@
                     </div>                        
                 </div>
             </div>
-        @else
-            <div class="col-md-2 text-right">
-                <img class="avatar" src="{{ $user->avatar? asset($user->avatar):asset('/img/icon/user/green.svg') }}">    
-            </div>
-            <div class="col-md-10 font-weight-light align-self-end"><h4>{{ $user->name }}</h4> </div>          
-        @endif  
+        @endif
     </div>
     <!-- Modal -->
     <div class="modal {{ count($errors) == 0 ? 'fade' : '' }}" id="objective" tabindex="-1" role="dialog">
@@ -38,7 +40,7 @@
             </div>
         </div>
     </div>
-    @include('okrs.okr', $okrs)
+    @include('okrs.okr', ['admin'=>$admin, $okrs])
 </div>
 
 
