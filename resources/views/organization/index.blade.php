@@ -9,7 +9,7 @@
             <div class="row justify-content-md-center">
                 <div class="col-md-4">
                     <div class="row">
-                        <a class="col-md-3" href="{{ route('company.okr', $company->id) }}">
+                        <a class="col-md-3" href="{{ route('company.okr') }}">
                             @if ($company->image)
                                 <img src="{{ $company->image }}" alt="" class="avatar text-center organizationIcon bg-white">
                             @else
@@ -19,7 +19,7 @@
                             @endif
                         </a>
                         <div class="col-md-9 align-self-center">
-                            <a href="{{ route('company.okr', $company->id) }}">
+                            <a href="{{ route('company.okr') }}">
                                 <p class="mb-0 font-weight-bold">公司名稱: {{ $company->name }}</p>
                                 <p class="mb-0">{{ $company->description }}</p>
                             </a>
@@ -32,7 +32,7 @@
                 @foreach ($departments as $department)
                     <div class="col-md-4">
                         <div class="row">
-                            <a class="col-md-3" href="{{ route('company.okr', $department->id) }}">
+                            <a class="col-md-3" href="{{ route('department.okr', $department->id) }}">
                                 @if ($department->image)
                                     <img src="{{ $department->image }}" alt="" class="avatar text-center organizationIcon bg-white">
                                 @else
@@ -42,7 +42,7 @@
                                 @endif
                             </a>
                             <div class="col-md-9 align-self-center">
-                                <a href="{{ route('company.okr', $department->id) }}">
+                                <a href="{{ route('department.okr', $department->id) }}">
                                     <p class="mb-0 font-weight-bold">部門名稱: {{ $department->name }}</p>
                                     <p class="mb-0">{{ $department->description }}</p>
                                 </a>

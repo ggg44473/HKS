@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Company;
 use App\Department;
+use App\Objective;
 
 class DepartmentController extends Controller
 {
@@ -16,6 +17,51 @@ class DepartmentController extends Controller
         $this->middleware('auth');
     }
     
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function listOKR($departmentId)
+    {
+        $departments = Department::where('id', $departmentId)->first();
+        $colors = ['#06d6a0','#ef476f','#ffd166','#6eeb83','#f7b32b','#fcf6b1','#a9e5bb','#59c3c3','#d81159'];
+        $okrs = [];
+
+        $objectives = Objective::where(['owner_type'=>'department','owner_id' => $departmentId])->orderBy('finished_at')->get();
+        foreach ($objectives as $obj) {
+            //  單一OKR圖表
+            $datas = $obj->getRelatedKRrecord();
+            $chart = new SampleChart;
+            if(!$datas){
+                $chart->labels([0]);
+                $chart->dataset('None', 'line',[0]);
+            }
+            $chart->title('KR 達成率變化圖',22,'#216869',true, "'Helvetica Neue','Helvetica','Arial',sans-serif");
+            foreach($datas as $data){
+                $chart->labels($data['update']);
+                $chart->dataset($data['kr_id'], 'bar', $data['accomplish']);
+            }
+
+            // 打包單張OKR
+            $okrs[] = [
+                "objective" => $obj,
+                "keyresults" => $obj->keyresults()->getResults(),
+                "actions" => $obj->actions()->getResults(),
+                "chart" => $chart,
+            ];
+        }
+        
+        $data = [
+            'user' => auth()->user(),
+            'department' => $company,
+            'okrs' => $okrs,
+            'colors' => $colors,
+        ];
+
+        return view('organization.department.okr', $data);
+    }
+
     /**
      * Display a listing of the resource.
      *

@@ -94,3 +94,5 @@ Route::get('organization/department/create', 'DepartmentController@create')->nam
 Route::post('organization/department/store', 'DepartmentController@store')->name('department.store');
 //顯示公司OKR
 Route::get('organization/company/okr', 'CompanyController@listOKR')->name('company.okr');
+//顯示部門OKR
+Route::get('organization/department/{department}/okr', 'DepartmentController@listOKR')->name('department.okr');
