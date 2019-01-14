@@ -54,7 +54,11 @@ class DepartmentController extends Controller
         
         $data = [
             'user' => auth()->user(),
+<<<<<<< HEAD
             'department' => $department,
+=======
+            'department' => $departments,
+>>>>>>> origin/viewFolder
             'okrs' => $okrs,
             'colors' => $colors,
         ];

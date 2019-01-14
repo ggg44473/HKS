@@ -1,6 +1,7 @@
 @extends('layouts.master')
 @section('title','公司OKR')
 @section('content')
+<<<<<<< HEAD
 <div class="container">
     <div class="row m-3">
         <div class="col-md-2 text-right">
@@ -46,4 +47,7 @@
         </div>
     </div>
 </div>
+=======
+    @include('okrs.list', ['route' => 'company.objective.store']) 
+>>>>>>> origin/viewFolder
 @endsection
