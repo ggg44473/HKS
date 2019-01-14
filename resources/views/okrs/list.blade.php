@@ -34,7 +34,7 @@
                         <span>&times;</span>
                     </button>
                 </div>
-                @include('okrs.create', $route) 
+                @include('okrs.create', ['route'=>$route]) 
             </div>
         </div>
     </div>

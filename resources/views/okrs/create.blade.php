@@ -16,7 +16,7 @@
             </ul>
         </div>
         @endif
-        <form method="POST" action="{{ route( $route ) }}">
+        <form method="POST" action="{{ $route }}">
             @csrf
             <div class="form-group col-md-12">
                 <label for="objective_title">目標</label>

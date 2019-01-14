@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Objective;
 use App\Charts\SampleChart;
- 
+use App\Http\Requests\ObjectiveRequest;
 
 class UserController extends Controller
 {
@@ -58,7 +58,7 @@ class UserController extends Controller
             'colors' => $colors,
         ];
 
-        return view('okrs.index', $data);
+        return view('user.okr', $data);
     }
 
     public function storeObjective(ObjectiveRequest $request, User $user) {

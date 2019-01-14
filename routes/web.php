@@ -55,16 +55,16 @@ Route::delete('actions/{action}/destroy', 'ActionsController@destroy')->name('ac
 //刪除Action的檔案
 Route::get('actions/{action}/media/{media}/destroy', 'ActionsController@destroyFile')->name('actions.destroyFile');
 
-// ###### 組織OKR ######
-// //組織OKR首頁
-// Route::get('organization', 'OrganizationController@index')->name('organization');
-// //新增公司
-// Route::post('organization/company/store', 'CompanyController@store')->name('company.store');
-// //新增部門頁面
-// Route::get('organization/department/create', 'DepartmentController@create')->name('department.create');
-// //儲存新增部門
-// Route::post('organization/department/store', 'DepartmentController@store')->name('department.store');
-// //顯示公司OKR
-// Route::get('organization/company/okr', 'CompanyController@listOKR')->name('company.okr');
-// //顯示部門OKR
-// Route::get('organization/department/{department}/okr', 'DepartmentController@listOKR')->name('department.okr');
+###### 組織OKR ######
+//組織OKR首頁
+Route::get('organization', 'OrganizationController@index')->name('organization');
+//新增公司
+Route::post('organization/company/store', 'CompanyController@store')->name('company.store');
+//新增部門頁面
+Route::get('organization/department/create', 'DepartmentController@create')->name('department.create');
+//儲存新增部門
+Route::post('organization/department/store', 'DepartmentController@store')->name('department.store');
+//顯示公司OKR
+Route::get('organization/company/okr', 'CompanyController@listOKR')->name('company.okr');
+//顯示部門OKR
+Route::get('organization/department/{department}/okr', 'DepartmentController@listOKR')->name('department.okr');
