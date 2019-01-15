@@ -13,17 +13,15 @@
                 <small>Updated : {{$action->updated_at}}</small><br />
                 | <small>
                     執行者:
-                    <a href="{{ route('user.okr',$action->user()->getResults()->id) }}">
-                        <img src="{{ $action->user()->getResults()->avatar? asset('storage/avatar/'.$action->user()->getResults()->id.'/'.$action->user()->getResults()->avatar):asset('/img/icon/user/green.svg') }}"
-                            class="avatar">
+                    <a href="{{ route('user.okr', $action->user()->getResults()->id) }}">
+                        <img src="{{ $action->user()->getResults()->getAvatar() }}" class="avatar">
                     </a>
                     {{$action->user()->getResults()->name}}
                 </small> |
                 <small>
                     指派者:
                     <a href="{{ route('user.okr',$action->assignee()->getResults()->id) }}">
-                        <img src="{{ $action->assignee()->getResults()->avatar? asset('storage/avatar/'.$action->assignee()->getResults()->id.'/'.$action->assignee()->getResults()->avatar):asset('/img/icon/user/green.svg') }}"
-                            class="avatar">
+                        <img src="{{ $action->assignee()->getResults()->getAvatar() }}" class="avatar">
                     </a>
                     {{$action->assignee()->getResults()->name}}
                 </small> |
