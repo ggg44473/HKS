@@ -78,9 +78,10 @@ class Action extends Model implements HasMedia
         $media = $this->getMedia();
         foreach ($media as $m) {
             $files[] = [
-                'url' => $m->getUrl(),
+                'media_id' => $m->id,
                 'name' => $m->file_name,
-                'media_id' => $m->id
+                'url' => $m->getUrl(),
+                'updated_at' => $m->updated_at->format('Y-m-d H:i:s')
             ];
         }
 

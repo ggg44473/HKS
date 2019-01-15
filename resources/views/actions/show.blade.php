@@ -47,14 +47,18 @@
         </div>
         <div class="col-md-11">
             @if(!empty($files))
+            <div class="row">
                 @foreach($files as $file)
-                    <a href="{{ $file['url'] }}">{{ $file['name'] }}</a> |
+                <div class="col-xs-12 col-md-6 col-lg-4">
+                    {{ $file['updated_at'] }} <br>
+                    <a href="{{ $file['url'] }}">{{ $file['name'] }}</a>
+                </div>
                 @endforeach
+            </div>
             @endif
-        </div>
-    </div><br />
-    <hr />
-    @comments(['model' => $action])
-    @endcomments
-</div>
-@endsection
+        </div><br />
+        <hr />
+        @comments(['model' => $action])
+        @endcomments
+    </div>
+    @endsection

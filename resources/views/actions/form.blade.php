@@ -49,13 +49,17 @@
     </div>
     <div class="col-md-12">
         @if(!empty($files))
+        <div class="row">
             @foreach($files as $file)
-                <a href="{{ route('actions.destroyFile', ['action' => $action->id, 'media' => $file['media_id']]) }}"><i class="fas fa-times"></i></a>
-                    :
-                <a href="{{ $file['url'] }}">
-                    {{ $file['name'] }}
-                </a> |
+            <div class="col-xs-12 col-md-6 col-lg-4">
+                {{ $file['updated_at'] }} <br>
+                <a href="{{ route('actions.destroyFile', ['action' => $action->id, 'media' => $file['media_id']]) }}">
+                    <i class="fas fa-times" style="color: red"></i>
+                </a>
+                <a href="{{ $file['url'] }}">{{ $file['name'] }}</a>
+            </div>
             @endforeach
+        </div>
         @endif
     </div>
     <div class="form-group col-md-11">
