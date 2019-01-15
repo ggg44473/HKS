@@ -20,19 +20,29 @@
                         </a>
                         <div class="col-md-9 align-self-center">
                             <a href="{{ route('company.okr') }}">
-                                <p class="mb-0 font-weight-bold">公司名稱: {{ $company->name }}</p>
-                                <p class="mb-0">{{ $company->description }}</p>
+                                <p class="mb-0 font-weight-bold text-black-50">公司名稱: {{ $company->name }}</p>
+                                <p class="mb-0 text-black-50">{{ $company->description }}</p>
                             </a>
-                            <a href="{{ route('department.create') }}"><i class="fas fa-plus-circle"></i> 新增部門</a>
+                            @if ($company->user_id == auth()->user()->id)
+                                <a href="{{ route('department.create') }}" data-toggle="tooltip" data-placement="bottom" title="新增部門"><i class="fas fa-plus-circle u-margin-4"></i></a>
+                                <a href="#" data-toggle="tooltip" data-placement="bottom" title="新增成員"><i class="fas fa-user-plus u-margin-4"></i></a>
+                                <a href="{{ route('company.edit') }}" data-toggle="tooltip" data-placement="bottom" title="編輯組織"><i class="fas fa-edit u-margin-4"></i></a>
+                                {{-- <a href="{{ route('company.destroy', $company->id) }}" data-toggle="tooltip" data-placement="bottom" title="刪除組織"><i class="fas fa-trash-alt u-margin-4"></i></a> --}}
+                                <a href="#" onclick="document.getElementById('companyDelete').submit()"><i class="fas fa-trash"></i></a>
+                                <form method="POST" id="companyDelete" action="{{ route('company.destroy') }}">
+                                    @csrf
+                                    {{ method_field('DELETE') }}
+                                </form>
+                            @endif
                         </div>
                     </div>
                 </div>
             </div>
             <div class="row justify-content-md-center u-mt-16">
                 @foreach ($departments as $department)
-                    <div class="col-md-3 bg-white u-margin-16">
+                    <div class="col-md-3 u-margin-16">
                         <div class="row">
-                            <a class="col-md-4" href="{{ route('department.okr', $department->id) }}">
+                            <a href="{{ route('department.okr', $department->id) }}" class="u-ml-8 u-mr-8">
                                 @if ($department->image)
                                     <img src="{{ $department->image }}" alt="" class="avatar text-center organizationIcon bg-white">
                                 @else
@@ -41,16 +51,21 @@
                                     </div>
                                 @endif
                             </a>
-                            <div class="col-md-8 align-self-center">
+                            <div class="u-ml-8 u-mr-8 align-self-center">
                                 <a href="{{ route('department.okr', $department->id) }}">
-                                    <span class="mb-0 font-weight-bold">{{ $department->name }}</span>
+                                    <p class="mb-0 font-weight-bold text-black-50">{{ $department->name }}</p>
                                 </a>
-                                <i class="fas fa-cog u-ml-8 text-secondary"></i>
-                                {{-- <a href="{{ route('department.create') }}" class="u-ml-4 u-mr-4"  data-toggle="tooltip" data-placement="bottom" title="Tooltip on bottom">
-                                    <i class="fas fa-plus-circle"></i>
-                                </a>
-                                <a href="#" class="u-ml-4 u-mr-4"><i class="fas fa-user-plus"></i></a>
-                                <a href="{{ route('department.edit', $department->id) }}" class="u-ml-4 u-mr-4"></a> --}}
+                                @if ($department->user_id == auth()->user()->id)
+                                    <a href="{{ route('department.create') }}" data-toggle="tooltip" data-placement="bottom" title="新增部門"><i class="fas fa-plus-circle u-margin-4"></i></a>
+                                    <a href="#" data-toggle="tooltip" data-placement="bottom" title="新增成員"><i class="fas fa-user-plus u-margin-4"></i></a>
+                                    <a href="{{ route('department.edit', $department->id) }}" data-toggle="tooltip" data-placement="bottom" title="編輯部門"><i class="fas fa-edit u-margin-4"></i></a>
+                                    {{-- <a href="{{ route('department.destroy', $department->id) }}" data-toggle="tooltip" data-placement="bottom" title="刪除部門"><i class="fas fa-trash-alt u-margin-4"></i></a> --}}
+                                    <a href="#" onclick="document.getElementById('departmentDelete').submit()"><i class="fas fa-trash"></i></a>
+                                    <form method="POST" id="departmentDelete" action="{{ route('department.destroy', $department->id) }}">
+                                        @csrf
+                                        {{ method_field('DELETE') }}
+                                    </form>    
+                                @endif
                             </div>
                         </div>
                     </div>
