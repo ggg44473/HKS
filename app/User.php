@@ -34,4 +34,8 @@ class User extends Authenticatable
     {
         return $this->avatar? $this->avatar:'/img/icon/user/green.svg';
     }
+
+    public function getOKrRoute(){
+        return route('user.okr', $this->id);
+    }
 }

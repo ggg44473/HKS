@@ -3,10 +3,10 @@
         @if ( auth()->user() == $owner)
             <div class="col-md-7 font-weight-light"><h4>我的OKR</h4> </div>
         @else
-            <div class="col-md-2 text-right">
-                <img class="avatar" src="{{ $owner->avatar }}">    
-            </div>
-            <div class="col-md-5 font-weight-light align-self-end"><h4>{{ $owner->name }}</h4> </div>          
+            <a class="col-md-7" href="{{ $owner->getOKrRoute() }}">
+                <img class="avatar u-ml-8 u-mr-8" src="{{ $owner->getAvatar() }}">
+                <h4 class="list-inline-item u-ml-8 u-mr-8 text-black-50">{{ $owner->name }}</h4>
+            </a>       
         @endif  
         @if (auth()->user()->id == $admin)
             <div class="col-md-5 text-right align-self-end">

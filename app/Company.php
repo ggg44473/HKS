@@ -22,4 +22,8 @@ class Company extends Model
     {
         return $this->avatar? $this->avatar:'/img/icon/building/g.svg';
     }
+
+    public function getOKrRoute(){
+        return route('company.okr');
+    }
 }
