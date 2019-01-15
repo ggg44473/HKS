@@ -58,17 +58,31 @@ Route::get('actions/{action}/media/{media}/destroy', 'ActionsController@destroyF
 ###### 組織OKR ######
 //組織OKR首頁
 Route::get('organization', 'OrganizationController@index')->name('organization');
+
 //新增公司
 Route::post('organization/company/store', 'CompanyController@store')->name('company.store');
+//編輯公司頁面
+Route::get('organization/company/edit', 'CompanyController@edit')->name('company.edit');
+//更新公司
+Route::patch('organization/company/update', 'CompanyController@update')->name('company.update');
+//刪除公司
+Route::delete('organization/company/destroy', 'CompanyController@destroy')->name('company.destroy');
+//顯示公司OKR
+Route::get('organization/company/okr', 'CompanyController@listOKR')->name('company.okr');
+//公司新增O
+Route::post('organization/company/{company}/objective/store', 'CompanyController@storeObjective')->name('company.objective.store');
+
 //新增部門頁面
 Route::get('organization/department/create', 'DepartmentController@create')->name('department.create');
 //儲存新增部門
 Route::post('organization/department/store', 'DepartmentController@store')->name('department.store');
-//顯示公司OKR
-Route::get('organization/company/okr', 'CompanyController@listOKR')->name('company.okr');
+//編輯部門頁面
+Route::get('organization/department/{department}/edit', 'DepartmentController@edit')->name('department.edit');
+//更新公司
+Route::patch('organization/department/{department}/update', 'DepartmentController@update')->name('department.update');
+//刪除部門
+Route::delete('organization/department/{department}/destroy', 'DepartmentController@destroy')->name('department.destroy');
 //顯示部門OKR
 Route::get('organization/department/{department}/okr', 'DepartmentController@listOKR')->name('department.okr');
-//公司新增O
-Route::post('organization/company/{company}/objective/store', 'CompanyController@storeObjective')->name('company.objective.store');
 //部門新增O
 Route::post('organization/department/{department}/objective/store', 'DepartmentController@storeObjective')->name('department.objective.store');

@@ -8,6 +8,7 @@ use App\Department;
 use App\Objective;
 use App\Http\Requests\ObjectiveRequest;
 use App\Charts\SampleChart;
+use App\User;
 
 class DepartmentController extends Controller
 {
@@ -144,34 +145,51 @@ class DepartmentController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  Department $department
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Department $department)
     {
-        //
+        return view('organization.department.edit', ['department'=>$department]);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  Department $department
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Department $department)
     {
-        //
+        $attr['name'] = $request->department_name;
+        $attr['description'] = $request->department_description;
+        $department->update($attr);
+
+        if($request->hasFile('department_img_upload')){
+            $file = $request->file('department_img_upload');
+            $filename = date('YmdHis').'.'.$file->getClientOriginalExtension();
+            $file->storeAs('public/department/'.$department->id, $filename);
+            $department->update(['avatar'=>'/storage/department/'.$department->id.'/'.$filename]);
+        }
+
+        return redirect()->route('organization');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  Department $department
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Department $department)
     {
-        //
+        $users = User::where(['company_id'=>auth()->user()->company_id,'department_id'=>$department->id])->get();
+        foreach ($users as $user) {
+            $user->update(['department_id'=>null]);            
+        }
+        $department->delete();
+
+        return redirect('organization');
     }
 }

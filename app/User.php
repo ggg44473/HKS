@@ -38,4 +38,8 @@ class User extends Authenticatable
     public function getOKrRoute(){
         return route('user.okr', $this->id);
     }
+    
+    public function company(){
+        return $this->hasOne(Company::class);
+    }
 }

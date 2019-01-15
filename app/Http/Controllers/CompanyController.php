@@ -113,7 +113,7 @@ class CompanyController extends Controller
         
         User::where('id',auth()->user()->id)->update(['company_id' => $company->id]);
 
-        return redirect()->route('department.create');
+        return redirect()->route('organization');
     }
 
     /**
@@ -130,35 +130,54 @@ class CompanyController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit()
     {
-        //
+        $company = auth()->user()->company()->first();
+        $data = [
+            'company' => $company,
+        ];
+        return view('organization.company.edit', $data);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $company = Company::find(auth()->user()->company_id);
+        $attr['name'] = $request->company_name;
+        $attr['description'] = $request->company_description;
+        $company->update($attr);
+
+        if($request->hasFile('company_img_upload')){
+            $file = $request->file('company_img_upload');
+            $filename = date('YmdHis').'.'.$file->getClientOriginalExtension();
+            $file->storeAs('public/company/'.$company->id, $filename);
+            $company->update(['avatar'=>'/storage/company/'.$company->id.'/'.$filename]);
+        }
+
+        return redirect()->route('organization');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy()
     {
-        //
+        $users = User::where('company_id',auth()->user()->company_id)->get();
+        foreach ($users as $user) {
+            $user->update(['company_id'=>null, 'department_id'=>null]);            
+        }
+        auth()->user()->company()->first()->delete();
+
+        return redirect('organization');
     }
 
     /**
