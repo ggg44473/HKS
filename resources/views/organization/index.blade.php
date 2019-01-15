@@ -27,7 +27,6 @@
                                 <a href="{{ route('department.create') }}" data-toggle="tooltip" data-placement="bottom" title="新增部門"><i class="fas fa-plus-circle u-margin-4"></i></a>
                                 <a href="#" data-toggle="tooltip" data-placement="bottom" title="新增成員"><i class="fas fa-user-plus u-margin-4"></i></a>
                                 <a href="{{ route('company.edit') }}" data-toggle="tooltip" data-placement="bottom" title="編輯組織"><i class="fas fa-edit u-margin-4"></i></a>
-                                {{-- <a href="{{ route('company.destroy', $company->id) }}" data-toggle="tooltip" data-placement="bottom" title="刪除組織"><i class="fas fa-trash-alt u-margin-4"></i></a> --}}
                                 <a href="#" onclick="document.getElementById('companyDelete').submit()"><i class="fas fa-trash"></i></a>
                                 <form method="POST" id="companyDelete" action="{{ route('company.destroy') }}">
                                     @csrf
@@ -40,11 +39,11 @@
             </div>
             <div class="row justify-content-md-center u-mt-16">
                 @foreach ($departments as $department)
-                    <div class="col-md-3 u-margin-16">
+                    <div class="col-md-3 u-margin-16 bg-white">
                         <div class="row">
-                            <a href="{{ route('department.okr', $department->id) }}" class="u-ml-8 u-mr-8">
-                                @if ($department->image)
-                                    <img src="{{ $department->image }}" alt="" class="avatar text-center organizationIcon bg-white">
+                            <a href="{{ route('department.okr', $department['parent']->id) }}" class="u-ml-8 u-mr-8">
+                                @if ($department['parent']->getAvatar())
+                                    <img src="{{ $department['parent']->getAvatar() }}" alt="" class="avatar text-center organizationIcon bg-white">
                                 @else
                                     <div class="avatar text-center organizationIcon bg-white">
                                         <i class="fas fa-building text-primary"></i>
@@ -52,22 +51,49 @@
                                 @endif
                             </a>
                             <div class="u-ml-8 u-mr-8 align-self-center">
-                                <a href="{{ route('department.okr', $department->id) }}">
-                                    <p class="mb-0 font-weight-bold text-black-50">{{ $department->name }}</p>
+                                <a href="{{ route('department.okr', $department['parent']->id) }}">
+                                    <p class="mb-0 font-weight-bold text-black-50">{{ $department['parent']->name }}</p>
                                 </a>
-                                @if ($department->user_id == auth()->user()->id)
+                                @if ($department['parent']->user_id == auth()->user()->id)
                                     <a href="{{ route('department.create') }}" data-toggle="tooltip" data-placement="bottom" title="新增部門"><i class="fas fa-plus-circle u-margin-4"></i></a>
                                     <a href="#" data-toggle="tooltip" data-placement="bottom" title="新增成員"><i class="fas fa-user-plus u-margin-4"></i></a>
-                                    <a href="{{ route('department.edit', $department->id) }}" data-toggle="tooltip" data-placement="bottom" title="編輯部門"><i class="fas fa-edit u-margin-4"></i></a>
-                                    {{-- <a href="{{ route('department.destroy', $department->id) }}" data-toggle="tooltip" data-placement="bottom" title="刪除部門"><i class="fas fa-trash-alt u-margin-4"></i></a> --}}
-                                    <a href="#" onclick="document.getElementById('departmentDelete').submit()"><i class="fas fa-trash"></i></a>
-                                    <form method="POST" id="departmentDelete" action="{{ route('department.destroy', $department->id) }}">
+                                    <a href="{{ route('department.edit', $department['parent']->id) }}" data-toggle="tooltip" data-placement="bottom" title="編輯部門"><i class="fas fa-edit u-margin-4"></i></a>
+                                    <a href="#" onclick="document.getElementById('departmentDelete{{ $department['parent']->id }}').submit()"><i class="fas fa-trash"></i></a>
+                                    <form method="POST" id="departmentDelete{{ $department['parent']->id }}" action="{{ route('department.destroy', $department['parent']->id) }}">
                                         @csrf
                                         {{ method_field('DELETE') }}
                                     </form>    
                                 @endif
                             </div>
                         </div>
+                        @foreach ($department['sub'] as $sub)
+                            <div class="row">
+                                <a href="{{ route('department.okr', $sub->id) }}" class="u-ml-8 u-mr-8">
+                                    @if ($sub->getAvatar())
+                                        <img src="{{ $sub->getAvatar() }}" alt="" class="avatar text-center organizationIcon bg-white">
+                                    @else
+                                        <div class="avatar text-center organizationIcon bg-white">
+                                            <i class="fas fa-building text-primary"></i>
+                                        </div>
+                                    @endif
+                                </a>
+                                <div class="u-ml-8 u-mr-8 align-self-center">
+                                    <a href="{{ route('department.okr', $sub->id) }}">
+                                        <p class="mb-0 font-weight-bold text-black-50">{{ $sub->name }}</p>
+                                    </a>
+                                    @if ($sub->user_id == auth()->user()->id)
+                                        <a href="{{ route('department.create') }}" data-toggle="tooltip" data-placement="bottom" title="新增部門"><i class="fas fa-plus-circle u-margin-4"></i></a>
+                                        <a href="#" data-toggle="tooltip" data-placement="bottom" title="新增成員"><i class="fas fa-user-plus u-margin-4"></i></a>
+                                        <a href="{{ route('department.edit', $sub->id) }}" data-toggle="tooltip" data-placement="bottom" title="編輯部門"><i class="fas fa-edit u-margin-4"></i></a>
+                                        <a href="#" onclick="document.getElementById('subDepartmentDelete{{ $sub->id }}').submit()"><i class="fas fa-trash"></i></a>
+                                        <form method="POST" id="subDepartmentDelete{{ $sub->id }}" action="{{ route('department.destroy', $sub->id) }}">
+                                            @csrf
+                                            {{ method_field('DELETE') }}
+                                        </form>    
+                                    @endif
+                                </div>
+                            </div>
+                        @endforeach
                     </div>
                 @endforeach
             </div>
