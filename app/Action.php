@@ -24,10 +24,15 @@ class Action extends Model implements HasMedia
         'started_at',
         'finished_at',
     ];
+    protected $touches = ['objective'];
 
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+    public function objective()
+    {
+        return $this->belongsTo(Objective::class);
     }
 
     public function assignee()
