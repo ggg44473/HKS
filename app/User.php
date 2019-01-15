@@ -29,4 +29,13 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function getAvatar()
+    {
+        return $this->avatar? $this->avatar:'/img/icon/user/green.svg';
+    }
+
+    public function getOKrRoute(){
+        return route('user.okr', $this->id);
+    }
 }

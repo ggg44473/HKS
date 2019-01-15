@@ -34,7 +34,7 @@ class OrganizationController extends Controller
                     "sub" => Department::where(['company_id' => auth()->user()->company_id, 'parent_department_id' => $department->id])->get(),
                 ];
             }
-            // $data['departments'] 
+            $data['departments'] = $departments;
         }
         return view('organization.index', $data);
     }

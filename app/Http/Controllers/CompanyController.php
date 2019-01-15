@@ -8,6 +8,7 @@ use App\Company;
 use App\User;
 use App\Objective;
 use App\Charts\SampleChart;
+use App\Http\Requests\ObjectiveRequest;
 
 class CompanyController extends Controller
 {
@@ -56,12 +57,18 @@ class CompanyController extends Controller
         
         $data = [
             'user' => auth()->user(),
-            'company' => $company,
+            'owner' => $company,
             'okrs' => $okrs,
             'colors' => $colors,
         ];
 
         return view('organization.company.okr', $data);
+    }
+
+    public function storeObjective(ObjectiveRequest $request, Company $company)
+    {
+        $company->addObjective($request);
+        return redirect()->back();
     }
 
     /**
@@ -101,7 +108,7 @@ class CompanyController extends Controller
             $file = $request->file('company_img_upload');
             $filename = date('YmdHis').'.'.$file->getClientOriginalExtension();
             $file->storeAs('public/company/'.$company->id, $filename);
-            $company->update(['image'=>'/storage/company/'.$company->id.'/'.$filename]);
+            $company->update(['avatar'=>'/storage/company/'.$company->id.'/'.$filename]);
         }
         
         User::where('id',auth()->user()->id)->update(['company_id' => $company->id]);

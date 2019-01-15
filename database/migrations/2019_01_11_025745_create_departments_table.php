@@ -21,7 +21,7 @@ class CreateDepartmentsTable extends Migration
             $table->foreign('parent_department_id')->references('id')->on('departments')->onDelete('cascade');
             $table->integer('company_id')->unsigned();
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
-            $table->string('image')->nullable();
+            $table->string('avatar')->nullable();
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();

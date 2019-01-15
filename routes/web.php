@@ -68,3 +68,7 @@ Route::post('organization/department/store', 'DepartmentController@store')->name
 Route::get('organization/company/okr', 'CompanyController@listOKR')->name('company.okr');
 //顯示部門OKR
 Route::get('organization/department/{department}/okr', 'DepartmentController@listOKR')->name('department.okr');
+//公司新增O
+Route::post('organization/company/{company}/objective/store', 'CompanyController@storeObjective')->name('company.objective.store');
+//部門新增O
+Route::post('organization/department/{department}/objective/store', 'DepartmentController@storeObjective')->name('department.objective.store');

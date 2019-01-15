@@ -9,9 +9,9 @@
             <div class="invalid-feedback ml-4">
                 Your message is required.
             </div>
-            <small class="form-text text-muted"><a target="_blank" href="https://help.github.com/articles/basic-writing-and-formatting-syntax">Markdown</a> cheatsheet.</small>
+            {{-- <small class="form-text text-muted"><a target="_blank" href="https://help.github.com/articles/basic-writing-and-formatting-syntax">Markdown</a> cheatsheet.</small> --}}
         </div>
-        <button type="submit" class="btn btn-sm btn-outline-success text-uppercase">Submit</button>
+        <button type="submit" class="btn btn-sm btn-outline-success text-uppercase u-mt-16">Submit</button>
     </form>
 </div>
 <br />
