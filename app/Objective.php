@@ -39,7 +39,7 @@ class Objective extends Model
     {
         return $this->hasManyThrough('App\KeyResultRecord', 'App\KeyResult', 'objective_id', 'key_results_id');
     }
-    
+
     public function getRelatedKrRecord()
     {
         //宣告

@@ -1,7 +1,6 @@
 @section('script')
     <script src="{{ asset('js/editbtn.js') }}" defer></script>       
 @endsection
-
 @foreach($okrs as $okr)
     <div class="card shadow-sm m-4 okr-card">
         <div class="card-header bg-transparent" style="border-bottom: none;">
@@ -73,11 +72,11 @@
                                 <div class="pt-3" style="display:inline-block; width:60%;">
                                     <div class="progress">
                                         @if($kr->accomplishRate()<0)
-                                            <div class="progress-bar bg-danger" role="progressbar" style="width:{{ abs($kr->accomplishRate()) }}%" aria-valuenow="25" aria-valuemin="{{ $kr->initial }}" aria-valuemax="{{ $kr->target }}">
+                                            <div class="progress-bar bg-danger" data-toggle="tooltip" data-placement="top" title="當前:{{ $kr->current_value }} 目標:{{ $kr->target_value }} 權重:{{ $kr->weight }}" role="progressbar" style="width:{{ abs($kr->accomplishRate()) }}%" aria-valuenow="25">
                                             {{ $kr->accomplishRate() }}%
                                             </div>
                                         @else
-                                            <div class="progress-bar" role="progressbar" style="width:{{ $kr->accomplishRate() }}%" aria-valuenow="25" aria-valuemin="{{ $kr->initial }}" aria-valuemax="{{ $kr->target }}">
+                                            <div class="progress-bar" data-toggle="tooltip" data-placement="top" title="當前:{{ $kr->current_value }} 目標:{{ $kr->target_value }} 權重:{{ $kr->weight }}" role="progressbar" style="width:{{ $kr->accomplishRate() }}%" aria-valuenow="25">
                                             {{ $kr->accomplishRate() }}%
                                             </div>
                                         @endif

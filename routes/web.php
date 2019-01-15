@@ -16,6 +16,8 @@ Route::get('/', ['middleware' => 'guest', function(){ return view('welcome'); }]
 Auth::routes();
 
 ######  個人綜覽  ######
+// 排序OKR頁面
+Route::get('user/{user}/search', 'UserController@index')->name('user.index');
 // 顯示個人OKR
 Route::get('user/{user}/okr', 'UserController@listOKR')->name('user.okr');
 // 顯示個人帳號設定
