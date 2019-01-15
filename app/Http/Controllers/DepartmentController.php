@@ -68,7 +68,7 @@ class DepartmentController extends Controller
     public function storeObjective(ObjectiveRequest $request, Department $department)
     {
         $department->addObjective($request);
-        return redirect()->back();
+        return redirect()->route('department.okr', $department->id);
     }
 
     /**

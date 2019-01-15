@@ -68,7 +68,7 @@ class CompanyController extends Controller
     public function storeObjective(ObjectiveRequest $request, Company $company)
     {
         $company->addObjective($request);
-        return redirect()->back();
+        return redirect()->route('company.okr');
     }
 
     /**

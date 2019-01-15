@@ -143,7 +143,7 @@ class UserController extends Controller
 
     public function storeObjective(ObjectiveRequest $request, User $user) {
         $user->addObjective($request);
-        return redirect()->back();
+        return redirect()->route('user.okr', $user->id);
     }
 
     /**
