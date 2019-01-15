@@ -5,7 +5,7 @@
 @else
   <li id="comment-{{ $comment->id }}" class="media">
 @endif
-    <img class="avatar ml-3 mr-4" src="{{ $comment->commenter->avatar? asset($comment->commenter->avatar):asset('/img/icon/user/green.svg') }}" alt="{{ $comment->commenter->name }} Avatar">    
+    <img class="avatar ml-3 mr-4" src="{{ $comment->commenter->getAvatar() }}" alt="{{ $comment->commenter->name }} Avatar">    
     <div class="media-body">
         <h5 class="mt-0 mb-1">{{ $comment->commenter->name }} <small class="text-muted">- {{ $comment->created_at->diffForHumans() }}</small></h5>
         <div style="white-space: pre-wrap;">{!! $markdown->line($comment->comment) !!}</div>

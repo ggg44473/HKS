@@ -4,7 +4,7 @@
             <div class="col-md-7 font-weight-light"><h4>我的OKR</h4> </div>
         @else
             <div class="col-md-2 text-right">
-                <img class="avatar" src="{{ $owner->avatar? asset($owner->avatar):asset($image) }}">    
+                <img class="avatar" src="{{ $owner->avatar }}">    
             </div>
             <div class="col-md-5 font-weight-light align-self-end"><h4>{{ $owner->name }}</h4> </div>          
         @endif  
