@@ -52,7 +52,6 @@ class KrController extends Controller
         $attr['target_value'] = $request->input('krs_tar');
         $attr['current_value'] = $request->input('krs_now');
         $attr['weight'] = $request->input('krs_weight');
-
         KeyResult::create($attr);
         return redirect()->back();
     }

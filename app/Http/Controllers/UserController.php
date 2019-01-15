@@ -44,6 +44,7 @@ class UserController extends Controller
                     $query->where('started_at', '>=', $search);
                 });
         }
+        
         #判斷終點日期搜索是否為空        
         if ($search = $request->input('fin_date', '')) {                                     
             $builder->where(function ($query) use ($search) {                         
@@ -118,7 +119,7 @@ class UserController extends Controller
             $chart->title('KR 達成率變化圖',22,'#216869',true, "'Helvetica Neue','Helvetica','Arial',sans-serif");
             foreach($datas as $data){
                 $chart->labels($data['update']);
-                $chart->dataset($data['kr_id'], 'bar', $data['accomplish']);
+                $chart->dataset($data['kr_id'], 'line', $data['accomplish']);
             }
             // 打包單張OKR
             $okrs[] = [
