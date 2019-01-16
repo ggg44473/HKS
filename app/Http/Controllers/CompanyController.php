@@ -9,6 +9,7 @@ use App\User;
 use App\Objective;
 use App\Charts\SampleChart;
 use App\Http\Requests\ObjectiveRequest;
+use App\Department;
 
 class CompanyController extends Controller
 {
@@ -88,7 +89,15 @@ class CompanyController extends Controller
      */
     public function create()
     {
-        //
+        $company = Company::where('id', auth()->user()->company_id)->first();
+        $departments = Department::where('company_id', $company->id)->get();
+        $data = [
+            'parent' => $company,
+            'self' => '',
+            'children' => $departments,
+        ];
+
+        return view('organization.department.create', $data);
     }
 
     /**

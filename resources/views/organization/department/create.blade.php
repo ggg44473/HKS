@@ -28,11 +28,14 @@
                             <div class="form-group u-ml-16 w-25" style="display:inline-block">
                                 <label for="department_parent">隸屬組織<strong class="invalid-feedback"></strong></label>
                                 <select name="department_parent" id="department_parent" class="form-control">
-                                    @if ($company != null)
-                                        <option value="company{{ $company->id }}" selected>{{ $company->name }}</option>                                        
+                                    @if ($parent)
+                                        <option value="parent{{ $parent->id }}" selected>{{ $parent->name }}</option>
                                     @endif
-                                    @foreach ($departments as $department)
-                                        <option value="department{{ $department->id }}">{{ $department->name }}</option>                                        
+                                    @if ($self)
+                                        <option value="parent{{ $self->id }}" selected>{{ $self->name }}</option>
+                                    @endif
+                                    @foreach ($children as $child)
+                                        <option value="department{{ $child->id }}">{{ $child->name }}</option>                                        
                                     @endforeach
                                 </select>
                             </div>
@@ -43,7 +46,7 @@
                             <div class="form-row">
                                 <div class="form-group col-md-12">
                                     <label for="department_description">部門概述<strong class="invalid-feedback"></strong></label>
-                                    <textarea type="text" name="department_description" id="department_description" value="" placeholder="請輸入部門概述" class="form-control {{ $errors->has('company_description') ? ' is-invalid' : '' }}" required></textarea>
+                                    <textarea type="text" name="department_description" id="department_description" value="" placeholder="請輸入部門概述" class="form-control {{ $errors->has('department_description') ? ' is-invalid' : '' }}" required></textarea>
                                 </div>
                             </div>
                         </div>
