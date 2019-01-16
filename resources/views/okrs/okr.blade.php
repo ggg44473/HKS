@@ -66,7 +66,7 @@
                 <div class="col-md-10">
                     @foreach ($okr['keyresults'] as $kr)
                         <div class="row pt-2">
-                            <span class="col-md-5 pt-2" style="border-left: 5px solid {{ $colors[($kr->id)%9] }} "> no.{{ $kr->id }} : {{ $kr->title }} </span>
+                            <span class="col-md-5 pt-2" style="border-left: 5px solid {{ $kr->color() }} "> no.{{ $kr->id }} : {{ $kr->title }} </span>
                             <div class="col-md-7 row justify-content-end">
                                 <span class="pt-2 pr-4">{{ $kr->confidence }} / 10  <i class="fas fa-heart" style="color: #FFB5B1;"></i></span>                            
                                 <div class="pt-3" style="display:inline-block; width:60%;">

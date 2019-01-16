@@ -6,7 +6,7 @@
             {{ $action->finished_at }}
             <span class="badge badge-pill badge-{{$action->priority()->getResults()->color}}">{{$action->priority()->getResults()->priority}}</span>
         </div>
-        <div class="col-md-7 mb-1" style="border-left: 5px solid {{ $colors[($action->related_kr)%9] }} ">
+        <div class="col-md-7 mb-1" style="border-left: 5px solid {{ $action->keyresult()->getResults()->color()}} ">
             <a href="{{ route('actions.show',$action->id) }}">{{ $action->title }}</a>                    
         </div>
         <div class="col-md-2 text-right">

@@ -28,7 +28,6 @@ class CompanyController extends Controller
     public function listOKR()
     {
         $company = Company::where('id',auth()->user()->company_id)->first();
-        $colors = ['#06d6a0','#ef476f','#ffd166','#6eeb83','#f7b32b','#fcf6b1','#a9e5bb','#59c3c3','#d81159'];
         $okrs = [];
 
         $objectives = $company->objectives()->get();
@@ -59,7 +58,6 @@ class CompanyController extends Controller
             'user' => auth()->user(),
             'owner' => $company,
             'okrs' => $okrs,
-            'colors' => $colors,
         ];
 
         return view('organization.company.okr', $data);

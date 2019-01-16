@@ -22,7 +22,6 @@ class UserController extends Controller
     public function index(Request $request, User $user)
     {
         $okrs = [];
-        $colors = ['#06d6a0','#ef476f','#ffd166','#6eeb83','#f7b32b','#fcf6b1','#a9e5bb','#59c3c3','#d81159'];
         
         #::query 開始查詢該模型
         $builder = Objective::query()->where('model_id','=',$user->id);
@@ -92,7 +91,6 @@ class UserController extends Controller
             'pages' => $pages,
             'owner' => $user,
             'okrs' => $okrs,
-            'colors' => $colors,
             'filters' => ['search' => $search, 'order' => $order],
         ];
         return view('user.okr', $data);
@@ -101,7 +99,6 @@ class UserController extends Controller
     public function listOKR(User $user)
     {
         $now =  now()->toDateString();
-        $colors = ['#06d6a0','#ef476f','#ffd166','#6eeb83','#f7b32b','#fcf6b1','#a9e5bb','#59c3c3','#d81159'];
         $okrs = [];
         $pages = $user->objectives()
         ->where('started_at', '<=', $now)
@@ -135,7 +132,6 @@ class UserController extends Controller
             'owner' => $user,
             'pages' => $pages,
             'okrs' => $okrs,
-            'colors' => $colors,
         ];
 
         return view('user.okr', $data);
