@@ -1,4 +1,4 @@
-<div class="col-md-3 u-margin-16 bg-white">
+<div class="col-md-3 u-margin-16 card">
     <div class="row">
         <a href="{{ route('department.okr', $department->id) }}" class="u-ml-8 u-mr-8">
             @if ($department->getAvatar())
@@ -11,8 +11,12 @@
         </a>
         <div class="u-ml-8 u-mr-8 align-self-center">
             <a href="{{ route('department.okr', $department->id) }}">
-                <p class="mb-0 font-weight-bold text-black-50">{{ $department->name }}</p>
+                <span class="mb-0 font-weight-bold text-black-50">{{ $department->name }}</span>
             </a>
+            @if ($department->children->count()>0)
+                <a data-toggle="collapse" href="#collapse{{ $department->id }}" role="button"><i class="fas fa-chevron-down pl-2"></i></a>
+            @endif
+            <br>
             @if ($department->user_id == auth()->user()->id)
                 <a href="{{ route('department.create', $department->id) }}" data-toggle="tooltip" data-placement="bottom" title="新增部門"><i class="fas fa-plus-circle u-margin-4"></i></a>
                 <a href="#" data-toggle="tooltip" data-placement="bottom" title="新增成員"><i class="fas fa-user-plus u-margin-4"></i></a>
@@ -25,7 +29,9 @@
             @endif
         </div>
     </div>
-    @foreach ($department->children as $child)
-        @include('organization.department.child', ['department'=>$child])
-    @endforeach
+    <div class="collapse" id="collapse{{ $department->id }}">
+        @foreach ($department->children as $child)
+            @include('organization.department.child', ['department'=>$child])
+        @endforeach
+    </div>
 </div>
