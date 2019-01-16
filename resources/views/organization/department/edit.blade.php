@@ -30,12 +30,16 @@
                                 <div class="form-group u-ml-16 w-25" style="display:inline-block">
                                     <label for="department_parent">隸屬組織<strong class="invalid-feedback"></strong></label>
                                     <select name="department_parent" id="department_parent" class="form-control">
-                                        <option value="department{{ $department->parent->id }}" selected>{{ $department->parent->name }}</option>
-                                        @foreach ($department->parent->children as $child)
-                                            @if ($child->id != $department->id)
-                                                <option value="department{{ $child->id }}">{{ $child->name }}</option>                                                                                        
-                                            @endif
-                                        @endforeach
+                                        @if ($department->parent)
+                                            <option value="department{{ $department->parent->id }}" selected>{{ $department->parent->name }}</option>
+                                            @foreach ($department->parent->children as $child)
+                                                @if ($child->id != $department->id)
+                                                    <option value="department{{ $child->id }}">{{ $child->name }}</option>                                                                                        
+                                                @endif
+                                            @endforeach
+                                        @else
+                                            <option value="company{{ $department->company->id }}" selected>{{ $department->company->name }}</option>
+                                        @endif
                                     </select>
                                 </div>
                             </div>

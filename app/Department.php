@@ -13,7 +13,7 @@ class Department extends Model
         'name', 'description', 'parent_department_id', 'company_id', 'avatar', 'user_id', 
     ];
 
-    public function company_id()
+    public function company()
     {
         return $this->belongsTo(Company::class);
     }
