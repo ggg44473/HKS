@@ -25,17 +25,10 @@ class OrganizationController extends Controller
     public function index()
     {
         $data = [];
-        $departmentPackage = [];
         if (auth()->user()->company_id > 0) {
             $data['company'] = Company::where('id', auth()->user()->company_id)->first();
             $departments = Department::where(['company_id' => auth()->user()->company_id, 'parent_department_id' => null])->get();
-            foreach ($departments as $department) {
-                $departmentPackage[] = [
-                    "parent" => $department,
-                    "sub" => Department::where(['company_id' => auth()->user()->company_id, 'parent_department_id' => $department->id])->get(),
-                ];
-            }
-            $data['departments'] = $departmentPackage;
+            $data['departments'] = $departments;
         }
         return view('organization.index', $data);
     }

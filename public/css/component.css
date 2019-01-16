@@ -9,7 +9,7 @@
  * Modal
  * Button
  * Form
- * Profile Page
+ * Avatar
  * Pricing Table
  * Card
  * Organization Page 
@@ -221,11 +221,17 @@ main{
     cursor: pointer;
 }
 /*-------------------------*/
-/* Profile Page */
+/* Avatar */
 /*-------------------------*/
 .avatar{
     width: 70px;
     height: 70px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.avatar-sm{
+    width: 35px;
+    height: 35px;
     border-radius: 50%;
     object-fit: cover;
 }

@@ -31,4 +31,20 @@ class Department extends Model
     public function getOKrRoute(){
         return route('department.okr', $this->id);
     }
+
+    /**
+     * Returns all departments that this department is the parent of.
+     */
+    public function children()
+    {
+        return $this->hasMany(Department::class, 'parent_department_id');
+    }
+
+    /**
+     * Returns the department to which this department belongs to.
+     */
+    public function parent()
+    {
+        return $this->belongsTo(Department::class,'parent_department_id');
+    }
 }
