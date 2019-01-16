@@ -32,7 +32,7 @@
                                         <option value="parent{{ $parent->id }}" selected>{{ $parent->name }}</option>
                                     @endif
                                     @if ($self)
-                                        <option value="parent{{ $self->id }}" selected>{{ $self->name }}</option>
+                                        <option value="self{{ $self->id }}" selected>{{ $self->name }}</option>
                                     @endif
                                     @foreach ($children as $child)
                                         <option value="department{{ $child->id }}">{{ $child->name }}</option>                                        

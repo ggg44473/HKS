@@ -127,7 +127,7 @@ class DepartmentController extends Controller
         $attr['description'] = $request->department_description;
         $attr['user_id'] = auth()->user()->id;
         $attr['company_id'] = auth()->user()->company_id;
-        if (substr($request->department_parent, 0, 10) === "department") {
+        if (substr($request->department_parent, 0, 4)=="self" || substr($request->department_parent, 0, 10) === "department") {
             $attr['parent_department_id'] = preg_replace('/[^\d]/', '', $request->department_parent);
         }
         $department = Department::create($attr);
