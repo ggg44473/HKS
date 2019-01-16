@@ -56,16 +56,18 @@ class UserController extends Controller
                     }
                 }
             }
-            #使用分頁(依照單頁O的筆數上限)
-            $pages = $builder->paginate(5);   
+            #使用分頁(依照單頁O的筆數上限、利用append記錄搜尋資訊)
+            $pages = $builder->paginate(5)
+            ->appends(['st_date' =>$request->input('st_date', ''),
+            'fin_date' =>$request->input('fin_date', ''),
+            'order' =>$request->input('order', '')]);
+
         } else {
             $pages = $user->objectives()
             ->where('started_at', '<=', $now)
             ->where('finished_at', '>=', $now)        
             ->orderBy('finished_at')->paginate(5);
         }
-
- 
         foreach ($pages as $obj) {
             #打包單張OKR
             $okrs[] = [
@@ -75,13 +77,11 @@ class UserController extends Controller
                 "chart" =>  $obj->getChart(),
             ];
         }
-
         $data = [
             'owner' => $user,
             'pages' => $pages,
             'okrs' => $okrs,
         ];
-
         return view('user.okr', $data);
     }
 
