@@ -73,6 +73,10 @@ Route::delete('organization/company/destroy', 'CompanyController@destroy')->name
 Route::get('organization/company/okr', 'CompanyController@listOKR')->name('company.okr');
 //公司新增O
 Route::post('organization/company/{company}/objective/store', 'CompanyController@storeObjective')->name('company.objective.store');
+//公司邀請成員頁面
+Route::get('organization/company/invite', 'CompanyController@invite')->name('company.invite');
+//搜尋成員
+Route::post('organization/search/', 'CompanyController@search');
 
 //新增全部部門頁面
 Route::get('organization/department/root/create', 'DepartmentController@createRoot')->name('department.root.create');

@@ -16,8 +16,3 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-
-
-###### 組織OKR ######
-Route::get('organization', 'OrganizationController@index');
-Route::post('organization/search/', 'OrganizationController@search');

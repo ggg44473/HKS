@@ -1811,6 +1811,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -1827,7 +1831,7 @@ __webpack_require__.r(__webpack_exports__);
     fetch: function fetch() {
       var _this = this;
 
-      axios.post('/api/organization/search', {
+      axios.post('/organization/search', {
         keywords: this.keywords
       }).then(function (response) {
         return _this.results = response.data;
@@ -36750,7 +36754,7 @@ var render = function() {
             }
           ],
           staticClass: "form-control",
-          attrs: { type: "text", placeholder: "請輸入成員信箱" },
+          attrs: { type: "text", placeholder: "請輸入成員名稱/信箱" },
           domProps: { value: _vm.keywords },
           on: {
             input: function($event) {
@@ -36763,16 +36767,22 @@ var render = function() {
         })
       ]),
       _vm._v(" "),
-      _vm._m(1),
-      _vm._v(" "),
-      _vm.results.length > 0
+      _vm.results.length > 0 && _vm.keywords.length > 0
         ? _c(
-            "ul",
+            "div",
+            { staticClass: "mt-2" },
             _vm._l(_vm.results, function(result) {
-              return _c("li", {
-                key: result.id,
-                domProps: { textContent: _vm._s(result.name) }
-              })
+              return _c("a", { key: result.id, staticClass: "dropdown-item" }, [
+                _c("img", {
+                  staticClass: "avatar-sm",
+                  attrs: { src: result.avatar }
+                }),
+                _vm._v(" "),
+                _c("span", {
+                  staticClass: "ml-2",
+                  domProps: { textContent: _vm._s(result.name) }
+                })
+              ])
             }),
             0
           )
@@ -36788,14 +36798,6 @@ var staticRenderFns = [
     return _c("label", { attrs: { for: "company_member" } }, [
       _vm._v("邀請成員"),
       _c("strong", { staticClass: "invalid-feedback" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-1 align-self-end text-center" }, [
-      _c("i", { staticClass: "fas fa-plus-circle", attrs: { id: "addMember" } })
     ])
   }
 ]

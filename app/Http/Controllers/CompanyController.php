@@ -182,6 +182,16 @@ class CompanyController extends Controller
     }
 
     /**
+     * Show the form for inviting a new member.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function invite()
+    {
+        return view('organization.inviteMember');
+    }
+
+    /**
      * 搜尋使用者名稱或信箱
      *
      * @param  \Illuminate\Http\Request  $request
