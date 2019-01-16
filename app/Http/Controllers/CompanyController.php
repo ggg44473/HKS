@@ -9,6 +9,7 @@ use App\User;
 use App\Objective;
 use App\Charts\SampleChart;
 use App\Http\Requests\ObjectiveRequest;
+use App\Department;
 
 class CompanyController extends Controller
 {
@@ -163,6 +164,16 @@ class CompanyController extends Controller
         auth()->user()->company()->first()->delete();
 
         return redirect('organization');
+    }
+
+    /**
+     * Show the form for inviting a new member.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function invite()
+    {
+        return view('organization.inviteMember');
     }
 
     /**

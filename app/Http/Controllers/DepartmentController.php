@@ -71,20 +71,31 @@ class DepartmentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function createRoot()
+    {
+        $company = Company::where('id', auth()->user()->company_id)->first();
+        $departments = Department::where('company_id', $company->id)->get();
+        $data = [
+            'parent' => $company,
+            'self' => '',
+            'children' => $departments,
+        ];
+
+        return view('organization.department.create', $data);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create(Department $department)
     {
         $data = [
-            'company' => '',
-            'departments' => [],
+            'parent' => '',
+            'self' => $department,
+            'children' => $department->children,
         ];
-        if (auth()->user()->company_id > 0) {
-            $company = Company::where('id', auth()->user()->company_id)->first();
-            $department = Department::where('company_id', $company->id)->get();
-            $data = [
-                'company' => $company,
-                'departments' => $department,
-            ];
-        }
 
         return view('organization.department.create', $data);
     }
@@ -97,11 +108,11 @@ class DepartmentController extends Controller
      */
     public function store(Request $request)
     {
-        $attr['name'] = $request->input('department_name');
-        $attr['description'] = $request->input('department_description');
+        $attr['name'] = $request->department_name;
+        $attr['description'] = $request->department_description;
         $attr['user_id'] = auth()->user()->id;
         $attr['company_id'] = auth()->user()->company_id;
-        if (substr($request->department_parent, 0, 10) === "department") {
+        if (substr($request->department_parent, 0, 4)=="self" || substr($request->department_parent, 0, 10) === "department") {
             $attr['parent_department_id'] = preg_replace('/[^\d]/', '', $request->department_parent);
         }
         $department = Department::create($attr);
