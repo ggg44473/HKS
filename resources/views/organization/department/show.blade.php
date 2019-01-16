@@ -1,4 +1,4 @@
-<div class="col u-margin-16 bg-white">
+<div class="col-md-3 u-margin-16 bg-white">
     <div class="row">
         <a href="{{ route('department.okr', $department->id) }}" class="u-ml-8 u-mr-8">
             @if ($department->getAvatar())

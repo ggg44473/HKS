@@ -27,6 +27,17 @@
                                     <label for="department_name">部門名稱<strong class="invalid-feedback"></strong></label>
                                     <input type="text" name="department_name" id="department_name" value="{{ $department->name }}" placeholder="請輸入部門名稱" class="form-control {{ $errors->has('department_name') ? ' is-invalid' : '' }}" required>
                                 </div>
+                                <div class="form-group u-ml-16 w-25" style="display:inline-block">
+                                    <label for="department_parent">隸屬組織<strong class="invalid-feedback"></strong></label>
+                                    <select name="department_parent" id="department_parent" class="form-control">
+                                        <option value="department{{ $department->parent->id }}" selected>{{ $department->parent->name }}</option>
+                                        @foreach ($department->parent->children as $child)
+                                            @if ($child->id != $department->id)
+                                                <option value="department{{ $child->id }}">{{ $child->name }}</option>                                                                                        
+                                            @endif
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
                         </div>
                         <div class="row u-ml-32 u-mr-32">

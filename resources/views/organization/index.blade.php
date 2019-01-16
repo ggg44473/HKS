@@ -7,6 +7,7 @@
     <div class="container">
         @if (auth()->user()->company_id)
             @include('organization.company.show')
+            <hr/>
             <div class="row justify-content-md-center u-mt-16">
                 @foreach ($departments as $department)
                     @include('organization.department.show')
