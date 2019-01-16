@@ -65,25 +65,12 @@ class UserController extends Controller
         $pages = $builder->paginate(5);    
 
         foreach ($pages as $obj) {
-            //  單一OKR圖表
-            $datas = $obj->getRelatedKrRecord();
-            $chart = new SampleChart;
-            if(!$datas){
-                $chart->labels([0]);
-                $chart->dataset('None', 'line',[0]);
-            }
-            $chart->title('KR 達成率變化圖',22,'#216869',true, "'Helvetica Neue','Helvetica','Arial',sans-serif");
-            foreach($datas as $data){
-                $chart->labels($data['update']);
-                $chart->dataset($data['kr_id'], 'line', $data['accomplish']);
-            }
-
-            // 打包單張OKR
+            #打包單張OKR
             $okrs[] = [
                 "objective" => $obj,
                 "keyresults" => $obj->keyresults()->getResults(),
                 "actions" => $obj->actions()->getResults(),
-                "chart" => $chart,
+                "chart" => $obj->getChart(),
             ];
         }
 
@@ -106,24 +93,12 @@ class UserController extends Controller
         ->orderBy('finished_at')->paginate(5);
  
         foreach ($pages as $obj) {
-            //  單一OKR圖表
-            $datas = $obj->getRelatedKrRecord();
-            $chart = new SampleChart;
-            if(!$datas){
-                $chart->labels([0]);
-                $chart->dataset('None', 'line',[0]);
-            }
-            $chart->title('KR 達成率變化圖',22,'#216869',true, "'Helvetica Neue','Helvetica','Arial',sans-serif");
-            foreach($datas as $data){
-                $chart->labels($data['update']);
-                $chart->dataset($data['kr_id'], 'line', $data['accomplish']);
-            }
-            // 打包單張OKR
+            #打包單張OKR
             $okrs[] = [
                 "objective" => $obj,
                 "keyresults" => $obj->keyresults()->getResults(),
                 "actions" => $obj->actions()->getResults(),
-                "chart" => $chart,
+                "chart" =>  $obj->getChart(),
             ];
         }
     
