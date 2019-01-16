@@ -30,6 +30,7 @@ class ActionsController extends Controller
         $priorities = Priority::all();
         $user = User::where('id', '=', auth()->user()->id)->first();
         $keyresults = KeyResult::where('objective_id', '=', $objective->id)->get();
+        if($keyresults->toArray()==null) return redirect()->route('user.okr', auth()->user()->id);
         $data = [
             'user' => $user,
             'keyresults' => $keyresults,

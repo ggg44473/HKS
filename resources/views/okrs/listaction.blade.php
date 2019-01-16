@@ -1,4 +1,3 @@
-
 <div class="row">
     @foreach($okr['actions'] as $action)
         @if(!$action->isdone)
@@ -14,7 +13,7 @@
             <i class="fa fa-comments text-primary fa-lg ml-4"></i>  {{$action->comments->count()}}
         </div>
         <div class="col-md-1 btn-group">
-            <a class="btn-group pl-2 pr-2 text-success" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-pencil-alt"></i></a>
+            <a class="btn-group pl-2 pr-2 text-success" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-pencil-alt"></i></a>
             <div class="dropdown-menu">
                 <a class="dropdown-item text-primary" href="#" onclick="document.getElementById('doneAct{{ $action->id }}').submit()"><i class="fas fa-check-circle"></i> 完成 Action</a>
                 <form method="POST" id="doneAct{{ $action->id }}" action="{{ route('actions.done',$action->id) }}">
