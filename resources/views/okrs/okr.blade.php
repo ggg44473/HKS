@@ -2,7 +2,7 @@
     <script src="{{ asset('js/editbtn.js') }}" defer></script>       
 @endsection
 <div class="alert alert-info text-center" role="alert">
-共有<strong> {{$total}} </strong>筆目標 ( Objectives )
+共有<strong> {{$pages->total()}} </strong>筆目標 ( Objectives )
 @if($st_date!=null || $fin_date!=null)
 <br/>搜尋時間範圍 : {{$st_date}} ~ {{$fin_date}}
 @endif

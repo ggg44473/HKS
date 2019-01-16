@@ -25,18 +25,50 @@ class DepartmentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function listOKR($departmentId)
+    public function listOKR(Request $request, Department $department)
     {
-        $department = Department::where('id', $departmentId)->first();
         $okrs = [];
-
-        $objectives = $department->objectives()->get();
-        foreach ($objectives as $obj) {
+        # 預設當前進行OKR
+        $pages = $department->searchObjectives($request);
+        # 如果有做搜尋則跑此判斷
+        if ($request->input('st_date', '') || $request->input('fin_date', '')) {
+            $builder = $user->objectives();
+            # 判斷起始日期搜索是否為空        
+            if ($search = $request->input('st_date', '')) {
+                $builder->where(function ($query) use ($search) {
+                    $query->where('finished_at', '>=', $search);
+                });
+            }
+            # 判斷終點日期搜索是否為空        
+            if ($search = $request->input('fin_date', '')) {
+                $builder->where(function ($query) use ($search) {
+                    $query->where('started_at', '<=', $search);
+                });
+            }
+            # 判斷使用內建排序與否
+            if ($order = $request->input('order', '')) { 
+                # 判斷value是以 _asc 或者 _desc 结尾來排序
+                if (preg_match('/^(.+)_(asc|desc)$/', $order, $m)) {
+                    # 判斷是否為指定的接收的參數
+                    if (in_array($m[1], ['started_at', 'finished_at', 'updated_at'])) {   
+                        # 開始排序              
+                        $builder->orderBy($m[1], $m[2]);
+                    }
+                }
+            }
+            # 使用分頁(依照單頁O的筆數上限、利用append記錄搜尋資訊)
+            $pages = $builder->paginate(5)->appends([
+                'st_date' => $request->input('st_date', ''),
+                'fin_date' => $request->input('fin_date', ''),
+                'order' => $request->input('order', '')
+            ]);
+        }
+        foreach ($pages as $obj) {
             #打包單張OKR
             $okrs[] = [
                 "objective" => $obj,
-                "keyresults" => $obj->keyresults()->getResults(),
-                "actions" => $obj->actions()->getResults(),
+                "keyresults" => $obj->keyresults,
+                "actions" => $obj->actions,
                 "chart" => $obj->getChart(),
             ];
         }
@@ -45,6 +77,10 @@ class DepartmentController extends Controller
             'user' => auth()->user(),
             'owner' => $department,
             'okrs' => $okrs,
+            'pages' => $pages,
+            'st_date' => $request->input('st_date', ''),
+            'fin_date' => $request->input('fin_date', ''),
+            'order' => $request->input('order', ''),
         ];
 
         return view('organization.department.okr', $data);

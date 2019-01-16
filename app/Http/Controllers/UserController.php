@@ -21,66 +21,55 @@ class UserController extends Controller
 
     public function listOKR(Request $request, User $user)
     {
-        $now = now()->toDateString();
         $okrs = [];
-
-        $pages = $user->objectives()
-            ->where('started_at', '<=', $now)
-            ->where('finished_at', '>=', $now)
-            ->orderBy('finished_at')->paginate(5);
-        $total = $pages->count();
-
+        # 預設當前進行OKR
+        $pages = $user->searchObjectives($request);
+        # 如果有做搜尋則跑此判斷
         if ($request->input('st_date', '') || $request->input('fin_date', '')) {
-            #::query 開始查詢該模型
-            $builder = Objective::query()->where('model_id', '=', $user->id);
-    
-            #判斷起始日期搜索是否為空        
+            $builder = $user->objectives();
+            # 判斷起始日期搜索是否為空        
             if ($search = $request->input('st_date', '')) {
                 $builder->where(function ($query) use ($search) {
                     $query->where('finished_at', '>=', $search);
                 });
             }
-            #判斷終點日期搜索是否為空        
+            # 判斷終點日期搜索是否為空        
             if ($search = $request->input('fin_date', '')) {
                 $builder->where(function ($query) use ($search) {
                     $query->where('started_at', '<=', $search);
                 });
             }
-            #判斷使用內建排序與否
+            # 判斷使用內建排序與否
             if ($order = $request->input('order', '')) { 
-                #判斷value是以 _asc 或者 _desc 结尾來排序
+                # 判斷value是以 _asc 或者 _desc 结尾來排序
                 if (preg_match('/^(.+)_(asc|desc)$/', $order, $m)) {
-                    #判斷是否為指定的接收的參數
+                    # 判斷是否為指定的接收的參數
                     if (in_array($m[1], ['started_at', 'finished_at', 'updated_at'])) {   
-                        #開始排序              
+                        # 開始排序              
                         $builder->orderBy($m[1], $m[2]);
                     }
                 }
             }
-            #使用分頁(依照單頁O的筆數上限、利用append記錄搜尋資訊)
-            $total = $builder->get()->count();
-            $pages = $builder->paginate(5)
-                ->appends([
-                    'st_date' => $request->input('st_date', ''),
-                    'fin_date' => $request->input('fin_date', ''),
-                    'order' => $request->input('order', '')
-                ]);
-
+            # 使用分頁(依照單頁O的筆數上限、利用append記錄搜尋資訊)
+            $pages = $builder->paginate(5)->appends([
+                'st_date' => $request->input('st_date', ''),
+                'fin_date' => $request->input('fin_date', ''),
+                'order' => $request->input('order', '')
+            ]);
         }
         foreach ($pages as $obj) {
-            #打包單張OKR
+            # 打包單張OKR
             $okrs[] = [
                 "objective" => $obj,
-                "keyresults" => $obj->keyresults()->getResults(),
-                "actions" => $obj->actions()->getResults(),
+                "keyresults" => $obj->keyresults,
+                "actions" => $obj->actions,
                 "chart" => $obj->getChart(),
             ];
         }
         $data = [
             'owner' => $user,
-            'pages' => $pages,
             'okrs' => $okrs,
-            'total' => $total,
+            'pages' => $pages,
             'st_date' => $request->input('st_date', ''),
             'fin_date' => $request->input('fin_date', ''),
             'order' => $request->input('order', ''),
@@ -134,10 +123,8 @@ class UserController extends Controller
             $file = $request->file('avatar');
             $filename = date('YmdHis') . '.' . $file->getClientOriginalExtension();
             $file->storeAs('public/avatar/' . auth()->user()->id, $filename);
-
             $user->update(['avatar' => '/storage/avatar/' . auth()->user()->id . '/' . $filename]);
         }
-
         return redirect()->route('user.settings', auth()->user()->id);
     }
 

@@ -25,6 +25,16 @@ trait HasObjectiveTrait
         Objective::create($attr);
     }
 
+    public function searchObjectives($request)
+    {
+        $now = now()->toDateString();
+        return $this->objectives()
+            ->where('started_at', '<=', $now)
+            ->where('finished_at', '>=', $now)
+            ->orderBy('finished_at')
+            ->paginate(5);
+    }
+
     public function hasObjectives()
     {
         return count($this->objectives()->get()) ? true : false;
