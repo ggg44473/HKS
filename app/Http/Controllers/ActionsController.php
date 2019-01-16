@@ -31,7 +31,7 @@ class ActionsController extends Controller
         $user = User::where('id', '=', auth()->user()->id)->first();
         $keyresults = KeyResult::where('objective_id', '=', $objective->id)->get();
         $data = [
-            'user' => $user,
+            'owner' => $user,
             'keyresults' => $keyresults,
             'priorities' => $priorities,
         ];
