@@ -86,6 +86,24 @@ class DepartmentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function createRoot()
+    {
+        $company = Company::where('id', auth()->user()->company_id)->first();
+        $departments = Department::where('company_id', $company->id)->get();
+        $data = [
+            'parent' => $company,
+            'self' => '',
+            'children' => $departments,
+        ];
+
+        return view('organization.department.create', $data);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function create(Department $department)
     {
         $data = [
