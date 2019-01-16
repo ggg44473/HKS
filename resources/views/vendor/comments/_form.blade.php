@@ -1,4 +1,4 @@
-<div class="card-body">
+<div class="card-body col-12 pt-0">
     <form method="POST" action="{{ url('comments') }}">
         @csrf
         <input type="hidden" name="commentable_type" value="\{{ get_class($model) }}" />
@@ -9,7 +9,7 @@
             <div class="invalid-feedback ml-4">
                 Your message is required.
             </div>
-            {{-- <small class="form-text text-muted"><a target="_blank" href="https://help.github.com/articles/basic-writing-and-formatting-syntax">Markdown</a> cheatsheet.</small> --}}
+            <small class="form-text text-muted"><a target="_blank" href="https://help.github.com/articles/basic-writing-and-formatting-syntax">Markdown</a> cheatsheet.</small>
         </div>
         <button type="submit" class="btn btn-sm btn-outline-success text-uppercase u-mt-16">Submit</button>
     </form>
