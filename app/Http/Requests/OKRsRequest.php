@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class OKRsRequest extends FormRequest
 {
-/**
+    /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
@@ -28,7 +28,7 @@ class OKRsRequest extends FormRequest
             'st_date' => 'required',
             'fin_date' => 'required|different:st_date',
             'krs_title.*.id' => 'required',
-            'krs_conf.*.id'=> 'required',
+            'krs_conf.*.id' => 'required',
             'krs_init.*id' => 'required',
             'krs_tar.*.id' => 'required|different:krs_init.*',
             'krs_now.*.id' => 'required',

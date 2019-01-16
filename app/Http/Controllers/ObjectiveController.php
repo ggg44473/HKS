@@ -18,6 +18,6 @@ class ObjectiveController extends Controller
     public function destroy(Objective $objective)
     {
         $objective->delete();
-        return redirect()->back();        
+        return redirect()->back();
     }
 }

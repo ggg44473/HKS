@@ -3,12 +3,9 @@
 @section('title','個人綜覽')
 
 @section('script')
-<script src="{{ asset('js/cropper.js') }}" defer></script>
-<script src="{{ asset('js/avatar.js') }}" defer></script>  
 @endsection
 
 @section('stylesheet')
-<link  href="{{ asset('css/cropper.css') }}" rel="stylesheet">
 @endsection
 
 @section('content')

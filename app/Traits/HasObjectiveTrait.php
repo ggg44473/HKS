@@ -37,6 +37,6 @@ trait HasObjectiveTrait
 
     public function deleteObjective()
     {
-        
+
     }
 }

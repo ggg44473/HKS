@@ -57,10 +57,10 @@ class KeyResultRequest extends FormRequest
             'krs_now.required' => '不可空白!',
             'krs_weight.required' => '不可空白!',
             'krs_tar.different' => '與起始值需不同',
-            'krs_conf.min' =>'須大於0',
-            'krs_conf.max' =>'須小於10',
-            'krs_weight.min' =>'須大於0.1',
-            'krs_weight.max' =>'須小於2',
+            'krs_conf.min' => '須大於0',
+            'krs_conf.max' => '須小於10',
+            'krs_weight.min' => '須大於0.1',
+            'krs_weight.max' => '須小於2',
         ];
     }
 
@@ -75,7 +75,7 @@ class KeyResultRequest extends FormRequest
         $validator->after(function ($validator) {
             if (count($validator->errors())) {
                 $validator->errors()->add('krs_owner', $this->validationData()['krs_owner']);
-            }         
+            }
         });
     }
 }

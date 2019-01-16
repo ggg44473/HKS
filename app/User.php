@@ -32,14 +32,16 @@ class User extends Authenticatable
 
     public function getAvatar()
     {
-        return $this->avatar? $this->avatar:'/img/icon/user/green.svg';
+        return $this->avatar ? $this->avatar : '/img/icon/user/green.svg';
     }
 
-    public function getOKrRoute(){
+    public function getOKrRoute()
+    {
         return route('user.okr', $this->id);
     }
-    
-    public function company(){
+
+    public function company()
+    {
         return $this->hasOne(Company::class);
     }
 }

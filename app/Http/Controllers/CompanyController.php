@@ -28,7 +28,7 @@ class CompanyController extends Controller
      */
     public function listOKR()
     {
-        $company = Company::where('id',auth()->user()->company_id)->first();
+        $company = Company::where('id', auth()->user()->company_id)->first();
         $okrs = [];
 
         $objectives = $company->objectives()->get();
@@ -41,7 +41,7 @@ class CompanyController extends Controller
                 "chart" => $obj->getChart(),
             ];
         }
-        
+
         $data = [
             'user' => auth()->user(),
             'owner' => $company,
@@ -90,14 +90,14 @@ class CompanyController extends Controller
         $attr['user_id'] = auth()->user()->id;
         $company = Company::create($attr);
 
-        if($request->hasFile('company_img_upload')){
+        if ($request->hasFile('company_img_upload')) {
             $file = $request->file('company_img_upload');
-            $filename = date('YmdHis').'.'.$file->getClientOriginalExtension();
-            $file->storeAs('public/company/'.$company->id, $filename);
-            $company->update(['avatar'=>'/storage/company/'.$company->id.'/'.$filename]);
+            $filename = date('YmdHis') . '.' . $file->getClientOriginalExtension();
+            $file->storeAs('public/company/' . $company->id, $filename);
+            $company->update(['avatar' => '/storage/company/' . $company->id . '/' . $filename]);
         }
-        
-        User::where('id',auth()->user()->id)->update(['company_id' => $company->id]);
+
+        User::where('id', auth()->user()->id)->update(['company_id' => $company->id]);
 
         return redirect()->route('organization');
     }
@@ -140,11 +140,11 @@ class CompanyController extends Controller
         $attr['description'] = $request->company_description;
         $company->update($attr);
 
-        if($request->hasFile('company_img_upload')){
+        if ($request->hasFile('company_img_upload')) {
             $file = $request->file('company_img_upload');
-            $filename = date('YmdHis').'.'.$file->getClientOriginalExtension();
-            $file->storeAs('public/company/'.$company->id, $filename);
-            $company->update(['avatar'=>'/storage/company/'.$company->id.'/'.$filename]);
+            $filename = date('YmdHis') . '.' . $file->getClientOriginalExtension();
+            $file->storeAs('public/company/' . $company->id, $filename);
+            $company->update(['avatar' => '/storage/company/' . $company->id . '/' . $filename]);
         }
 
         return redirect()->route('organization');
@@ -157,9 +157,9 @@ class CompanyController extends Controller
      */
     public function destroy()
     {
-        $users = User::where('company_id',auth()->user()->company_id)->get();
+        $users = User::where('company_id', auth()->user()->company_id)->get();
         foreach ($users as $user) {
-            $user->update(['company_id'=>null, 'department_id'=>null]);            
+            $user->update(['company_id' => null, 'department_id' => null]);
         }
         auth()->user()->company()->first()->delete();
 
@@ -193,25 +193,25 @@ class CompanyController extends Controller
     function getRelatedKrRecord(Objective $objective)
     {
         //宣告
-        $merged=collect();
-        $kr_record=array();
-        $kr_record_array=array();
+        $merged = collect();
+        $kr_record = array();
+        $kr_record_array = array();
         // 抓出相關KR歷史紀錄
         $collections = $objective->keyResultRecords()->getResults()->groupBy('key_results_id');
         // 算出達成率並存成array(KR_ID，ACV_RATE，UPDATE)
-        foreach($collections as $collection){
+        foreach ($collections as $collection) {
             // 需要達成率合併
-            foreach($collection as $collect){
-                $merged->push(collect($collect)->merge(['rate'=>$collect->accomplishRate()])->toArray());
+            foreach ($collection as $collect) {
+                $merged->push(collect($collect)->merge(['rate' => $collect->accomplishRate()])->toArray());
             }
             $kr_id = $merged->pluck('key_results_id')->first();
             $kr_date = $merged->pluck('updated_at')->all();
             $kr_acop = $merged->pluck('history_confidence')->all();
             $kr_conf = $merged->pluck('rate')->all();
-            $merged=collect();
-            $kr_record=array('kr_id'=>$kr_id,'update'=>$kr_date,'confidence'=>$kr_acop,'accomplish'=>$kr_conf);            
-            array_push($kr_record_array,$kr_record);
-        }      
+            $merged = collect();
+            $kr_record = array('kr_id' => $kr_id, 'update' => $kr_date, 'confidence' => $kr_acop, 'accomplish' => $kr_conf);
+            array_push($kr_record_array, $kr_record);
+        }
         return $kr_record_array;
     }
 }

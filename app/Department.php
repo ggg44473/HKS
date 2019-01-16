@@ -8,9 +8,9 @@ use App\Traits\HasObjectiveTrait;
 class Department extends Model
 {
     use HasObjectiveTrait;
-    
+
     protected $fillable = [
-        'name', 'description', 'parent_department_id', 'company_id', 'avatar', 'user_id', 
+        'name', 'description', 'parent_department_id', 'company_id', 'avatar', 'user_id',
     ];
 
     public function company()
@@ -25,10 +25,11 @@ class Department extends Model
 
     public function getAvatar()
     {
-        return $this->avatar? $this->avatar: '/img/icon/building/g.svg';
+        return $this->avatar ? $this->avatar : '/img/icon/building/g.svg';
     }
 
-    public function getOKrRoute(){
+    public function getOKrRoute()
+    {
         return route('department.okr', $this->id);
     }
 
@@ -45,6 +46,6 @@ class Department extends Model
      */
     public function parent()
     {
-        return $this->belongsTo(Department::class,'parent_department_id');
+        return $this->belongsTo(Department::class, 'parent_department_id');
     }
 }

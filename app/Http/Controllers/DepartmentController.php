@@ -112,7 +112,7 @@ class DepartmentController extends Controller
         $attr['description'] = $request->department_description;
         $attr['user_id'] = auth()->user()->id;
         $attr['company_id'] = auth()->user()->company_id;
-        if (substr($request->department_parent, 0, 4)=="self" || substr($request->department_parent, 0, 10) === "department") {
+        if (substr($request->department_parent, 0, 4) == "self" || substr($request->department_parent, 0, 10) === "department") {
             $attr['parent_department_id'] = preg_replace('/[^\d]/', '', $request->department_parent);
         }
         $department = Department::create($attr);
@@ -146,7 +146,7 @@ class DepartmentController extends Controller
      */
     public function edit(Department $department)
     {
-        return view('organization.department.edit', ['department'=>$department]);
+        return view('organization.department.edit', ['department' => $department]);
     }
 
     /**
@@ -162,11 +162,11 @@ class DepartmentController extends Controller
         $attr['description'] = $request->department_description;
         $department->update($attr);
 
-        if($request->hasFile('department_img_upload')){
+        if ($request->hasFile('department_img_upload')) {
             $file = $request->file('department_img_upload');
-            $filename = date('YmdHis').'.'.$file->getClientOriginalExtension();
-            $file->storeAs('public/department/'.$department->id, $filename);
-            $department->update(['avatar'=>'/storage/department/'.$department->id.'/'.$filename]);
+            $filename = date('YmdHis') . '.' . $file->getClientOriginalExtension();
+            $file->storeAs('public/department/' . $department->id, $filename);
+            $department->update(['avatar' => '/storage/department/' . $department->id . '/' . $filename]);
         }
 
         return redirect()->route('organization');
@@ -180,9 +180,9 @@ class DepartmentController extends Controller
      */
     public function destroy(Department $department)
     {
-        $users = User::where(['company_id'=>auth()->user()->company_id,'department_id'=>$department->id])->get();
+        $users = User::where(['company_id' => auth()->user()->company_id, 'department_id' => $department->id])->get();
         foreach ($users as $user) {
-            $user->update(['department_id'=>null]);            
+            $user->update(['department_id' => null]);
         }
         $department->delete();
 

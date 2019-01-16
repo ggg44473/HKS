@@ -9,9 +9,11 @@
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
-*/
+ */
 
-Route::get('/', ['middleware' => 'guest', function(){ return view('welcome'); }]);
+Route::get('/', ['middleware' => 'guest', function () {
+    return view('welcome');
+}]);
 
 Auth::routes();
 
@@ -53,7 +55,7 @@ Route::get('actions/{action}/edit', 'ActionsController@edit')->name('actions.edi
 // 更新Action
 Route::patch('actions/{action}/update', 'ActionsController@update')->name('actions.update');
 // 顯示指定的Action
-Route::get('actions/{action}/show','ActionsController@show')->where('action','[0-9]+')->name('actions.show');
+Route::get('actions/{action}/show', 'ActionsController@show')->where('action', '[0-9]+')->name('actions.show');
 //刪除個人Action
 Route::delete('actions/{action}/destroy', 'ActionsController@destroy')->name('actions.destroy');
 //刪除Action的檔案

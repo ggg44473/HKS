@@ -14,7 +14,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <!-- Right Side Of Navbar -->
         <ul class="navbar-nav ml-auto"> 
-            <form class="form-inline mr-5" action="{{route('search.index',$owner->id) }}">
+            <form class="form-inline mr-5" action="{{route('search.index', auth()->user()->id) }}">
                 @csrf
                 <input class="form-control mr-sm-1 search" type="search" placeholder="Search" aria-label="Search" name="search">
                 <button class="btn btn-search my-2 my-sm-0" type="submit" ><i class="fas fa-search"></i></button>

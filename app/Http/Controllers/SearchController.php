@@ -19,22 +19,22 @@ class SearchController extends Controller
         $okrs = [];
         
         #::query 開始查詢該模型
-        $builder = Objective::query()->where('model_id','=',$user->id);
+        $builder = Objective::query()->where('model_id', '=', $user->id);
         #判斷搜索是否為空        
         if ($search = $request->input('search', '')) { 
             #定義模糊查詢                
-            $like = '%' . $search . '%';                                           
-            $builder->where(function ($query) use ($like) {                         
-                    $query->where('title', 'like', $like)   #查詢Objective目標
+            $like = '%' . $search . '%';
+            $builder->where(function ($query) use ($like) {
+                $query->where('title', 'like', $like)   #查詢Objective目標
                         #第一個參數是模型關聯的方法名 , 第二個參數繼承上一步的query , 第三個參數使用模糊查詢字
-                        ->orWhereHas('keyresults', function ($query) use ($like) {        
-                            $query->where('title', 'like', $like);           
-                        });
-                });
+                    ->orWhereHas('keyresults', function ($query) use ($like) {
+                        $query->where('title', 'like', $like);
+                    });
+            });
         }
        
         #使用分頁(依照單頁O的筆數上限)
-        $pages = $builder->paginate(5)->appends(['search' =>$request->input('search', '')]);
+        $pages = $builder->paginate(5)->appends(['search' => $request->input('search', '')]);
 
         foreach ($pages as $obj) {
             #打包單張OKR

@@ -21,5 +21,5 @@ class KeyResultRecord extends Model
     {
         return $this->keyresult()->getResults()->historyAcpRate($this->history_value);
     }
-    
+
 }

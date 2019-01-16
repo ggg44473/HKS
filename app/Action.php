@@ -56,7 +56,7 @@ class Action extends Model implements HasMedia
     }
 
     public function addRelatedFiles()
-    {        
+    {
         $this->addAllMediaFromRequest()->each(function ($fileAdder) {
             $fileAdder->sanitizingFileName(function ($fileName) {
                 return strtolower(str_replace(['#', '/', '\\', ' '], '-', $fileName));
