@@ -1,15 +1,15 @@
 <div class="form-row ml-5">
     <div class="form-group col-md-4">
         <label for="action_title">Action 具體作為</label>
-        <input type="text" class="form-control" name="act_title" id="action_title" value="{{ $action ? $action->title:'' }}">
+        <input type="text" class="form-control" name="act_title" id="action_title" value="{{ $action ? $action->title:old('act_title')  }}">
     </div>
     <div class="form-group col-md-2">
         <label for="started_at">起始日</label>
-        <input autocomplete="off" class="form-control" name="st_date" id="started_at" value="{{  $action ? $action->started_at:'' }}">
+        <input autocomplete="off" class="form-control" name="st_date" id="started_at" value="{{  $action ? $action->started_at:old('st_date') }}">
     </div>
     <div class="form-group col-md-2">
         <label for="finished_at">完成日</label>
-        <input autocomplete="off" class="form-control" name="fin_date" id="finished_at" value="{{  $action ? $action->finished_at:'' }}">
+        <input autocomplete="off" class="form-control" name="fin_date" id="finished_at" value="{{  $action ? $action->finished_at:old('fin_date') }}">
     </div>
     <div class="form-group col-md-2">
         <label for="priority">優先度</label>
@@ -45,7 +45,7 @@
     </div>
     <div class="form-group col-md-12">
         <label for="action_content">內容</label>
-        <textarea class="form-control" id="action_content" rows="15" name="act_content">{{ $action ? $action->content:'' }}</textarea>
+        <textarea class="form-control" id="action_content" rows="15" name="act_content">{{ $action ? $action->content:old('act_content') }}</textarea>
     </div>
     <div class="col-md-12">
         @if(!empty($files))
@@ -64,7 +64,7 @@
     </div>
     <div class="form-group col-md-11">
         <label for="files">上傳附件</label>
-        <input type="file" class="form-group" name="files[]" id="files" multiple>
+    <input type="file" class="form-group" name="files[]" id="files" multiple>
     </div>
     <button class="btn btn-primary btn-sm mb-1 mt-1 " type="submit">送出</button>
 </div>
