@@ -10,6 +10,6 @@ $factory->define(App\KeyResult::class, function (Faker $faker) {
         'initial_value' => $faker->numberBetween($min = 0, $max = 10),
         'target_value' => $faker->numberBetween($min = 11, $max = 20),
         'current_value' => $faker->numberBetween($min = 0, $max = 20),
-        'weight' => $faker->numberBetween($min = 0, $max = 3),
+        'weight' => $faker->randomFloat($nbMaxDecimals = 1, $min = 0.1, $max = 2.9),
     ];
 });
