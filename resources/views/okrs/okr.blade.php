@@ -16,7 +16,6 @@
                     @endif
                 </div>
             </div>
-           
         </div>
         <div class="card-body u-pl-48 u-pr-48">
             
