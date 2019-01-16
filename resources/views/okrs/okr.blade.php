@@ -1,6 +1,12 @@
 @section('script')
     <script src="{{ asset('js/editbtn.js') }}" defer></script>       
 @endsection
+<div class="alert alert-info text-center" role="alert">
+共有<strong> {{$total}} </strong>筆目標 ( Objectives )
+@if($st_date!=null || $fin_date!=null)
+<br/>搜尋時間範圍 : {{$st_date}} ~ {{$fin_date}}
+@endif
+</div>
 @foreach($okrs as $okr)
     <div class="card shadow-sm m-4 okr-card">
         <div class="card-header bg-transparent" style="border-bottom: none;">

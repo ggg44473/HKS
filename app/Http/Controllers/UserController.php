@@ -23,6 +23,7 @@ class UserController extends Controller
     {
         $now =  now()->toDateString();
         $okrs = [];
+        $total = $user->objectives()->get()->count();
         $pages = $user->objectives()
         ->where('started_at', '<=', $now)
         ->where('finished_at', '>=', $now)        
@@ -57,16 +58,12 @@ class UserController extends Controller
                 }
             }
             #使用分頁(依照單頁O的筆數上限、利用append記錄搜尋資訊)
+            $total = $builder->get()->count();
             $pages = $builder->paginate(5)
             ->appends(['st_date' =>$request->input('st_date', ''),
             'fin_date' =>$request->input('fin_date', ''),
             'order' =>$request->input('order', '')]);
 
-        } else {
-            $pages = $user->objectives()
-            ->where('started_at', '<=', $now)
-            ->where('finished_at', '>=', $now)        
-            ->orderBy('finished_at')->paginate(5);
         }
         foreach ($pages as $obj) {
             #打包單張OKR
@@ -81,6 +78,10 @@ class UserController extends Controller
             'owner' => $user,
             'pages' => $pages,
             'okrs' => $okrs,
+            'total' => $total,
+            'st_date' =>$request->input('st_date', ''),
+            'fin_date' =>$request->input('fin_date', ''),
+            'order' =>$request->input('order', ''),
         ];
         return view('user.okr', $data);
     }
