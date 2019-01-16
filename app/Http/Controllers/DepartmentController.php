@@ -28,30 +28,16 @@ class DepartmentController extends Controller
     public function listOKR($departmentId)
     {
         $department = Department::where('id', $departmentId)->first();
-        $colors = ['#06d6a0', '#ef476f', '#ffd166', '#6eeb83', '#f7b32b', '#fcf6b1', '#a9e5bb', '#59c3c3', '#d81159'];
         $okrs = [];
 
         $objectives = $department->objectives()->get();
         foreach ($objectives as $obj) {
-            //  單一OKR圖表
-            $datas = $obj->getRelatedKrRecord();
-            $chart = new SampleChart;
-            if (!$datas) {
-                $chart->labels([0]);
-                $chart->dataset('None', 'line', [0]);
-            }
-            $chart->title('KR 達成率變化圖', 22, '#216869', true, "'Helvetica Neue','Helvetica','Arial',sans-serif");
-            foreach ($datas as $data) {
-                $chart->labels($data['update']);
-                $chart->dataset($data['kr_id'], 'bar', $data['accomplish']);
-            }
-
-            // 打包單張OKR
+            #打包單張OKR
             $okrs[] = [
                 "objective" => $obj,
                 "keyresults" => $obj->keyresults()->getResults(),
                 "actions" => $obj->actions()->getResults(),
-                "chart" => $chart,
+                "chart" => $obj->getChart(),
             ];
         }
 
@@ -59,7 +45,6 @@ class DepartmentController extends Controller
             'user' => auth()->user(),
             'owner' => $department,
             'okrs' => $okrs,
-            'colors' => $colors,
         ];
 
         return view('organization.department.okr', $data);

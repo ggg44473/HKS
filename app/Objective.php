@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Laravelista\Comments\Commentable;
+use App\Charts\SampleChart;
 
 class Objective extends Model
 {
@@ -40,6 +41,21 @@ class Objective extends Model
         return $this->hasManyThrough('App\KeyResultRecord', 'App\KeyResult', 'objective_id', 'key_results_id');
     }
 
+    public function getChart()
+    {
+        $datas = $this->getRelatedKrRecord();
+        $chart = new SampleChart;
+        if(!$datas){
+            $chart->labels([0]);
+            $chart->dataset('None', 'line',[0]);
+        }
+        $chart->title('Kr 達成率變化圖',22,'#216869',true, "'Helvetica Neue','Helvetica','Arial',sans-serif");
+        foreach($datas as $data){
+            $chart->labels($data['update']);
+            $chart->dataset($data['kr_id'], 'line', $data['accomplish']);
+        }
+        return $chart;
+    }
     public function getRelatedKrRecord()
     {
         //宣告

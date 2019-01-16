@@ -14,10 +14,10 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <!-- Right Side Of Navbar -->
         <ul class="navbar-nav ml-auto"> 
-            <form class="form-inline mr-5">
+            <form class="form-inline mr-5" action="{{route('search.index',$owner->id) }}">
                 @csrf
-                <input class="form-control mr-sm-1 search" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-search my-2 my-sm-0" type="submit"><i class="fas fa-search"></i></button>
+                <input class="form-control mr-sm-1 search" type="search" placeholder="Search" aria-label="Search" name="search">
+                <button class="btn btn-search my-2 my-sm-0" type="submit" ><i class="fas fa-search"></i></button>
             </form>
             <li class="nav-item active">
                 <a class="nav-link text-muted" href="#"><i class="fas fa-bell"></i><span class="sr-only">(current)</span></a>

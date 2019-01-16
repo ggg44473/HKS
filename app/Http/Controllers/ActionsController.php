@@ -32,7 +32,7 @@ class ActionsController extends Controller
         $keyresults = KeyResult::where('objective_id', '=', $objective->id)->get();
         if($keyresults->toArray()==null) return redirect()->route('user.okr', auth()->user()->id);
         $data = [
-            'user' => $user,
+            'owner' => $user,
             'keyresults' => $keyresults,
             'priorities' => $priorities,
         ];

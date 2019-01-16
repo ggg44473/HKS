@@ -1,6 +1,12 @@
 @section('script')
     <script src="{{ asset('js/editbtn.js') }}" defer></script>       
 @endsection
+<div class="alert alert-info text-center" role="alert">
+共有<strong> {{$total}} </strong>筆目標 ( Objectives )
+@if($st_date!=null || $fin_date!=null)
+<br/>搜尋時間範圍 : {{$st_date}} ~ {{$fin_date}}
+@endif
+</div>
 @foreach($okrs as $okr)
     <div class="card shadow-sm m-4 okr-card">
         <div class="card-header bg-transparent" style="border-bottom: none;">
@@ -16,7 +22,6 @@
                     @endif
                 </div>
             </div>
-           
         </div>
         <div class="card-body u-pl-48 u-pr-48">
             
@@ -66,7 +71,7 @@
                 <div class="col-md-10">
                     @foreach ($okr['keyresults'] as $kr)
                         <div class="row pt-2">
-                            <span class="col-md-5 pt-2" style="border-left: 5px solid {{ $colors[($kr->id)%9] }} "> no.{{ $kr->id }} : {{ $kr->title }} </span>
+                            <span class="col-md-5 pt-2" style="border-left: 5px solid {{ $kr->color() }} "> no.{{ $kr->id }} : {{ $kr->title }} </span>
                             <div class="col-md-7 row justify-content-end">
                                 <span class="pt-2 pr-4">{{ $kr->confidence }} / 10  <i class="fas fa-heart" style="color: #FFB5B1;"></i></span>                            
                                 <div class="pt-3" style="display:inline-block; width:60%;">

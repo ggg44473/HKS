@@ -46,7 +46,7 @@ class OkrController extends Controller
         //使用者的krs
         $keyresults = KeyResult::where('objective_id','=',$objective->id)->get();  
         $data = [
-            'user' => $user,
+            'owner' => $user,
             'objective' => $objective,
             'keyresults'=> $keyresults,
         ];
