@@ -7,6 +7,10 @@
 <script src="{{ asset('js/avatar.js') }}" defer></script>  
 @endsection
 
+@section('stylesheet')
+<link  href="{{ asset('css/cropper.css') }}" rel="stylesheet">
+@endsection
+
 @section('content')
 <div class="container">
     <div class="row m-3">

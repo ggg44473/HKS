@@ -31,6 +31,7 @@
     <link href="{{ asset('css/component.css') }}" rel="stylesheet">
     <link href="https://unpkg.com/gijgo@1.9.11/css/gijgo.min.css" rel="stylesheet" type="text/css" />
     <link href="{{ asset('css/ion.rangeSlider.css') }}" rel="stylesheet" />
+    @yield('stylesheet')
 </head>
 <body>
     {{-- <script src="https://unpkg.com/vue"></script>

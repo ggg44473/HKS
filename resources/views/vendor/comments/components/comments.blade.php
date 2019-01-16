@@ -2,14 +2,14 @@
     @if($model->comments->count() < 1)
         <p class="lead">目前沒有任何回饋</p>
     @endif
+    
+    @include('comments::_form')
 
     <ul class="list-unstyled">
         @foreach($model->comments->where('parent', null) as $comment)
             @include('comments::_comment')
         @endforeach
     </ul>
-
-    @include('comments::_form')
 @else
     @if($model->comments->count() < 1)
         <p class="lead">目前沒有任何回饋</p>

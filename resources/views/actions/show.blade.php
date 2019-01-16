@@ -2,50 +2,44 @@
 @section('title','Action')
 @section('content')
 <div class="container">
-    <div class="row mb-2 align-items-center">
-        <div class="col-md-4 mb-2">
-            <a href="{{ route('user.okr', auth()->user()->id) }}" class="btn btn-primary btn-sm">返回</a><br />
+    <div class="row mb-2">
+        <div class="col-12">
+            <a href="{{ route('user.okr', auth()->user()->id) }}" class="btn btn-primary btn-sm float-right">返回</a>
+        </div>
+        <div class="col">
+            <h4>{{$action->title}}</h4>
+        </div>
+        <div class="col">
             <span class="badge badge-pill badge-{{$action->priority()->getResults()->color}}">{{$action->priority()->getResults()->priority}}</span>
             <span class="badge badge-pill badge-secondary">關聯KR : {{$action->keyresult()->getResults()->title}}</span>
         </div>
-        <div class="col align-self-end mb-3 text-right">
-            <h5>
-                <small>Updated : {{$action->updated_at}}</small><br />
-                | <small>
-                    執行者:
-                    <a href="{{ route('user.okr', $action->user()->getResults()->id) }}">
-                        <img src="{{ $action->user()->getResults()->getAvatar() }}" class="avatar">
-                    </a>
-                    {{$action->user()->getResults()->name}}
-                </small> |
-                <small>
-                    指派者:
-                    <a href="{{ route('user.okr',$action->assignee()->getResults()->id) }}">
-                        <img src="{{ $action->assignee()->getResults()->getAvatar() }}" class="avatar">
-                    </a>
-                    {{$action->assignee()->getResults()->name}}
-                </small> |
-                <small>Started : {{$action->started_at}}</small> |
-                <small>Finished : {{$action->finished_at}}</small> |
-            </h5>
+    </div>
+    <div class="row align-items-center mb-4">
+        <div class="col-md-6">
+            執行者:
+            <a href="{{ route('user.okr', $action->user()->getResults()->id) }}" title="{{$action->user()->getResults()->name}}">
+                <img src="{{ $action->user()->getResults()->getAvatar() }}" class="avatar mr-1">
+            </a>
+            指派者:
+            <a href="{{ route('user.okr',$action->assignee()->getResults()->id) }}" title="{{$action->assignee()->getResults()->name}}">
+                <img src="{{ $action->assignee()->getResults()->getAvatar() }}" class="avatar">
+            </a>
         </div>
-        <div class="col-md-12 text-center alert alert-success">
-            <h4>{{$action->title}}</h4>
+        <div class="col-md-2">Start: {{$action->started_at}}</div>
+        <div class="col-md-2">Finish: {{$action->finished_at}}</div>
+        <div class="col-md-2">Updated: {{$action->updated_at}}</div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <label>說明</label>
+            <div class="ml-4">
+                <pre>{{$action->content}}</pre>
+            </div>
         </div>
-        <div class="col-md-12 align-self-end mb-2 text-right">
-        </div>
-        <div class="col-md ml-2">
-            <h4>說明</h4>
-        </div>
-        <div class="col-md-11 bg-white pt-2 mb-2">
-            <pre>{{$action->content}} </pre>
-        </div>
-        <div class="col-md ml-2">
-            <h4>附件</h4>
-        </div>
-        <div class="col-md-11">
+        <div class="col-12">
+            <label>附件</label>
             @if(!empty($files))
-            <div class="row">
+            <div class="row ml-3">
                 @foreach($files as $file)
                 <div class="col-xs-12 col-md-6 col-lg-4">
                     {{ $file['updated_at'] }} <br>
@@ -54,9 +48,12 @@
                 @endforeach
             </div>
             @endif
-        </div><br />
-        <hr />
+        </div>
+    </div>
+    <hr>
+    <div class="row">
         @comments(['model' => $action])
         @endcomments
     </div>
-    @endsection
+</div>
+@endsection
