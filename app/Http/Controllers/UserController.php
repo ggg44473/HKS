@@ -36,15 +36,13 @@ class UserController extends Controller
             #判斷起始日期搜索是否為空        
             if ($search = $request->input('st_date', '')) {                                     
                 $builder->where(function ($query) use ($search) {                         
-                        $query->where('started_at', '<=', $search)
-                        ->Where('finished_at', '>=', $search);
+                        $query->where('finished_at', '>=', $search);
                     });
             }
             #判斷終點日期搜索是否為空        
             if ($search = $request->input('fin_date', '')) {                                     
                 $builder->where(function ($query) use ($search) {                         
-                        $query->where('started_at', '<=', $search)
-                        ->Where('finished_at', '>=', $search);
+                        $query->where('started_at', '<=', $search);
                     });
             }
             #判斷使用內建排序與否
