@@ -4,23 +4,19 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\HasObjectiveTrait;
+use App\Traits\HasAvatarTrait;
 
 class Company extends Model
 {
-    use HasObjectiveTrait;
+    use HasObjectiveTrait, HasAvatarTrait;
 
     protected $fillable = [
-        'name', 'description', 'user_id', 'avatar'
+        'name', 'description', 'user_id',
     ];
 
     public function user()
     {
         return $this->belongsTo(User::class);
-    }
-
-    public function getAvatar()
-    {
-        return $this->avatar ? $this->avatar : '/img/icon/building/g.svg';
     }
 
     public function getOKrRoute()

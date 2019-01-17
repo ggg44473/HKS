@@ -162,12 +162,7 @@ class DepartmentController extends Controller
         $attr['description'] = $request->department_description;
         $department->update($attr);
 
-        if ($request->hasFile('department_img_upload')) {
-            $file = $request->file('department_img_upload');
-            $filename = date('YmdHis') . '.' . $file->getClientOriginalExtension();
-            $file->storeAs('public/department/' . $department->id, $filename);
-            $department->update(['avatar' => '/storage/department/' . $department->id . '/' . $filename]);
-        }
+        $department->addAvatar($request);
 
         return redirect()->route('organization');
     }

@@ -130,13 +130,7 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        if ($request->hasFile('avatar')) {
-            $file = $request->file('avatar');
-            $filename = date('YmdHis') . '.' . $file->getClientOriginalExtension();
-            $file->storeAs('public/avatar/' . auth()->user()->id, $filename);
-
-            $user->update(['avatar' => '/storage/avatar/' . auth()->user()->id . '/' . $filename]);
-        }
+        $user->addAvatar($request);
 
         return redirect()->route('user.settings', auth()->user()->id);
     }
