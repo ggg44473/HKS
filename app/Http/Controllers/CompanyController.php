@@ -31,7 +31,7 @@ class CompanyController extends Controller
         $company = Company::where('id', auth()->user()->company_id)->first();
         $okrs = [];
         # 預設當前進行OKR
-        $pages = $company->searchObjectives($request);
+        $pages = $company->searchActiveObjectives($request);
         # 如果有做搜尋則跑此判斷
         if ($request->input('st_date', '') || $request->input('fin_date', '')) {
             $builder = $user->objectives();

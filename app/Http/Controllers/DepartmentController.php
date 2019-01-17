@@ -29,7 +29,7 @@ class DepartmentController extends Controller
     {
         $okrs = [];
         # 預設當前進行OKR
-        $pages = $department->searchObjectives($request);
+        $pages = $department->searchActiveObjectives($request);
         # 如果有做搜尋則跑此判斷
         if ($request->input('st_date', '') || $request->input('fin_date', '')) {
             $builder = $user->objectives();

@@ -3,6 +3,7 @@
 namespace App\Traits;
 
 use App\Objective;
+use Illuminate\Http\Request;
 
 trait HasObjectiveTrait
 {
@@ -14,7 +15,7 @@ trait HasObjectiveTrait
         return $this->morphMany(Objective::class, 'model');
     }
 
-    public function addObjective($request)
+    public function addObjective(Request $request)
     {
         $attr['model_id'] = $this->id;
         $attr['model_type'] = get_class($this);
@@ -25,7 +26,7 @@ trait HasObjectiveTrait
         Objective::create($attr);
     }
 
-    public function searchObjectives($request)
+    public function searchActiveObjectives(Request $request)
     {
         $now = now()->toDateString();
         return $this->objectives()
@@ -40,13 +41,61 @@ trait HasObjectiveTrait
         return count($this->objectives()->get()) ? true : false;
     }
 
-    public function updateObjective()
+    public function getPages(Request $request)
     {
+        # 預設當前進行OKR
+        $pages = $this->searchActiveObjectives($request);
 
+        # 如果有做搜尋則跑此判斷
+        if ($request->input('st_date', '') || $request->input('fin_date', '')) {
+            $builder = $this->objectives();
+            # 判斷起始日期搜索是否為空        
+            if ($search = $request->input('st_date', '')) {
+                $builder->where(function ($query) use ($search) {
+                    $query->where('finished_at', '>=', $search);
+                });
+            }
+            # 判斷終點日期搜索是否為空        
+            if ($search = $request->input('fin_date', '')) {
+                $builder->where(function ($query) use ($search) {
+                    $query->where('started_at', '<=', $search);
+                });
+            }
+            # 判斷使用內建排序與否
+            if ($order = $request->input('order', '')) { 
+                # 判斷value是以 _asc 或者 _desc 结尾來排序
+                if (preg_match('/^(.+)_(asc|desc)$/', $order, $m)) {
+                    # 判斷是否為指定的接收的參數
+                    if (in_array($m[1], ['started_at', 'finished_at', 'updated_at'])) {   
+                        # 開始排序              
+                        $builder->orderBy($m[1], $m[2]);
+                    }
+                }
+            }
+            # 使用分頁(依照單頁O的筆數上限、利用append記錄搜尋資訊)
+            $pages = $builder->paginate(5)->appends([
+                'st_date' => $request->input('st_date', ''),
+                'fin_date' => $request->input('fin_date', ''),
+                'order' => $request->input('order', '')
+            ]);
+        }
+
+        return $pages;
     }
 
-    public function deleteObjective()
+    public function getOKRs(Request $request)
     {
+        $okrs = [];
+        $pages = $this->getPages($request);
+        foreach ($pages as $obj) {
+            $okrs[] = [
+                "objective" => $obj,
+                "keyresults" => $obj->keyresults,
+                "actions" => $obj->actions,
+                "chart" => $obj->getChart(),
+            ];
+        }
 
+        return $okrs;
     }
 }

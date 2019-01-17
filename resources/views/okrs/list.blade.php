@@ -1,4 +1,5 @@
 @section('script')
+<script src="{{ asset('js/editbtn.js') }}" defer></script>
 {{-- Chartjs --}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js" charset="utf-8"></script>
 {{-- Highcharts --}}
@@ -66,5 +67,13 @@
         </div>
     </div>
 </div>
-@include('okrs.okr', ['admin'=>$admin, $okrs])
+<div class="alert alert-info text-center" role="alert">
+    共有<strong> {{$pages->total()}} </strong>筆目標 ( Objectives )
+    @if($st_date!=null || $fin_date!=null)
+    <br />搜尋時間範圍 : {{$st_date}} ~ {{$fin_date}}
+    @endif
+</div>
+@foreach($okrs as $okr)
+    @include('okrs.okr', ['okr' => $okr])
+@endforeach
 </div>

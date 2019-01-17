@@ -20,26 +20,6 @@ class OkrController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
-    {
-        //
-    }
-
-    public function create()
-    {
-        //
-    }
-
-    public function store(Request $request)
-    {
-        //
-    }
-
-    public function show($id)
-    {
-        //
-    }
-
     public function edit(Objective $objective)
     {
         $user = User::where('id', '=', auth()->user()->id)->first();        
@@ -52,6 +32,7 @@ class OkrController extends Controller
         ];
         return view('okrs.edit', $data);
     }
+
     public function update(Request $request, Objective $objective)
     {
         $objAttr['title'] = $request->input('obj_title');
@@ -76,10 +57,5 @@ class OkrController extends Controller
         }
 
         return redirect()->route('user.okr', auth()->user()->id);
-    }
-
-    public function destroy($id)
-    {
-        //
     }
 }
