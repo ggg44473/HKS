@@ -34,7 +34,7 @@ export default {
 
     methods: {
         fetch() {
-            axios.post('/organization/search', { keywords: this.keywords })
+            axios.post('/organization/member/search', { keywords: this.keywords })
                 .then(response => this.results = response.data)
                 .catch(error => {});
         },
