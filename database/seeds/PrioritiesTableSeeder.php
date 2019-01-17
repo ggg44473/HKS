@@ -14,24 +14,25 @@ class PrioritiesTableSeeder extends Seeder
     {
         Priority::truncate();
         Priority::insert([
-            'priority' => 'Postponed',
-            'color' => 'dark',
+            'priority' => 'Immediate',
+            'color' => 'danger',
         ]);
         Priority::insert([
-            'priority' => 'Low',
-            'color' => 'success',
+            'priority' => 'Urgent',
+            'color' => 'warning',
         ]);
         Priority::insert([
             'priority' => 'Normal',
             'color' => 'info',
         ]);
         Priority::insert([
-            'priority' => 'Immediate',
-            'color' => 'warning',
+            'priority' => 'Low',
+            'color' => 'success',
         ]);
         Priority::insert([
-            'priority' => 'Urgent',
-            'color' => 'danger',
+            'priority' => 'Postponed',
+            'color' => 'dark',
         ]);
+
     }
 }

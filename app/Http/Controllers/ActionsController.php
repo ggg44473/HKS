@@ -118,7 +118,7 @@ class ActionsController extends Controller
     public function destroy(Action $action)
     {
         $action->delete();
-        return redirect()->route('user.okr', auth()->user()->id);
+        return redirect()->back();
     }
 
     public function destroyFile(Action $action, Media $media)
@@ -132,6 +132,6 @@ class ActionsController extends Controller
         $act = Action::find($action->id);
         $act->isdone = 'true';
         $act->save();
-        return redirect()->route('user.okr', auth()->user()->id);
+        return redirect()->back();
     }
 }

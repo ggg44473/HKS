@@ -14,7 +14,7 @@ class ObjectivesTableSeeder extends Seeder
     {
         Objective::truncate();
         Objective::unguard();
-        factory(Objective::class, 12)->create();
+        factory(Objective::class, 400)->create();
         Objective::reguard();
     }
 }
