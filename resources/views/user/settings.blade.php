@@ -25,8 +25,8 @@
                 </div>
                 <div class="u-pl-32 u-pr-32 form-group row">
                     <div class="col-12">
-                        <span for="name" class="u-pl-8 u-pr-8">姓名</span>
-                        <input type="text" class="u-pl-8 u-pr-8" id="name" value="{{ $user->name }}" style="color: #495057; border: 1px solid #ced4da; background-color: #fff;">
+                        <span class="u-pl-8 u-pr-8">姓名</span>
+                        <input type="text" class="u-pl-8 u-pr-8" name="name" id="name" value="{{ $user->name }}" style="color: #495057; border: 1px solid #ced4da; background-color: #fff;">
                     </div>
                 </div>
                 <div class="u-pl-32 u-pr-32 u-pt-16 u-pb-16 form-group row">
