@@ -33,7 +33,7 @@
                 新增目標</a>
         </div>
         @endif
-        <div class="col-md-4">{!! $pages->render() !!} </div>
+        <div class="col-md-4">{{$pageInfo['link']}} </div>
         <div class="col-md-8 mb-2">
             <form action="{{ route('user.okr',$owner->id) }}" class="form-inline search-form">
                 <input autocomplete="off" class="form-control input-sm" name="st_date" id="filter_started_at" value=""
@@ -68,7 +68,7 @@
     </div>
 </div>
 <div class="alert alert-info text-center" role="alert">
-    共有<strong> {{$pages->total()}} </strong>筆目標 ( Objectives )
+    共有<strong> {{$pageInfo['totalItem']}} </strong>筆目標 ( Objectives )
     @if($st_date!=null || $fin_date!=null)
     <br />搜尋時間範圍 : {{$st_date}} ~ {{$fin_date}}
     @endif

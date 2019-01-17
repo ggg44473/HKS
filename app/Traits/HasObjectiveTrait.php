@@ -26,29 +26,16 @@ trait HasObjectiveTrait
         Objective::create($attr);
     }
 
-    public function searchActiveObjectives(Request $request)
-    {
-        $now = now()->toDateString();
-        return $this->objectives()
-            ->where('started_at', '<=', $now)
-            ->where('finished_at', '>=', $now)
-            ->orderBy('finished_at')
-            ->paginate(5);
-    }
-
     public function hasObjectives()
     {
         return count($this->objectives()->get()) ? true : false;
     }
 
-    public function getPages(Request $request)
+    public function getObjectivesBuilder(Request $request)
     {
-        # 預設當前進行OKR
-        $pages = $this->searchActiveObjectives($request);
-
+        $builder = $this->objectives();
         # 如果有做搜尋則跑此判斷
         if ($request->input('st_date', '') || $request->input('fin_date', '')) {
-            $builder = $this->objectives();
             # 判斷起始日期搜索是否為空        
             if ($search = $request->input('st_date', '')) {
                 $builder->where(function ($query) use ($search) {
@@ -72,18 +59,30 @@ trait HasObjectiveTrait
                     }
                 }
             }
-            # 使用分頁(依照單頁O的筆數上限、利用append記錄搜尋資訊)
-            $pages = $builder->paginate(5)->appends([
-                'st_date' => $request->input('st_date', ''),
-                'fin_date' => $request->input('fin_date', ''),
-                'order' => $request->input('order', '')
-            ]);
+        } else {
+            $now = now()->toDateString();
+            $builder->where('started_at', '<=', $now)
+                ->where('finished_at', '>=', $now)
+                ->orderBy('finished_at');
         }
+
+        return $builder;
+    }
+
+    public function getPages(Request $request)
+    {
+        $builder = $this->getObjectivesBuilder($request);
+
+        $pages = $builder->paginate(5)->appends([
+            'st_date' => $request->input('st_date', ''),
+            'fin_date' => $request->input('fin_date', ''),
+            'order' => $request->input('order', '')
+        ]);
 
         return $pages;
     }
 
-    public function getOKRs(Request $request)
+    public function getOkrsWithPage(Request $request)
     {
         $okrs = [];
         $pages = $this->getPages($request);
@@ -96,6 +95,12 @@ trait HasObjectiveTrait
             ];
         }
 
-        return $okrs;
+        return [
+            'okrs' => $okrs,
+            'pageInfo' => [
+                'link' => $pages->render(),
+                'totalItem' =>$pages->total()
+            ]
+        ];
     }
 }

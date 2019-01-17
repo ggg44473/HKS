@@ -21,14 +21,12 @@ class UserController extends Controller
 
     public function listOKR(Request $request, User $user)
     {
-        $pages = $user->getPages($request);
-
-        $okrs = $user->getOKRs($request);
+        $okrsWithPage = $user->getOkrsWithPage($request);
 
         $data = [
             'owner' => $user,
-            'okrs' => $okrs,
-            'pages' => $pages,
+            'okrs' => $okrsWithPage['okrs'],
+            'pageInfo' => $okrsWithPage['pageInfo'],
             'st_date' => $request->input('st_date', ''),
             'fin_date' => $request->input('fin_date', ''),
             'order' => $request->input('order', ''),
