@@ -47,8 +47,8 @@ class CompanyController extends Controller
 
     public function storeObjective(ObjectiveRequest $request, Company $company)
     {
-        $company->addObjective($request);
-        return redirect()->route('company.okr');
+        $objective = $company->addObjective($request);
+        return redirect()->to(url()->previous() . '#oid-' . $objective->id);
     }
 
     /**

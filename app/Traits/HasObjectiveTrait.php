@@ -23,7 +23,7 @@ trait HasObjectiveTrait
         $attr['started_at'] = $request->input('st_date');
         $attr['finished_at'] = $request->input('fin_date');
 
-        Objective::create($attr);
+        return Objective::create($attr);
     }
 
     public function hasObjectives()
