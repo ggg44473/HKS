@@ -1,51 +1,66 @@
-@extends('layouts.master')
-
-@section('title','個人綜覽')
-
+@extends('layouts.master') 
+@section('title','個人綜覽') 
 @section('script')
+<script src="{{ asset('js/avatar.js') }}" defer></script>
 @endsection
-
+ 
 @section('stylesheet')
 @endsection
-
+ 
 @section('content')
 <div class="container">
-    <div class="row m-3">
-        <div class="ml-4 mr-4">
-            <form id="avatarForm" name="form" method="POST" action="{{ route('user.update', auth()->user()->id) }}" enctype="multipart/form-data">
-                @csrf
-                {{ method_field('PATCH') }}
-                <label class="label" data-toggle="tooltip" title="Change your avatar">
-                    <img id="avatar" class="avatar" src="{{ $user->avatar? $user->avatar:asset('/img/icon/user/green.svg') }}">    
-                    <input type="file" name="avatar" id="input" class="sr-only" accept="image/*"/>
-                </label>
+    <div class="row m-3 justify-content-center">
+        <h4 class="col-md-7">帳號設定</h4>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form name="form" method="POST" action="{{ route('user.update', auth()->user()->id) }}" enctype="multipart/form-data">
+                @csrf {{ method_field('PATCH') }}
+
+                <div class="u-pl-32 u-pr-32 form-group row">
+                    <div class="col-12">
+                        <span class="u-pl-8 u-pr-8">帳號</span>
+                        <span class="u-pl-8 u-pr-8">{{ $user->email }}</span>
+                    </div>
+                </div>
+                <div class="u-pl-32 u-pr-32 form-group row">
+                    <div class="col-12">
+                        <span class="u-pl-8 u-pr-8">姓名</span>
+                        <input type="text" class="u-pl-8 u-pr-8" name="name" id="name" value="{{ $user->name }}" style="color: #495057; border: 1px solid #ced4da; background-color: #fff;">
+                    </div>
+                </div>
+                <div class="u-pl-32 u-pr-32 u-pt-16 u-pb-16 form-group row">
+                    <div class="col-12">
+                        <span for="avatar" class="u-pl-8 u-pr-8">頭像</span>
+                        <img id="avatar" class="avatar" src="{{ $user->getAvatar() }}">
+                        <input type="file" class="u-ml-8 u-mr-8 align-self-bottom" id="input" name="avatar" value="{{ $user->name }}" accept="image/*">
+                    </div>
+                </div>
+                <div class="u-pl-32 u-pr-32 form-group row">
+                    <div class="col-12">
+                        <span class="u-pl-8 u-pr-8">組織</span>
+                        <span class="u-pl-8 u-pr-8">{{ $user->company->name }}</span>
+                    </div>
+                </div>
+                <div class="u-pl-32 u-pr-32 form-group row">
+                    <div class="col-12">
+                        <span class="u-pl-8 u-pr-8">部門</span>
+                        <span class="u-pl-8 u-pr-8">{{ $user->department->name }}</span>
+                    </div>
+                </div>
+                <div class="u-pl-32 u-pr-32 form-group row">
+                    <div class="col-12">
+                        <span class="u-pl-8 u-pr-8">職稱</span>
+                        <span class="u-pl-8 u-pr-8">{{ $user->position }}</span>
+                    </div>
+                </div>
+                <div class="u-pl-32 u-pr-32 form-group row justify-content-end">
+                    <div class="col-2">
+                        <button type="submit" class="btn btn-primary">變更</button>
+                    </div>
+                </div>
             </form>
         </div>
-        <div class="ml-2 pt-3">
-            <h4>{{ $user->name }}</h4>
-            <p>{{ $user->position.'   '.$user->created_at }}</p>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-    <div class="modal-content">
-        <div class="modal-header">
-        <h5 class="modal-title" id="modalLabel">Crop the image</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-        </div>
-        <div class="modal-body">
-        <div class="img-container">
-            <img id="image" src="">
-        </div>
-        </div>
-        <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-primary" id="crop">Crop</button>
-        </div>
-    </div>
     </div>
 </div>
 @endsection

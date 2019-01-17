@@ -76,6 +76,8 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
+        $attr['name'] = $request->name;
+        $user->update($attr);
         if ($request->hasFile('avatar')) {
             $file = $request->file('avatar');
             $filename = date('YmdHis') . '.' . $file->getClientOriginalExtension();
