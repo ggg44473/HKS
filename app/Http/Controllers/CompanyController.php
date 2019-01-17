@@ -84,12 +84,7 @@ class CompanyController extends Controller
         $attr['user_id'] = auth()->user()->id;
         $company = Company::create($attr);
 
-        if ($request->hasFile('company_img_upload')) {
-            $file = $request->file('company_img_upload');
-            $filename = date('YmdHis') . '.' . $file->getClientOriginalExtension();
-            $file->storeAs('public/company/' . $company->id, $filename);
-            $company->update(['avatar' => '/storage/company/' . $company->id . '/' . $filename]);
-        }
+        $company->addAvatar($request);
 
         User::where('id', auth()->user()->id)->update(['company_id' => $company->id]);
 

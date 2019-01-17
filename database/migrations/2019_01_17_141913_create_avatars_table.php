@@ -17,7 +17,7 @@ class CreateAvatarsTable extends Migration
             $table->increments('id');
             $table->string('model_type');
             $table->string('model_id');
-            $table->string('path');
+            $table->string('path')->nullable();
             $table->timestamps();
         });
     }

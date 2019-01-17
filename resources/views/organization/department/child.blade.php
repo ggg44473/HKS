@@ -1,13 +1,7 @@
 <div class="u-margin-4 u-ml-16">
         <div class="row">
             <a href="{{ route('department.okr', $department->id) }}" class="u-ml-4 u-mr-4">
-                @if ($department->getAvatar())
-                    <img src="{{ $department->getAvatar() }}" alt="" class="avatar-sm text-center organizationIcon bg-white">
-                @else
-                    <div class="avatar-sm text-center organizationIcon bg-white">
-                        <i class="fas fa-building text-primary"></i>
-                    </div>
-                @endif
+                <img src="{{ $department->getAvatar() }}" alt="" class="avatar-sm text-center organizationIcon bg-white">
             </a>
             <div class="u-ml-4 u-mr-4 align-self-center">
                 <a href="{{ route('department.okr', $department->id) }}">

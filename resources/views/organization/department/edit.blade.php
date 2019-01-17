@@ -17,10 +17,10 @@
                         {{ method_field('PATCH') }}
                         <div class="row u-ml-16 u-mr-16">
                             <div class="col-md-12 align-self-center">
-                                <input id="departmentImgUpload" name="department_img_upload" type="file" class="u-hidden" accept="image/*"/>
-                                <img id="departmentImg" class="avatar u-hidden u-margin-16" src="{{ $department->avatar }}" alt="">
+                                <input id="departmentImgUpload" name="avatar" type="file" class="u-hidden" accept="image/*"/>
+                                <img id="departmentImg" class="avatar u-hidden u-margin-16" src="{{ $department->getAvatar() }}" alt="">
                                 <div id="departmentIcon" class="avatar text-center departmentIcon">
-                                    <i class="fas fa-building text-white"></i>
+                                    <i class="fas fa-images text-white"></i>
                                     <i class="fas fa-upload text-white"></i>
                                 </div>
                                 <div class="form-group u-ml-16 w-25" style="display:inline-block">

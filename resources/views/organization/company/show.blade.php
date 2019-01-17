@@ -2,13 +2,7 @@
     <div class="col-md-4">
         <div class="row">
             <a class="col-md-3" href="{{ route('company.okr') }}">
-                @if ($company->image)
-                    <img src="{{ $company->image }}" alt="" class="avatar text-center organizationIcon bg-white">
-                @else
-                    <div class="avatar text-center organizationIcon bg-white">
-                        <i class="fas fa-building text-primary"></i>
-                    </div>
-                @endif
+                <img src="{{ $company->getAvatar() }}" alt="" class="avatar text-center organizationIcon bg-white">
             </a>
             <div class="col-md-9 align-self-center">
                 <a href="{{ route('company.okr') }}">

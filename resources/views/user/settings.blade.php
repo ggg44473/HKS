@@ -1,12 +1,12 @@
-@extends('layouts.master') 
-@section('title','個人綜覽') 
+@extends('layouts.master')
+@section('title','個人綜覽')
 @section('script')
 <script src="{{ asset('js/avatar.js') }}" defer></script>
 @endsection
- 
+
 @section('stylesheet')
 @endsection
- 
+
 @section('content')
 <div class="container">
     <div class="row m-3 justify-content-center">
@@ -33,27 +33,38 @@
                     <div class="col-12">
                         <span for="avatar" class="u-pl-8 u-pr-8">頭像</span>
                         <img id="avatar" class="avatar" src="{{ $user->getAvatar() }}">
-                        <input type="file" class="u-ml-8 u-mr-8 align-self-bottom" id="input" name="avatar" value="{{ $user->name }}" accept="image/*">
+                        <input type="file" class="u-ml-8 u-mr-8 align-self-bottom" id="input" name="avatar" value="{{ $user->name }}"
+                            accept="image/*">
                     </div>
                 </div>
+
+                @if ($user->compan)
                 <div class="u-pl-32 u-pr-32 form-group row">
                     <div class="col-12">
                         <span class="u-pl-8 u-pr-8">組織</span>
                         <span class="u-pl-8 u-pr-8">{{ $user->company->name }}</span>
                     </div>
                 </div>
+                @endif
+
+                @if ($user->department)
                 <div class="u-pl-32 u-pr-32 form-group row">
                     <div class="col-12">
                         <span class="u-pl-8 u-pr-8">部門</span>
                         <span class="u-pl-8 u-pr-8">{{ $user->department->name }}</span>
                     </div>
                 </div>
+                @endif
+
+                @if ($user->position)
                 <div class="u-pl-32 u-pr-32 form-group row">
                     <div class="col-12">
                         <span class="u-pl-8 u-pr-8">職稱</span>
                         <span class="u-pl-8 u-pr-8">{{ $user->position }}</span>
                     </div>
                 </div>
+                @endif
+
                 <div class="u-pl-32 u-pr-32 form-group row justify-content-end">
                     <div class="col-2">
                         <button type="submit" class="btn btn-primary">變更</button>

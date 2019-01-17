@@ -19,15 +19,14 @@ trait HasAvatarTrait
         if ($request->hasFile('avatar')) {
             $file = $request->file('avatar');
             $filename = date('YmdHis') . '.' . $file->getClientOriginalExtension();
-            $attr['path'] = '/storage/avatar/' . $this->id . '/' . $filename;
             if ($this->avatar()->first()) {
                 $avatar = $this->avatar()->first();
-                $avatar->update($attr);
             } else {
                 $attr['model_id'] = $this->id;
                 $attr['model_type'] = get_class($this);
                 $avatar = Avatar::create($attr);
             }
+            $avatar->update(['path' => '/storage/avatar/' . $avatar->id . '/' . $filename]);
             $file->storeAs('public/avatar/' . $avatar->id, $filename);
         }
     }

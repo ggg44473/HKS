@@ -15,7 +15,7 @@
                     @csrf
                     <div class="row u-ml-16 u-mr-16">
                         <div class="col align-self-center">
-                            <input id="departmentImgUpload" name="department_img_upload" type="file" class="u-hidden" accept="image/*"/>
+                            <input id="departmentImgUpload" name="avatar" type="file" class="u-hidden" accept="image/*"/>
                             <img id="departmentImg" class="avatar u-hidden u-margin-16" src="" alt="">
                             <div id="departmentIcon" class="avatar text-center departmentIcon">
                                 <i class="fas fa-images text-white"></i>
