@@ -16,7 +16,7 @@ class KeyResultsTableSeeder extends Seeder
     {
         KeyResult::truncate();
         KeyResult::unguard();
-        factory(KeyResult::class, 36)->create();
+        factory(KeyResult::class, 800)->create();
         KeyResult::reguard();
     }
 }
