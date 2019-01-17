@@ -1,13 +1,7 @@
 <div class="col-md-3 u-margin-16 card">
     <div class="row">
         <a href="{{ route('department.okr', $department->id) }}" class="u-ml-8 u-mr-8">
-            @if ($department->getAvatar())
-                <img src="{{ $department->getAvatar() }}" alt="" class="avatar text-center organizationIcon bg-white">
-            @else
-                <div class="avatar text-center organizationIcon bg-white">
-                    <i class="fas fa-building text-primary"></i>
-                </div>
-            @endif
+            <img src="{{ $department->getAvatar() }}" alt="" class="avatar text-center organizationIcon bg-white">
         </a>
         <div class="u-ml-8 u-mr-8 align-self-center">
             <a href="{{ route('department.okr', $department->id) }}">

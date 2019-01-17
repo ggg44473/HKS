@@ -9,7 +9,7 @@
                     @csrf
                     <div class="row u-ml-16 u-mr-16">
                         <div class="col-md-12 align-self-center">
-                            <input id="companyImgUpload" name="company_img_upload" type="file" class="u-hidden" accept="image/*"/>
+                            <input id="companyImgUpload" name="avatar" type="file" class="u-hidden" accept="image/*"/>
                             <img id="companyImg" class="avatar u-hidden u-margin-16" src="" alt="">
                             <div id="companyIcon" class="avatar text-center companyIcon">
                                 <i class="fas fa-building text-white"></i>
