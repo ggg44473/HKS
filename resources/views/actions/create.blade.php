@@ -10,7 +10,7 @@
         @include('actions.error',[$errors]) 
         <form method="POST" action="{{ route('actions.store') }}" enctype="multipart/form-data">
             @csrf
-            @include('actions.form',[$user,$keyresults,$priorities,$action=false,]) 
+            @include('actions.form', ['action'=>false]) 
         </form>
     </div>
 </div>

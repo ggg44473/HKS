@@ -6,10 +6,12 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravelista\Comments\Commenter;
+use App\Traits\HasObjectiveTrait;
+use App\Traits\HasAvatarTrait;
 
 class User extends Authenticatable
 {
-    use Notifiable, Commenter;
+    use Notifiable, Commenter, HasObjectiveTrait, HasAvatarTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -17,7 +19,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'avatar', 'department_id', 'position', 'enable'
+        'name', 'email', 'password', 'company_id', 'department_id', 'position', 'enable'
     ];
 
     /**
@@ -29,9 +31,18 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function objectives()
+    public function getOKrRoute()
     {
-        return $this->hasMany(Objective::class);
+        return route('user.okr', $this->id);
     }
 
+    public function company()
+    {
+        return $this->hasOne(Company::class);
+    }
+
+    public function department()
+    {
+        return $this->hasOne(Department::class);
+    }
 }

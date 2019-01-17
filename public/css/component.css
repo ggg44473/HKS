@@ -9,8 +9,10 @@
  * Modal
  * Button
  * Form
- * Profile Page
+ * Avatar
  * Pricing Table
+ * Card
+ * Organization Page 
 **/
 
 /*-------------------------*/
@@ -219,11 +221,17 @@ main{
     cursor: pointer;
 }
 /*-------------------------*/
-/* Profile Page */
+/* Avatar */
 /*-------------------------*/
 .avatar{
     width: 70px;
     height: 70px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.avatar-sm{
+    width: 35px;
+    height: 35px;
     border-radius: 50%;
     object-fit: cover;
 }
@@ -265,4 +273,56 @@ main{
 
 .okr-content{
     line-height: 18px;
+}
+
+/*-------------------------*/
+/* Card */
+/*-------------------------*/
+.card{
+    border: none;
+    border-radius: 10px;
+    box-shadow: 5px 5px 30px rgba(20%,20%,20%,0.5);
+}
+
+/*-------------------------*/
+/* Organization Page */
+/*-------------------------*/
+.companyIcon, .departmentIcon{
+    display: inline-block;
+    background-color: #bbb;
+    margin: 16px 16px;
+    transition: all 0.5s;
+}
+.companyIcon:hover, .departmentIcon:hover{
+    background-color: rgb(86, 185, 174);
+}
+.companyIcon>i, .organizationIcon>i, .departmentIcon>i{
+    font-size: 30px;
+    line-height: 70px;
+}
+.companyIcon .fa-upload, .departmentIcon .fa-upload{
+    display: none;
+}
+.companyIcon .fa-building, .departmentIcon .fa-building{
+    display: inline;
+}
+#company_description, #department_description{
+    resize: none;
+    height: 70.5px;
+}
+#addMember{
+    font-size: 26px;
+    color: rgb(86, 185, 174);
+    transition: all 0.5s;
+}
+#addMember:hover{
+    color: #3BA99C;
+}
+.organizationIcon{
+    display: inline-block;
+    background-color: #fff;
+    margin: 16px 8px;
+    transition: all 0.5s;
+    -webkit-box-shadow: 0.1rem 0.1rem 0.3rem 0.1rem rgba(108, 117, 125, 0.2);
+            box-shadow: 0.1rem 0.1rem 0.3rem 0.1rem rgba(108, 117, 125, 0.2);
 }

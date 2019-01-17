@@ -3,7 +3,7 @@
     <a class="nav-link" href="{{ route('user.okr', auth()->user()->id) }}">
         <span>我的OKR</span>
     </a>
-    <a class="nav-link" href="">
+    <a class="nav-link" href="{{ route('organization') }}">
         <span>組織OKR</span>
     </a>
     <a class="nav-link" href="">
@@ -18,7 +18,7 @@
 </nav>
 <nav class="nav flex-column sidebar" id="sidebar">
     <a class="nav-link" href="{{ route('user.okr', auth()->user()->id) }}"><img src="{{ asset('/img/icon/home/w.svg') }}" alt=""></a>
-    <a class="nav-link" href=""><img src="{{ asset('/img/icon/okr/w.svg') }}" alt=""></a>
+    <a class="nav-link" href="{{ route('organization') }}"><img src="{{ asset('/img/icon/okr/w.svg') }}" alt=""></a>
     <a class="nav-link" href=""><img src="{{ asset('/img/icon/project/w.svg') }}" alt=""></a>
     <a class="nav-link" href=""><img src="{{ asset('/img/icon/calendar/w.svg') }}" alt=""></a>
     <a class="nav-link" href=""><img src="{{ asset('/img/icon/like/w.svg') }}" alt=""></a>

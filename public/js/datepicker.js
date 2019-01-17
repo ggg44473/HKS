@@ -17,3 +17,21 @@ $('#finished_at').datepicker({
         return $('#started_at').val();
     }
 });
+
+$('#filter_started_at').datepicker({
+    uiLibrary: 'bootstrap4',
+    icons: { rightIcon:'<i class="far fa-calendar-alt"></i>' },
+    format: 'yyyy/mm/dd',
+    maxDate: function () {
+        return $('#filter_start').val();
+    }
+});
+
+$('#filter_finished_at').datepicker({
+    uiLibrary: 'bootstrap4',
+    icons: { rightIcon:'<i class="far fa-calendar-alt"></i>' },
+    format: 'yyyy/mm/dd',
+    minDate: function () {
+        return $('#filter_finish').val();
+    }
+});

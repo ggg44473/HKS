@@ -21,8 +21,8 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
-            $table->string('avatar')->nullable();
-            $table->integer('department_id')->unsigned();
+            $table->integer('company_id')->unsigned()->nullable();
+            $table->integer('department_id')->unsigned()->nullable();
             $table->string('position')->nullable();
             $table->boolean('enable')->default(true);
         });
