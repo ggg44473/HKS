@@ -18,7 +18,7 @@ Route::get('/', ['middleware' => 'guest', function () {
 Auth::routes();
 
 ######  V1搜尋  ######
-Route::get('search/user/{user}', 'SearchController@index')->name('search.index');
+Route::get('search', 'SearchController@index')->name('search.index');
 
 ######  個人綜覽  ######
 // 排序OKR頁面

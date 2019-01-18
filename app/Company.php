@@ -14,9 +14,14 @@ class Company extends Model
         'name', 'description', 'user_id',
     ];
 
-    public function user()
+    public function users()
     {
-        return $this->belongsTo(User::class);
+        return $this->hasMany(User::class);
+    }
+
+    public function departments()
+    {
+        return $this->hasMany(Department::class);
     }
 
     public function getOKrRoute()
