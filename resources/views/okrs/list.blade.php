@@ -57,10 +57,12 @@
 
             </form>
         </div>
+        @if($actionlist)
         <div class="btn-group col mb-2">
             <button class="btn btn-light" disabled>OKR</button>
             <a href="{{route('user.action',$owner->id)}}" class="btn btn-success" disabled>Action</a>
         </div>
+        @endif
     </div>
 </div>
 <!-- Modal -->
