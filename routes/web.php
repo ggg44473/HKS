@@ -17,10 +17,10 @@ Route::get('/', ['middleware' => 'guest', function () {
 
 Auth::routes();
 
-######  V1搜尋  ######
+###### V1搜尋 ######
 Route::get('search/user/{user}', 'SearchController@index')->name('search.index');
 
-######  個人綜覽  ######
+###### 個人綜覽 ######
 // 排序OKR頁面
 // 顯示個人OKR
 Route::get('user/{user}/okr', 'UserController@listOKR')->name('user.okr');
@@ -31,7 +31,7 @@ Route::patch('user/{user}/update', 'UserController@update')->name('user.update')
 // 新增個人O
 Route::post('user/{user}/objective/store', 'UserController@storeObjective')->name('user.objective.store');
 
-######  OKR  ######
+###### OKR ######
 // 刪除O
 Route::delete('objective/{objective}/destroy', 'ObjectiveController@destroy')->name('objective.destroy');
 // 編輯OKR頁面
@@ -98,3 +98,6 @@ Route::delete('organization/department/{department}/destroy', 'DepartmentControl
 Route::get('organization/department/{department}/okr', 'DepartmentController@listOKR')->name('department.okr');
 //部門新增O
 Route::post('organization/department/{department}/objective/store', 'DepartmentController@storeObjective')->name('department.objective.store');
+
+###### 通知 ######
+Route::get('send', 'HksCommentController@sendNotification');
