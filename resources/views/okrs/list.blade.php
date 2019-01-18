@@ -33,7 +33,11 @@
                 新增目標</a>
         </div>
         @endif
-        <div class="col-md-4">{{$pageInfo['link']}} </div>
+    </div>
+    <div class="row m-3">
+        <div class="col-md-2">
+            {{$pageInfo['link']}}
+        </div>
         <div class="col-md-8 mb-2">
             <form action="{{ $routeSearch }}" class="form-inline search-form">
                 <input autocomplete="off" class="form-control input-sm" name="st_date" id="filter_started_at" value=""
@@ -50,8 +54,13 @@
                     <option value="updated_at_desc">最近更新由遠到近</option>
                 </select>
                 <button class="btn btn-primary">搜索</button>
+
+            </form>
         </div>
-        </form>
+        <div class="btn-group col mb-2">
+            <button class="btn btn-light" disabled>OKR</button>
+            <a href="{{route('user.action',$owner->id)}}" class="btn btn-success" disabled>Action</a>
+        </div>
     </div>
 </div>
 <!-- Modal -->
@@ -74,6 +83,6 @@
     @endif
 </div>
 @foreach($okrs as $okr)
-    @include('okrs.okr', ['okr' => $okr])
+@include('okrs.okr', ['okr' => $okr])
 @endforeach
 </div>

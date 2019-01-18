@@ -36,6 +36,11 @@ class User extends Authenticatable
         return route('user.okr', $this->id);
     }
 
+    public function actions()
+    {
+        return $this->hasMany('App\Action','assignee');
+    }
+    
     public function company()
     {
         return $this->hasOne(Company::class);

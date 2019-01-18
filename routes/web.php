@@ -24,6 +24,8 @@ Route::get('search/user/{user}', 'SearchController@index')->name('search.index')
 // 排序OKR頁面
 // 顯示個人OKR
 Route::get('user/{user}/okr', 'UserController@listOKR')->name('user.okr');
+// 顯示個人Action
+Route::get('user/{user}/action', 'UserController@listAction')->name('user.action');
 // 顯示個人帳號設定
 Route::get('user/{user}', 'UserController@settings')->name('user.settings');
 // 更新個人照片

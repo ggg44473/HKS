@@ -32,7 +32,7 @@ class Action extends Model implements HasMedia
     }
     public function objective()
     {
-        return $this->belongsTo(Objective::class);
+        return $this->keyresult->belongsTo(Objective::class);
     }
 
     public function assignee()
