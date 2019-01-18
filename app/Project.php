@@ -7,21 +7,26 @@ use App\Traits\HasObjectiveTrait;
 use App\Traits\HasAvatarTrait;
 use App\Interfaces\HasObjectiveInterface;
 
-class Company extends Model implements HasObjectiveInterface
+class Project extends Model implements HasObjectiveInterface
 {
     use HasObjectiveTrait, HasAvatarTrait;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     protected $fillable = [
-        'name', 'description', 'user_id',
+        'title', 'description', 'user_id'
     ];
 
-    public function user()
+    public function admin()
     {
         return $this->belongsTo(User::class);
     }
 
     public function getOKrRoute()
     {
-        return route('company.okr');
+        return route('department.okr', $this->id);
     }
 }

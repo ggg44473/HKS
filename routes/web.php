@@ -98,3 +98,7 @@ Route::delete('organization/department/{department}/destroy', 'DepartmentControl
 Route::get('organization/department/{department}/okr', 'DepartmentController@listOKR')->name('department.okr');
 //部門新增O
 Route::post('organization/department/{department}/objective/store', 'DepartmentController@storeObjective')->name('department.objective.store');
+
+###### Project ######
+//專案首頁
+Route::get('project', 'ProjectController@index')->name('project');

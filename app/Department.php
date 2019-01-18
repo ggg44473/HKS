@@ -5,8 +5,9 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\HasObjectiveTrait;
 use App\Traits\HasAvatarTrait;
+use App\Interfaces\HasObjectiveInterface;
 
-class Department extends Model
+class Department extends Model implements HasObjectiveInterface
 {
     use HasObjectiveTrait, HasAvatarTrait;
 
