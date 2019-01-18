@@ -16,12 +16,12 @@ class Company extends Model
 
     public function users()
     {
-        return $this->hasMany(User::class);
+        return $this->hasMany('App\User','company_id');
     }
 
     public function departments()
     {
-        return $this->hasMany(Department::class);
+        return $this->hasMany('App\Department','company_id');
     }
 
     public function getOKrRoute()

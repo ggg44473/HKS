@@ -17,30 +17,26 @@ class SearchController extends Controller
      */
     public function index(Request $request)
     {
-
         #判斷公司是否存在到要查詢
         if (auth()->user()->company_id) {
-            $company = Company::query()->where('id', '=', auth()->user()->company_id)->first();
-            $usersBuilder = $company->users;
-            $departmentsBuilder = $company->departments;
-
             #判斷搜索是否為空        
-            if ($search = $request->input('search', '')) { 
+            if ($search = $request->input('search', '')) {
+                $company = Company::query()->where('id', '=', auth()->user()->company_id)->first();
+                $usersBuilder = $company->users();
+                $departmentsBuilder = $company->departments();
             #定義模糊查詢                
                 $like = '%' . $search . '%';
-                $mailLike = $search . '%';
-                $usersBuilder->where(function ($query) use ($like) {
-                    $query->where('name', 'like', $like);
-                })->orWhere(function ($query) use ($mailLike) {
-                    $query->where('email', 'like', $mailLike);
-                });
 
+                $usersBuilder->where(function ($query) use ($like) {
+
+                    $query->where('name', 'like', $like)
+                        ->orWhere('email', 'like', $like);
+                });
                 $departmentsBuilder->where(function ($query) use ($like) {
                     $query->where('name', 'like', $like);
                 });
             }
         }
-
         //     ->orWhere('email', 'like', $like)
         // #第一個參數是模型關聯的方法名 , 第二個參數繼承上一步的query , 第三個參數使用模糊查詢字
         //     ->orWhereHas('keyresults', function ($query) use ($like) {
@@ -51,9 +47,10 @@ class SearchController extends Controller
         // $pages = $departmentsBuilder->union($usersBuilder)->paginate(5)->appends(['search' => $request->input('search', '')]);
 
         $data = [
-            'departments' => $departmentsBuilder,
-            'members' => $usersBuilder,
+            'departments' => isset($departmentsBuilder) ? $departmentsBuilder->getResults() : '',
+            'members' => isset($usersBuilder) ? $usersBuilder->getResults() : '',
         ];
+
         return view('search', $data);
     }
 
