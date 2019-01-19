@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('script')
-
+    <script src="{{ asset('js/tooltip.js') }}" defer></script>
 @endsection
 @section('stylesheet')
 <link href="{{ asset('css/project.css') }}" rel="stylesheet">
@@ -34,7 +34,15 @@
         </div>
     </div>
     <div class="row">
-
+        @foreach ($done as $project)
+        <div class="col-md-6 u-mb-16">
+            <a href="{{ route('project.okr', $project) }}">
+                <div class="card u-margin-8">
+                    @include('project.card')
+                </div>
+            </a>
+        </div>
+        @endforeach
     </div>
 </div>
 @endsection

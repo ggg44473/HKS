@@ -106,11 +106,13 @@ Route::get('project', 'ProjectController@index')->name('project');
 Route::get('project/create', 'ProjectController@create')->name('project.create');
 //儲存新增專案
 Route::post('project/store', 'ProjectController@store')->name('project.store');
-//編輯部門頁面
+//編輯專案頁面
 Route::get('project/{project}/edit', 'ProjectController@edit')->name('project.edit');
-//更新公司
+//更新專案
 Route::patch('project/{project}/update', 'ProjectController@update')->name('project.update');
-//刪除部門
+//完成專案
+Route::get('project/{project}/done', 'ProjectController@done')->name('project.done');
+//刪除專案
 Route::delete('project/{project}/destroy', 'ProjectController@destroy')->name('project.destroy');
 //顯示專案OKR
 Route::get('project/{project}/okr', 'ProjectController@listOKR')->name('project.okr');

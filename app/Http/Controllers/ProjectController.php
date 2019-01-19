@@ -23,14 +23,19 @@ class ProjectController extends Controller
      */
     public function index(Request $request)
     {
-        $projects = Project::all();
+        $projects = Project::where('isdone',false)->get();
         foreach($projects as $project){
             $project['okrs'] = $project->getOkrsWithPage($request)['okrs'];
         }
-        // dd($projects);
+
+        $projectDone = Project::where('isdone',true)->get();
+        foreach($projectDone as $project){
+            $project['okrs'] = $project->getOkrsWithPage($request)['okrs'];
+        }
         
         $data = [
             'projects' => $projects,
+            'done' => $projectDone
         ];
         return view('project.index', $data);
     }
@@ -142,5 +147,13 @@ class ProjectController extends Controller
     {
         $objective = $project->addObjective($request);
         return redirect()->to(url()->previous() . '#oid-' . $objective->id);
+    }
+
+    public function done(Project $project)
+    {
+        $project->isdone = !$project->isdone;
+        $project->save();
+
+        return redirect()->route('project');
     }
 }
