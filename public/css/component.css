@@ -10,7 +10,6 @@
  * Button
  * Form
  * Avatar
- * Pricing Table
  * Card
  * Organization Page 
 **/
@@ -98,18 +97,6 @@
     -webkit-box-shadow: 0.1rem 0.1rem 0.3rem 0.1rem rgba(108, 117, 125, 0.2);
             box-shadow: 0.1rem 0.1rem 0.3rem 0.1rem rgba(108, 117, 125, 0.2);
 }
-.btn.btn-login{
-    background-color: transparent;
-    color: #FFE484;
-    border: 1px solid #FFE484;
-}
-.btn.btn-login:focus{
-    box-shadow: none;
-}
-.btn.btn-login:hover{
-    background-color: #FFE484;
-    color: #21897E;
-}
 .navbar .avatar{
     width: 35px;
     height: 35px;
@@ -131,11 +118,7 @@ main{
     position: relative;
     top: 55px;
 }
-.introduction{
-    width:100%; 
-    height:700px;
-    padding-top: 55px;
-}
+
 /*-------------------------*/
 /* Footer */
 /*-------------------------*/
@@ -233,45 +216,6 @@ main{
     height: 35px;
     border-radius: 50%;
     object-fit: cover;
-}
-/*-------------------------*/
-/* Pricing Table */
-/*-------------------------*/
-.price {
-    list-style-type: none;
-    border: 1px solid #eee;
-    border-radius: 10px;
-    margin: 0;
-    padding: 0;
-    -webkit-transition: 0.3s;
-    transition: 0.3s;
-}
-  
-.price:hover {
-    box-shadow: 0 8px 12px 0 rgba(0,0,0,0.2)
-}
-  
-.price .header {
-    background-color: #3BA99C;
-    color: white;
-    font-size: 25px;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-}
-  
-.price li {
-    border-bottom: 1px solid #eee;
-    padding: 20px;
-    text-align: center;
-}
-  
-.price .grey {
-    background-color: #eee;
-    font-size: 20px;
-}
-
-.okr-content{
-    line-height: 18px;
 }
 
 /*-------------------------*/
