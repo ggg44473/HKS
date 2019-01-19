@@ -17,7 +17,7 @@ class Project extends Model implements HasObjectiveInterface
      * @var array
      */
     protected $fillable = [
-        'title', 'description', 'user_id'
+        'name', 'description', 'user_id'
     ];
 
     public function admin()
@@ -27,6 +27,6 @@ class Project extends Model implements HasObjectiveInterface
 
     public function getOKrRoute()
     {
-        return route('department.okr', $this->id);
+        return route('project.okr', $this->id);
     }
 }

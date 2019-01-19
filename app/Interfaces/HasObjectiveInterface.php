@@ -22,5 +22,5 @@ interface HasObjectiveInterface
 
     public function getOkrsWithPage(Request $request);
 
-    public function getOKrRoute() : string;
+    public function getOKrRoute();
 }
