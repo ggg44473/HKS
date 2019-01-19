@@ -44,12 +44,23 @@
             <hr class="u-mb-16">
         </div>
     </div>
-    <div class="row justify-content-center">
-        <div class="col-lg-3 text-center">
-            <span class="font-weight-bold text-black-50" style="font-size:14px;">Objective</span>
+    @if ($project->okrs)
+        @foreach ($project->okrs as $okrs)
+            <div class="row justify-content-center">
+                <div class="col-lg-3 text-center">
+                    <span class="font-weight-bold text-black-50" style="font-size:14px;">Objective</span>
+                </div>
+                <div class="col-lg-7 text-black-50 text-center text-lg-left">{{ $okrs['objective']->title }}</div>
+            </div>
+        @endforeach
+    @else
+        <div class="row justify-content-center">
+            <div class="col-lg-3 text-center">
+                <span class="font-weight-bold text-black-50" style="font-size:14px;">Objective</span>
+            </div>
+            <div class="col-lg-7 text-black-50 text-center text-lg-left">尚未具有進行中的Objective</div>
         </div>
-        <div class="col-lg-7 text-black-50 text-center text-lg-left">{{ $project->okrs?$project->okrs[0]['objective']->title:'尚未具有進行中的Objective' }}</div>
-    </div>
+    @endif
     <div class="row justify-content-center">
         <div class="col-md-10">
             <hr class="u-mb-16">
