@@ -17,6 +17,8 @@ Route::get('/', ['middleware' => 'guest', function () {
 
 Auth::routes();
 
+######  V2行事曆  ######
+Route::get('calendar', 'UserController@calendar')->name('calendar.index');
 ######  V1搜尋  ######
 Route::get('search', 'SearchController@index')->name('search.index');
 

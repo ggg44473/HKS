@@ -94,4 +94,10 @@ class UserController extends Controller
         //
     }
 
+
+    public function calendar()
+    {
+        return view('calendar.index');
+    }
+
 }
