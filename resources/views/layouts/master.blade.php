@@ -35,10 +35,10 @@
     @yield('stylesheet')
 </head>
 <body>
-    @include('layouts.sidebar')
-    <div id="app" class="content">
+    <div id="app">
+        @include('layouts.sidebar')
         @include('layouts.navbar')
-        <main class="py-4">
+        <main class="py-4 content">
             @yield('content')
         </main>
     </div>

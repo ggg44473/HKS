@@ -1,4 +1,3 @@
-
 <nav class="nav flex-column sidebar" id="sidebar-text">
     <a class="nav-link" href="{{ route('user.okr', auth()->user()->id) }}">
         <span>我的OKR</span>
