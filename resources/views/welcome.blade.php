@@ -50,9 +50,14 @@
                         <a class="nav-link" href="#afford">升級方案</a>
                     </li>
                 </ul>
+                <ul class="navbar-nav mr-4">
+                    @guest
+                    <a href="{{ route('login') }}" class="btn btn-login" >登 入</a>
+                    @endguest          
+                </ul>
                 <ul class="navbar-nav">
                     @guest
-                    <a href="{{ route('login') }}" class="btn btn-login" >會員登入</a>
+                    <a href="{{ route('register') }}" class="btn btn-login" >註 冊</a>
                     @endguest          
                 </ul>
             </div>
