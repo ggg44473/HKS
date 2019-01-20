@@ -63,8 +63,7 @@ Route::get('actions/{action}/media/{media}/destroy', 'ActionsController@destroyF
 
 ###### 組織OKR ######
 //組織OKR首頁
-Route::get('organization', 'OrganizationController@index')->name('organization');
-
+Route::get('organization', 'CompanyController@index')->name('company.index');
 //新增公司
 Route::post('organization/company/store', 'CompanyController@store')->name('company.store');
 //編輯公司頁面
@@ -82,6 +81,8 @@ Route::get('organization/company/invite', 'CompanyController@invite')->name('com
 //搜尋成員
 Route::post('organization/member/search/', 'CompanyController@search');
 
+//顯示子部門頁面
+Route::get('organization/department/{department}', 'DepartmentController@index')->name('department.index');
 //新增全部部門頁面
 Route::get('organization/department/root/create', 'DepartmentController@createRoot')->name('department.root.create');
 //新增子部門頁面

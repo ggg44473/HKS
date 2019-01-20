@@ -58,7 +58,13 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        //
+        $data = [];
+        if (auth()->user()->company_id > 0) {
+            $data['company'] = Company::where('id', auth()->user()->company_id)->first();
+            $departments = Department::where(['company_id' => auth()->user()->company_id, 'parent_department_id' => null])->get();
+            $data['departments'] = $departments;
+        }
+        return view('organization.index', $data);
     }
 
     /**
@@ -88,7 +94,7 @@ class CompanyController extends Controller
 
         User::where('id', auth()->user()->id)->update(['company_id' => $company->id]);
 
-        return redirect()->route('organization');
+        return redirect()->route('company.index');
     }
 
     /**
@@ -131,7 +137,7 @@ class CompanyController extends Controller
 
         $company->addAvatar($request);
 
-        return redirect()->route('organization');
+        return redirect()->route('company.index');
     }
 
     /**
@@ -147,7 +153,7 @@ class CompanyController extends Controller
         }
         auth()->user()->company()->first()->delete();
 
-        return redirect('organization');
+        return redirect('company.index');
     }
 
     /**

@@ -10,7 +10,7 @@
             <hr/>
             <div class="row justify-content-md-center u-mt-16">
                 @foreach ($departments as $department)
-                    @include('organization.department.show')
+                    @include('organization.department.show', ['show'=>true])
                 @endforeach
             </div>
         @else
