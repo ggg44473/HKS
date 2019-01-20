@@ -35,6 +35,12 @@
         text-align: center;
     }
 }
+@media (min-width: 992px){
+    .navbar{
+        padding-left: 76px;
+        padding-right: 76px;
+    }
+}
 .navbar-brand{
     font-size: 20px;
     line-height: 30px;
