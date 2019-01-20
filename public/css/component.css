@@ -11,6 +11,7 @@
  * Form
  * Avatar
  * Card
+ * OKR
  * Organization Page 
 **/
 
@@ -45,14 +46,14 @@
     .navbar{
         padding-right: 0;
     }
-    .content{
-        margin-left: 0 !important;
-    }
     .nav-name{
         display: none;
     }
 }
 @media (max-width: 575px){
+    .content{
+        margin-left: 0 !important;
+    }
     .search{
         display: none;
     }
@@ -283,7 +284,25 @@ main{
 .card{
     border: none;
     border-radius: 10px;
-    box-shadow: 5px 5px 30px rgba(20%,20%,20%,0.5);
+    box-shadow: 3px 3px 30px rgba(20%,20%,20%,0.5);
+}
+
+/*-------------------------*/
+/* OKR */
+/*-------------------------*/
+@media (min-width: 992px){
+    .okr-card .card-body{
+        padding-left: 48px;
+        padding-right: 48px;
+    }
+}
+@media (max-width: 575px){
+    .kr{
+        padding-left: 20px;
+    }
+    .kr .value{
+        margin-bottom: 10px;
+    }
 }
 
 /*-------------------------*/

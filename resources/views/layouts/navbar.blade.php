@@ -20,7 +20,7 @@
             <a class="nav-item nav-link text-muted mt-auto mb-auto btn-search-sm" data-toggle="modal" data-target="#searchModal"><i class="fas fa-search"></i></a>
         </form>
         <a class="nav-item nav-link text-muted mt-auto mb-auto" href="#"><i class="fas fa-bell"></i></a>
-        <a href="{{ route('user.okr', auth()->user()->id) }}" class="nav-item pl-2 pl-md-3 mt-auto mb-auto"><img src="{{ auth()->user()->getAvatar() }}" class="avatar"></a>
+        <a  data-toggle="dropdown" class="nav-item pl-2 pl-md-3 mt-auto mb-auto"><img src="{{ auth()->user()->getAvatar() }}" class="avatar"></a>
         <a id="navbarDropdown" class="nav-item dropdown nav-link dropdown-toggle mt-auto mb-auto" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>     
             <span class="nav-name">{{ Auth::user()->name }}</span><span class="caret"></span>
         </a>
