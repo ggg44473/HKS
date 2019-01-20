@@ -36,8 +36,8 @@
 </head>
 <body>
     <div id="app">
-        @include('layouts.sidebar')
         @include('layouts.navbar')
+        @include('layouts.sidebar')
         <main class="py-4 content">
             @yield('content')
         </main>

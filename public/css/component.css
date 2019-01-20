@@ -22,13 +22,13 @@
     top: 0;
     left: 0;
     width: 100%;
-    z-index: 999;
+    z-index: 1000;
     padding-left: 76px;
     padding-right: 76px;
 }
 /* Side-menu */
 .sidebar{
-    z-index: 1000;
+    z-index: 999;
     position: fixed;
     top: 0;
     left: 0;
