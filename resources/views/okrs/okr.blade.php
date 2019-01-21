@@ -2,9 +2,8 @@
     <div class="card-header bg-transparent" style="border-bottom: none;">
         {{-- 卡片時間 --}}
         <div class="row">
-            <div class="col-md-4 offset-md-8">
-                <span class="font-weight-light pl-2 pr-2">起始日:{{ $okr['objective']->started_at }}</span>
-                <span class="font-weight-light pl-2 pr-2">結算日:{{ $okr['objective']->finished_at }}</span>
+            <div class="col-md-12 ml-auto text-right">
+                <span class="font-weight-light pl-2 pr-4">{{ $okr['objective']->started_at }}~{{ $okr['objective']->finished_at }}</span>
                 @if (auth()->user()->id == $admin)
                 <a class="close okr-close-btn">
                     <i class="far fa-edit"></i>
@@ -13,17 +12,17 @@
             </div>
         </div>
     </div>
-    <div class="card-body u-pl-48 u-pr-48">
+    <div class="card-body">
 
         {{-- 卡片目標 --}}
         <div class="row align-items-center">
-            <div class="col-md-2 font-weight-bold text-right">
-                <h4 style="font-size:20px;">Objectives</h4>
+            <div class="col-md-2 font-weight-bold text-md-right pr-0">
+                <h4 style="font-size:18px;">Objective</h4>
             </div>
             <div class="col-md-10">
                 <div class="row">
-                    <div class="col-md-5" style="line-height: 32px; font-size: 16px;">{{ $okr['objective']->title }}</div>
-                    <div class="col-md-7 row justify-content-end">
+                    <div class="col-md-5 col-sm-5" style="line-height: 32px; font-size: 16px;">{{ $okr['objective']->title }}</div>
+                    <div class="col-md-7 col-sm-7 row justify-content-end">
                         <div class="pt-2" style="display:inline-block; width:60%;">
                             @php
                             $sum = 0; $totalWeight = 0;
@@ -62,15 +61,15 @@
     <hr class="u-mb-16">
     {{-- 卡片指標 --}}
     <div class="row">
-        <div class="col-md-2 font-weight-bold text-right align-self-center">
-            <h4 style="font-size:20px;">Key Results</h4>
+        <div class="col-md-2 font-weight-bold text-md-right align-self-center pr-0">
+            <h4 style="font-size:18px;">Key Results</h4>
         </div>
         <div class="col-md-10">
             @foreach ($okr['keyresults'] as $kr)
-            <div class="row pt-2">
-                <span class="col-md-5 pt-2" style="border-left: 5px solid {{ $kr->color() }} "> no.{{ $kr->id }} : {{
+            <div class="row pt-2 kr">
+                <span class="col-md-5 col-sm-5 ml-sm-4 pt-2" style="border-left: 5px solid {{ $kr->color() }} "> no.{{ $kr->id }} : {{
                     $kr->title }} </span>
-                <div class="col-md-7 row justify-content-end">
+                <div class="col-md-7 col-sm-7 row justify-content-end value">
                     <span class="pt-2 pr-4">{{ $kr->confidence }} / 10 <i class="fas fa-heart" style="color: #FFB5B1;"></i></span>
                     <div class="pt-3" style="display:inline-block; width:60%;">
                         <div class="progress">
@@ -112,24 +111,24 @@
 
 <div class="card-footer text-muted mt-3">
     <div class="row text-center mb-3">
-        <span class="col-md-4">
-
+        <div class="col-sm-4 align-self-center">
             <button class="btn btn-outline-primary border-0" type="button" data-toggle="collapse" data-target="#Action{{ $okr['objective']->id }}"
                 aria-expanded="false" aria-controls="Action">
                 <i class="fas fa-bullseye"></i> 查看 Actions
             </button>
-        </span><span class="col-md-4">
-
+        </div>
+        <div class="col-sm-4 align-self-center">
             <button class="btn btn-outline-primary border-0" type="button" data-toggle="collapse" data-target="#Msg{{ $okr['objective']->id }}"
                 aria-expanded="false" aria-controls="Msg">
                 <i class="far fa-comments"></i> 查看留言
             </button>
-        </span><span class="col-md-4">
-
+        </div>
+        <div class="col-sm-4 align-self-center">
             <button class="btn btn-outline-primary border-0" type="button" data-toggle="collapse" data-target="#History{{ $okr['objective']->id }}"
                 aria-expanded="false" aria-controls="History">
                 <i class="fas fa-chart-line"></i> 歷史數據
             </button>
+        </div>
     </div>
 
     <div class="collapse" id="Action{{ $okr['objective']->id }}">

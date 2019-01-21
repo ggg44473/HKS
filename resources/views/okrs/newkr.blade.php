@@ -11,7 +11,7 @@
 </a>
 
 <div class="collapse {{ $isError? 'show' : '' }}" id="collapse{{ $okr['objective']->id }}">
-    <div class="card card-body mr-5">
+    <div class="card card-body mr-md-5">
         <form method="POST" action="{{ route('kr.store') }}">
                 @csrf
             <div class="form-row">

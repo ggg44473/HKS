@@ -40,10 +40,10 @@
 </head>
 
 <body>
-    @include('layouts.sidebar')
-    <div id="app" class="content">
+    <div id="app">
         @include('layouts.navbar')
-        <main class="py-4">
+        @include('layouts.sidebar')
+        <main class="py-4 content">
             @yield('content')
         </main>
     </div>
