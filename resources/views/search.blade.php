@@ -96,5 +96,50 @@
         </table>
     </div>
     @endif
+
+    @if($projects)
+    <div class="col-12">
+        <h4>專案</h4>
+        <table class="rwd-table table ">
+            <thead>
+                <tr class="bg-primary text-light text-center">
+                    <th>
+                        專案
+                    </th>
+                    <th>
+                        簡述
+                    </th>
+                    <th>
+                        創建
+                    </th>
+                    <th>
+                        狀態
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($projects as $project)
+                <tr class="text-center">
+                    <td data-th="專案">
+                        <a href="{{ route('project.okr', $project->id) }}" class="u-ml-8 u-mr-8">
+                            <img src="{{ $project->getAvatar() }}" alt="" class="avatar-sm text-center bg-white">
+                        </a>
+                        {{$project->name}}
+                    </td>
+                    <td data-th="簡述">
+                        {{$project->description}}
+                    </td>
+                    <td data-th="創建">
+                        {{$project->admin->name}}
+                    </td>
+                    <td data-th="狀態">
+                        {{$project->isdone ? '完成' : '未完成'}}
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+    @endif
 </div>
 @endsection
