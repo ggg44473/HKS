@@ -2,13 +2,12 @@
 @section('title','個人行事曆')
 
 @section('script')
-<!-- jQuery v3.3.1 -->
-<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-    crossorigin="anonymous"></script>
 <!-- Moment.js v2.23.0 -->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.23.0/moment.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.23.0/moment.min.js" defer></script>
 <!-- FullCalendar v3.10.0 -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.0/fullcalendar.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.0/fullcalendar.min.js" defer></script>
+<!-- FullCalendar.js -->
+<script src="{{ asset('js/calendar.js') }}" defer></script>
 @endsection
 
 @section('stylesheet')
@@ -19,8 +18,7 @@
 
 @section('content')
 <div class="container">
-
-    <div id="example"></div>
-
+    <div id="calendar">
+    </div>
 </div>
 @endsection
