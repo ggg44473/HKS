@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('script')
-    <script src="{{ asset('js/organization.js') }}" defer></script>
+    <script src="{{ asset('js/avatar.js') }}" defer></script>
 @endsection
 @section('title','組織OKR|編輯部門')
 @section('content')
@@ -17,12 +17,16 @@
                         {{ method_field('PATCH') }}
                         <div class="row u-ml-16 u-mr-16">
                             <div class="col-md-12 align-self-center">
-                                <input id="departmentImgUpload" name="avatar" type="file" class="u-hidden" accept="image/*"/>
-                                <img id="departmentImg" class="avatar u-hidden u-margin-16" src="{{ $department->getAvatar() }}" alt="">
-                                <div id="departmentIcon" class="avatar text-center departmentIcon">
-                                    <i class="fas fa-images text-white"></i>
-                                    <i class="fas fa-upload text-white"></i>
-                                </div>
+                                <input id="imgUpload" name="avatar" type="file" class="u-hidden" accept="image/*"/>
+                                @if ($department->avatar)
+                                    <img id="avatarImg" class="avatar u-margin-16" src="{{ $department->getAvatar() }}" alt="">
+                                    <img id="avatarImgUpload" class="avatar u-hidden u-margin-16" src="/img/icon/upload/gray.svg" alt="">
+                                @else
+                                    <div id="departmentIcon" class="avatar text-center departmentIcon">
+                                        <i class="fas fa-images text-white"></i>
+                                        <i class="fas fa-upload text-white"></i>
+                                    </div>
+                                @endif
                                 <div class="form-group u-ml-16 w-25" style="display:inline-block">
                                     <label for="department_name">部門名稱<strong class="invalid-feedback"></strong></label>
                                     <input type="text" name="department_name" id="department_name" value="{{ $department->name }}" placeholder="請輸入部門名稱" class="form-control {{ $errors->has('department_name') ? ' is-invalid' : '' }}" required>

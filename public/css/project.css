@@ -1,0 +1,13 @@
+@media(max-width: 992px){
+    .projectAvatar{
+        display: none;
+    }
+    .description{
+        display: none;
+    }
+}
+
+#project_description{
+    resize: none;
+    height: 70.5px;
+}

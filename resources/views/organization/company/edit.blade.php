@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('script')
-    <script src="{{ asset('js/organization.js') }}" defer></script>
+    <script src="{{ asset('js/avatar.js') }}" defer></script>
 @endsection
 @section('title','組織OKR|編輯公司')
 @section('content')
@@ -17,12 +17,16 @@
                         {{ method_field('PATCH') }}
                         <div class="row u-ml-16 u-mr-16">
                             <div class="col-md-12 align-self-center">
-                                <input id="companyImgUpload" name="avatar" type="file" class="u-hidden" accept="image/*"/>
-                                <img id="companyImg" class="avatar u-hidden u-margin-16" src="{{ $company->getAvatar() }}" alt="">
-                                <div id="companyIcon" class="avatar text-center companyIcon">
-                                    <i class="fas fa-building text-white"></i>
-                                    <i class="fas fa-upload text-white"></i>
-                                </div>
+                                <input id="imgUpload" name="avatar" type="file" class="u-hidden" accept="image/*"/>
+                                @if ($company->avatar)
+                                    <img id="avatarImg" class="avatar u-margin-16" src="{{ $company->getAvatar() }}" alt="">
+                                    <img id="avatarImgUpload" class="avatar u-margin-16 u-hidden" src="/img/icon/upload/gray.svg" alt="">
+                                @else
+                                    <div id="companyIcon" class="avatar text-center companyIcon">
+                                        <i class="fas fa-building text-white"></i>
+                                        <i class="fas fa-upload text-white"></i>
+                                    </div>
+                                @endif
                                 <div class="form-group u-ml-16 w-25" style="display:inline-block">
                                     <label for="company_name">組織名稱<strong class="invalid-feedback"></strong></label>
                                     <input type="text" name="company_name" id="company_name" value="{{ $company->name }}" placeholder="請輸入組織名稱" class="form-control {{ $errors->has('company_name') ? ' is-invalid' : '' }}" required>

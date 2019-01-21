@@ -287,23 +287,23 @@ main{
 /*-------------------------*/
 /* Organization Page */
 /*-------------------------*/
-.companyIcon, .departmentIcon{
+.uploadIcon{
     display: inline-block;
     background-color: #bbb;
     margin: 16px 16px;
     transition: all 0.5s;
 }
-.companyIcon:hover, .departmentIcon:hover{
+.uploadIcon:hover{
     background-color: rgb(86, 185, 174);
 }
-.companyIcon>i, .organizationIcon>i, .departmentIcon>i{
+.uploadIcon>i, .organizationIcon>i{
     font-size: 30px;
     line-height: 70px;
 }
-.companyIcon .fa-upload, .departmentIcon .fa-upload{
+.uploadIcon .fa-upload{
     display: none;
 }
-.companyIcon .fa-building, .departmentIcon .fa-building{
+.uploadIcon .fa-building, .uploadIcon .fa-images{
     display: inline;
 }
 #company_description, #department_description{

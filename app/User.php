@@ -8,8 +8,9 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravelista\Comments\Commenter;
 use App\Traits\HasObjectiveTrait;
 use App\Traits\HasAvatarTrait;
+use App\Interfaces\HasObjectiveInterface;
 
-class User extends Authenticatable
+class User extends Authenticatable implements HasObjectiveInterface
 {
     use Notifiable, Commenter, HasObjectiveTrait, HasAvatarTrait;
 

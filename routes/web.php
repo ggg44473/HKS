@@ -102,3 +102,23 @@ Route::delete('organization/department/{department}/destroy', 'DepartmentControl
 Route::get('organization/department/{department}/okr', 'DepartmentController@listOKR')->name('department.okr');
 //部門新增O
 Route::post('organization/department/{department}/objective/store', 'DepartmentController@storeObjective')->name('department.objective.store');
+
+###### Project ######
+//專案首頁
+Route::get('project', 'ProjectController@index')->name('project');
+//新增專案頁面
+Route::get('project/create', 'ProjectController@create')->name('project.create');
+//儲存新增專案
+Route::post('project/store', 'ProjectController@store')->name('project.store');
+//編輯專案頁面
+Route::get('project/{project}/edit', 'ProjectController@edit')->name('project.edit');
+//更新專案
+Route::patch('project/{project}/update', 'ProjectController@update')->name('project.update');
+//完成專案
+Route::get('project/{project}/done', 'ProjectController@done')->name('project.done');
+//刪除專案
+Route::delete('project/{project}/destroy', 'ProjectController@destroy')->name('project.destroy');
+//顯示專案OKR
+Route::get('project/{project}/okr', 'ProjectController@listOKR')->name('project.okr');
+//專案新增O
+Route::post('project/{project}/objective/store', 'ProjectController@storeObjective')->name('project.objective.store');

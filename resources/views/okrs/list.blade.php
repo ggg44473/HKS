@@ -39,7 +39,7 @@
             {{$pageInfo['link']}}
         </div>
         <div class="col-md-8 mb-2">
-            <form action="{{ $routeSearch }}" class="form-inline search-form">
+            <form action="{{ $owner->getOKrRoute() }}" class="form-inline search-form">
                 <input autocomplete="off" class="form-control input-sm" name="st_date" id="filter_started_at" value=""
                     placeholder="起始日">
                 <input autocomplete="off" class="form-control input-sm ml-2" name="fin_date" id="filter_finished_at"

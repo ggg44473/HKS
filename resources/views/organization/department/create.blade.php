@@ -1,7 +1,7 @@
 @extends('layouts.master')
 @section('title','組織OKR|新增部門')
 @section('script')
-    <script src="{{ asset('js/organization.js') }}" defer></script>
+    <script src="{{ asset('js/avatar.js') }}" defer></script>
 @endsection
 @section('content')
 <div class="row justify-content-md-center">
@@ -15,9 +15,10 @@
                     @csrf
                     <div class="row u-ml-16 u-mr-16">
                         <div class="col align-self-center">
-                            <input id="departmentImgUpload" name="avatar" type="file" class="u-hidden" accept="image/*"/>
-                            <img id="departmentImg" class="avatar u-hidden u-margin-16" src="" alt="">
-                            <div id="departmentIcon" class="avatar text-center departmentIcon">
+                            <input id="imgUpload" name="avatar" type="file" class="u-hidden" accept="image/*"/>
+                            <img id="avatarImg" class="avatar u-hidden u-margin-16" src="" alt="">
+                            <img id="avatarImgUpload" class="avatar u-hidden u-margin-16" src="/img/icon/upload/gray.svg" alt="">
+                            <div id="departmentIcon" class="avatar text-center uploadIcon">
                                 <i class="fas fa-images text-white"></i>
                                 <i class="fas fa-upload text-white"></i>
                             </div>
@@ -54,7 +55,7 @@
                     <div class="form-row u-ml-32 u-mr-32 u-mb-32 justify-content-end">
                         <div class="form-group u-pl-16 u-pr-16">
                             <button class="btn btn-primary" type="submit">建立</button>
-                            <a href="{{ route('organization') }}" class="btn btn-secondary">返回</a>   
+                            <a href="{{ route('organization') }}" class="btn btn-secondary">取消</a>   
                         </div>
                     </div>
                 </form>

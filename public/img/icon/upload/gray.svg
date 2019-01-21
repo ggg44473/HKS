@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="36px" height="36px" viewBox="0 0 36 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 51.2 (57519) - http://www.bohemiancoding.com/sketch -->
+    <title>icon/upload/gray</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="icon" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="icon-upload/g">
+            <rect id="Rectangle-3-Copy" x="0" y="0" width="36" height="36"></rect>
+            <circle id="Oval-Copy" fill-opacity="0.3" fill="#000000" cx="18" cy="18" r="18"></circle>
+            <path d="M20,16 L20,22.5 C20,22.7761424 19.7761424,23 19.5,23 L16.5,23 C16.2238576,23 16,22.7761424 16,22.5 L16,16 L12,16 L18,10 L24,16 L20,16 Z" id="Combined-Shape" fill="#FFFFFF"></path>
+            <path d="M15,22 L15,23 C15,23.5522847 15.4477153,24 16,24 L20,24 C20.5522847,24 21,23.5522847 21,23 L21,22 L25.5,22 C25.7761424,22 26,22.2238576 26,22.5 L26,25.5 C26,25.7761424 25.7761424,26 25.5,26 L10.5,26 C10.2238576,26 10,25.7761424 10,25.5 L10,22.5 C10,22.2238576 10.2238576,22 10.5,22 L15,22 Z M22.5,25 C22.7761424,25 23,24.7761424 23,24.5 C23,24.2238576 22.7761424,24 22.5,24 C22.2238576,24 22,24.2238576 22,24.5 C22,24.7761424 22.2238576,25 22.5,25 Z M24.5,25 C24.7761424,25 25,24.7761424 25,24.5 C25,24.2238576 24.7761424,24 24.5,24 C24.2238576,24 24,24.2238576 24,24.5 C24,24.7761424 24.2238576,25 24.5,25 Z" id="Combined-Shape" fill="#FFFFFF"></path>
+        </g>
+    </g>
+</svg>

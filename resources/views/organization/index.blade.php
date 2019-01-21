@@ -1,6 +1,7 @@
 @extends('layouts.master')
 @section('script')
-    <script src="{{ asset('js/organization.js') }}" defer></script>
+    <script src="{{ asset('js/tooltip.js') }}" defer></script>
+    <script src="{{ asset('js/avatar.js') }}" defer></script>
 @endsection
 @section('title','組織OKR')
 @section('content')
