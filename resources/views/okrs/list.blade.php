@@ -42,9 +42,9 @@
             <form action="{{ $owner->getOKrRoute() }}" class="form-inline search-form">
                 <input autocomplete="off" class="form-control input-sm" name="st_date" id="filter_started_at" value=""
                     placeholder="起始日">
-                <input autocomplete="off" class="form-control input-sm ml-2" name="fin_date" id="filter_finished_at"
+                <input autocomplete="off" class="form-control input-sm ml-md-2" name="fin_date" id="filter_finished_at"
                     value="" placeholder="結算日">
-                <select name="order" class="form-control input-sm mr-2 ml-2">
+                <select name="order" class="form-control input-sm mr-md-2 ml-md-2">
                     <option value="">排序方式</option>
                     <option value="started_at_asc">起始日由近到遠</option>
                     <option value="started_at_desc">起始日由遠到近</option>
