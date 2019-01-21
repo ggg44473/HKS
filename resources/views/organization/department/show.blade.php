@@ -7,8 +7,8 @@
             <a href="{{ route('department.okr', $department->id) }}">
                 <span class="mb-0 font-weight-bold text-black-50">{{ $department->name }}</span>
             </a>
-            @if ($department->children->count()>0)
-                <a data-toggle="collapse" href="#collapse{{ $department->id }}" role="button"><i class="fas fa-chevron-down pl-2"></i></a>
+            @if ($department->children->count()>0 && $show)
+                <a href="{{ route('department.index', $department) }}" ><i class="far fa-plus-square pl-2"></i></a>
             @endif
             <br>
             @if ($department->user_id == auth()->user()->id)
@@ -22,10 +22,5 @@
                 </form>    
             @endif
         </div>
-    </div>
-    <div class="collapse" id="collapse{{ $department->id }}">
-        @foreach ($department->children as $child)
-            @include('organization.department.child', ['department'=>$child])
-        @endforeach
     </div>
 </div>

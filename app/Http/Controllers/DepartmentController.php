@@ -53,9 +53,13 @@ class DepartmentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Department $department)
     {
-        //
+        $data['parent'] = $department->parent;
+        $data['department'] = $department;
+        $data['children'] = $department->children;
+            
+        return view('organization.department.index', $data);
     }
 
     /**
@@ -111,7 +115,7 @@ class DepartmentController extends Controller
 
         $department->addAvatar($request);
 
-        return redirect()->route('organization');
+        return redirect()->route('company.index');
     }
 
     /**
@@ -151,7 +155,7 @@ class DepartmentController extends Controller
 
         $department->addAvatar($request);
 
-        return redirect()->route('organization');
+        return redirect()->route('company.index');
     }
 
     /**
@@ -168,6 +172,6 @@ class DepartmentController extends Controller
         }
         $department->delete();
 
-        return redirect('organization');
+        return redirect('company.index');
     }
 }

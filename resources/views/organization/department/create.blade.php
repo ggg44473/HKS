@@ -55,7 +55,7 @@
                     <div class="form-row u-ml-32 u-mr-32 u-mb-32 justify-content-end">
                         <div class="form-group u-pl-16 u-pr-16">
                             <button class="btn btn-primary" type="submit">建立</button>
-                            <a href="{{ route('organization') }}" class="btn btn-secondary">取消</a>   
+                            <a href="{{ route('company.index') }}" class="btn btn-secondary">返回</a>   
                         </div>
                     </div>
                 </form>
