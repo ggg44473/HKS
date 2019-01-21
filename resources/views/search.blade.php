@@ -30,7 +30,7 @@
                 <tr class="text-center">
                     <td data-th="頭像">
                         <a href="{{ route('department.okr', $department->id) }}" class="u-ml-8 u-mr-8">
-                            <img src="{{ $department->getAvatar() }}" alt="" class="avatar-sm text-center organizationIcon bg-white">
+                            <img src="{{ $department->getAvatar() }}" alt="" class="avatar-sm text-center bg-white">
                         </a>
                     </td>
                     <td data-th="部門">
@@ -76,7 +76,7 @@
                 <tr class="text-center">
                     <td data-th="頭像">
                         <a href="{{ route('user.okr', $member->id) }}" class="u-ml-8 u-mr-8">
-                            <img src="{{ $member->getAvatar() }}" alt="" class="avatar-sm text-center organizationIcon bg-white">
+                            <img src="{{ $member->getAvatar() }}" alt="" class="avatar-sm text-center bg-white">
                         </a>
                     </td>
                     <td data-th="姓名">
