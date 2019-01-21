@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\ObjectiveRequest;
 use App\User;
 use App\Objective;
 use App\Charts\SampleChart;
-use App\Http\Requests\ObjectiveRequest;
 use Carbon\Carbon;
 
 class UserController extends Controller

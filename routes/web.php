@@ -22,7 +22,7 @@ Route::get('calendar', 'UserController@calendar')->name('calendar.index');
 ######  V1搜尋  ######
 Route::get('search', 'SearchController@index')->name('search.index');
 
-######  個人綜覽  ######
+###### 個人綜覽 ######
 // 排序OKR頁面
 // 顯示個人OKR
 Route::get('user/{user}/okr', 'UserController@listOKR')->name('user.okr');
@@ -35,7 +35,7 @@ Route::patch('user/{user}/update', 'UserController@update')->name('user.update')
 // 新增個人O
 Route::post('user/{user}/objective/store', 'UserController@storeObjective')->name('user.objective.store');
 
-######  OKR  ######
+###### OKR ######
 // 刪除O
 Route::delete('objective/{objective}/destroy', 'ObjectiveController@destroy')->name('objective.destroy');
 // 編輯OKR頁面
@@ -123,3 +123,5 @@ Route::delete('project/{project}/destroy', 'ProjectController@destroy')->name('p
 Route::get('project/{project}/okr', 'ProjectController@listOKR')->name('project.okr');
 //專案新增O
 Route::post('project/{project}/objective/store', 'ProjectController@storeObjective')->name('project.objective.store');
+###### 通知 ######
+Route::get('send', 'HksCommentController@sendNotification');
