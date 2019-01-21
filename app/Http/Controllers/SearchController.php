@@ -24,6 +24,7 @@ class SearchController extends Controller
                 $company = Company::query()->where('id', '=', auth()->user()->company_id)->first();
                 $usersBuilder = $company->users();
                 $departmentsBuilder = $company->departments();
+                $projectsBuilder = auth()->user()->projects();
             #定義模糊查詢                
                 $like = '%' . $search . '%';
 
@@ -34,6 +35,10 @@ class SearchController extends Controller
                 });
                 $departmentsBuilder->where(function ($query) use ($like) {
                     $query->where('name', 'like', $like);
+                });
+                $projectsBuilder->where(function ($query) use ($like) {
+                    $query->where('name', 'like', $like)
+                    ->orWhere('description', 'like', $like);
                 });
             }
         }
@@ -49,7 +54,9 @@ class SearchController extends Controller
         $data = [
             'departments' => isset($departmentsBuilder) ? $departmentsBuilder->getResults() : '',
             'members' => isset($usersBuilder) ? $usersBuilder->getResults() : '',
+            'projects' => isset($projectsBuilder) ? $projectsBuilder->getResults() : '',
         ];
+        
 
         return view('search', $data);
     }

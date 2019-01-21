@@ -37,6 +37,11 @@ class User extends Authenticatable implements HasObjectiveInterface
         return route('user.okr', $this->id);
     }
 
+    public function projects()
+    {
+        return $this->hasMany('App\Project','user_id');
+    }
+
     public function actions()
     {
         return $this->hasMany('App\Action','assignee');
