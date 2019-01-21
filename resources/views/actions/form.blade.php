@@ -64,7 +64,7 @@
     </div>
     <div class="form-group col-md-11">
         <label for="files">上傳附件</label>
-    <input type="file" class="form-group" name="files[]" id="files" multiple>
+        <input type="file" class="form-group" name="files[]" id="files" multiple>
     </div>
     <button class="btn btn-primary btn-sm mb-1 mt-1 " type="submit">送出</button>
 </div>

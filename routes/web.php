@@ -17,8 +17,10 @@ Route::get('/', ['middleware' => 'guest', function () {
 
 Auth::routes();
 
+######  V2行事曆  ######
+Route::get('calendar', 'UserController@calendar')->name('calendar.index');
 ######  V1搜尋  ######
-Route::get('search/user/{user}', 'SearchController@index')->name('search.index');
+Route::get('search', 'SearchController@index')->name('search.index');
 
 ######  個人綜覽  ######
 // 排序OKR頁面
