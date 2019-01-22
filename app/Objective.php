@@ -5,8 +5,9 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Laravelista\Comments\Commentable;
 use App\Charts\SampleChart;
+use App\Interfaces\HasNotifiableInterface;
 
-class Objective extends Model
+class Objective extends Model implements HasNotifiableInterface
 {
 
     use Commentable;
@@ -21,7 +22,7 @@ class Objective extends Model
         'finished_at'
     ];
 
-    public function model() : MorphTo
+    public function model()
     {
         return $this->morphTo();
     }
@@ -79,5 +80,15 @@ class Objective extends Model
             array_push($kr_record_array, $kr_record);
         }
         return $kr_record_array;
+    }
+
+    public function getNotifiable()
+    {
+        return $this->model->getNotifiableUser();
+    }
+
+    public function getHasCommentMessage()
+    {
+        return 'Objective ' . $this->title;
     }
 }

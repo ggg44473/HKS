@@ -8,8 +8,9 @@ use Laravelista\Comments\Commentable;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\MediaLibrary\Models\Media;
+use App\Interfaces\HasNotifiableInterface;
 
-class Action extends Model implements HasMedia
+class Action extends Model implements HasMedia, HasNotifiableInterface
 {
     use Commentable, HasMediaTrait;
 
@@ -30,6 +31,7 @@ class Action extends Model implements HasMedia
     {
         return $this->belongsTo(User::class);
     }
+
     public function objective()
     {
         return $this->keyresult->belongsTo(Objective::class);
@@ -91,5 +93,15 @@ class Action extends Model implements HasMedia
         }
 
         return $files;
+    }
+
+    public function getNotifiable()
+    {
+        return $this->user;
+    }
+
+    public function getHasCommentMessage()
+    {
+        return 'Action ' . $this->title;
     }
 }
