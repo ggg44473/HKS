@@ -17,13 +17,16 @@ Route::get('/', ['middleware' => 'guest', function () {
 
 Auth::routes();
 
-######  V2行事曆  ######
-Route::get('calendar', 'UserController@calendar')->name('calendar.index');
-######  V1搜尋  ######
+######  個人行事曆  ######
+// Route::resource('events','EventController');
+Route::get('calendar', 'ActivityController@calendar')->name('calendar.index');
+Route::post('calendar/user/{user}/create', 'ActivityController@create')->name('calendar.create');
+Route::post('events/store', 'ActivityController@store')->name('calendar.store');
+
+######  搜尋  ######
 Route::get('search', 'SearchController@index')->name('search.index');
 
 ###### 個人綜覽 ######
-// 排序OKR頁面
 // 顯示個人OKR
 Route::get('user/{user}/okr', 'UserController@listOKR')->name('user.okr');
 // 顯示個人Action

@@ -157,12 +157,4 @@ class UserController extends Controller
     }
 
 
-    public function calendar()
-    {
-        
-        $data = auth()->user()->objectives->toArray();
-        // dd(response()->json($data));
-        return view('calendar.index');
-    }
-
 }
