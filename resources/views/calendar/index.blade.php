@@ -19,8 +19,6 @@
 @section('content')
 <div class="container">
     <div classs="row">
-        {{-- <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#addevent"><i class="fa fa-plus fa-sm"></i>
-            新增行程</a> --}}
         @if(count($errors)>0)
         <div class="alert alert-danger">
             <ul>
@@ -37,21 +35,7 @@
         @endif
     </div>
     <div id="calendar" data-uid="{{auth()->user()->id}}"></div>
-    {{--
-    <!-- Modal -->
-    <div class="modal {{ count($errors) == 0 ? 'fade' : '' }}" id="addevent" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">
-                        <span>&times;</span>
-                    </button>
-                </div>
-                @include('calendar.addevent')
-            </div>
-        </div>
-    </div> --}}
-    <form class="" action="{{route('calendar.create', auth()->user()->id) }}" method="post">
+    <form action="{{route('calendar.create', auth()->user()->id) }}" method="post">
         @csrf
         <div class="modal fade" tabindex="-1" role="dialog" id="mdlEvent">
             <div class="modal-dialog modal-dialog-centered modal-sm" role="document" style="width:80">

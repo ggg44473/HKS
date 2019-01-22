@@ -9,6 +9,7 @@ use App\User;
 use App\Action;
 use App\Activity;
 use App\Objective;
+use Carbon\Carbon;
 
 class ActivityController extends Controller
 {
@@ -20,8 +21,20 @@ class ActivityController extends Controller
     public function index(User $user)
     {
         $activities = Activity::select("id", "title", "started_at as start", "finished_at as end", "color")
-            ->where('user_id', '=', $user->id)->get()->toArray();
-        return response()->json($activities);
+            ->where('user_id', '=', $user->id)->get();
+
+        $action = array();
+        $actions = array();
+        foreach ($activities as $activity) {
+            $action = array(
+                'id' => $activity->id, 'title' => $activity->title,
+                'start' => $activity->start, 'color' => $activity->color,
+                'end' => $activity->end, 'url' => route('calendar.show', $activity->id)
+            );
+
+            array_push($actions, $action);
+        }
+        return response()->json($actions);
     }
 
     public function objectives(User $user)
@@ -39,12 +52,12 @@ class ActivityController extends Controller
         $blade = ['Immediate', 'Urgent', 'Normal', 'Low', 'Postponed'];
         $activities = Action::select("id", "title", "finished_at as start", "priority")
             ->where('assignee', '=', $user->id)->get();
-            
+
         foreach ($activities as $activity) {
             $action = array(
-                'id' => $activity->id, 'title' => '[ '.$blade[$activity->priority - 1].' ] '.$activity->title,
-                'start' => $activity->start, 'color' => $colors[$activity->priority - 1] ,
-                'url' => route('actions.show',$activity->id)
+                'id' => $activity->id, 'title' => '[ ' . $blade[$activity->priority - 1] . ' ] ' . $activity->title,
+                'start' => $activity->start, 'color' => $colors[$activity->priority - 1],
+                'url' => route('actions.show', $activity->id)
             );
             array_push($actions, $action);
         }
@@ -75,9 +88,13 @@ class ActivityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Activity $activity)
     {
-        //
+        // $activity = Activity::where('id', '=', $activity->id)->get();
+        $data = [
+            'activity' => $activity,
+        ];
+        return view('calendar.show', $data);
     }
 
     /**
@@ -98,9 +115,16 @@ class ActivityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ActivityRequest $request, Activity $activity)
     {
-        //
+        $actAttr['title'] = $request->input('title');
+        $actAttr['color'] = $request->input('color');
+        $actAttr['started_at'] = $request->input('st_date') . " " . date("H:m:s", strtotime($request->input('st_time')));
+        if ($request->input('fin_date'))
+            $actAttr['finished_at'] = $request->input('fin_date') . " " . date("H:m:s", strtotime($request->input('fin_time')));
+        $activity->update($actAttr);
+
+        return redirect('calendar');
     }
 
     /**
@@ -109,8 +133,9 @@ class ActivityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Activity $activity)
     {
-        //
+        $activity->delete();
+        return redirect('calendar');
     }
 }
