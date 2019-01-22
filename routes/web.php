@@ -85,8 +85,6 @@ Route::get('organization/company/okr', 'CompanyController@listOKR')->name('compa
 Route::post('organization/company/{company}/objective/store', 'CompanyController@storeObjective')->name('company.objective.store');
 //公司邀請成員頁面
 Route::get('organization/company/invite', 'CompanyController@invite')->name('company.invite');
-//搜尋未有公司成員
-Route::get('organization/company/member/search/', 'CompanyController@search')->name('company.member.search');
 //新增公司成員
 Route::post('organization/company/member/store', 'CompanyController@storeMember')->name('company.member.store');
 //更新公司成員
@@ -114,8 +112,6 @@ Route::get('organization/department/{department}/okr', 'DepartmentController@lis
 Route::post('organization/department/{department}/objective/store', 'DepartmentController@storeObjective')->name('department.objective.store');
 //部門邀請成員頁面
 Route::get('organization/department/{department}/invite', 'DepartmentController@invite')->name('department.invite');
-//搜尋公司成員
-Route::get('organization/department/member/search/', 'DepartmentController@search')->name('department.member.search');
 //新增部門成員
 Route::post('organization/department/{department}/member/store', 'DepartmentController@storeMember')->name('department.member.store');
 //更新部門成員
@@ -142,5 +138,21 @@ Route::delete('project/{project}/destroy', 'ProjectController@destroy')->name('p
 Route::get('project/{project}/okr', 'ProjectController@listOKR')->name('project.okr');
 //專案新增O
 Route::post('project/{project}/objective/store', 'ProjectController@storeObjective')->name('project.objective.store');
+//專案邀請成員頁面
+Route::get('project/{project}/invite', 'ProjectController@invite')->name('project.invite');
+//新增專案成員
+Route::post('project/{project}/member/store', 'ProjectController@storeMember')->name('project.member.store');
+//更新專案成員
+Route::patch('project/{project}/member/update', 'ProjectController@updateMember')->name('project.member.update');
+//刪除專案成員
+Route::patch('project/{project}/member/{member}/destroy', 'ProjectController@destroyMember')->name('project.member.destroy');
+
+//回傳未有公司的使用者
+Route::get('search/member/noncompany/', 'CompanyController@search')->name('company.member.search');
+//回傳無部門的公司成員
+Route::get('search/company/member/nondepartment/', 'DepartmentController@search')->name('department.member.search');
+//回傳公司的所有成員
+Route::get('search/company/member/', 'ProjectController@search')->name('project.member.search');
+
 
 ###### 通知 ######

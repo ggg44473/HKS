@@ -191,9 +191,8 @@ class DepartmentController extends Controller
     }
 
     /**
-     * 搜尋使用者名稱或信箱
+     * 回傳同公司、無部門的所有人
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function search()

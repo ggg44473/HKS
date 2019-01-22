@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Project;
 use App\Http\Requests\ObjectiveRequest;
+use App\User;
+use App\ProjectUser;
 
 class ProjectController extends Controller
 {
@@ -23,16 +25,16 @@ class ProjectController extends Controller
      */
     public function index(Request $request)
     {
-        $projects = Project::where('isdone',false)->get();
-        foreach($projects as $project){
+        $projects = Project::where('isdone', false)->get();
+        foreach ($projects as $project) {
             $project['okrs'] = $project->getOkrsWithPage($request)['okrs'];
         }
 
-        $projectDone = Project::where('isdone',true)->get();
-        foreach($projectDone as $project){
+        $projectDone = Project::where('isdone', true)->get();
+        foreach ($projectDone as $project) {
             $project['okrs'] = $project->getOkrsWithPage($request)['okrs'];
         }
-        
+
         $data = [
             'projects' => $projects,
             'done' => $projectDone
@@ -61,7 +63,7 @@ class ProjectController extends Controller
         $attr['name'] = $request->project_name;
         $attr['description'] = $request->project_description;
         $attr['user_id'] = auth()->user()->id;
-        
+
         $project = Project::create($attr);
         $project->addAvatar($request);
 
@@ -87,7 +89,7 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        return view('project.edit', ['project' => $project]);        
+        return view('project.edit', ['project' => $project]);
     }
 
     /**
@@ -155,5 +157,60 @@ class ProjectController extends Controller
         $project->save();
 
         return redirect()->route('project');
+    }
+
+    /**
+     * Show the form for inviting a new member.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function invite(Project $project)
+    {
+        $data = [
+            'project' => $project,
+        ];
+
+        return view('project.invite', $data);
+    }
+
+    /**
+     * 回傳公司所有成員
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function search()
+    {
+        $results = User::where('company_id', auth()->user()->company_id)->get();
+
+        return response()->json($results);
+    }
+
+    /**
+     * Store a newly created member in database.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeMember(Request $request, Project $project)
+    {
+        $userIds = preg_split("/[,]+/", $request->invite);
+        foreach ($userIds as $userId) {
+            ProjectUser::create(['project_id' => $project->id, 'user_id' => $userId]);
+        }
+
+        return redirect()->route('project.invite', $project);
+    }
+
+    /**
+     * Remove company_id, department_id and position from storage.
+     *
+     * @param  User $user
+     * @return \Illuminate\Http\Response
+     */
+    public function destroyMember(Project $project, User $member)
+    {
+        ProjectUser::where([['project_id', $project->id], ['user_id', $member->id]])->delete();
+
+        return redirect()->route('project.invite', $project);
     }
 }

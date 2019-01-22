@@ -17,12 +17,22 @@ class Project extends Model implements HasObjectiveInterface
      * @var array
      */
     protected $fillable = [
-        'name', 'description', 'user_id'
+        'name', 'description', 'user_id', 'isdone'
     ];
 
     public function admin()
     {
         return $this->belongsTo('App\User', 'user_id');
+    }
+
+    public function members()
+    {
+        return $this->belongsToMany(User::class);;
+    }
+
+    public function company()
+    {
+        return $this->admin->belongsTo(Company::class);
     }
 
     public function getOKrRoute()

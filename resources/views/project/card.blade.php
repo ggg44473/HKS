@@ -80,7 +80,7 @@
         <div class="col-md-10 text-right">
             @if ($project->user_id == auth()->user()->id)
             <a href="{{ route('project.done', $project) }}" data-toggle="tooltip" data-placement="bottom" title="{{ $project->isdone?'取消關閉':'關閉專案'}}"><i class="far fa-check-square u-margin-4"></i></a>                    
-            <a href="#" data-toggle="tooltip" data-placement="bottom" title="新增成員"><i class="fas fa-user-plus u-margin-4"></i></a>
+            <a href="{{ route('project.invite', $project) }}" data-toggle="tooltip" data-placement="bottom" title="新增成員"><i class="fas fa-user-plus u-margin-4"></i></a>
             <a href="{{ route('project.edit', $project) }}" data-toggle="tooltip" data-placement="bottom" title="編輯專案"><i class="fas fa-edit u-margin-4"></i></a>
             <a href="#" onclick="document.getElementById('projectDelete').submit()" data-toggle="tooltip" data-placement="bottom" title="刪除專案"><i class="fas fa-trash-alt"></i></a>
             <form method="POST" id="projectDelete" action="{{ route('project.destroy', $project) }}">

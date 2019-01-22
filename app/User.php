@@ -39,14 +39,14 @@ class User extends Authenticatable implements HasObjectiveInterface
 
     public function projects()
     {
-        return $this->hasMany('App\Project','user_id');
+        return $this->belongsToMany(Project::class);;
     }
 
     public function actions()
     {
-        return $this->hasMany('App\Action','assignee');
+        return $this->hasMany('App\Action', 'assignee');
     }
-    
+
     public function company()
     {
         return $this->belongsTo(Company::class);
