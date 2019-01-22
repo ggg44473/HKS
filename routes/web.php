@@ -123,5 +123,5 @@ Route::delete('project/{project}/destroy', 'ProjectController@destroy')->name('p
 Route::get('project/{project}/okr', 'ProjectController@listOKR')->name('project.okr');
 //專案新增O
 Route::post('project/{project}/objective/store', 'ProjectController@storeObjective')->name('project.objective.store');
+
 ###### 通知 ######
-Route::get('send', 'HksCommentController@sendNotification');
