@@ -20,6 +20,11 @@ class Department extends Model implements HasObjectiveInterface
         return $this->belongsTo(Company::class);
     }
 
+    public function users()
+    {
+        return $this->hasMany('App\User','department_id');
+    }
+
     public function admin()
     {
         return $this->belongsTo(User::class);
@@ -44,5 +49,10 @@ class Department extends Model implements HasObjectiveInterface
     public function parent()
     {
         return $this->belongsTo(Department::class, 'parent_department_id');
+    }
+
+    public function getNotifiableUser()
+    {
+        return $this->users;
     }
 }

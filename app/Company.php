@@ -29,4 +29,9 @@ class Company extends Model implements HasObjectiveInterface
     {
         return route('company.okr');
     }
+
+    public function getNotifiableUser()
+    {
+        return $this->users;
+    }
 }

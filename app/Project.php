@@ -29,4 +29,9 @@ class Project extends Model implements HasObjectiveInterface
     {
         return route('project.okr', $this->id);
     }
+
+    public function getNotifiableUser()
+    {
+        return $this->admin;
+    }
 }

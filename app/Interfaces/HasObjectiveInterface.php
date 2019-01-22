@@ -23,4 +23,6 @@ interface HasObjectiveInterface
     public function getOkrsWithPage(Request $request);
 
     public function getOKrRoute();
+
+    public function getNotifiableUser();
 }

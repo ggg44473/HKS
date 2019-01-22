@@ -49,11 +49,16 @@ class User extends Authenticatable implements HasObjectiveInterface
     
     public function company()
     {
-        return $this->hasOne(Company::class);
+        return $this->belongsTo(Company::class);
     }
 
     public function department()
     {
-        return $this->hasOne(Department::class);
+        return $this->belongsTo(Department::class);
+    }
+
+    public function getNotifiableUser()
+    {
+        return $this;
     }
 }
