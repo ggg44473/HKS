@@ -82,8 +82,8 @@ Route::get('organization/company/okr', 'CompanyController@listOKR')->name('compa
 Route::post('organization/company/{company}/objective/store', 'CompanyController@storeObjective')->name('company.objective.store');
 //公司邀請成員頁面
 Route::get('organization/company/invite', 'CompanyController@invite')->name('company.invite');
-//搜尋成員
-Route::get('organization/member/search/', 'CompanyController@search');
+//搜尋未有公司成員
+Route::get('organization/company/member/search/', 'CompanyController@search')->name('company.member.search');
 //新增公司成員
 Route::post('organization/company/member/store', 'CompanyController@storeMember')->name('company.member.store');
 //更新公司成員
@@ -109,6 +109,16 @@ Route::delete('organization/department/{department}/destroy', 'DepartmentControl
 Route::get('organization/department/{department}/okr', 'DepartmentController@listOKR')->name('department.okr');
 //部門新增O
 Route::post('organization/department/{department}/objective/store', 'DepartmentController@storeObjective')->name('department.objective.store');
+//部門邀請成員頁面
+Route::get('organization/department/{department}/invite', 'DepartmentController@invite')->name('department.invite');
+//搜尋公司成員
+Route::get('organization/department/member/search/', 'DepartmentController@search')->name('department.member.search');
+//新增部門成員
+Route::post('organization/department/{department}/member/store', 'DepartmentController@storeMember')->name('department.member.store');
+//更新部門成員
+Route::patch('organization/department/{department}/member/update', 'DepartmentController@updateMember')->name('department.member.update');
+//刪除部門成員
+Route::patch('organization/department/{department}/member/{member}/destroy', 'DepartmentController@destroyMember')->name('department.member.destroy');
 
 ###### Project ######
 //專案首頁

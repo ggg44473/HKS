@@ -168,7 +168,7 @@ class CompanyController extends Controller
                 'departments'=>Department::where('company_id',auth()->user()->company_id)->get(),
             ];
 
-        return view('organization.inviteMember', $data);
+        return view('organization.company.invite', $data);
     }
 
     /**

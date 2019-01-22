@@ -33,6 +33,7 @@
         searchText: ''
       }
     },
+    props: ['api'],
     created () {
       this.searchMember()
     },
@@ -54,7 +55,7 @@
       },
       searchMember () {
         if (this.memberList.length === 0) {
-          axios.get(`/organization/member/search`)
+          axios.get(this.api)
             .then(response => {
               this.memberList = response.data
             })

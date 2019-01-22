@@ -1,8 +1,5 @@
 @extends('layouts.master')
-{{-- @section('script')
-    <script src="{{ asset('js/organization.js') }}" defer></script>
-@endsection --}}
-@section('title','組織OKR|邀請成員')
+@section('title','邀請成員')
 @section('content')
     <div class="container">
         <div class="row m-3">
@@ -13,7 +10,7 @@
         <div class="mb-4">
             <form action="{{ route('company.member.store') }}" method="post">
                 @csrf
-                <search-component></search-component>
+                <search-component api={{ route('company.member.search') }}></search-component>
             </form>
         </div>
         <div class="row justify-content-md-center">
@@ -84,7 +81,7 @@
                                     <input name="position{{ $member->id }}" type="text" class="form-control" value="{{ $member->position }}">
                                 </td>
                                 <td data-th="設定">
-                                    <div onclick="document.getElementById('memberDelete{{ $member->id }}').submit()" ><i class="fas fa-trash-alt text-danger"></i></div>
+                                    <a href="#" onclick="document.getElementById('memberDelete{{ $member->id }}').submit()" ><i class="fas fa-trash-alt text-danger"></i></a href="#">
                                     <form name="memberDelete{{ $member->id }}" method="POST" id="memberDelete{{ $member->id }}" action="{{ route('company.member.destroy', $member ) }}">
                                         @csrf
                                         {{ method_field('PATCH') }}

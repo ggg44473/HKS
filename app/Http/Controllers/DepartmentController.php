@@ -174,4 +174,82 @@ class DepartmentController extends Controller
 
         return redirect('company.index');
     }
+
+    /**
+     * Show the form for inviting a new member.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function invite(Department $department)
+    {
+        $data = [
+            'department'=>$department,
+            'members'=>User::where('department_id', $department->id)->get(),
+        ];
+
+        return view('organization.department.invite', $data);
+    }
+
+    /**
+     * 搜尋使用者名稱或信箱
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function search()
+    {
+        $results = User::where([['company_id', auth()->user()->company_id],['department_id', null]])->get();
+
+        return response()->json($results);
+    }
+
+    /**
+     * Store a newly created member in database.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeMember(Request $request, Department $department)
+    {
+        $userIds = preg_split("/[,]+/", $request->invite);
+        foreach($userIds as $userId){
+            $user = User::where('id', $userId)->first();
+            if($user->company_id == $department->company_id){
+                $user->update(['department_id' => $department->id]);
+            }
+        }
+        
+        return redirect()->route('department.invite', $department);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function updateMember(Request $request, Department $department)
+    {
+        $members = User::where('department_id', $department->id)->get();
+        foreach ($members as $member) {
+            $attr['department_id'] = $request->input('department' . $member->id);
+            $attr['position'] = $request->input('position' . $member->id);
+            $member->update($attr);
+        }
+
+        return redirect()->route('department.invite', $department);
+    }
+    
+    /**
+     * Remove company_id, department_id and position from storage.
+     *
+     * @param  User $user
+     * @return \Illuminate\Http\Response
+     */
+    public function destroyMember(Department $department, User $member)
+    {
+        $member->update(['department_id'=>null, 'position'=>null]);
+
+        return redirect()->route('department.invite', $department);
+    }
 }

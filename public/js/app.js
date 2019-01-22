@@ -1835,6 +1835,7 @@ __webpack_require__.r(__webpack_exports__);
       searchText: ''
     };
   },
+  props: ['api'],
   created: function created() {
     this.searchMember();
   },
@@ -1859,7 +1860,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       if (this.memberList.length === 0) {
-        axios.get("/organization/member/search").then(function (response) {
+        axios.get(this.api).then(function (response) {
           _this.memberList = response.data;
         }).catch(function (error) {});
       }
