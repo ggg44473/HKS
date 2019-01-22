@@ -584,7 +584,7 @@ pre {
     font-weight: bold;
 }
 
-@media (min-width: 480px) {
+@media (min-width: 768px) {
     .rwd-table td:before {
         display: none;
     }
