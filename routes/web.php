@@ -83,7 +83,13 @@ Route::post('organization/company/{company}/objective/store', 'CompanyController
 //公司邀請成員頁面
 Route::get('organization/company/invite', 'CompanyController@invite')->name('company.invite');
 //搜尋成員
-Route::post('organization/member/search/', 'CompanyController@search');
+Route::get('organization/member/search/', 'CompanyController@search');
+//新增公司成員
+Route::post('organization/company/member/store', 'CompanyController@storeMember')->name('company.member.store');
+//更新公司成員
+Route::patch('organization/company/member/update', 'CompanyController@updateMember')->name('company.member.update');
+//刪除公司成員
+Route::patch('organization/company/member/{member}/destroy', 'CompanyController@destroyMember')->name('company.member.destroy');
 
 //顯示子部門頁面
 Route::get('organization/department/{department}', 'DepartmentController@index')->name('department.index');

@@ -163,7 +163,12 @@ class CompanyController extends Controller
      */
     public function invite()
     {
-        return view('organization.inviteMember');
+            $data = [
+                'members'=>User::where([['company_id',auth()->user()->company_id],['id','!=',auth()->user()->id]])->get(),
+                'departments'=>Department::where('company_id',auth()->user()->company_id)->get(),
+            ];
+
+        return view('organization.inviteMember', $data);
     }
 
     /**
@@ -172,11 +177,59 @@ class CompanyController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function search(Request $request)
+    public function search()
     {
-        $keyword = '%' . $request->keywords . '%';
-        $results = User::where('email', 'like', $keyword)->orWhere('name', 'like', $keyword)->get();
+        // $keyword = '%' . $request->keywords . '%';
+        // $results = User::where('email', 'like', $keyword)->orWhere('name', 'like', $keyword)->get();
+        $results = User::where('company_id', null)->get();
 
         return response()->json($results);
+    }
+
+    /**
+     * Store a newly created member in database.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeMember(Request $request)
+    {
+        $userIds = preg_split("/[,]+/", $request->invite);
+        foreach($userIds as $userId){
+            User::where('id', $userId)->update(['company_id' => auth()->user()->company_id]);
+        }
+        
+        return redirect()->route('company.invite');
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function updateMember(Request $request)
+    {
+        $members = User::where('company_id',auth()->user()->company_id)->get();
+        foreach ($members as $member) {
+            $attr['department_id'] = $request->input('department' . $member->id);
+            $attr['position'] = $request->input('position' . $member->id);
+            $member->update($attr);
+        }
+
+        return redirect()->route('company.invite');
+    }
+    
+    /**
+     * Remove company_id, department_id and position from storage.
+     *
+     * @param  User $user
+     * @return \Illuminate\Http\Response
+     */
+    public function destroyMember(User $member)
+    {
+        $member->update(['company_id'=>null, 'department_id'=>null, 'position'=>null]);
+
+        return redirect()->route('company.invite');
     }
 }
