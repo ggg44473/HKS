@@ -116,6 +116,12 @@ class ActionsController extends Controller
             $action->addRelatedFiles();
         }
 
+        if (\Session::has('redirect_url')) {
+            $redirect_url = \Session::get('redirect_url');
+            \Session::forget('redirect_url');
+            return redirect($redirect_url);
+        }
+
         return redirect()->route('user.okr', auth()->user()->id);
     }
 
