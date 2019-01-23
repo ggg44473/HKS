@@ -160,9 +160,9 @@ Route::patch('project/{project}/member/update', 'ProjectController@updateMember'
 Route::patch('project/{project}/member/{member}/destroy', 'ProjectController@destroyMember')->name('project.member.destroy');
 
 //回傳未有公司的使用者
-Route::get('search/member/noncompany/', 'CompanyController@search')->name('company.member.search');
+Route::get('search/member/nonCompany/', 'CompanyController@search')->name('company.member.search');
 //回傳無部門的公司成員
-Route::get('search/company/member/nondepartment/', 'DepartmentController@search')->name('department.member.search');
+Route::get('search/company/{company}/member/nonDepartment/', 'DepartmentController@search')->name('department.member.search');
 //回傳不屬於此專案的公司成員
 Route::get('search/company/member/project/{project}', 'ProjectController@search')->name('project.member.search');
 

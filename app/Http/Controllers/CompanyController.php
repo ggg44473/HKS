@@ -96,7 +96,7 @@ class CompanyController extends Controller
 
         $company->addAvatar($request);
 
-        User::where('id', auth()->user()->id)->update(['company_id' => $company->id]);
+        auth()->user()->update(['company_id' => $company->id]);
 
         return redirect()->route('company.index');
     }
@@ -241,8 +241,6 @@ class CompanyController extends Controller
      */
     public function search()
     {
-        // $keyword = '%' . $request->keywords . '%';
-        // $results = User::where('email', 'like', $keyword)->orWhere('name', 'like', $keyword)->get();
         $results = User::where('company_id', null)->get();
 
         return response()->json($results);

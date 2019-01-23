@@ -10,7 +10,7 @@
     <div class="mb-4">
         <form action="{{ route('department.member.store', $department) }}" method="post">
             @csrf
-            <search-component api={{ route('department.member.search') }}></search-component>
+            <search-component api={{ route('department.member.search', $department->company) }}></search-component>
         </form>
     </div>
     <div class="row justify-content-md-center">

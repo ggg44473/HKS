@@ -183,7 +183,7 @@ class DepartmentController extends Controller
     {
         $data = [
             'department'=>$department,
-            'members'=>User::where('department_id', $department->id)->get(),
+            'members'=>$department->users,
         ];
 
         return view('organization.department.member', $data);
@@ -192,11 +192,12 @@ class DepartmentController extends Controller
     /**
      * 回傳同公司、無部門的所有人
      *
+     * @param  \App\Company $company
      * @return \Illuminate\Http\Response
      */
-    public function search()
+    public function search(Company $company)
     {
-        $results = User::where([['company_id', auth()->user()->company_id],['department_id', null]])->get();
+        $results = User::where([['company_id', $company->id],['department_id', null]])->get();
 
         return response()->json($results);
     }
