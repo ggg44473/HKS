@@ -29,10 +29,11 @@ class CommentEventSubscriber
         if ($comment->parent == null) {
             $users = $comment->commentable->getNotifiable();
             $details['name'] = is_a($users, 'App\User') ? $users->name : 'All';
-            $details['commentOn'] = $comment->commentable->getHasCommentMessage();
+            $details['body'] = ' commented on ' . $comment->commentable->getHasCommentMessage();
         } else {
             $users = $comment->parent->commenter;
             $details['name'] = $users->name;
+            $details['body'] = ' replied on your comment';
             $details['parentComment'] = $comment->parent->comment;
         }
 
