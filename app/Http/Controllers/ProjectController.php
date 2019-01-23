@@ -35,7 +35,7 @@ class ProjectController extends Controller
         foreach ($projectDone as $project) {
             $project['okrs'] = $project->getOkrsWithPage($request)['okrs'];
         }
-        $invitations = auth()->user()->invitation->where('model_type', get_class($project));
+        $invitations = auth()->user()->invitation->where('model_type',Project::class);
 
         $data = [
             'projects' => $projects,
@@ -249,8 +249,9 @@ class ProjectController extends Controller
      */
     public function search(Project $project)
     {
-        $results = User::where('company_id', $project->company->id)->get();
-
+        // $collection = ProjectUser::where('project_id', $project->id);
+        $results = User::select('id')->where('company_id', $project->company->id)->get();
+// dd($results);
         return response()->json($results);
     }
 
