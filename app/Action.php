@@ -17,7 +17,6 @@ class Action extends Model implements HasMedia, HasNotifiableInterface
     protected $fillable = [
         'user_id',
         'related_kr',
-        'assignee',
         'priority',
         'isdone',
         'title',
@@ -35,11 +34,6 @@ class Action extends Model implements HasMedia, HasNotifiableInterface
     public function objective()
     {
         return $this->keyresult->belongsTo(Objective::class);
-    }
-
-    public function assignee()
-    {
-        return $this->belongsTo('App\User', 'assignee');
     }
 
     public function keyresult()

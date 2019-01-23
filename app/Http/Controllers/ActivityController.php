@@ -62,7 +62,7 @@ class ActivityController extends Controller
         $colors = ['#ea0000', '#ae8f00', '#0072e3', '#00aeae', '#6c6c6c'];
         $blade = ['Immediate', 'Urgent', 'Normal', 'Low', 'Postponed'];
         $activities = Action::select("id", "title", "finished_at as start", "priority")
-            ->where('assignee', '=', $user->id)->get();
+            ->where('user_id', '=', $user->id)->get();
 
         foreach ($activities as $activity) {
             $action = array(

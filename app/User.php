@@ -44,7 +44,7 @@ class User extends Authenticatable implements HasObjectiveInterface
 
     public function actions()
     {
-        return $this->hasMany('App\Action','assignee');
+        return $this->hasMany('App\Action','user_id');
     }
     
     public function company()

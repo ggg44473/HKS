@@ -16,13 +16,9 @@
     </div>
     <div class="row align-items-center mb-4">
         <div class="col-md-6">
-            建立:
+            負責:
             <a href="{{ route('user.okr', $action->user()->getResults()->id) }}" title="{{$action->user()->getResults()->name}}">
                 <img src="{{ $action->user()->getResults()->getAvatar() }}" class="avatar-sm mr-1">
-            </a>
-            負責:
-            <a href="{{ route('user.okr',$action->assignee()->getResults()->id) }}" title="{{$action->assignee()->getResults()->name}}">
-                <img src="{{ $action->assignee()->getResults()->getAvatar() }}" class="avatar-sm">
             </a>
         </div>
         <div class="col-md-2">Start: {{$action->started_at}}</div>
