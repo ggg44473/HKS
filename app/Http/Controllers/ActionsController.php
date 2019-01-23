@@ -43,7 +43,6 @@ class ActionsController extends Controller
     {
         $attr['user_id'] = auth()->user()->id;
         $attr['related_kr'] = $request->input('krs_id');
-        $attr['assignee'] = auth()->user()->id;
         $attr['priority'] = $request->input('priority');
         $attr['title'] = $request->input('act_title');
         $attr['content'] = $request->input('act_content');
@@ -54,6 +53,12 @@ class ActionsController extends Controller
 
         if ($request->hasFile('files')) {
             $action->addRelatedFiles();
+        }
+
+        if (\Session::has('redirect_url')) {
+            $redirect_url = \Session::get('redirect_url');
+            \Session::forget('redirect_url');
+            return redirect($redirect_url);
         }
 
         return redirect()->route('user.okr', auth()->user()->id);
@@ -80,7 +85,7 @@ class ActionsController extends Controller
         //使用者的krs
         $actions = Action::where('id', '=', $action->id)->get();
         foreach ($actions as $act) {
-            $obj_id = $act->keyresult()->getResults()->objective_id;
+            $obj_id = $act->keyresult->objective_id;
         }
         $keyresults = KeyResult::where('objective_id', '=', $obj_id)->get();
 
@@ -99,7 +104,6 @@ class ActionsController extends Controller
     public function update(ActionRequest $request, Action $action)
     {
         $attr['related_kr'] = $request->input('krs_id');
-        // $attr['assignee'] = auth()->user()->id;
         $attr['priority'] = $request->input('priority');
         $attr['title'] = $request->input('act_title');
         $attr['content'] = $request->input('act_content');

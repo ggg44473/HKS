@@ -14,9 +14,9 @@ class UsersTableSeeder extends Seeder
     {
         User::truncate(); //清空資料庫
         User::create([
-            'name' => 'hks',
+            'name' => 'Enyun',
             'password' => bcrypt('hkshks'),
-            'email' => 'hks@mail.com',
+            'email' => 'GoalCareHKS@gmail.com',
             'position' => '董事長',
         ]);
         User::unguard();

@@ -5,8 +5,9 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\HasObjectiveTrait;
 use App\Traits\HasAvatarTrait;
+use App\Interfaces\HasObjectiveInterface;
 
-class Department extends Model
+class Department extends Model implements HasObjectiveInterface
 {
     use HasObjectiveTrait, HasAvatarTrait;
 
@@ -17,6 +18,11 @@ class Department extends Model
     public function company()
     {
         return $this->belongsTo(Company::class);
+    }
+
+    public function users()
+    {
+        return $this->hasMany('App\User','department_id');
     }
 
     public function admin()
@@ -43,5 +49,10 @@ class Department extends Model
     public function parent()
     {
         return $this->belongsTo(Department::class, 'parent_department_id');
+    }
+
+    public function getNotifiableUser()
+    {
+        return $this->users;
     }
 }

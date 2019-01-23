@@ -65,7 +65,6 @@ trait HasObjectiveTrait
                 ->where('finished_at', '>=', $now)
                 ->orderBy('finished_at');
         }
-
         return $builder;
     }
 

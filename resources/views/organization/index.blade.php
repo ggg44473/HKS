@@ -1,6 +1,7 @@
 @extends('layouts.master')
 @section('script')
-    <script src="{{ asset('js/organization.js') }}" defer></script>
+    <script src="{{ asset('js/tooltip.js') }}" defer></script>
+    <script src="{{ asset('js/avatar.js') }}" defer></script>
 @endsection
 @section('title','組織OKR')
 @section('content')
@@ -10,10 +11,13 @@
             <hr/>
             <div class="row justify-content-md-center u-mt-16">
                 @foreach ($departments as $department)
-                    @include('organization.department.show')
+                    @include('organization.department.show', ['show'=>true])
                 @endforeach
             </div>
         @else
+            @foreach ($invitations as $invitation)
+                @include('organization.company.invitation')        
+            @endforeach
             @include('organization.company.create')
         @endif
     </div>

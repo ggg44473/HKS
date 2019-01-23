@@ -10,8 +10,8 @@
  * Button
  * Form
  * Avatar
- * Pricing Table
  * Card
+ * OKR
  * Organization Page 
 **/
 
@@ -23,19 +23,64 @@
     top: 0;
     left: 0;
     width: 100%;
-    z-index: 999;
-    padding-left: 76px;
+    z-index: 1000;
+    /* padding-left: 76px; */
     padding-right: 76px;
+}
+.navbar-brand{
+    font-size: 20px;
+    line-height: 30px;
+    text-align: center;
 }
 /* Side-menu */
 .sidebar{
-    z-index: 1000;
+    z-index: 999;
     position: fixed;
     top: 0;
     left: 0;
     background-color: #21897E;
     height: 100%;
     padding-top: 60px;
+}
+@media (max-width: 768px){
+    .navbar{
+        padding-right: 0;
+    }
+    .nav-name{
+        display: none;
+    }
+}
+@media (max-width: 575px){
+    .content{
+        margin-left: 0 !important;
+    }
+    .search{
+        display: none;
+    }
+    .btn.btn-search{
+        display: none;
+    }
+    .btn-menu{
+        display: none;
+    }
+    .sidebar{
+        display: none;
+    }
+    .sidebar-sm{
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000;
+    }
+}
+@media (min-width:576px){
+    .sidebar-sm{
+        display: none;
+    }
+    .btn-search-sm{
+        display: none;
+    }
 }
 #sidebar{
     width: 60px;
@@ -49,7 +94,6 @@
     top: 0;
     left: -30px;
     width: 90px;
-    transition: all 0.5s ease-in;
 }
 #sidebar-text .nav-link {   
     padding-top: 1.3rem;
@@ -71,7 +115,7 @@
 }
 /* Search */
 .form-control.search{
-    width: 8rem;
+    width: 5rem;
     border: none;
     border-radius: 0;
     border-bottom: 1px solid rgba(0, 0, 0, 0.125);
@@ -79,6 +123,15 @@
     padding-bottom: 0;
     padding-left: 0.375rem;
     padding-right: 0.375rem;
+}
+@media (min-width: 768px){
+    .form-control.search{
+        width: 8rem;
+        padding-top: 0.75rem;
+        padding-bottom: 0;
+        padding-left: 0.375rem;
+        padding-right: 0.375rem;
+    }
 }
 .form-control.search:focus{
     border-color: #3BA99C;
@@ -90,6 +143,11 @@
     border: 1px solid #d6d6d6;
     background-color: transparent;
 }
+@media (max-width: 768px){
+    .btn.btn-search{
+        border: none;
+    }
+}
 .btn.btn-search:hover {
     color: #fff;
     background-color: #3BA99C;
@@ -98,18 +156,6 @@
 .btn.btn-search:focus{
     -webkit-box-shadow: 0.1rem 0.1rem 0.3rem 0.1rem rgba(108, 117, 125, 0.2);
             box-shadow: 0.1rem 0.1rem 0.3rem 0.1rem rgba(108, 117, 125, 0.2);
-}
-.btn.btn-login{
-    background-color: transparent;
-    color: #FFE484;
-    border: 1px solid #FFE484;
-}
-.btn.btn-login:focus{
-    box-shadow: none;
-}
-.btn.btn-login:hover{
-    background-color: #FFE484;
-    color: #21897E;
 }
 .navbar .avatar{
     width: 35px;
@@ -132,11 +178,7 @@ main{
     position: relative;
     top: 55px;
 }
-.introduction{
-    width:100%; 
-    height:700px;
-    padding-top: 55px;
-}
+
 /*-------------------------*/
 /* Footer */
 /*-------------------------*/
@@ -235,45 +277,6 @@ main{
     border-radius: 50%;
     object-fit: cover;
 }
-/*-------------------------*/
-/* Pricing Table */
-/*-------------------------*/
-.price {
-    list-style-type: none;
-    border: 1px solid #eee;
-    border-radius: 10px;
-    margin: 0;
-    padding: 0;
-    -webkit-transition: 0.3s;
-    transition: 0.3s;
-}
-  
-.price:hover {
-    box-shadow: 0 8px 12px 0 rgba(0,0,0,0.2)
-}
-  
-.price .header {
-    background-color: #3BA99C;
-    color: white;
-    font-size: 25px;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-}
-  
-.price li {
-    border-bottom: 1px solid #eee;
-    padding: 20px;
-    text-align: center;
-}
-  
-.price .grey {
-    background-color: #eee;
-    font-size: 20px;
-}
-
-.okr-content{
-    line-height: 18px;
-}
 
 /*-------------------------*/
 /* Card */
@@ -281,29 +284,47 @@ main{
 .card{
     border: none;
     border-radius: 10px;
-    box-shadow: 5px 5px 30px rgba(20%,20%,20%,0.5);
+    box-shadow: 3px 3px 30px rgba(20%,20%,20%,0.5);
+}
+
+/*-------------------------*/
+/* OKR */
+/*-------------------------*/
+@media (min-width: 992px){
+    .okr-card .card-body{
+        padding-left: 48px;
+        padding-right: 48px;
+    }
+}
+@media (max-width: 575px){
+    .kr{
+        padding-left: 20px;
+    }
+    .kr .value{
+        margin-bottom: 10px;
+    }
 }
 
 /*-------------------------*/
 /* Organization Page */
 /*-------------------------*/
-.companyIcon, .departmentIcon{
+.uploadIcon{
     display: inline-block;
     background-color: #bbb;
     margin: 16px 16px;
     transition: all 0.5s;
 }
-.companyIcon:hover, .departmentIcon:hover{
+.uploadIcon:hover{
     background-color: rgb(86, 185, 174);
 }
-.companyIcon>i, .organizationIcon>i, .departmentIcon>i{
+.uploadIcon>i, .organizationIcon>i{
     font-size: 30px;
     line-height: 70px;
 }
-.companyIcon .fa-upload, .departmentIcon .fa-upload{
+.uploadIcon .fa-upload{
     display: none;
 }
-.companyIcon .fa-building, .departmentIcon .fa-building{
+.uploadIcon .fa-building, .uploadIcon .fa-images{
     display: inline;
 }
 #company_description, #department_description{

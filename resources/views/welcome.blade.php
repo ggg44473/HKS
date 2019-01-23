@@ -24,60 +24,46 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/base.css') }}" rel="stylesheet">
     <link href="{{ asset('css/component.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/welcome.css') }}" rel="stylesheet">
 
 </head>
 <body onload="moveScol()" onunload="getScrollPosition()">
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-dark navbar-laravel bg-primary">
             <!-- LOGO --> 
-            <a class="navbar-brand font-weight-bold text-white ml-3" href="{{ url('/') }}">
-                <img src="{{ asset('/img/logo/white.svg') }}" alt="">
-                Goal Care
+            <a class="navbar-brand font-weight-bold text-white" href="{{ url('/') }}">
+                <img class="d-inline-block align-top mr-1" width="30" height="30" src="{{ asset('/img/logo/white.svg') }}" alt=""> Goal Care
             </a>
-            <div class="collapse navbar-collapse">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarToggler">
                 <!-- Right Side Of Navbar -->
-                <ul class="navbar-nav nav-pills ml-auto mr-5"> 
-                    <li class="nav-item mr-4">
-                        <a class="nav-link" href="#about">關於我們</a>
-                    </li>
-                    <li class="nav-item mr-4">
-                        <a class="nav-link" href="#serve">服務項目</a>
-                    </li>
-                    <li class="nav-item mr-4">
-                        <a class="nav-link" href="#customer">平台客戶</a>
-                    </li>
-                    <li class="nav-item mr-4">
-                        <a class="nav-link" href="#afford">升級方案</a>
-                    </li>
-                </ul>
-                <ul class="navbar-nav">
-                    @guest
-                    <a href="{{ route('login') }}" class="btn btn-login" >會員登入</a>
-                    @endguest          
-                </ul>
+                <div class="navbar-nav nav-pills ml-auto mr-4"> 
+                    <a class="nav-item ml-1 mr-1 nav-link" href="#about">關於我們</a>
+                    <a class="nav-item ml-1 mr-1 nav-link" href="#serve">服務項目</a>
+                    <a class="nav-item ml-1 mr-1 nav-link" href="#customer">平台客戶</a>
+                    <a class="nav-item ml-1 mr-1 nav-link" href="#afford">升級方案</a>
+                    <a class="nav-item btn btn-login" href="{{ route('login') }}">登 入</a>
+                    <a class="nav-item btn btn-login" href="{{ route('register') }}">註 冊</a>
+                </div>
             </div>
         </nav>
         <div>
-            <div class="introduction" id="about">
-                <div class="container">
-                    <h3 class="pt-5">關於我們</h3>
+            <div class="container">
+                <div class="introduction" id="about">
+                    <h4 class="pt-5">關於我們</h4>
                 </div>
-            </div>
-            <div class="introduction" id="serve">
-                <div class="container">
-                    <h3 class="pt-5">服務項目</h3>
+                <div class="introduction" id="serve">
+                    <h4 class="pt-5">服務項目</h4>
                 </div>
-            </div>
-            <div class="introduction" id="customer">
-                <div class="container">
-                    <h3 class="pt-5">平台客戶</h3>
+                <div class="introduction" id="customer">
+                    <h4 class="pt-5">平台客戶</h4>
                 </div>
-            </div>
-            <div class="introduction" id="afford">
-                <div class="container">
-                    <h3 class="pt-5">升級方案</h3>
+                <div class="introduction" id="afford">
+                    <h4 class="pt-5">升級方案</h4>
                     <div class="row mt-5">
-                        <div class="col-md-4">
+                        <div class="col-md-4 mb-5">
                             <ul class="price">
                                 <li class="header">Basic</li>
                                 <li class="grey">$ 9.99 / year</li>
@@ -85,11 +71,11 @@
                                 <li>10 Emails</li>
                                 <li>10 Domains</li>
                                 <li>1GB Bandwidth</li>
-                                <li class="grey"><a href="{{ route('register') }}" class="btn btn-primary">Sign Up</a></li>
+                                <li class="grey price-bottom"><a href="{{ route('register') }}" class="btn btn-primary">Sign Up</a></li>
                             </ul>
                         </div>
-                                      
-                        <div class="col-md-4">
+                                        
+                        <div class="col-md-4 mb-5">
                             <ul class="price">
                                 <li class="header">Pro</li>
                                 <li class="grey">$ 24.99 / year</li>
@@ -97,11 +83,11 @@
                                 <li>25 Emails</li>
                                 <li>25 Domains</li>
                                 <li>2GB Bandwidth</li>
-                                <li class="grey"><a href="{{ route('register') }}" class="btn btn-primary">Sign Up</a></li>
+                                <li class="grey price-bottom"><a href="{{ route('register') }}" class="btn btn-primary">Sign Up</a></li>
                             </ul>
                         </div>
-                                      
-                        <div class="col-md-4">
+                                        
+                        <div class="col-md-4 mb-5">
                             <ul class="price">
                                 <li class="header">Premium</li>
                                 <li class="grey">$ 49.99 / year</li>
@@ -109,7 +95,7 @@
                                 <li>50 Emails</li>
                                 <li>50 Domains</li>
                                 <li>5GB Bandwidth</li>
-                                <li class="grey"><a href="{{ route('register') }}" class="btn btn-primary">Sign Up</a></li>
+                                <li class="grey price-bottom"><a href="{{ route('register') }}" class="btn btn-primary">Sign Up</a></li>
                             </ul>
                         </div>
                     </div>

@@ -42,6 +42,8 @@ trait HasAvatarTrait
                 case 'App\Company':
                 case 'App\Department':
                     return '/img/icon/building/g.svg';
+                case 'App\Project':
+                    return '/img/icon/project/gc.svg';
             }
         }
     }

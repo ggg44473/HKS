@@ -53,9 +53,13 @@ class DepartmentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Department $department)
     {
-        //
+        $data['parent'] = $department->parent;
+        $data['department'] = $department;
+        $data['children'] = $department->children;
+            
+        return view('organization.department.index', $data);
     }
 
     /**
@@ -111,7 +115,7 @@ class DepartmentController extends Controller
 
         $department->addAvatar($request);
 
-        return redirect()->route('organization');
+        return redirect()->route('company.index');
     }
 
     /**
@@ -151,7 +155,7 @@ class DepartmentController extends Controller
 
         $department->addAvatar($request);
 
-        return redirect()->route('organization');
+        return redirect()->route('company.index');
     }
 
     /**
@@ -162,12 +166,88 @@ class DepartmentController extends Controller
      */
     public function destroy(Department $department)
     {
-        $users = User::where(['company_id' => auth()->user()->company_id, 'department_id' => $department->id])->get();
-        foreach ($users as $user) {
+        foreach ($department->users as $user) {
             $user->update(['department_id' => null]);
         }
         $department->delete();
 
-        return redirect('organization');
+        return redirect()->route('company.index');
+    }
+
+    /**
+     * Show the form for inviting a new member.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function memberSetting(Department $department)
+    {
+        $data = [
+            'department'=>$department,
+            'members'=>$department->users,
+        ];
+
+        return view('organization.department.member', $data);
+    }
+
+    /**
+     * 回傳同公司、無部門的所有人
+     *
+     * @param  \App\Company $company
+     * @return \Illuminate\Http\Response
+     */
+    public function search(Company $company)
+    {
+        $results = User::where([['company_id', $company->id],['department_id', null]])->get();
+
+        return response()->json($results);
+    }
+
+    /**
+     * Store a newly created member in database.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeMember(Request $request, Department $department)
+    {
+        $userIds = preg_split("/[,]+/", $request->invite);
+        foreach($userIds as $userId){
+            $user = User::where('id', $userId)->first();
+            if($user->company_id == $department->company_id){
+                $user->update(['department_id' => $department->id]);
+            }
+        }
+        
+        return redirect()->route('department.member.setting', $department);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function updateMember(Request $request, Department $department)
+    {
+        foreach ($department->users as $member) {
+            $attr['department_id'] = $request->input('department' . $member->id);
+            $attr['position'] = $request->input('position' . $member->id);
+            $member->update($attr);
+        }
+
+        return redirect()->route('department.member.setting', $department);
+    }
+    
+    /**
+     * Remove company_id, department_id and position from storage.
+     *
+     * @param  User $user
+     * @return \Illuminate\Http\Response
+     */
+    public function destroyMember(Department $department, User $member)
+    {
+        $member->update(['department_id'=>null, 'position'=>null]);
+
+        return redirect()->route('department.member.setting', $department);
     }
 }

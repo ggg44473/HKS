@@ -1,0 +1,123 @@
+/* ---------------------- */
+/* Catalog */
+/* ---------------------- */
+/**
+ * Navbar
+ * Main
+ * Button
+ * Pricing Table
+**/
+
+/*-------------------------*/
+/* Navbar */
+/*-------------------------*/
+@media (max-width: 991px) {
+    .navbar {
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+}
+@media (max-width: 767px) {
+    .navbar {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+    .navbar-brand{
+        font-size: 16px;
+        line-height: 24px;
+        text-align: center;
+    }
+    .navbar-brand>img{
+        width: 24px;
+        height: 24px;
+    }
+    .navbar-nav{
+        text-align: center;
+    }
+}
+@media (min-width: 992px){
+    .navbar{
+        padding-left: 76px;
+        padding-right: 76px;
+    }
+}
+.navbar-brand{
+    font-size: 20px;
+    line-height: 30px;
+    text-align: center;
+}
+
+/*-------------------------*/
+/* Main */
+/*-------------------------*/
+.introduction {
+    width: 100%;
+    /* height:700px; */
+    padding-top: 55px;
+}
+
+/*-------------------------*/
+/* Botton */
+/*-------------------------*/
+.btn.btn-login{
+    background-color: transparent;
+    color: #FFE484;
+    border: 1px solid #FFE484;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+}
+.btn.btn-login:focus{
+    box-shadow: none;
+}
+.btn.btn-login:hover{
+    background-color: #FFE484;
+    color: #21897E;
+}
+@media (max-width: 767px) {
+    .btn.btn-login{
+        display: inline-block;
+        width: 50%;
+        margin: 8px auto 16px;
+    }
+}
+
+/*-------------------------*/
+/* Pricing Table */
+/*-------------------------*/
+.price {
+    list-style-type: none;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    margin: 0;
+    padding: 0;
+    -webkit-transition: 0.3s;
+    transition: 0.3s;
+}
+
+.price:hover {
+    box-shadow: 0 8px 12px 0 rgba(0, 0, 0, 0.2)
+}
+
+.price .header {
+    background-color: #3BA99C;
+    color: white;
+    font-size: 25px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.price li {
+    border-bottom: 1px solid #eee;
+    padding: 20px;
+    text-align: center;
+}
+
+.price .grey {
+    background-color: #eee;
+    font-size: 20px;
+}
+
+.price-bottom {
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}

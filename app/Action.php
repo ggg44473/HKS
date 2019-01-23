@@ -8,15 +8,15 @@ use Laravelista\Comments\Commentable;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\MediaLibrary\Models\Media;
+use App\Interfaces\HasNotifiableInterface;
 
-class Action extends Model implements HasMedia
+class Action extends Model implements HasMedia, HasNotifiableInterface
 {
     use Commentable, HasMediaTrait;
 
     protected $fillable = [
         'user_id',
         'related_kr',
-        'assignee',
         'priority',
         'isdone',
         'title',
@@ -30,14 +30,10 @@ class Action extends Model implements HasMedia
     {
         return $this->belongsTo(User::class);
     }
+
     public function objective()
     {
-        return $this->belongsTo(Objective::class);
-    }
-
-    public function assignee()
-    {
-        return $this->belongsTo('App\User', 'assignee');
+        return $this->keyresult->belongsTo(Objective::class);
     }
 
     public function keyresult()
@@ -91,5 +87,15 @@ class Action extends Model implements HasMedia
         }
 
         return $files;
+    }
+
+    public function getNotifiable()
+    {
+        return $this->user;
+    }
+
+    public function getHasCommentMessage()
+    {
+        return 'Action ' . $this->title;
     }
 }

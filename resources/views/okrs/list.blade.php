@@ -33,14 +33,18 @@
                 新增目標</a>
         </div>
         @endif
-        <div class="col-md-4">{{$pageInfo['link']}} </div>
+    </div>
+    <div class="row m-3">
+        <div class="col-md-2">
+            {{$pageInfo['link']}}
+        </div>
         <div class="col-md-8 mb-2">
-            <form action="{{ $routeSearch }}" class="form-inline search-form">
+            <form action="{{ $owner->getOKrRoute() }}" class="form-inline search-form">
                 <input autocomplete="off" class="form-control input-sm" name="st_date" id="filter_started_at" value=""
                     placeholder="起始日">
-                <input autocomplete="off" class="form-control input-sm ml-2" name="fin_date" id="filter_finished_at"
+                <input autocomplete="off" class="form-control input-sm ml-md-2" name="fin_date" id="filter_finished_at"
                     value="" placeholder="結算日">
-                <select name="order" class="form-control input-sm mr-2 ml-2">
+                <select name="order" class="form-control input-sm mr-md-2 ml-md-2">
                     <option value="">排序方式</option>
                     <option value="started_at_asc">起始日由近到遠</option>
                     <option value="started_at_desc">起始日由遠到近</option>
@@ -50,8 +54,15 @@
                     <option value="updated_at_desc">最近更新由遠到近</option>
                 </select>
                 <button class="btn btn-primary">搜索</button>
+
+            </form>
         </div>
-        </form>
+        @if($actionlist)
+        <div class="btn-group col mb-2">
+            <button class="btn btn-light" disabled>OKR</button>
+            <a href="{{route('user.action',$owner->id)}}" class="btn btn-success" disabled>Action</a>
+        </div>
+        @endif
     </div>
 </div>
 <!-- Modal -->
@@ -74,6 +85,6 @@
     @endif
 </div>
 @foreach($okrs as $okr)
-    @include('okrs.okr', ['okr' => $okr])
+@include('okrs.okr', ['okr' => $okr])
 @endforeach
 </div>

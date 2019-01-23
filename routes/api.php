@@ -16,3 +16,8 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('user/{user}/calendar', 'ActivityController@index');
+Route::get('user/{user}/objectives', 'ActivityController@objectives');
+Route::get('user/{user}/actions', 'ActivityController@actions');
+// Route::post('user/{user}/create', 'ActivityController@create');

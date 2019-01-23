@@ -58,7 +58,17 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        //
+        $company = Company::where('id', auth()->user()->company_id)->first();
+        $departments = Department::where(['company_id' => auth()->user()->company_id, 'parent_department_id' => null])->get();
+        $invitations = auth()->user()->invitation->where('model_type', Company::class);
+
+        $data = [
+            'company' => $company,
+            'departments' => $departments,
+            'invitations' => $invitations
+        ];
+
+        return view('organization.index', $data);
     }
 
     /**
@@ -86,9 +96,9 @@ class CompanyController extends Controller
 
         $company->addAvatar($request);
 
-        User::where('id', auth()->user()->id)->update(['company_id' => $company->id]);
+        auth()->user()->update(['company_id' => $company->id]);
 
-        return redirect()->route('organization');
+        return redirect()->route('company.index');
     }
 
     /**
@@ -131,7 +141,7 @@ class CompanyController extends Controller
 
         $company->addAvatar($request);
 
-        return redirect()->route('organization');
+        return redirect()->route('company.index');
     }
 
     /**
@@ -147,7 +157,7 @@ class CompanyController extends Controller
         }
         auth()->user()->company()->first()->delete();
 
-        return redirect('organization');
+        return redirect()->route('company.index');
     }
 
     /**
@@ -155,9 +165,72 @@ class CompanyController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function invite()
+    public function memberSetting()
     {
-        return view('organization.inviteMember');
+        $data = [
+            'company' => auth()->user()->company,
+            'members' => User::where([['company_id', auth()->user()->company_id], ['id', '!=', auth()->user()->id]])->get(),
+            'departments' => Department::where('company_id', auth()->user()->company_id)->get(),
+        ];
+
+        return view('organization.company.member', $data);
+    }
+
+    /**
+     * 發送邀請
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Company $company
+     * @return \Illuminate\Http\Response
+     */
+    public function inviteMember(Request $request, Company $company)
+    {
+        $company->sendInvitation($request);
+
+        return redirect()->route('company.member.setting', $company);
+    }
+
+    /**
+     * 取消邀請
+     *
+     * @param  \App\Company $company
+     * @param  \App\User $member
+     * @return \Illuminate\Http\Response
+     */
+    public function cancelInvite(Company $company, User $member)
+    {
+        $company->deleteInvitation($member);
+
+        return redirect()->route('company.member.setting', $company);
+    }
+
+    /**
+     * 拒絕邀請
+     *
+     * @param  \App\Company $company
+     * @param  \App\User $member
+     * @return \Illuminate\Http\Response
+     */
+    public function rejectInvite(Company $company, User $member)
+    {
+        $company->deleteInvitation($member);
+
+        return redirect()->route('company.index');
+    }
+
+    /**
+     * 同意邀請
+     *
+     * @param  \App\Company $company
+     * @param  \App\User $member
+     * @return \Illuminate\Http\Response
+     */
+    public function agreeInvite(Company $company, User $member)
+    {
+        $company->deleteInvitation($member);
+        $member->update(['company_id' => $company->id]);
+
+        return redirect()->route('company.index');
     }
 
     /**
@@ -166,11 +239,57 @@ class CompanyController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function search(Request $request)
+    public function search()
     {
-        $keyword = '%' . $request->keywords . '%';
-        $results = User::where('email', 'like', $keyword)->orWhere('name', 'like', $keyword)->get();
+        $results = User::where('company_id', null)->get();
 
         return response()->json($results);
+    }
+
+    /**
+     * Store a newly created member in database.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeMember(Request $request)
+    {
+        $userIds = preg_split("/[,]+/", $request->invite);
+        foreach ($userIds as $userId) {
+            User::where('id', $userId)->update(['company_id' => auth()->user()->company_id]);
+        }
+
+        return redirect()->route('company.member.setting');
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function updateMember(Request $request)
+    {
+        $members = User::where('company_id', auth()->user()->company_id)->get();
+        foreach ($members as $member) {
+            $attr['department_id'] = $request->input('department' . $member->id);
+            $attr['position'] = $request->input('position' . $member->id);
+            $member->update($attr);
+        }
+
+        return redirect()->route('company.member.setting');
+    }
+
+    /**
+     * Remove company_id, department_id and position from storage.
+     *
+     * @param  User $user
+     * @return \Illuminate\Http\Response
+     */
+    public function destroyMember(User $member)
+    {
+        $member->update(['company_id' => null, 'department_id' => null, 'position' => null]);
+
+        return redirect()->route('company.member.setting');
     }
 }

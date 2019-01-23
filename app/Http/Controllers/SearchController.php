@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Company;
 use App\User;
 use App\Objective;
 use App\Charts\SampleChart;
@@ -14,43 +15,49 @@ class SearchController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request, User $user)
+    public function index(Request $request)
     {
-        $okrs = [];
-        
-        #::query 開始查詢該模型
-        $builder = Objective::query()->where('model_id', '=', $user->id);
-        #判斷搜索是否為空        
-        if ($search = $request->input('search', '')) { 
+        #判斷公司是否存在到要查詢
+        if (auth()->user()->company_id) {
+            #判斷搜索是否為空        
+            if ($search = $request->input('search', '')) {
+                $company = Company::query()->where('id', '=', auth()->user()->company_id)->first();
+                $usersBuilder = $company->users();
+                $departmentsBuilder = $company->departments();
+                $projectsBuilder = auth()->user()->projects();
             #定義模糊查詢                
-            $like = '%' . $search . '%';
-            $builder->where(function ($query) use ($like) {
-                $query->where('title', 'like', $like)   #查詢Objective目標
-                        #第一個參數是模型關聯的方法名 , 第二個參數繼承上一步的query , 第三個參數使用模糊查詢字
-                    ->orWhereHas('keyresults', function ($query) use ($like) {
-                        $query->where('title', 'like', $like);
-                    });
-            });
+                $like = '%' . $search . '%';
+
+                $usersBuilder->where(function ($query) use ($like) {
+
+                    $query->where('name', 'like', $like)
+                        ->orWhere('email', 'like', $like);
+                });
+                $departmentsBuilder->where(function ($query) use ($like) {
+                    $query->where('name', 'like', $like);
+                });
+                $projectsBuilder->where(function ($query) use ($like) {
+                    $query->where('name', 'like', $like)
+                    ->orWhere('description', 'like', $like);
+                });
+            }
         }
+        //     ->orWhere('email', 'like', $like)
+        // #第一個參數是模型關聯的方法名 , 第二個參數繼承上一步的query , 第三個參數使用模糊查詢字
+        //     ->orWhereHas('keyresults', function ($query) use ($like) {
+        //         $query->where('title', 'like', $like);
+        //     });
        
         #使用分頁(依照單頁O的筆數上限)
-        $pages = $builder->paginate(5)->appends(['search' => $request->input('search', '')]);
-
-        foreach ($pages as $obj) {
-            #打包單張OKR
-            $okrs[] = [
-                "objective" => $obj,
-                "keyresults" => $obj->keyresults()->getResults(),
-                "actions" => $obj->actions()->getResults(),
-                "chart" => $obj->getChart(),
-            ];
-        }
+        // $pages = $departmentsBuilder->union($usersBuilder)->paginate(5)->appends(['search' => $request->input('search', '')]);
 
         $data = [
-            'pages' => $pages,
-            'owner' => $user,
-            'okrs' => $okrs,
+            'departments' => isset($departmentsBuilder) ? $departmentsBuilder->getResults() : '',
+            'members' => isset($usersBuilder) ? $usersBuilder->getResults() : '',
+            'projects' => isset($projectsBuilder) ? $projectsBuilder->getResults() : '',
         ];
+        
+
         return view('search', $data);
     }
 

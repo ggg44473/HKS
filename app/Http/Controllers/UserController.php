@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\ObjectiveRequest;
 use App\User;
 use App\Objective;
 use App\Charts\SampleChart;
-use App\Http\Requests\ObjectiveRequest;
 use Carbon\Carbon;
 
 class UserController extends Controller
@@ -32,6 +32,68 @@ class UserController extends Controller
             'order' => $request->input('order', ''),
         ];
         return view('user.okr', $data);
+    }
+
+    public function listAction(Request $request, User $user)
+    {
+        $builder = $user->actions();
+
+        if ($request->input('order', '')) {
+
+            #Action是否完成
+            $builder->where('isdone', '=', $request->input('isdone', ''));
+            
+            #Action狀態
+            $now = now()->toDateString();
+            switch ($request->input('state', '')) {
+                case 'now':
+                    $builder->where('started_at', '<=', $now)
+                        ->where('finished_at', '>=', $now);
+                    break;
+                case 'back':
+                    $builder->where('finished_at', '<=', $now);
+                    break;
+                case 'future':
+                    $builder->where('started_at', '>=', $now);
+                    break;
+            }
+            
+            #Action排序
+            if ($order = $request->input('order', '')) { 
+                # 判斷value是以 _asc 或者 _desc 结尾來排序
+                if (preg_match('/^(.+)_(asc|desc)$/', $order, $m)) {
+                    # 判斷是否為指定的接收的參數
+                    if (in_array($m[1], ['started_at', 'finished_at', 'priority'])) {   
+                        # 開始排序              
+                        $builder->orderBy($m[1], $m[2]);
+                    }
+                }
+            }
+        } else {
+            #預設
+            $now = now()->toDateString();
+            $builder->where('started_at', '<=', $now)
+                ->where('finished_at', '>=', $now)
+                ->orderBy('finished_at');
+        }
+        $pages = $builder->paginate(10)->appends([
+            'state' => $request->input('state', ''),
+            'isdone' => $request->input('isdone', ''),
+            'order' => $request->input('order', '')
+        ]);
+
+        $data = [
+            'owner' => $user,
+            'actions' => $pages,
+            'pageInfo' => [
+                'link' => $pages->render(),
+                'totalItem' => $pages->total()
+            ],
+            'state' => $request->input('state', ''),
+            'isdone' => $request->input('isdone', ''),
+            'order' => $request->input('order', ''),
+        ];
+        return view('user.action', $data);
     }
 
     public function storeObjective(ObjectiveRequest $request, User $user)
@@ -93,5 +155,6 @@ class UserController extends Controller
     {
         //
     }
+
 
 }
