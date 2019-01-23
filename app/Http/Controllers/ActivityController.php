@@ -39,9 +39,20 @@ class ActivityController extends Controller
 
     public function objectives(User $user)
     {
-        $activities = Objective::select("id", "title", "started_at as start", "finished_at as end")
-            ->where('model_id', '=', $user->id)->where('model_type', '=', 'App\User')->get()->toArray();
-        return response()->json($activities);
+        $action = array();
+        $actions = array();
+        $colors = ['App\User' => '#e87461', 'App\Project' => '#e0c879', 'App\Company' => '#0072e3', 'App\Department' => '#00aeae'];
+        $blade = ['App\User' => '個人目標', 'App\Project' => '個人專案', 'App\Company' => '公司目標', 'App\Department' => '部門目標'];
+        $activities = Objective::select("id", "title", "started_at as start", "finished_at as end", "model_type")
+            ->where('model_id', '=', $user->id)->get();
+        foreach ($activities as $activity) {
+            $action = array(
+                'id' => $activity->id, 'title' => '[ ' . $blade[$activity->model_type] . ' ] ' . $activity->title,
+                'start' => $activity->start, 'end' => $activity->end, 'color' => $colors[$activity->model_type],
+            );
+            array_push($actions, $action);
+        }
+        return response()->json($actions);
     }
 
     public function actions(User $user)
