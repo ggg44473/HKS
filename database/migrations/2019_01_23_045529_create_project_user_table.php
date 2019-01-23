@@ -17,6 +17,7 @@ class CreateProjectUserTable extends Migration
             $table->increments('id');
             $table->integer('project_id')->unsigned();
             $table->integer('user_id')->unsigned();
+            $table->timestamps();
         });
     }
 
