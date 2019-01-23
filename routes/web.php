@@ -21,7 +21,9 @@ Auth::routes();
 // Route::resource('events','EventController');
 Route::get('calendar', 'ActivityController@calendar')->name('calendar.index');
 Route::post('calendar/user/{user}/create', 'ActivityController@create')->name('calendar.create');
-Route::post('events/store', 'ActivityController@store')->name('calendar.store');
+Route::get('calendar/activity/{activity}/show', 'ActivityController@show')->name('calendar.show');
+Route::patch('calendar/activity/{activity}/update', 'ActivityController@update')->name('calendar.update');
+Route::delete('calendar/activity/{activity}/destroy', 'ActivityController@destroy')->name('calendar.destroy');
 
 ######  搜尋  ######
 Route::get('search', 'SearchController@index')->name('search.index');

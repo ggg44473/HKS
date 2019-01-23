@@ -4,7 +4,7 @@
 <div class="container">
 <div class="row justify-content-center">
     <div class="col-md-10">
-         <h4><a href="{{ route('user.okr', auth()->user()->id) }}" class="btn btn-primary btn-sm">返回</a>
+         <h4><a href="{{url()->previous()}}" class="btn btn-primary btn-sm float-right">返回</a>
          修改 OKR</h4>
     </div>
     @include('actions.error',[$errors]) 

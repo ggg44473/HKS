@@ -4,25 +4,21 @@
 <div class="container">
     <div class="row mb-2">
         <div class="col-12">
-            <a href="{{ route('user.okr', auth()->user()->id) }}" class="btn btn-primary btn-sm float-right">返回</a>
+            <a href="{{url()->previous()}}" class="btn btn-primary btn-sm float-right">返回</a>
         </div>
         <div class="col">
             <h4>{{$action->title}}</h4>
         </div>
         <div class="col">
             <span class="badge badge-pill badge-{{$action->priority()->getResults()->color}}">{{$action->priority()->getResults()->priority}}</span>
-            <span class="badge badge-pill badge-secondary">關聯KR : {{$action->keyresult()->getResults()->title}}</span>
+            <span class="badge badge-pill badge-secondary">關聯KR : {{$action->keyresult->title}}</span>
         </div>
     </div>
     <div class="row align-items-center mb-4">
         <div class="col-md-6">
-            建立:
-            <a href="{{ route('user.okr', $action->user()->getResults()->id) }}" title="{{$action->user()->getResults()->name}}">
-                <img src="{{ $action->user()->getResults()->getAvatar() }}" class="avatar-sm mr-1">
-            </a>
             負責:
-            <a href="{{ route('user.okr',$action->assignee()->getResults()->id) }}" title="{{$action->assignee()->getResults()->name}}">
-                <img src="{{ $action->assignee()->getResults()->getAvatar() }}" class="avatar-sm">
+            <a href="{{ route('user.okr', $action->user->id) }}" title="{{$action->user->name}}">
+                <img src="{{ $action->user->getAvatar() }}" class="avatar-sm mr-1">
             </a>
         </div>
         <div class="col-md-2">Start: {{$action->started_at}}</div>

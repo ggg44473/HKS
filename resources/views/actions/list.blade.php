@@ -66,7 +66,7 @@
             <tbody>
                 @foreach($actions as $action)
                 <tr class="text-center">
-                    <td data-th="優先度" class="alert alert-{{$action->priority()->getResults()->color}}">
+                    <td data-th="優先度" class="alert-{{$action->priority()->getResults()->color}}">
                         {{$action->priority()->getResults()->priority}}
                     </td>
                     <td data-th="結算日">
