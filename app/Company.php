@@ -7,10 +7,11 @@ use App\Traits\HasObjectiveTrait;
 use App\Traits\HasAvatarTrait;
 use App\Interfaces\HasObjectiveInterface;
 use App\Traits\HasInvitationTrait;
+use App\Traits\HasFollowTrait;
 
 class Company extends Model implements HasObjectiveInterface
 {
-    use HasObjectiveTrait, HasAvatarTrait, HasInvitationTrait;
+    use HasObjectiveTrait, HasAvatarTrait, HasInvitationTrait, HasFollowTrait;
 
     protected $fillable = [
         'name', 'description', 'user_id',

@@ -9,10 +9,11 @@ use Laravelista\Comments\Commenter;
 use App\Traits\HasObjectiveTrait;
 use App\Traits\HasAvatarTrait;
 use App\Interfaces\HasObjectiveInterface;
+use App\Traits\HasFollowTrait;
 
 class User extends Authenticatable implements HasObjectiveInterface
 {
-    use Notifiable, Commenter, HasObjectiveTrait, HasAvatarTrait;
+    use Notifiable, Commenter, HasObjectiveTrait, HasAvatarTrait, HasFollowTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -65,5 +66,10 @@ class User extends Authenticatable implements HasObjectiveInterface
     public function invitation()
     {
         return $this->hasMany(Invitation::class);
+    }
+
+    public function follow()
+    {
+        return $this->hasMany(Follow::class);
     }
 }
