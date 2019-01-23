@@ -27,7 +27,7 @@ class ActivityController extends Controller
         $actions = array();
         foreach ($activities as $activity) {
             $action = array(
-                'id' => $activity->id, 'title' => $activity->title,
+                'id' => $activity->id, 'title' => $activity->title, 'school' => '3',
                 'start' => $activity->start, 'color' => $activity->color,
                 'end' => $activity->end, 'url' => route('calendar.show', $activity->id)
             );
@@ -48,7 +48,7 @@ class ActivityController extends Controller
         foreach ($activities as $activity) {
             $action = array(
                 'id' => $activity->id, 'title' => '[ ' . $blade[$activity->model_type] . ' ] ' . $activity->title,
-                'start' => $activity->start, 'end' => $activity->end, 'color' => $colors[$activity->model_type],
+                'start' => $activity->start, 'end' => $activity->end, 'color' => $colors[$activity->model_type], 'school' => '1'
             );
             array_push($actions, $action);
         }
@@ -68,7 +68,7 @@ class ActivityController extends Controller
             $action = array(
                 'id' => $activity->id, 'title' => '[ ' . $blade[$activity->priority - 1] . ' ] ' . $activity->title,
                 'start' => $activity->start, 'color' => $colors[$activity->priority - 1],
-                'url' => route('actions.show', $activity->id)
+                'url' => route('actions.show', $activity->id), 'school' => '2'
             );
             array_push($actions, $action);
         }

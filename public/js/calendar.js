@@ -44,7 +44,7 @@ $("#calendar").fullCalendar({
     themeSystem: 'bootstrap4',
     height: 'parent',
     contentHeight: 500,
-    windowResizeDelay:100,
+    windowResizeDelay: 100,
     header: { // 頂部排版
         left: "prev,next today", // 左邊放置上一頁、下一頁和今天
         center: "title", // 中間放置標題
@@ -53,17 +53,33 @@ $("#calendar").fullCalendar({
     editable: true, // 啟動拖曳調整日期
     eventLimit: true, //  啟動複數資料來源
     eventSources: [evo, evt, eac], // 複數資料格式
+    eventRender: function eventRender(event, element, view) {
+        return ['all', event.school].indexOf($('#school_selector').val()) >= 0
+    },
     dayClick: function (date, jsEvent, view, resourceObj) {
         $("#started_at").val(date.format());
         $("#mdlEvent").modal();
         $("#fin_date").val();
-        // alert('Date: ' + date.format());
-        // alert('Resource ID:' + resourceObj.id);
     },
+    // customButtons: {
+    //     myCustomButton: {
+    //         text: '篩選',
+    //         click: function () {
+    //             $('#school_selector').on('change', function () {
+    //                 $('#calendar').fullCalendar('rerenderEvents');
+    //             })
+
+    //         }
+    //     },
+    // }
 });
+
 $('#finished_at').datepicker({
     format: 'yyyy-mm-dd'
 });
+$('#school_selector').on('change', function () {
+    $('#calendar').fullCalendar('rerenderEvents');
+})
 
 
 // $.get('api/calendar',{},function(data){

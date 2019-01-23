@@ -34,6 +34,13 @@
         </div>
         @endif
     </div>
+    <select class="btn btn-primary mb-2" id="school_selector">
+        <option class="btn-light" value="all">全部 All</option>
+        <option class="btn-light" value="1">目標 Objective</option>
+        <option class="btn-light" value="2">作為 Action</option>
+        <option class="btn-light" value="3">行程 Activity</option>
+    </select>
+    
     <div id="calendar" data-uid="{{auth()->user()->id}}"></div>
     <form action="{{route('calendar.create', auth()->user()->id) }}" method="post">
         @csrf
