@@ -6,10 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 use App\Traits\HasObjectiveTrait;
 use App\Traits\HasAvatarTrait;
 use App\Interfaces\HasObjectiveInterface;
+use App\Traits\HasFollowTrait;
 
 class Department extends Model implements HasObjectiveInterface
 {
-    use HasObjectiveTrait, HasAvatarTrait;
+    use HasObjectiveTrait, HasAvatarTrait, HasFollowTrait;
 
     protected $fillable = [
         'name', 'description', 'parent_department_id', 'company_id', 'user_id',

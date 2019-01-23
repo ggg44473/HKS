@@ -22,17 +22,28 @@
             <h4>我的OKR</h4>
         </div>
         @else
-        <a class="col-md-7" href="{{ $owner->getOKrRoute() }}">
-            <img class="avatar u-ml-8 u-mr-8" src="{{ $owner->getAvatar() }}">
-            <h4 class="list-inline-item u-ml-8 u-mr-8 text-black-50">{{ $owner->name }}</h4>
-        </a>
-        @endif
-        @if (auth()->user()->id == $admin)
-        <div class="col-md-5 text-right align-self-end">
-            <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#objective"><i class="fa fa-plus fa-sm"></i>
-                新增目標</a>
+        <div class="col-md-7">
+            <a href="{{ $owner->getOKrRoute() }}">
+                <img class="avatar u-ml-8 u-mr-8" src="{{ $owner->getAvatar() }}">
+                <h4 class="list-inline-item u-ml-8 text-black-50">{{ $owner->name }}</h4>
+            </a>
+            @if ($owner->follower->first())
+            <a href="{{ route('follow.cancel', [get_class($owner), $owner]) }}" class="text-warning">
+                <i class="fas fa-star" style="font-size: 24px;"></i>
+            </a>
+            @else
+            <a href="{{ route('follow', [get_class($owner), $owner]) }}" class="text-warning">
+                <i class="far fa-star" style="font-size: 24px;"></i>
+            </a>
+            @endif
         </div>
         @endif
+        <div class="col-md-5 text-right align-self-end">
+            @if (auth()->user()->id == $admin)
+            <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#objective"><i class="fa fa-plus fa-sm"></i>
+                新增目標</a>
+            @endif
+        </div>
     </div>
     <div class="row m-3">
         <div class="col-md-2">

@@ -168,5 +168,12 @@ Route::get('search/company/{company}/member/nonDepartment/', 'DepartmentControll
 //回傳不屬於此專案的公司成員
 Route::get('search/company/member/project/{project}', 'ProjectController@search')->name('project.member.search');
 
+###### 追蹤 ######
+//專案首頁
+Route::get('follow', 'FollowController@index')->name('follow.index');
+//追蹤
+Route::get('follow/{type}/{owner}', 'FollowController@follow')->name('follow');
+//取消追蹤
+Route::get('follow/{type}/{owner}/cancel', 'FollowController@cancel')->name('follow.cancel');
 
 ###### 通知 ######
