@@ -15,6 +15,9 @@
                 @endforeach
             </div>
         @else
+            @foreach ($invitations as $invitation)
+                @include('organization.company.invitation')        
+            @endforeach
             @include('organization.company.create')
         @endif
     </div>

@@ -83,10 +83,16 @@ Route::delete('organization/company/destroy', 'CompanyController@destroy')->name
 Route::get('organization/company/okr', 'CompanyController@listOKR')->name('company.okr');
 //公司新增O
 Route::post('organization/company/{company}/objective/store', 'CompanyController@storeObjective')->name('company.objective.store');
-//公司邀請成員頁面
+//公司成員設定頁面
 Route::get('organization/company/member', 'CompanyController@memberSetting')->name('company.member.setting');
-//新增公司成員
-Route::post('organization/company/member/store', 'CompanyController@storeMember')->name('company.member.store');
+//發送邀請
+Route::post('organization/company/{company}/member/invite', 'CompanyController@inviteMember')->name('company.member.invite');
+//取消邀請
+Route::patch('organization/company/{company}/member/{member}/invite/destroy', 'CompanyController@cancelInvite')->name('company.member.invite.destroy');
+//拒絕邀請
+Route::get('organization/company/{company}/member/{member}/invite/reject', 'CompanyController@rejectInvite')->name('company.member.invite.reject');
+//同意邀請
+Route::get('organization/company/{company}/member/{member}/invite/agree', 'CompanyController@agreeInvite')->name('company.member.invite.agree');
 //更新公司成員
 Route::patch('organization/company/member/update', 'CompanyController@updateMember')->name('company.member.update');
 //刪除公司成員
@@ -110,7 +116,7 @@ Route::delete('organization/department/{department}/destroy', 'DepartmentControl
 Route::get('organization/department/{department}/okr', 'DepartmentController@listOKR')->name('department.okr');
 //部門新增O
 Route::post('organization/department/{department}/objective/store', 'DepartmentController@storeObjective')->name('department.objective.store');
-//部門邀請成員頁面
+//部門成員設定頁面
 Route::get('organization/department/{department}/member', 'DepartmentController@memberSetting')->name('department.member.setting');
 //新增部門成員
 Route::post('organization/department/{department}/member/store', 'DepartmentController@storeMember')->name('department.member.store');
@@ -138,7 +144,7 @@ Route::delete('project/{project}/destroy', 'ProjectController@destroy')->name('p
 Route::get('project/{project}/okr', 'ProjectController@listOKR')->name('project.okr');
 //專案新增O
 Route::post('project/{project}/objective/store', 'ProjectController@storeObjective')->name('project.objective.store');
-//專案邀請成員頁面
+//專案成員設定頁面
 Route::get('project/{project}/member', 'ProjectController@memberSetting')->name('project.member.setting');
 //發送邀請
 Route::post('project/{project}/member/invite', 'ProjectController@inviteMember')->name('project.member.invite');
@@ -148,8 +154,6 @@ Route::patch('project/{project}/member/{member}/invite/destroy', 'ProjectControl
 Route::get('project/{project}/member/{member}/invite/reject', 'ProjectController@rejectInvite')->name('project.member.invite.reject');
 //同意邀請
 Route::get('project/{project}/member/{member}/invite/agree', 'ProjectController@agreeInvite')->name('project.member.invite.agree');
-//新增專案成員
-Route::post('project/{project}/member/store', 'ProjectController@storeMember')->name('project.member.store');
 //更新專案成員
 Route::patch('project/{project}/member/update', 'ProjectController@updateMember')->name('project.member.update');
 //刪除專案成員

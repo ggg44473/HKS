@@ -8,7 +8,7 @@
         </div>
     </div>
     <div class="mb-4">
-        <form action="{{ route('company.member.store') }}" method="post">
+        <form action="{{ route('company.member.invite', $company) }}" method="post">
             @csrf
             <search-component api={{ route('company.member.search') }}></search-component>
         </form>
@@ -102,6 +102,41 @@
             </form>
         </div>
     </div>
-
+    <div class="row justify-content-md-center">
+        <div class="col-sm-10">邀請中成員
+            <table class="rwd-table table">
+                <thead>
+                    <tr class="bg-primary text-light text-center">
+                        <th>頭像</th>
+                        <th>姓名</th>
+                        <th>信箱</th>
+                        <th>設定</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($company->getInvitationUsers() as $member)
+                    <tr class="text-center">
+                        <td data-th="頭像">
+                            <a href="{{ route('user.okr', $member->id) }}" class="u-ml-8 u-mr-8">
+                                <img src="{{ $member->getAvatar() }}" alt="" class="avatar-sm text-center bg-white">
+                            </a>
+                        </td>
+                        <td data-th="姓名">{{ $member->name }}</td>
+                        <td data-th="信箱">{{ $member->email }}</td>
+                        <td data-th="設定">
+                            <a href="#" onclick="document.getElementById('memberDelete{{ $member->id }}').submit()"><i
+                                    class="fas fa-trash-alt text-danger"></i></a href="#">
+                            <form name="memberDelete{{ $member->id }}" method="POST" id="memberDelete{{ $member->id }}"
+                                action="{{ route('company.member.invite.destroy', [$company, $member]) }}">
+                                @csrf
+                                {{ method_field('PATCH') }}
+                            </form>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 @endsection

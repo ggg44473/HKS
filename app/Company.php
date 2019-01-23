@@ -18,12 +18,12 @@ class Company extends Model implements HasObjectiveInterface
 
     public function users()
     {
-        return $this->hasMany('App\User','company_id');
+        return $this->hasMany('App\User', 'company_id');
     }
 
     public function departments()
     {
-        return $this->hasMany('App\Department','company_id');
+        return $this->hasMany('App\Department', 'company_id');
     }
 
     public function getOKrRoute()
@@ -34,5 +34,10 @@ class Company extends Model implements HasObjectiveInterface
     public function getNotifiableUser()
     {
         return $this->users;
+    }
+
+    public function admin()
+    {
+        return $this->belongsTo(User::class);
     }
 }
