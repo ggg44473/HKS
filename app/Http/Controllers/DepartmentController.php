@@ -166,13 +166,12 @@ class DepartmentController extends Controller
      */
     public function destroy(Department $department)
     {
-        $users = User::where(['company_id' => auth()->user()->company_id, 'department_id' => $department->id])->get();
-        foreach ($users as $user) {
+        foreach ($department->users as $user) {
             $user->update(['department_id' => null]);
         }
         $department->delete();
 
-        return redirect('company.index');
+        return redirect()->route('company.index');
     }
 
     /**
@@ -180,14 +179,14 @@ class DepartmentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function invite(Department $department)
+    public function memberSetting(Department $department)
     {
         $data = [
             'department'=>$department,
             'members'=>User::where('department_id', $department->id)->get(),
         ];
 
-        return view('organization.department.invite', $data);
+        return view('organization.department.member', $data);
     }
 
     /**
@@ -218,7 +217,7 @@ class DepartmentController extends Controller
             }
         }
         
-        return redirect()->route('department.invite', $department);
+        return redirect()->route('department.member.setting', $department);
     }
 
     /**
@@ -229,14 +228,13 @@ class DepartmentController extends Controller
      */
     public function updateMember(Request $request, Department $department)
     {
-        $members = User::where('department_id', $department->id)->get();
-        foreach ($members as $member) {
+        foreach ($department->users as $member) {
             $attr['department_id'] = $request->input('department' . $member->id);
             $attr['position'] = $request->input('position' . $member->id);
             $member->update($attr);
         }
 
-        return redirect()->route('department.invite', $department);
+        return redirect()->route('department.member.setting', $department);
     }
     
     /**
@@ -249,6 +247,6 @@ class DepartmentController extends Controller
     {
         $member->update(['department_id'=>null, 'position'=>null]);
 
-        return redirect()->route('department.invite', $department);
+        return redirect()->route('department.member.setting', $department);
     }
 }

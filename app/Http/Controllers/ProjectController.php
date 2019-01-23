@@ -7,6 +7,7 @@ use App\Project;
 use App\Http\Requests\ObjectiveRequest;
 use App\User;
 use App\ProjectUser;
+use App\Invitation;
 
 class ProjectController extends Controller
 {
@@ -34,10 +35,12 @@ class ProjectController extends Controller
         foreach ($projectDone as $project) {
             $project['okrs'] = $project->getOkrsWithPage($request)['okrs'];
         }
+        $invitations = auth()->user()->invitation->where('model_type', get_class($project));
 
         $data = [
             'projects' => $projects,
-            'done' => $projectDone
+            'done' => $projectDone,
+            'invitations' => $invitations
         ];
         return view('project.index', $data);
     }
@@ -66,6 +69,7 @@ class ProjectController extends Controller
 
         $project = Project::create($attr);
         $project->addAvatar($request);
+        ProjectUser::create(['project_id' => $project->id, 'user_id' => auth()->user()->id]);
 
         return redirect()->route('project');
     }
@@ -84,7 +88,7 @@ class ProjectController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  Project $project
+     * @param  \App\Project $project
      * @return \Illuminate\Http\Response
      */
     public function edit(Project $project)
@@ -96,7 +100,7 @@ class ProjectController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  Project $project
+     * @param  \App\Project $project
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Project $project)
@@ -113,11 +117,12 @@ class ProjectController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Project $project
      * @return \Illuminate\Http\Response
      */
     public function destroy(Project $project)
     {
+        ProjectUser::where('project_id', $project->id)->delete();
         $project->delete();
 
         return redirect('project');
@@ -151,6 +156,12 @@ class ProjectController extends Controller
         return redirect()->to(url()->previous() . '#oid-' . $objective->id);
     }
 
+    /**
+     * 完成/取消專案
+     *
+     * @param  \App\Project $project
+     * @return \Illuminate\Http\Response
+     */
     public function done(Project $project)
     {
         $project->isdone = !$project->isdone;
@@ -164,53 +175,96 @@ class ProjectController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function invite(Project $project)
+    public function memberSetting(Project $project)
     {
         $data = [
             'project' => $project,
         ];
 
-        return view('project.invite', $data);
+        return view('project.member', $data);
     }
 
     /**
-     * 回傳公司所有成員
+     * 發送邀請
      *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Project $project
      * @return \Illuminate\Http\Response
      */
-    public function search()
+    public function inviteMember(Request $request, Project $project)
     {
-        $results = User::where('company_id', auth()->user()->company_id)->get();
+        $project->sendInvitation($request);
+
+        return redirect()->route('project.member.setting', $project);
+    }
+
+    /**
+     * 取消邀請
+     *
+     * @param  \App\Project $project
+     * @param  \App\User $member
+     * @return \Illuminate\Http\Response
+     */
+    public function cancelInvite(Project $project, User $member)
+    {
+        $project->deleteInvitation($member);
+
+        return redirect()->route('project.member.setting', $project);
+    }
+
+    /**
+     * 拒絕邀請
+     *
+     * @param  \App\Project $project
+     * @param  \App\User $member
+     * @return \Illuminate\Http\Response
+     */
+    public function rejectInvite(Project $project, User $member)
+    {
+        $project->deleteInvitation($member);
+
+        return redirect()->route('project');
+    }
+
+    /**
+     * 同意邀請
+     *
+     * @param  \App\Project $project
+     * @param  \App\User $member
+     * @return \Illuminate\Http\Response
+     */
+    public function agreeInvite(Project $project, User $member)
+    {
+        $project->deleteInvitation($member);
+        ProjectUser::create(['project_id' => $project->id, 'user_id' => $member->id]);
+
+        return redirect()->route('project');
+    }
+
+    /**
+     * 回傳公司不屬於此專案的所有成員
+     *
+     * @param  \App\Project $project
+     * @return \Illuminate\Http\Response
+     */
+    public function search(Project $project)
+    {
+        $results = User::where('company_id', $project->company->id)->get();
 
         return response()->json($results);
     }
 
     /**
-     * Store a newly created member in database.
+     * Remove department_id and position from storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function storeMember(Request $request, Project $project)
-    {
-        $userIds = preg_split("/[,]+/", $request->invite);
-        foreach ($userIds as $userId) {
-            ProjectUser::create(['project_id' => $project->id, 'user_id' => $userId]);
-        }
-
-        return redirect()->route('project.invite', $project);
-    }
-
-    /**
-     * Remove company_id, department_id and position from storage.
-     *
-     * @param  User $user
+     * @param  \App\Project $project
+     * @param  \App\User $member
      * @return \Illuminate\Http\Response
      */
     public function destroyMember(Project $project, User $member)
     {
         ProjectUser::where([['project_id', $project->id], ['user_id', $member->id]])->delete();
 
-        return redirect()->route('project.invite', $project);
+        return redirect()->route('project.member.setting', $project);
     }
 }

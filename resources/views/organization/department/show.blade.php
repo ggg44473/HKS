@@ -13,7 +13,7 @@
             <br>
             @if ($department->user_id == auth()->user()->id)
                 <a href="{{ route('department.create', $department->id) }}" data-toggle="tooltip" data-placement="bottom" title="新增部門"><i class="fas fa-plus-circle u-margin-4"></i></a>
-                <a href="{{ route('department.invite', $department->id) }}" data-toggle="tooltip" data-placement="bottom" title="新增成員"><i class="fas fa-user-plus u-margin-4"></i></a>
+                <a href="{{ route('department.member.setting', $department->id) }}" data-toggle="tooltip" data-placement="bottom" title="新增成員"><i class="fas fa-user-plus u-margin-4"></i></a>
                 <a href="{{ route('department.edit', $department->id) }}" data-toggle="tooltip" data-placement="bottom" title="編輯部門"><i class="fas fa-edit u-margin-4"></i></a>
                 <a href="#" onclick="document.getElementById('departmentDelete{{ $department->id }}').submit()" data-toggle="tooltip" data-placement="bottom" title="刪除部門"><i class="fas fa-trash-alt"></i></a>
                 <form method="POST" id="departmentDelete{{ $department->id }}" action="{{ route('department.destroy', $department->id) }}">

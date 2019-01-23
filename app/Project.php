@@ -6,10 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 use App\Traits\HasObjectiveTrait;
 use App\Traits\HasAvatarTrait;
 use App\Interfaces\HasObjectiveInterface;
+use App\Traits\HasInvitationTrait;
 
 class Project extends Model implements HasObjectiveInterface
 {
-    use HasObjectiveTrait, HasAvatarTrait;
+    use HasObjectiveTrait, HasAvatarTrait, HasInvitationTrait;
 
     /**
      * The attributes that are mass assignable.

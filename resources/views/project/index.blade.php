@@ -8,6 +8,9 @@
 @section('title','專案綜覽')
 @section('content')
 <div class="container">
+    @foreach ($invitations as $invitation)
+        @include('project.invitation')        
+    @endforeach
     <div class="row m-3">
         <div class="col-xs-3 mr-auto">
             <h4>Project</h4>

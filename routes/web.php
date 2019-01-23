@@ -84,7 +84,7 @@ Route::get('organization/company/okr', 'CompanyController@listOKR')->name('compa
 //公司新增O
 Route::post('organization/company/{company}/objective/store', 'CompanyController@storeObjective')->name('company.objective.store');
 //公司邀請成員頁面
-Route::get('organization/company/invite', 'CompanyController@invite')->name('company.invite');
+Route::get('organization/company/member', 'CompanyController@memberSetting')->name('company.member.setting');
 //新增公司成員
 Route::post('organization/company/member/store', 'CompanyController@storeMember')->name('company.member.store');
 //更新公司成員
@@ -111,7 +111,7 @@ Route::get('organization/department/{department}/okr', 'DepartmentController@lis
 //部門新增O
 Route::post('organization/department/{department}/objective/store', 'DepartmentController@storeObjective')->name('department.objective.store');
 //部門邀請成員頁面
-Route::get('organization/department/{department}/invite', 'DepartmentController@invite')->name('department.invite');
+Route::get('organization/department/{department}/member', 'DepartmentController@memberSetting')->name('department.member.setting');
 //新增部門成員
 Route::post('organization/department/{department}/member/store', 'DepartmentController@storeMember')->name('department.member.store');
 //更新部門成員
@@ -139,7 +139,15 @@ Route::get('project/{project}/okr', 'ProjectController@listOKR')->name('project.
 //專案新增O
 Route::post('project/{project}/objective/store', 'ProjectController@storeObjective')->name('project.objective.store');
 //專案邀請成員頁面
-Route::get('project/{project}/invite', 'ProjectController@invite')->name('project.invite');
+Route::get('project/{project}/member', 'ProjectController@memberSetting')->name('project.member.setting');
+//發送邀請
+Route::post('project/{project}/member/invite', 'ProjectController@inviteMember')->name('project.member.invite');
+//取消邀請
+Route::patch('project/{project}/member/{member}/invite/destroy', 'ProjectController@cancelInvite')->name('project.member.invite.destroy');
+//拒絕邀請
+Route::get('project/{project}/member/{member}/invite/reject', 'ProjectController@rejectInvite')->name('project.member.invite.reject');
+//同意邀請
+Route::get('project/{project}/member/{member}/invite/agree', 'ProjectController@agreeInvite')->name('project.member.invite.agree');
 //新增專案成員
 Route::post('project/{project}/member/store', 'ProjectController@storeMember')->name('project.member.store');
 //更新專案成員
@@ -151,8 +159,8 @@ Route::patch('project/{project}/member/{member}/destroy', 'ProjectController@des
 Route::get('search/member/noncompany/', 'CompanyController@search')->name('company.member.search');
 //回傳無部門的公司成員
 Route::get('search/company/member/nondepartment/', 'DepartmentController@search')->name('department.member.search');
-//回傳公司的所有成員
-Route::get('search/company/member/', 'ProjectController@search')->name('project.member.search');
+//回傳不屬於此專案的公司成員
+Route::get('search/company/member/project/{project}', 'ProjectController@search')->name('project.member.search');
 
 
 ###### 通知 ######

@@ -6,10 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 use App\Traits\HasObjectiveTrait;
 use App\Traits\HasAvatarTrait;
 use App\Interfaces\HasObjectiveInterface;
+use App\Traits\HasInvitationTrait;
 
 class Company extends Model implements HasObjectiveInterface
 {
-    use HasObjectiveTrait, HasAvatarTrait;
+    use HasObjectiveTrait, HasAvatarTrait, HasInvitationTrait;
 
     protected $fillable = [
         'name', 'description', 'user_id',

@@ -153,7 +153,7 @@ class CompanyController extends Controller
         }
         auth()->user()->company()->first()->delete();
 
-        return redirect('company.index');
+        return redirect()->route('company.index');
     }
 
     /**
@@ -161,14 +161,14 @@ class CompanyController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function invite()
+    public function memberSetting()
     {
             $data = [
                 'members'=>User::where([['company_id',auth()->user()->company_id],['id','!=',auth()->user()->id]])->get(),
                 'departments'=>Department::where('company_id',auth()->user()->company_id)->get(),
             ];
 
-        return view('organization.company.invite', $data);
+        return view('organization.company.member', $data);
     }
 
     /**
@@ -199,7 +199,7 @@ class CompanyController extends Controller
             User::where('id', $userId)->update(['company_id' => auth()->user()->company_id]);
         }
         
-        return redirect()->route('company.invite');
+        return redirect()->route('company.member.setting');
     }
 
     /**
@@ -217,7 +217,7 @@ class CompanyController extends Controller
             $member->update($attr);
         }
 
-        return redirect()->route('company.invite');
+        return redirect()->route('company.member.setting');
     }
     
     /**
@@ -230,6 +230,6 @@ class CompanyController extends Controller
     {
         $member->update(['company_id'=>null, 'department_id'=>null, 'position'=>null]);
 
-        return redirect()->route('company.invite');
+        return redirect()->route('company.member.setting');
     }
 }

@@ -61,4 +61,9 @@ class User extends Authenticatable implements HasObjectiveInterface
     {
         return $this;
     }
+
+    public function invitation()
+    {
+        return $this->hasMany(Invitation::class);
+    }
 }
