@@ -3,15 +3,32 @@
 @section('content')
 <div class="container">
     <div class="row mb-2">
-        <div class="col-12">
-            <a href="{{url()->previous()}}" class="btn btn-primary btn-sm float-right">返回</a>
-        </div>
         <div class="col">
-            <h4>{{$action->title}}</h4>
-        </div>
-        <div class="col">
+            <a href="{{url()->previous()}}" class="text-primary mt-2 mr-2 float-left"><i class="fa fa-arrow-left fa-lg"></i></a><br/>
+            <h4 class="d-inline-block">{{$action->title}}</h4>
             <span class="badge badge-pill badge-{{$action->priority()->getResults()->color}}">{{$action->priority()->getResults()->priority}}</span>
             <span class="badge badge-pill badge-secondary">關聯KR : {{$action->keyresult->title}}</span>
+        </div>
+        <div class="col">
+            @if(auth()->user()->id== $action->user_id)
+            <a class="btn-group mt-2 mr-2 text-success float-right" href="#" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false"><i class="fas fa-pencil-alt"></i></a>
+            <div class="dropdown-menu">
+                <a class="dropdown-item text-primary" href="#" onclick="document.getElementById('doneAct{{ $action->id }}').submit()"><i
+                        class="fas fa-check-circle"></i> 完成 Action</a>
+                <form method="POST" id="doneAct{{ $action->id }}" action="{{ route('actions.done',$action->id) }}">
+                    @csrf
+                </form>
+                <a class="dropdown-item text-primary" href="{{ route('actions.edit',$action->id) }}"><i class="fas fa-pencil-alt"></i>
+                    編輯 Action</a>
+                <a class="dropdown-item text-danger" href="#" onclick="document.getElementById('deleteAct{{ $action->id }}').submit()"><i
+                        class="fas fa-trash"></i> 刪除 Action</a>
+                <form method="POST" id="deleteAct{{ $action->id }}" action="{{ route('actions.destroy',$action->id) }}">
+                    @csrf
+                    {{ method_field('DELETE') }}
+                </form>
+            </div>
+            @endif
         </div>
     </div>
     <div class="row align-items-center mb-4">

@@ -27,7 +27,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($project->members as $member)
+                    @foreach($project->users as $member)
                     <tr class="text-center">
                         <td data-th="頭像">
                             <a href="{{ route('user.okr', $member->id) }}" class="u-ml-8 u-mr-8">

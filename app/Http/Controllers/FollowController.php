@@ -30,7 +30,6 @@ class FollowController extends Controller
         $attr['user_id'] = auth()->user()->id;
         $attr['model_type'] = $type;
         $attr['model_id'] =  $owner;
-
         Follow::create($attr);
 
         return redirect()->back();

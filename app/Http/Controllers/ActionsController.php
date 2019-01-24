@@ -33,6 +33,7 @@ class ActionsController extends Controller
         if ($keyresults->toArray() == null) return redirect()->route('user.okr', auth()->user()->id);
         $data = [
             'owner' => $user,
+            'objective' => $objective,
             'keyresults' => $keyresults,
             'priorities' => $priorities,
         ];
@@ -50,18 +51,15 @@ class ActionsController extends Controller
         $attr['finished_at'] = $request->input('fin_date');
 
         $action = Action::create($attr);
-
+        if ($request->input('invite')) {
+            $action->sendInvitation($request);
+        }
         if ($request->hasFile('files')) {
             $action->addRelatedFiles();
         }
 
-        if (\Session::has('redirect_url')) {
-            $redirect_url = \Session::get('redirect_url');
-            \Session::forget('redirect_url');
-            return redirect($redirect_url);
-        }
-
-        return redirect()->route('user.okr', auth()->user()->id);
+        $objective = $action->objective;
+        return redirect()->to($objective->model->getOKrRoute() . '#oid-' . $objective->id);
     }
 
     public function show(Action $action)
@@ -103,6 +101,11 @@ class ActionsController extends Controller
 
     public function update(ActionRequest $request, Action $action)
     {
+        
+        if ($request->input('invite') && $request->input('invite') != $action->user_id){
+            $action->sendInvitation($request);
+        }
+
         $attr['related_kr'] = $request->input('krs_id');
         $attr['priority'] = $request->input('priority');
         $attr['title'] = $request->input('act_title');
@@ -116,13 +119,8 @@ class ActionsController extends Controller
             $action->addRelatedFiles();
         }
 
-        if (\Session::has('redirect_url')) {
-            $redirect_url = \Session::get('redirect_url');
-            \Session::forget('redirect_url');
-            return redirect($redirect_url);
-        }
-
-        return redirect()->route('user.okr', auth()->user()->id);
+        $objective = $action->objective;
+        return redirect()->to($objective->model->getOKrRoute() . '#oid-' . $objective->id);
     }
 
     public function destroy(Action $action)
@@ -144,4 +142,41 @@ class ActionsController extends Controller
         $act->save();
         return redirect()->back();
     }
+
+    public function search(Objective $objective)
+    {
+        $results = $objective->model->users;
+        return response()->json($results);
+    }
+
+
+    /**
+     * 拒絕邀請
+     *
+     * @param  \App\Project $project
+     * @param  \App\User $member
+     * @return \Illuminate\Http\Response
+     */
+    public function rejectInvite(Action $action, User $member)
+    {
+        $action->deleteInvitation($member);
+        return redirect()->route('user.action',$member->id);
+    }
+
+    /**
+     * 同意邀請
+     *
+     * @param  \App\Project $project
+     * @param  \App\User $member
+     * @return \Illuminate\Http\Response
+     */
+    public function agreeInvite(Action $action, User $member)
+    {
+        $action->deleteInvitation($member);
+        $attr['user_id'] = $member->id;
+        $action->update($attr);
+        return redirect()->route('user.action',$member->id);
+    }
+
+
 }

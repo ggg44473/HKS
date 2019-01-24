@@ -45,10 +45,11 @@ class ActivityController extends Controller
         $blade = ['App\User' => '個人目標', 'App\Project' => '個人專案', 'App\Company' => '公司目標', 'App\Department' => '部門目標'];
         $activities = Objective::select("id", "title", "started_at as start", "finished_at as end", "model_type")
             ->where('model_id', '=', $user->id)->get();
+            
         foreach ($activities as $activity) {
             $action = array(
                 'id' => $activity->id, 'title' => '[ ' . $blade[$activity->model_type] . ' ] ' . $activity->title,
-                'start' => $activity->start, 'end' => $activity->end, 'color' => $colors[$activity->model_type], 'school' => '1'
+                'start' => $activity->start, 'end' => $activity->end, 'color' => $colors[$activity->model_type], 'school' => '1',
             );
             array_push($actions, $action);
         }

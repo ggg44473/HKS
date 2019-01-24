@@ -27,7 +27,7 @@ class Project extends Model implements HasObjectiveInterface, HasInvitationInter
         return $this->belongsTo('App\User', 'user_id');
     }
 
-    public function members()
+    public function users()
     {
         return $this->belongsToMany(User::class);;
     }
