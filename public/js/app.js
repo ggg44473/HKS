@@ -1898,22 +1898,27 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       memberList: [],
       selectedMember: {},
-      searchText: ''
+      searchText: ""
     };
   },
-  props: ['api'],
+  props: ["api"],
   created: function created() {
     this.searchMember();
   },
   methods: {
     searchMember: function searchMember() {
       var _this = this;
+
+      // this.selectedMember = this.oldAssignee
+      console.log(this.oldAssignee);
 
       if (this.memberList.length === 0) {
         axios.get(this.api).then(function (response) {
@@ -41016,6 +41021,11 @@ var render = function() {
           },
           expression: "selectedMember"
         }
+      }),
+      _vm._v(" "),
+      _c("input", {
+        attrs: { type: "hidden", name: "assignee" },
+        domProps: { value: _vm.selectedMember.id }
       })
     ],
     1
