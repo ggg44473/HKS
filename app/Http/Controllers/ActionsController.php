@@ -56,13 +56,8 @@ class ActionsController extends Controller
             $action->addRelatedFiles();
         }
 
-        if (\Session::has('redirect_url')) {
-            $redirect_url = \Session::get('redirect_url');
-            \Session::forget('redirect_url');
-            return redirect($redirect_url);
-        }
-
-        return redirect()->route('user.okr', auth()->user()->id);
+        $objective = $action->objective;
+        return redirect()->to($objective->model->getOKrRoute() . '#oid-' . $objective->id);
     }
 
     public function show(Action $action)
@@ -116,14 +111,9 @@ class ActionsController extends Controller
         if ($request->hasFile('files')) {
             $action->addRelatedFiles();
         }
-
-        if (\Session::has('redirect_url')) {
-            $redirect_url = \Session::get('redirect_url');
-            \Session::forget('redirect_url');
-            return redirect($redirect_url);
-        }
-
-        return redirect()->route('user.okr', auth()->user()->id);
+        
+        $objective = $action->objective;
+        return redirect()->to($objective->model->getOKrRoute() . '#oid-' . $objective->id);
     }
 
     public function destroy(Action $action)
