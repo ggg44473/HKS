@@ -353,3 +353,24 @@ main{
     -webkit-box-shadow: 0.1rem 0.1rem 0.3rem 0.1rem rgba(108, 117, 125, 0.2);
             box-shadow: 0.1rem 0.1rem 0.3rem 0.1rem rgba(108, 117, 125, 0.2);
 }
+
+.circle>div, .circle>a{
+    position: relative;
+    top: -40px;
+    left: 12px;
+    width: 30px;
+    text-align: center;
+    color: #21897E;
+}
+
+.circle-progress-text{
+    position: relative;
+    color: #4A4A4A;
+    top: -18px;
+    left: -50px;
+    width: 150px;
+    text-align: center;
+    overflow:hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
