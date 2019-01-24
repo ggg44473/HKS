@@ -180,7 +180,7 @@ class CompanyController extends Controller
             'departments' => Department::where('company_id', auth()->user()->company_id)->get(),
         ];
 
-        return view('organization.company.member', $data);
+        return view('organization.company.memberSetting', $data);
     }
 
     /**
@@ -298,5 +298,28 @@ class CompanyController extends Controller
         $member->update(['company_id' => null, 'department_id' => null, 'position' => null]);
 
         return redirect()->route('company.member.setting');
+    }
+
+    /**
+     * Display a listing of the member.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function member(Request $request)
+    {
+        $company = Company::where('id', auth()->user()->company_id)->first();
+        $company['okrs'] = $company? $company['okrs'] = $company->getOkrsWithPage($request)['okrs'] : null;
+
+        $departments = Department::where(['company_id' => auth()->user()->company_id, 'parent_department_id' => null])->get();
+        foreach ($departments as $department) {
+            $department['okrs'] = $department ? $department->getOkrsWithPage($request)['okrs']:null;
+        }
+
+        $data = [
+            'company' => $company,
+            'departments' => $departments,
+        ];
+
+        return view('organization.member', $data);
     }
 }

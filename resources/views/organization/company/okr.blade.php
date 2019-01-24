@@ -31,8 +31,7 @@
                 aria-selected="false">OKRs</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" id="member-tab" data-toggle="tab" href="#member" role="tab" aria-controls="member"
-                aria-selected="false">成員</a>
+            <a class="nav-link" id="member-tab" href="{{ route('company.member') }}">成員</a>
         </li>
     </ul>
     <div class="tab-pane fade show pl-sm-4 pr-sm-4">

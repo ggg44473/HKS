@@ -1,10 +1,10 @@
-<div class="row justify-content-md-center">
+<div class="row justify-content-center">
     <div class="col-md-3 u-padding-16">
         <div class="row">
             <a class="u-ml-8 u-mr-8" href="{{ route('company.okr') }}">
                 <img src="{{ $company->getAvatar() }}" alt="" class="avatar text-center bg-white">
             </a>
-            <div class="u-ml-8 u-mr-8 align-self-center">
+            <div class="u-ml-16 u-mr-8 align-self-center">
                 <a href="{{ route('company.okr') }}">
                     <span class="mb-0 font-weight-bold text-black-50 d-inline-block text-truncate" style="max-width: 120px;">{{ $company->name }}</span><br>
                     <span class="mb-0 text-black-50 d-inline-block text-truncate" style="max-width: 120px;">{{ $company->description }}</span><br>
@@ -23,7 +23,7 @@
         </div>
     </div>
     <div class="col-md-5 u-padding-16">
-        <div class="row" style="height: 95px;">
+        <div class="row justify-content-md-center" style="height: 95px;">
             @if ($company->okrs)
                 @for ($i = 0; $i < 4 && $i < count($company->okrs); $i++)
                 <div class="col-3 align-self-center">
@@ -36,15 +36,24 @@
             @endif
         </div>
     </div>
-    <div class="col-md-2 align-self-end">
+    <div class="col-md-2 u-pt-16">
+        <div class="row" style="height: 95px;">
+            <div class="col-12 text-right">
+                @if ($company->follower->first())
+                <a href="{{ route('follow.cancel', [get_class($company), $company]) }}" class="text-warning" data-toggle="tooltip" data-placement="right" title="取消追蹤">
+                    <i class="fas fa-star" style="font-size: 24px;"></i>
+                </a>
+                @else
+                <a href="{{ route('follow', [get_class($company), $company]) }}" class="text-warning" data-toggle="tooltip" data-placement="right" title="追蹤">
+                    <i class="far fa-star" style="font-size: 24px;"></i>
+                </a>
+                @endif
+            </div>
         @if (count($company->okrs)>4)
-        <div class="row">
-            <a href="{{ route('company.okr') }}" class="col-12 {{ $company->user_id == auth()->user()->id? :'u-pb-32' }} text-black-50">more...</a>
-        </div>
+            <a href="{{ route('company.okr') }}" class="col-12 {{ $company->user_id == auth()->user()->id? :'u-pb-32' }} text-black-50 align-self-center">more...</a>
         @endif
         @if ($company->user_id == auth()->user()->id)
-        <div class="row">
-            <div class="col-12 text-right">
+            <div class="col-12 text-right align-self-end">
                 <a href="{{ route('department.root.create') }}" data-toggle="tooltip" data-placement="top" title="新增部門">
                     <i class="fas fa-plus-circle u-margin-4"></i>
                 </a>
@@ -62,7 +71,7 @@
                     {{ method_field('DELETE') }}
                 </form>
             </div>
-        </div>
         @endif
+        </div>
     </div>
 </div>
