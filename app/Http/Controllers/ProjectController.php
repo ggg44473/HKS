@@ -249,7 +249,7 @@ class ProjectController extends Controller
      */
     public function search(Project $project)
     {
-        $p_members = $project->members->toArray();
+        $p_members = $project->users->toArray();
         $p_member_ids = array_column($p_members, 'id');
 
         $c_members = $project->company->users->toArray();

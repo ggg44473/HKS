@@ -32,8 +32,8 @@
             </form>
         </div>
         <div class="btn-group col mb-2">
-            <a href="{{route('user.okr',$owner->id)}}" class="btn btn-success " >OKR</a>
-            <button class="btn btn-light" disabled>Action</button>
+            <a href="{{route('user.okr',$owner->id)}}" class="btn btn-light border " >OKR</a>
+            <button class="btn btn-success" disabled>Action</button>
         </div>
     </div>
     <div class="col-12">

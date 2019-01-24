@@ -22,6 +22,7 @@ window.Vue = require('vue');
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 // Vue.component('search-component', require('./components/SearchComponent.vue').default);
 Vue.component('search-component', require('./components/MultiSelectComponent.vue').default);
+Vue.component('search-only-component', require('./components/ObjectTypeComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

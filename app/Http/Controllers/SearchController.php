@@ -29,7 +29,6 @@ class SearchController extends Controller
                 $like = '%' . $search . '%';
 
                 $usersBuilder->where(function ($query) use ($like) {
-
                     $query->where('name', 'like', $like)
                         ->orWhere('email', 'like', $like);
                 });

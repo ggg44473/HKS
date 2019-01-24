@@ -3,6 +3,13 @@
         <label for="action_title">Action 具體作為</label>
         <input type="text" class="form-control" name="act_title" id="action_title" value="{{ $action ? $action->title:old('act_title')  }}">
     </div>
+    <div class="form-group col-md">
+        @if($action)
+            <search-only-component api={{ route('actions.search', $action->objective) }}></search-only-component>
+        @else
+            <search-only-component api={{ route('actions.search', $objective) }}></search-only-component>
+        @endif
+    </div>
     <div class="form-group col-md-2">
         <label for="started_at">起始日</label>
         <input autocomplete="off" class="form-control" name="st_date" id="started_at" value="{{  $action ? $action->started_at:old('st_date') }}">
