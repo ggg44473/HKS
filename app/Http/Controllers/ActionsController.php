@@ -51,7 +51,10 @@ class ActionsController extends Controller
         $attr['finished_at'] = $request->input('fin_date');
 
         $action = Action::create($attr);
-
+        if ($request->input('assignee')) {
+            $attrd['user_id'] = $request->input('assignee');
+            $action->update($attrd);
+        }
         if ($request->hasFile('files')) {
             $action->addRelatedFiles();
         }
@@ -99,6 +102,11 @@ class ActionsController extends Controller
 
     public function update(ActionRequest $request, Action $action)
     {
+        
+        if ($request->input('assignee')){
+            $attr['user_id'] = $request->input('assignee');
+        }
+
         $attr['related_kr'] = $request->input('krs_id');
         $attr['priority'] = $request->input('priority');
         $attr['title'] = $request->input('act_title');
@@ -111,7 +119,7 @@ class ActionsController extends Controller
         if ($request->hasFile('files')) {
             $action->addRelatedFiles();
         }
-        
+
         $objective = $action->objective;
         return redirect()->to($objective->model->getOKrRoute() . '#oid-' . $objective->id);
     }
@@ -137,7 +145,7 @@ class ActionsController extends Controller
     }
 
     public function search(Objective $objective)
-    { 
+    {
         $results = $objective->model->users;
         return response()->json($results);
     }
