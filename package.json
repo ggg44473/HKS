@@ -24,7 +24,6 @@
         "vue-template-compiler": "^2.5.21"
     },
     "dependencies": {
-        "fullcalendar": "^3.10.0",
         "vue-search-select": "^2.7.1"
     }
 }
