@@ -9,7 +9,7 @@ use App\Interfaces\HasObjectiveInterface;
 use App\Traits\HasInvitationTrait;
 use App\Traits\HasFollowTrait;
 
-class Company extends Model implements HasObjectiveInterface
+class Company extends Model implements HasObjectiveInterface, HasInvitationInterface
 {
     use HasObjectiveTrait, HasAvatarTrait, HasInvitationTrait, HasFollowTrait;
 
@@ -40,5 +40,10 @@ class Company extends Model implements HasObjectiveInterface
     public function admin()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function getInviteUrl()
+    {
+        return route('company.index');
     }
 }
