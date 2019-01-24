@@ -69,6 +69,8 @@ Route::get('actions/{action}/show', 'ActionsController@show')->where('action', '
 Route::delete('actions/{action}/destroy', 'ActionsController@destroy')->name('actions.destroy');
 //刪除Action的檔案
 Route::get('actions/{action}/media/{media}/destroy', 'ActionsController@destroyFile')->name('actions.destroyFile');
+//回傳search
+Route::get('objective/{objective}/search', 'ActionsController@search')->name('actions.search');
 
 ###### 組織OKR ######
 //組織OKR首頁

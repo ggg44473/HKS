@@ -33,6 +33,7 @@ class ActionsController extends Controller
         if ($keyresults->toArray() == null) return redirect()->route('user.okr', auth()->user()->id);
         $data = [
             'owner' => $user,
+            'objective' => $objective,
             'keyresults' => $keyresults,
             'priorities' => $priorities,
         ];
@@ -143,5 +144,11 @@ class ActionsController extends Controller
         $act->isdone = 'true';
         $act->save();
         return redirect()->back();
+    }
+
+    public function search(Objective $objective)
+    { 
+        $results = $objective->model->users;
+        return response()->json($results);
     }
 }
