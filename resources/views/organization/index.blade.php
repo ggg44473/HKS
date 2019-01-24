@@ -18,8 +18,7 @@
             <a class="nav-link" href="{{ route('company.okr') }}">OKRs</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" id="member-tab" data-toggle="tab" href="#member" role="tab" aria-controls="member"
-                aria-selected="false">成員</a>
+            <a class="nav-link" id="member-tab" href="{{ route('company.member') }}">成員</a>
         </li>
     </ul>
     <div class="tab-content" id="myTabContent">

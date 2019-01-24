@@ -186,7 +186,7 @@ class DepartmentController extends Controller
             'members'=>$department->users,
         ];
 
-        return view('organization.department.member', $data);
+        return view('organization.department.memberSetting', $data);
     }
 
     /**
