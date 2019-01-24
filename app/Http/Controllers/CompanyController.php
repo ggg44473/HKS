@@ -56,10 +56,20 @@ class CompanyController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $company = Company::where('id', auth()->user()->company_id)->first();
+        $company['okrs'];
+        if ($company != null) {
+            $company['okrs'] = $company->getOkrsWithPage($request)['okrs'];
+        }
+
         $departments = Department::where(['company_id' => auth()->user()->company_id, 'parent_department_id' => null])->get();
+        foreach ($departments as $department) {
+            $department['okrs'];
+            if($department != null) $department['okrs'] = $department->getOkrsWithPage($request)['okrs'];
+        }
+
         $invitations = auth()->user()->invitation->where('model_type', Company::class);
 
         $data = [
