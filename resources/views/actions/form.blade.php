@@ -5,9 +5,9 @@
     </div>
     <div class="form-group col-md">
         @if($action)
-            <search-only-component api={{ route('actions.search', $action->objective) }}></search-only-component>
+            <search-only-component api={{ route('actions.user.search', $action->objective) }}></search-only-component>
         @else
-            <search-only-component api={{ route('actions.search', $objective) }}></search-only-component>
+            <search-only-component api={{ route('actions.user.search', $objective) }}></search-only-component>
         @endif
     </div>
     <div class="form-group col-md-2">
