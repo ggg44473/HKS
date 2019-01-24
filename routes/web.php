@@ -176,4 +176,5 @@ Route::get('follow/{type}/{owner}', 'FollowController@follow')->name('follow');
 //取消追蹤
 Route::get('follow/{type}/{owner}/cancel', 'FollowController@cancel')->name('follow.cancel');
 
-###### 通知 ######
+###### 留言 ######
+Route::post('comments/{comment}', 'CommentsReplyController@reply');

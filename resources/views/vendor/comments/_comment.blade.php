@@ -64,7 +64,10 @@
             <div class="modal fade" id="reply-modal-{{ $comment->id }}" tabindex="-1" role="dialog">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
-                        <form method="POST" action="{{ url('comments/' . $comment->id) }}">
+                        @php
+                            $replyTo = isset($reply) ? $comment->parent->id : $comment->id;
+                        @endphp
+                        <form method="POST" action="{{ url('comments/' . $replyTo) }}">
                             @csrf
                             <div class="modal-header">
                                 <h5 class="modal-title">回覆</h5>
