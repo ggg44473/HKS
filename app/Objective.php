@@ -91,4 +91,16 @@ class Objective extends Model implements HasNotifiableInterface
     {
         return 'Objective ' . $this->title;
     }
+
+    public function getScore()
+    {
+        $sum = 0;
+        $totalWeight = 0;
+        foreach ($this->keyresults as $kr) {
+            $totalWeight += $kr->weight;
+            $sum += $kr->accomplishRate() * $kr->weight;
+        }
+        if ($totalWeight > 0) return round($sum / $totalWeight, 0);
+        else return 0;
+    }
 }
