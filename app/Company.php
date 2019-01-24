@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Traits\HasObjectiveTrait;
 use App\Traits\HasAvatarTrait;
 use App\Interfaces\HasObjectiveInterface;
+use App\Interfaces\HasInvitationInterface;
 use App\Traits\HasInvitationTrait;
 use App\Traits\HasFollowTrait;
 
