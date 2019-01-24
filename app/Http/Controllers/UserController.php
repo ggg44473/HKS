@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\ObjectiveRequest;
 use App\User;
+use App\Action;
 use App\Objective;
 use App\Charts\SampleChart;
 use Carbon\Carbon;
@@ -82,6 +83,7 @@ class UserController extends Controller
             'order' => $request->input('order', '')
         ]);
 
+        $invitations = auth()->user()->invitation->where('model_type', Action::class);
         $data = [
             'owner' => $user,
             'actions' => $pages,
@@ -92,6 +94,7 @@ class UserController extends Controller
             'state' => $request->input('state', ''),
             'isdone' => $request->input('isdone', ''),
             'order' => $request->input('order', ''),
+            'invitations' => $invitations,
         ];
         return view('user.action', $data);
     }

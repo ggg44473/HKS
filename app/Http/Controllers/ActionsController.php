@@ -51,9 +51,8 @@ class ActionsController extends Controller
         $attr['finished_at'] = $request->input('fin_date');
 
         $action = Action::create($attr);
-        if ($request->input('assignee')) {
-            $attrd['user_id'] = $request->input('assignee');
-            $action->update($attrd);
+        if ($request->input('invite')) {
+            $action->sendInvitation($request);
         }
         if ($request->hasFile('files')) {
             $action->addRelatedFiles();
@@ -103,8 +102,8 @@ class ActionsController extends Controller
     public function update(ActionRequest $request, Action $action)
     {
         
-        if ($request->input('assignee')){
-            $attr['user_id'] = $request->input('assignee');
+        if ($request->input('invite') && $request->input('invite') != $action->user_id){
+            $action->sendInvitation($request);
         }
 
         $attr['related_kr'] = $request->input('krs_id');
@@ -149,4 +148,35 @@ class ActionsController extends Controller
         $results = $objective->model->users;
         return response()->json($results);
     }
+
+
+    /**
+     * 拒絕邀請
+     *
+     * @param  \App\Project $project
+     * @param  \App\User $member
+     * @return \Illuminate\Http\Response
+     */
+    public function rejectInvite(Action $action, User $member)
+    {
+        $action->deleteInvitation($member);
+        return redirect()->route('user.action',$member->id);
+    }
+
+    /**
+     * 同意邀請
+     *
+     * @param  \App\Project $project
+     * @param  \App\User $member
+     * @return \Illuminate\Http\Response
+     */
+    public function agreeInvite(Action $action, User $member)
+    {
+        $action->deleteInvitation($member);
+        $attr['user_id'] = $member->id;
+        $action->update($attr);
+        return redirect()->route('user.action',$member->id);
+    }
+
+
 }

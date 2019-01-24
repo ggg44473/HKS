@@ -9,10 +9,12 @@ use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\MediaLibrary\Models\Media;
 use App\Interfaces\HasNotifiableInterface;
+use App\Traits\HasInvitationTrait;
+
 
 class Action extends Model implements HasMedia, HasNotifiableInterface
 {
-    use Commentable, HasMediaTrait;
+    use Commentable, HasMediaTrait, HasInvitationTrait;
 
     protected $fillable = [
         'user_id',

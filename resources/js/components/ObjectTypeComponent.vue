@@ -10,7 +10,7 @@
       placeholder="請選擇執行人"
       @searchchange="searchMember"
     ></model-list-select>
-    <input type="hidden" name="assignee" v-bind:value="selectedMember.id">
+    <input type="hidden" name="invite" v-bind:value="selectedMember.id">
   </div>
 </template>
 
