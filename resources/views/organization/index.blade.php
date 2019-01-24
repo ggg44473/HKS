@@ -1,10 +1,8 @@
 @extends('layouts.master')
 @section('script')
 <script src="{{ asset('js/tooltip.js') }}" defer></script>
-<script src="{{ asset('js/avatar.js') }}" defer></script>
 <script src="{{ asset('js/circle-progress.js') }}" defer></script>
 <script src="{{ asset('js/circleProgress.js') }}" defer></script>
-<script src="{{ asset('js/organization.js') }}" defer></script>
 @endsection
 @section('title','組織OKR')
 @section('content')
@@ -17,8 +15,7 @@
                 aria-selected="true">子部門</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" id="okr-tab" data-toggle="tab" href="#okr" role="tab" aria-controls="okr"
-                aria-selected="false">OKRs</a>
+            <a class="nav-link" href="{{ route('company.okr') }}">OKRs</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" id="member-tab" data-toggle="tab" href="#member" role="tab" aria-controls="member"
@@ -39,10 +36,6 @@
                 @endforeach
             </div>
         </div>
-        <div class="tab-pane fade" id="okr" role="tabpanel" aria-labelledby="profile-tab">
-            
-        </div>
-        <div class="tab-pane fade" id="member" role="tabpanel" aria-labelledby="contact-tab">...</div>
     </div>
 
     @else
