@@ -71,6 +71,10 @@ Route::delete('actions/{action}/destroy', 'ActionsController@destroy')->name('ac
 Route::get('actions/{action}/media/{media}/destroy', 'ActionsController@destroyFile')->name('actions.destroyFile');
 //回傳search
 Route::get('objective/{objective}/action/user/search', 'ActionsController@search')->name('actions.user.search');
+//拒絕邀請
+Route::get('actions/{action}/member/{member}/invite/reject', 'ActionsController@rejectInvite')->name('actions.member.invite.reject');
+//同意邀請
+Route::get('actions/{action}/member/{member}/invite/agree', 'ActionsController@agreeInvite')->name('actions.member.invite.agree');
 
 ###### 組織OKR ######
 //組織OKR首頁

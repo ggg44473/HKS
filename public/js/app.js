@@ -1917,9 +1917,6 @@ __webpack_require__.r(__webpack_exports__);
     searchMember: function searchMember() {
       var _this = this;
 
-      // this.selectedMember = this.oldAssignee
-      console.log(this.oldAssignee);
-
       if (this.memberList.length === 0) {
         axios.get(this.api).then(function (response) {
           _this.memberList = response.data;
@@ -41024,7 +41021,7 @@ var render = function() {
       }),
       _vm._v(" "),
       _c("input", {
-        attrs: { type: "hidden", name: "assignee" },
+        attrs: { type: "hidden", name: "invite" },
         domProps: { value: _vm.selectedMember.id }
       })
     ],
@@ -56068,8 +56065,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/apple/LaravelProject/HKS/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/apple/LaravelProject/HKS/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\www\sites\HKS\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\www\sites\HKS\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

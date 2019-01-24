@@ -1,4 +1,9 @@
 <div class="container">
+    
+    @foreach ($invitations as $invitation)
+    @include('actions.invitation')
+    @endforeach
+
     <div class="row m-3">
         @if ( auth()->user() == $owner)
         <div class="col-md-12 font-weight-light">
@@ -32,7 +37,7 @@
             </form>
         </div>
         <div class="btn-group col mb-2">
-            <a href="{{route('user.okr',$owner->id)}}" class="btn btn-light border " >OKR</a>
+            <a href="{{route('user.okr',$owner->id)}}" class="btn btn-light border ">OKR</a>
             <button class="btn btn-success" disabled>Action</button>
         </div>
     </div>
