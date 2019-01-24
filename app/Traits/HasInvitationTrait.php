@@ -4,6 +4,9 @@ namespace App\Traits;
 
 use App\Invitation;
 use App\ProjectUser;
+use App\User;
+use Notification;
+use App\Notifications\InviteNotification;
 
 trait HasInvitationTrait
 {
@@ -23,7 +26,8 @@ trait HasInvitationTrait
             $attr['model_id'] = $this->id;
             $attr['model_type'] = get_class($this);
             if (Invitation::where($attr)->first() == null) {
-                Invitation::create($attr);
+                $invitation = Invitation::create($attr);
+                Notification::send(User::findOrFail($userId), new InviteNotification($invitation));
             }
         }
     }

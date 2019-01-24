@@ -11,15 +11,15 @@ class InviteNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    private $details;
+    private $invitation;
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($details)
+    public function __construct($invitation)
     {
-        $this->details = $details;
+        $this->invitation = $invitation;
     }
 
     /**
@@ -41,11 +41,15 @@ class InviteNotification extends Notification implements ShouldQueue
      */
     public function toMail($notifiable)
     {
+        $userName = $this->invitation->user->name;
+        $modelType = substr($this->invitation->model_type, 4);
+        $model = $this->invitation->model;
+
         return (new MailMessage)
-            ->greeting($this->details['greeting'])
-            ->line($this->details['body'])
-            ->action($this->details['actionText'], $this->details['actionURL'])
-            ->line($this->details['thanks']);
+            ->greeting('Dear ' . $userName)
+            ->line('You have been invited into ' . $modelType . ' ' . $model->name)
+            ->action('Go to see the invitation', $model->getInviteUrl())
+            ->line('You care your goals, we care you.');
     }
 
     /**

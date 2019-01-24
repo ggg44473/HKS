@@ -9,7 +9,7 @@ use App\Interfaces\HasObjectiveInterface;
 use App\Traits\HasInvitationTrait;
 use App\Traits\HasFollowTrait;
 
-class Project extends Model implements HasObjectiveInterface
+class Project extends Model implements HasObjectiveInterface, HasInvitationInterface
 {
     use HasObjectiveTrait, HasAvatarTrait, HasInvitationTrait, HasFollowTrait;
 
@@ -45,5 +45,10 @@ class Project extends Model implements HasObjectiveInterface
     public function getNotifiableUser()
     {
         return $this->admin;
+    }
+
+    public function getInviteUrl()
+    {
+        return route('project');
     }
 }
