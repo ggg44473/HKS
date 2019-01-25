@@ -9,10 +9,11 @@ use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\MediaLibrary\Models\Media;
 use App\Interfaces\HasNotifiableInterface;
+use App\Interfaces\HasInvitationInterface;
 use App\Traits\HasInvitationTrait;
 
 
-class Action extends Model implements HasMedia, HasNotifiableInterface
+class Action extends Model implements HasMedia, HasNotifiableInterface, HasInvitationInterface
 {
     use Commentable, HasMediaTrait, HasInvitationTrait;
 
@@ -101,8 +102,8 @@ class Action extends Model implements HasMedia, HasNotifiableInterface
         return 'Action ' . $this->title;
     }
 
-    public function getInviteUrl()
+    public function getInviteUrl($userId)
     {
-        return route('user.action',auth()->user()->id);
+        return route('user.action', $userId);
     }
 }

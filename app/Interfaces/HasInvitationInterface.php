@@ -4,5 +4,5 @@ namespace App\Interfaces;
 
 interface HasInvitationInterface
 {
-    public function getInviteUrl();
+    public function getInviteUrl($userId);
 }

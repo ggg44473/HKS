@@ -43,7 +43,7 @@ class Company extends Model implements HasObjectiveInterface, HasInvitationInter
         return $this->belongsTo(User::class);
     }
 
-    public function getInviteUrl()
+    public function getInviteUrl($userId)
     {
         return route('company.index');
     }
