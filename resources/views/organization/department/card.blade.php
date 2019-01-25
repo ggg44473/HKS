@@ -33,7 +33,7 @@
                             <span class="text-black-50" style="font-size:10px;">{{ count($department->children) }} 子部門</span>
                         </a>
                     @endif
-                    <a href="#" class="pl-2">
+                    <a href="{{ route('department.member', $department) }}" class="pl-2">
                         <span class="text-black-50" style="font-size:10px;">{{ count($department->users) }} 位成員</span>
                     </a>
                 </div>
