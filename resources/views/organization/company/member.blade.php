@@ -82,13 +82,9 @@
                                 <input name="position{{ $member->id }}" type="text" class="form-control" value="{{ $member->position }}">
                             </td>
                             <td data-th="設定">
-                                <a href="#" onclick="document.getElementById('memberDelete{{ $member->id }}').submit()"><i
-                                        class="fas fa-trash-alt text-danger"></i></a href="#">
-                                <form name="memberDelete{{ $member->id }}" method="POST" id="memberDelete{{ $member->id }}"
-                                    action="{{ route('company.member.destroy', $member ) }}">
-                                    @csrf
-                                    {{ method_field('PATCH') }}
-                                </form>
+                                <a href="#" onclick="document.getElementById('memberDelete{{ $member->id }}').submit()">
+                                    <i class="fas fa-trash-alt text-danger"></i>
+                                </a href="#">
                             </td>
                         </tr>
                         @endforeach
@@ -100,6 +96,12 @@
                     </div>
                 </div>
             </form>
+            @foreach($members as $member)
+            <form name="memberDelete{{ $member->id }}" method="POST" id="memberDelete{{ $member->id }}" action="{{ route('company.member.destroy', $member ) }}">
+                @csrf
+                {{ method_field('PATCH') }}
+            </form>
+            @endforeach
         </div>
     </div>
     <div class="row justify-content-md-center">
@@ -124,8 +126,9 @@
                         <td data-th="姓名">{{ $member->name }}</td>
                         <td data-th="信箱">{{ $member->email }}</td>
                         <td data-th="設定">
-                            <a href="#" onclick="document.getElementById('memberDelete{{ $member->id }}').submit()"><i
-                                    class="fas fa-trash-alt text-danger"></i></a href="#">
+                            <a href="#" onclick="document.getElementById('memberDelete{{ $member->id }}').submit()">
+                                <i class="fas fa-trash-alt text-danger"></i>
+                            </a href="#">
                             <form name="memberDelete{{ $member->id }}" method="POST" id="memberDelete{{ $member->id }}"
                                 action="{{ route('company.member.invite.destroy', [$company, $member]) }}">
                                 @csrf

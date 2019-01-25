@@ -4,7 +4,7 @@ use Faker\Generator as Faker;
 
 $factory->define(App\Action::class, function (Faker $faker) {
     return [
-        'user_id'=> $faker->numberBetween($min = 1, $max = 200),
+        'user_id'=> $faker->numberBetween($min = 1, $max = 120),
         'related_kr'=>$faker->numberBetween($min = 1, $max = 800),
         'priority' => $faker->numberBetween($min = 1, $max = 5),
         'title' => $faker->realText($maxNbChars = 30),

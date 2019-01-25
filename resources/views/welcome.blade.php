@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -18,7 +19,8 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
 
     <!-- Icon -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/"
+        crossorigin="anonymous">
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -27,19 +29,21 @@
     <link href="{{ asset('css/welcome.css') }}" rel="stylesheet">
 
 </head>
+
 <body onload="moveScol()" onunload="getScrollPosition()">
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-dark navbar-laravel bg-primary">
-            <!-- LOGO --> 
+            <!-- LOGO -->
             <a class="navbar-brand font-weight-bold text-white" href="{{ url('/') }}">
-                <img class="d-inline-block align-top mr-1" width="30" height="30" src="{{ asset('/img/logo/white.svg') }}" alt=""> Goal Care
+                <img class="d-inline-block align-top mr-1" width="30" height="30" src="{{ asset('/img/logo/white.svg') }}"
+                    alt=""> Goal Care
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarToggler">
                 <!-- Right Side Of Navbar -->
-                <div class="navbar-nav nav-pills ml-auto mr-4"> 
+                <div class="navbar-nav nav-pills ml-auto mr-4">
                     <a class="nav-item ml-1 mr-1 nav-link" href="#about">關於我們</a>
                     <a class="nav-item ml-1 mr-1 nav-link" href="#serve">服務項目</a>
                     <a class="nav-item ml-1 mr-1 nav-link" href="#customer">平台客戶</a>
@@ -71,10 +75,11 @@
                                 <li>10 Emails</li>
                                 <li>10 Domains</li>
                                 <li>1GB Bandwidth</li>
-                                <li class="grey price-bottom"><a href="{{ route('register') }}" class="btn btn-primary">Sign Up</a></li>
+                                <li class="grey price-bottom"><a href="{{ route('register') }}" class="btn btn-primary">Sign
+                                        Up</a></li>
                             </ul>
                         </div>
-                                        
+
                         <div class="col-md-4 mb-5">
                             <ul class="price">
                                 <li class="header">Pro</li>
@@ -83,10 +88,11 @@
                                 <li>25 Emails</li>
                                 <li>25 Domains</li>
                                 <li>2GB Bandwidth</li>
-                                <li class="grey price-bottom"><a href="{{ route('register') }}" class="btn btn-primary">Sign Up</a></li>
+                                <li class="grey price-bottom"><a href="{{ route('register') }}" class="btn btn-primary">Sign
+                                        Up</a></li>
                             </ul>
                         </div>
-                                        
+
                         <div class="col-md-4 mb-5">
                             <ul class="price">
                                 <li class="header">Premium</li>
@@ -95,7 +101,8 @@
                                 <li>50 Emails</li>
                                 <li>50 Domains</li>
                                 <li>5GB Bandwidth</li>
-                                <li class="grey price-bottom"><a href="{{ route('register') }}" class="btn btn-primary">Sign Up</a></li>
+                                <li class="grey price-bottom"><a href="{{ route('register') }}" class="btn btn-primary">Sign
+                                        Up</a></li>
                             </ul>
                         </div>
                     </div>
@@ -104,7 +111,9 @@
         </div>
         <footer class="footer bg-dark">
             <div class="container">
-                <p class="final-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores ea, voluptate accusamus pariatur quidem est odio saepe itaque. Debitis cumque voluptatibus nihil quibusdam nisi, consequatur odit qui ratione excepturi dolore.</p>
+                <p class="final-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores ea,
+                    voluptate accusamus pariatur quidem est odio saepe itaque. Debitis cumque voluptatibus nihil
+                    quibusdam nisi, consequatur odit qui ratione excepturi dolore.</p>
                 <p class="copyright">Copyright © 2019 HKS</p>
             </div>
         </footer>
@@ -124,4 +133,5 @@
         </div>
     </div>
 </body>
+
 </html>
