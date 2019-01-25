@@ -60,7 +60,7 @@ class CompanyController extends Controller
     public function index(Request $request)
     {
         $company = Company::where('id', auth()->user()->company_id)->first();
-        $company['okrs'] = $company? $company['okrs'] = $company->getOkrsWithPage($request)['okrs'] : null;
+        $company['okrs'] = $company? $company->getOkrsWithPage($request)['okrs'] : null;
 
         $departments = Department::where(['company_id' => auth()->user()->company_id, 'parent_department_id' => null])->get();
         foreach ($departments as $department) {
@@ -308,7 +308,7 @@ class CompanyController extends Controller
     public function member(Request $request)
     {
         $company = Company::where('id', auth()->user()->company_id)->first();
-        $company['okrs'] = $company? $company['okrs'] = $company->getOkrsWithPage($request)['okrs'] : null;
+        $company['okrs'] = $company? $company->getOkrsWithPage($request)['okrs'] : null;
 
         $departments = Department::where(['company_id' => auth()->user()->company_id, 'parent_department_id' => null])->get();
         foreach ($departments as $department) {

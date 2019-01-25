@@ -14,7 +14,7 @@
                         <img src="{{ $company->users[$i]->getAvatar() }}" alt="" class="avatar-xs">
                     </a>
                     @if (count($company->users)>5 && $i == 2)
-                    <a class="d-inline-block pt-2" href="{{ route('company.member') }}" title="與其他 {{ count($company->users)-3 }} 位成員">
+                    <a class="d-inline-block pt-2" href="{{ route('company.member') }}" data-toggle="tooltip" data-placement="bottom" title="與其他 {{ count($company->users)-3 }} 位成員">
                         <img src="{{ asset('img/icon/more/gray.svg') }}" alt="" class="avatar-xs">
                     </a>
                     @endif

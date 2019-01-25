@@ -56,9 +56,18 @@
                 </form>
             </div>
         </div>
-        @foreach($company->okrs as $okr)
-            @include('okrs.okr', ['okr' => $okr, 'admin' => $company->user_id])
-        @endforeach
+        @if ($company->okrs)
+            @foreach($company->okrs as $okr)
+                @include('okrs.okr', ['okr' => $okr, 'admin' => $company->user_id])
+            @endforeach
+        @else
+            <div id="departmentCard" class="row justify-content-md-center u-mt-16">
+                <div class="alert alert-warning alert-dismissible fade show u-mt-32" role="alert">
+                    <strong><i class="fas fa-exclamation-circle pl-2 pr-2"></i></strong>
+                    當前期間尚未建立OKR !!
+                </div>
+            </div>
+        @endif
     </div>
     @if (auth()->user()->id == $company->user_id)
         <a href="#" data-toggle="modal" data-target="#objective" class="newObjective"><img src="{{ asset('img/icon/add/lightgreen.svg') }}" alt=""></a>        

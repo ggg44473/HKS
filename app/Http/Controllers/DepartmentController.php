@@ -28,11 +28,11 @@ class DepartmentController extends Controller
     public function listOKR(Request $request, Department $department)
     {
         $okrsWithPage = $department->getOkrsWithPage($request);
+        $department['okrs'] = $department->getOkrsWithPage($request)['okrs'];
 
         $data = [
             'user' => auth()->user(),
-            'owner' => $department,
-            'okrs' => $okrsWithPage['okrs'],
+            'department' => $department,
             'pageInfo' => $okrsWithPage['pageInfo'],
             'st_date' => $request->input('st_date', ''),
             'fin_date' => $request->input('fin_date', ''),
@@ -53,9 +53,10 @@ class DepartmentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Department $department)
+    public function index(Request $request, Department $department)
     {
         $data['parent'] = $department->parent;
+        $department['okrs'] = $department->getOkrsWithPage($request)['okrs'];
         $data['department'] = $department;
         $data['children'] = $department->children;
             
@@ -249,5 +250,21 @@ class DepartmentController extends Controller
         $member->update(['department_id'=>null, 'position'=>null]);
 
         return redirect()->route('department.member.setting', $department);
+    }
+
+    /**
+     * Display a listing of the member.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function member(Request $request, Department $department)
+    {
+        $department['okrs'] = $department->getOkrsWithPage($request)['okrs'];
+
+        $data = [
+            'department' => $department,
+        ];
+
+        return view('organization.department.member', $data);
     }
 }
