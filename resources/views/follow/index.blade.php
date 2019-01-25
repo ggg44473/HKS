@@ -24,7 +24,7 @@
                                 <img src="{{ $follow->model->getAvatar() }}" alt="" class="avatar text-center projectAvatar">
                                 <span class="u-margin-8 text-black-50 font-weight-bold" style="font-size: 18px">{{
                                         $follow->model->name }}</span>
-                                @if ($follow->model->follower->first())
+                                @if ($follow->model->following())
                                 <a href="{{ route('follow.cancel', [get_class($follow->model), $follow->model]) }}" class="text-warning">
                                     <i class="fas fa-star" style="font-size: 24px;"></i>
                                 </a>

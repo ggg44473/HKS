@@ -27,7 +27,7 @@
                 <img class="avatar u-ml-8 u-mr-8" src="{{ $owner->getAvatar() }}">
                 <h4 class="list-inline-item u-ml-8 text-black-50">{{ $owner->name }}</h4>
             </a>
-            @if ($owner->follower->first())
+            @if ($owner->following())
             <a href="{{ route('follow.cancel', [get_class($owner), $owner]) }}" class="text-warning">
                 <i class="fas fa-star" style="font-size: 24px;"></i>
             </a>

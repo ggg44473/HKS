@@ -42,7 +42,7 @@
     <div class="col-md-2 u-pt-16">
         <div class="row" style="height: 95px;">
             <div class="col-12 text-right">
-                @if ($department->follower->first())
+                @if ($department->following())
                 <a href="{{ route('follow.cancel', [get_class($department), $department]) }}" class="text-warning" data-toggle="tooltip" data-placement="right" title="取消追蹤">
                     <i class="fas fa-star" style="font-size: 24px;"></i>
                 </a>

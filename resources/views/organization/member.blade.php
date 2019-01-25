@@ -50,7 +50,7 @@
                     @foreach($members as $member)
                     <tr class="text-center">
                         <td data-th="追蹤">
-                            @if ($member->follower->first())
+                            @if ($member->following())
                             <a href="{{ route('follow.cancel', [get_class($member), $member]) }}" class="text-warning">
                                 <i class="fas fa-star" style="font-size: 24px;"></i>
                             </a>
