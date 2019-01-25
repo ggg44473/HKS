@@ -25,12 +25,12 @@ class ProjectController extends Controller
      */
     public function index(Request $request)
     {
-        $projects = Project::where('isdone', false)->get();
+        $projects = auth()->user()->projects->where('isdone', false);
         foreach ($projects as $project) {
             $project['okrs'] = $project->getOkrsWithPage($request)['okrs'];
         }
 
-        $projectDone = Project::where('isdone', true)->get();
+        $projectDone = auth()->user()->projects->where('isdone', true);
         foreach ($projectDone as $project) {
             $project['okrs'] = $project->getOkrsWithPage($request)['okrs'];
         }
