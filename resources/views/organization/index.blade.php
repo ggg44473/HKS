@@ -9,7 +9,7 @@
 @section('stylesheet')
 <link href="{{ asset('css/dragula.css') }}" rel="stylesheet" />    
 @endsection
-@section('title','組織OKR')
+@section('title','組織架構')
 @section('content')
 <div class="container">
     @if (auth()->user()->company_id)
@@ -36,17 +36,16 @@
                     </div>
                 @endif
                 @foreach ($departments as $department)
-                    @include('organization.department.show', ['show'=>true])
+                    @include('organization.department.card')
                 @endforeach
             </div>
         </div>
     </div>
-
     @else
-    @foreach ($invitations as $invitation)
-    @include('organization.company.invitation')
-    @endforeach
-    @include('organization.company.create')
+        @foreach ($invitations as $invitation)
+            @include('organization.company.invitation')
+        @endforeach
+        @include('organization.company.create')
     @endif
 </div>
 @endsection

@@ -126,8 +126,10 @@ Route::delete('organization/department/{department}/destroy', 'DepartmentControl
 Route::get('organization/department/{department}/okr', 'DepartmentController@listOKR')->name('department.okr');
 //部門新增O
 Route::post('organization/department/{department}/objective/store', 'DepartmentController@storeObjective')->name('department.objective.store');
+//部門成員頁面
+Route::get('organization/department/{department}/member', 'DepartmentController@member')->name('department.member');
 //部門成員設定頁面
-Route::get('organization/department/{department}/member', 'DepartmentController@memberSetting')->name('department.member.setting');
+Route::get('organization/department/{department}/member/setting', 'DepartmentController@memberSetting')->name('department.member.setting');
 //新增部門成員
 Route::post('organization/department/{department}/member/store', 'DepartmentController@storeMember')->name('department.member.store');
 //更新部門成員

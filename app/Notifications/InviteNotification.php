@@ -42,13 +42,15 @@ class InviteNotification extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         $userName = $this->invitation->user->name;
+        $userId = $this->invitation->user->id;
         $modelType = substr($this->invitation->model_type, 4);
         $model = $this->invitation->model;
+        $modelName = $model->name ?? $model->title;
 
         return (new MailMessage)
             ->greeting('Dear ' . $userName)
-            ->line('You have been invited into ' . $modelType . ' ' . $model->name)
-            ->action('Go to see the invitation', $model->getInviteUrl())
+            ->line('You have been invited into ' . $modelType . ' ' . $modelName)
+            ->action('Go to see the invitation', $model->getInviteUrl($userId))
             ->line('You care your goals, we care you.');
     }
 

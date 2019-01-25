@@ -22,6 +22,18 @@
     </ul>
     <div class="row justify-content-md-center">
         <div class="col-sm-10 mt-4">
+            <div class="float-right mb-2">
+                <form action="{{route('company.member')}}" class="form-inline search-form">
+                    <select name="order" class="form-control input-sm mr-2 ml-2">
+                        <option value="name_asc">姓名排序</option>
+                        <option value="email_asc">信箱排序</option>
+                        <option value="department_id_asc">部門度排序</option>
+                        <option value="position_asc">職稱排序</option>
+                    </select>
+                    <button type="submit" value="Submit" class="btn btn-primary">搜索</button>
+                </form>
+            </div>
+            {{ $members->links() }}
             <table class="rwd-table table">
                 <thead>
                     <tr class="bg-primary text-light text-center">
@@ -35,10 +47,10 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($company->users as $member)
+                    @foreach($members as $member)
                     <tr class="text-center">
                         <td data-th="追蹤">
-                            @if ($member->follower->first())
+                            @if ($member->following())
                             <a href="{{ route('follow.cancel', [get_class($member), $member]) }}" class="text-warning">
                                 <i class="fas fa-star" style="font-size: 24px;"></i>
                             </a>

@@ -102,6 +102,8 @@ class UserController extends Controller
     public function storeObjective(ObjectiveRequest $request, User $user)
     {
         $objective = $user->addObjective($request);
+        ship($objective->id);
+        
         return redirect()->to(url()->previous() . '#oid-' . $objective->id);
     }
 
