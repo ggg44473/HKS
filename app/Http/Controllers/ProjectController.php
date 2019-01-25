@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Project;
 use App\Http\Requests\ObjectiveRequest;
 use App\User;
-use App\ProjectUser;
 use App\Invitation;
 
 class ProjectController extends Controller
@@ -69,7 +68,7 @@ class ProjectController extends Controller
 
         $project = Project::create($attr);
         $project->addAvatar($request);
-        ProjectUser::create(['project_id' => $project->id, 'user_id' => auth()->user()->id]);
+        $project->users()->attach(auth()->user());
 
         return redirect()->route('project');
     }
@@ -122,7 +121,7 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
-        ProjectUser::where('project_id', $project->id)->delete();
+        $project->users()->detach();
         $project->delete();
 
         return redirect('project');
@@ -236,7 +235,7 @@ class ProjectController extends Controller
     public function agreeInvite(Project $project, User $member)
     {
         $project->deleteInvitation($member);
-        ProjectUser::create(['project_id' => $project->id, 'user_id' => $member->id]);
+        $project->users()->attach($member);
 
         return redirect()->route('project');
     }
@@ -270,7 +269,7 @@ class ProjectController extends Controller
      */
     public function destroyMember(Project $project, User $member)
     {
-        ProjectUser::where([['project_id', $project->id], ['user_id', $member->id]])->delete();
+        $project->users()->detach($member);
 
         return redirect()->route('project.member.setting', $project);
     }

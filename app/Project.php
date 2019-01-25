@@ -30,7 +30,12 @@ class Project extends Model implements HasObjectiveInterface, HasInvitationInter
 
     public function users()
     {
-        return $this->belongsToMany(User::class);;
+        return $this->belongsToMany(User::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 
     public function company()
