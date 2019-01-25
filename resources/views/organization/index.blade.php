@@ -3,6 +3,11 @@
 <script src="{{ asset('js/tooltip.js') }}" defer></script>
 <script src="{{ asset('js/circle-progress.js') }}" defer></script>
 <script src="{{ asset('js/circleProgress.js') }}" defer></script>
+<script src="{{ asset('js/dragula.js') }}" defer></script>
+<script src="{{ asset('js/dragDrop.js') }}" defer></script>
+@endsection
+@section('stylesheet')
+<link href="{{ asset('css/dragula.css') }}" rel="stylesheet" />    
 @endsection
 @section('title','組織OKR')
 @section('content')
@@ -23,7 +28,7 @@
     </ul>
     <div class="tab-content" id="myTabContent">
         <div class="tab-pane fade show active" id="department" role="tabpanel" aria-labelledby="department-tab">
-            <div class="row justify-content-md-center u-mt-16">
+            <div id="departmentCard" class="row justify-content-md-center u-mt-16">
                 @if (count($departments) == 0)
                     <div class="alert alert-warning alert-dismissible fade show u-mt-32" role="alert">
                         <strong><i class="fas fa-exclamation-circle pl-2 pr-2"></i></strong>
