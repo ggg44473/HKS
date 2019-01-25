@@ -272,6 +272,12 @@ main{
     border-radius: 50%;
     object-fit: cover;
 }
+.avatar-md{
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+}
 .avatar-sm{
     width: 35px;
     height: 35px;

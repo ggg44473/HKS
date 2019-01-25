@@ -10,7 +10,7 @@
             @include('organization.department.show',['department'=>$department, 'show'=>false])
         </div>
         <hr/>
-        <div class="row justify-content-md-center u-mt-16">
+        <div class="row justify-content-md-center u-mt-16" id="items-list" class="moveable">
             @foreach ($children as $department)
                 @include('organization.department.show', ['show'=>true])
             @endforeach
