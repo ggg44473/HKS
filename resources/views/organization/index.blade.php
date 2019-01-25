@@ -1,7 +1,13 @@
 @extends('layouts.master')
 @section('script')
 <script src="{{ asset('js/tooltip.js') }}" defer></script>
-<script src="{{ asset('js/avatar.js') }}" defer></script>
+<script src="{{ asset('js/circle-progress.js') }}" defer></script>
+<script src="{{ asset('js/circleProgress.js') }}" defer></script>
+<script src="{{ asset('js/dragula.js') }}" defer></script>
+<script src="{{ asset('js/dragDrop.js') }}" defer></script>
+@endsection
+@section('stylesheet')
+<link href="{{ asset('css/dragula.css') }}" rel="stylesheet" />    
 @endsection
 @section('title','組織OKR')
 @section('content')
@@ -14,28 +20,27 @@
                 aria-selected="true">子部門</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
-                aria-selected="false">OKRs</a>
+            <a class="nav-link" href="{{ route('company.okr') }}">OKRs</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact"
-                aria-selected="false">成員</a>
+            <a class="nav-link" id="member-tab" href="{{ route('company.member') }}">成員</a>
         </li>
     </ul>
     <div class="tab-content" id="myTabContent">
         <div class="tab-pane fade show active" id="department" role="tabpanel" aria-labelledby="department-tab">
-            <div class="row justify-content-md-center u-mt-16">
+            <div id="departmentCard" class="row justify-content-md-center u-mt-16">
+                @if (count($departments) == 0)
+                    <div class="alert alert-warning alert-dismissible fade show u-mt-32" role="alert">
+                        <strong><i class="fas fa-exclamation-circle pl-2 pr-2"></i></strong>
+                        尚未建立子部門 !!
+                    </div>
+                @endif
                 @foreach ($departments as $department)
-                @include('organization.department.show', ['show'=>true])
+                    @include('organization.department.show', ['show'=>true])
                 @endforeach
             </div>
         </div>
-        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-            
-        </div>
-        <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
     </div>
-
 
     @else
     @foreach ($invitations as $invitation)

@@ -30,8 +30,8 @@
                 <label for="finished_at">完成日</label>
                 <input autocomplete="off" class="form-control" name="fin_date" id="finished_at" value="" required>
             </div>
-            <div class="col-md-12 text-right">
-            <button class="btn btn-primary " type="submit">新增</button>
+            <div class="col-md-12 text-right mb-4">
+                <button class="btn btn-primary " type="submit">新增</button>
             </div>
         </form>
     </div>

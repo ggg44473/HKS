@@ -29,12 +29,13 @@ class CompanyController extends Controller
     public function listOKR(Request $request)
     {
         $company = Company::where('id', auth()->user()->company_id)->first();
+        $company['okrs'] = $company? $company['okrs'] = $company->getOkrsWithPage($request)['okrs'] : null;
 
         $okrsWithPage = $company->getOkrsWithPage($request);
 
         $data = [
             'user' => auth()->user(),
-            'owner' => $company,
+            'company' => $company,
             'okrs' => $okrsWithPage['okrs'],
             'pageInfo' => $okrsWithPage['pageInfo'],
             'st_date' => $request->input('st_date', ''),
@@ -59,15 +60,11 @@ class CompanyController extends Controller
     public function index(Request $request)
     {
         $company = Company::where('id', auth()->user()->company_id)->first();
-        $company['okrs'];
-        if ($company != null) {
-            $company['okrs'] = $company->getOkrsWithPage($request)['okrs'];
-        }
+        $company['okrs'] = $company? $company['okrs'] = $company->getOkrsWithPage($request)['okrs'] : null;
 
         $departments = Department::where(['company_id' => auth()->user()->company_id, 'parent_department_id' => null])->get();
         foreach ($departments as $department) {
-            $department['okrs'];
-            if($department != null) $department['okrs'] = $department->getOkrsWithPage($request)['okrs'];
+            $department['okrs'] = $department ? $department->getOkrsWithPage($request)['okrs']:null;
         }
 
         $invitations = auth()->user()->invitation->where('model_type', Company::class);
@@ -183,7 +180,7 @@ class CompanyController extends Controller
             'departments' => Department::where('company_id', auth()->user()->company_id)->get(),
         ];
 
-        return view('organization.company.member', $data);
+        return view('organization.company.memberSetting', $data);
     }
 
     /**
@@ -301,5 +298,28 @@ class CompanyController extends Controller
         $member->update(['company_id' => null, 'department_id' => null, 'position' => null]);
 
         return redirect()->route('company.member.setting');
+    }
+
+    /**
+     * Display a listing of the member.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function member(Request $request)
+    {
+        $company = Company::where('id', auth()->user()->company_id)->first();
+        $company['okrs'] = $company? $company['okrs'] = $company->getOkrsWithPage($request)['okrs'] : null;
+
+        $departments = Department::where(['company_id' => auth()->user()->company_id, 'parent_department_id' => null])->get();
+        foreach ($departments as $department) {
+            $department['okrs'] = $department ? $department->getOkrsWithPage($request)['okrs']:null;
+        }
+
+        $data = [
+            'company' => $company,
+            'departments' => $departments,
+        ];
+
+        return view('organization.member', $data);
     }
 }

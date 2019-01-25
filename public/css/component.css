@@ -13,6 +13,7 @@
  * Card
  * OKR
  * Organization Page 
+ * Circle Progress
 **/
 
 /*-------------------------*/
@@ -271,6 +272,12 @@ main{
     border-radius: 50%;
     object-fit: cover;
 }
+.avatar-md{
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+}
 .avatar-sm{
     width: 35px;
     height: 35px;
@@ -309,6 +316,14 @@ main{
     .kr .value{
         margin-bottom: 10px;
     }
+}
+
+.newObjective {
+    position: fixed;
+    bottom: 30px;
+    right: 36px;
+    border-radius: 50%;
+    box-shadow: 3px 3px 30px rgba(20%,20%,20%,0.7);
 }
 
 /*-------------------------*/
@@ -352,4 +367,27 @@ main{
     transition: all 0.5s;
     -webkit-box-shadow: 0.1rem 0.1rem 0.3rem 0.1rem rgba(108, 117, 125, 0.2);
             box-shadow: 0.1rem 0.1rem 0.3rem 0.1rem rgba(108, 117, 125, 0.2);
+}
+/*-------------------------*/
+/* Circle Progress */
+/*-------------------------*/
+.circle>div, .circle>a{
+    position: relative;
+    top: -40px;
+    left: 12px;
+    width: 30px;
+    text-align: center;
+    color: #21897E;
+}
+
+.circle-progress-text{
+    position: relative;
+    color: #4A4A4A;
+    top: -18px;
+    left: -50px;
+    width: 150px;
+    text-align: center;
+    overflow:hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
