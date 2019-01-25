@@ -37,10 +37,10 @@ function sidebar(isOpen){
         $('.btn-menu').addClass('text-white');
         $('.btn-menu').css('background-color','#3BA99C');
     }else{
+        $('.btn-menu').css('background-color','');
         $('#sidebar-text').css('left','-30px');
         $('.content').css('margin-left','60px');
         $('.btn-menu').addClass('text-primary');
         $('.btn-menu').removeClass('text-white');
-        $('.btn-menu').css('background-color','');
     }
 }

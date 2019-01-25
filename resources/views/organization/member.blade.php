@@ -1,7 +1,7 @@
 @extends('layouts.master')
 @section('script')
 <script src="{{ asset('js/tooltip.js') }}" defer></script>
-<script src="{{ asset('js/circle-progress.js') }}" defer></script>
+<script src="{{ asset('js/circle-progress.min.js') }}" defer></script>
 <script src="{{ asset('js/circleProgress.js') }}" defer></script>
 @endsection
 @section('title','組織成員')

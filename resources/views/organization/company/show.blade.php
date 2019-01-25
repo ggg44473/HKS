@@ -23,7 +23,7 @@
         </div>
     </div>
     <div class="col-md-5 u-padding-16">
-        <div class="row justify-content-md-center" style="height: 95px;">
+        <div class="row justify-content-md-center">
             @if ($company->okrs)
                 @for ($i = 0; $i < 4 && $i < count($company->okrs); $i++)
                 <div class="col-3 align-self-center">
@@ -37,7 +37,7 @@
         </div>
     </div>
     <div class="col-md-2 u-pt-16">
-        <div class="row" style="height: 95px;">
+        <div class="row">
             <div class="col-12 text-right">
                 @if ($company->following())
                 <a href="{{ route('follow.cancel', [get_class($company), $company]) }}" class="text-warning" data-toggle="tooltip" data-placement="right" title="取消追蹤">
