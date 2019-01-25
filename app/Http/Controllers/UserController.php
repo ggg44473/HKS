@@ -9,6 +9,7 @@ use App\Action;
 use App\Objective;
 use App\Charts\SampleChart;
 use Carbon\Carbon;
+use App\Events\CreateObj;
 
 class UserController extends Controller
 {
@@ -102,7 +103,15 @@ class UserController extends Controller
     public function storeObjective(ObjectiveRequest $request, User $user)
     {
         $objective = $user->addObjective($request);
+        ship($objective->id);
+        
         return redirect()->to(url()->previous() . '#oid-' . $objective->id);
+    }
+
+    public function ship($orderId)
+    {
+        $order = Objective::findOrFail($orderId);
+        event(new CreateObj($order));
     }
 
     /**
