@@ -18,6 +18,7 @@ class UsersTableSeeder extends Seeder
             'password' => bcrypt('hkshks'),
             'email' => 'GoalCareHKS@gmail.com',
             'position' => '董事長',
+            'company_id' => 1, 
         ]);
         User::create([
             'name' => 'Karen',
@@ -26,7 +27,7 @@ class UsersTableSeeder extends Seeder
             'position' => '總經理',
         ]);
         User::unguard();
-        factory(User::class, 200)->create();
+        factory(User::class, 120)->create();
         User::reguard(); 
         
     }
