@@ -15,7 +15,7 @@
     </div>
     <div class="row justify-content-md-center">
         <div class="col-sm-10">專案成員
-            <table class="rwd-table table">
+            <table class="rwd-table table table-hover">
                 <thead>
                     <tr class="bg-primary text-light text-center">
                         <th>頭像</th>
@@ -55,7 +55,7 @@
     </div>
     <div class="row justify-content-md-center">
         <div class="col-sm-10">邀請中成員
-            <table class="rwd-table table">
+            <table class="rwd-table table table-hover">
                 <thead>
                     <tr class="bg-primary text-light text-center">
                         <th>頭像</th>

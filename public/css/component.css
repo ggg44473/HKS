@@ -106,7 +106,6 @@
 /* btn-menu */
 .btn-menu{
     border-radius: 50%;
-    background-color: transparent;
 }
 .btn-menu:hover{
     background-color: #F2F2F2;
@@ -169,7 +168,6 @@
 /*-------------------------*/
 .fas{
     font-size: 18px;
-    padding-top: 0.2rem;
 }
 
 /*-------------------------*/
@@ -298,6 +296,10 @@ main{
     border: none;
     border-radius: 10px;
     box-shadow: 3px 3px 30px rgba(20%,20%,20%,0.5);
+}
+.card-header, .card-header:first-child{
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
 }
 /*-------------------------*/
 /* OKR */

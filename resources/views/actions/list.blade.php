@@ -42,7 +42,7 @@
         </div>
     </div>
     <div class="col-12">
-        <table class="rwd-table table">
+        <table class="rwd-table table table-hover">
             <thead>
                 <tr class="bg-primary text-light text-center">
                     <th>

@@ -18,7 +18,7 @@
             <form name="formUpdate" action="{{ route('department.member.update', $department) }}" method="post">
                 @csrf
                 {{ method_field('PATCH') }}
-                <table class="rwd-table table">
+                <table class="rwd-table table table-hover">
                     <thead>
                         <tr class="bg-primary text-light text-center">
                             <th>頭像</th>

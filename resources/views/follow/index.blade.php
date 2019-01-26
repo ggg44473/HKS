@@ -1,9 +1,10 @@
 @extends('layouts.master')
 @section('script')
-
+<script src="{{ asset('js/dragula.js') }}" defer></script>
+<script src="{{ asset('js/dragDrop.js') }}" defer></script>
 @endsection
 @section('stylesheet')
-
+<link href="{{ asset('css/dragula.css') }}" rel="stylesheet" />
 @endsection
 @section('title','個人追蹤')
 @section('content')
@@ -13,31 +14,50 @@
             <h4>個人追蹤</h4>
         </div>
     </div>
-    <div class="row">
+    <div id="departmentCard" class="row">
         @foreach (auth()->user()->follow as $follow)
-        <div class="col-md-4 u-mb-16">
-            <a href="{{ $follow->model->getOKrRoute() }}">
-                <div class="card u-margin-8">
-                    <div class="card-body u-pt-32 u-pb-32">
-                        <div class="row justify-content-center">
-                            <div class="col-lg-12 text-center">
-                                <img src="{{ $follow->model->getAvatar() }}" alt="" class="avatar text-center projectAvatar">
-                                <span class="u-margin-8 text-black-50 font-weight-bold" style="font-size: 18px">{{
-                                        $follow->model->name }}</span>
-                                @if ($follow->model->following())
-                                <a href="{{ route('follow.cancel', [get_class($follow->model), $follow->model]) }}" class="text-warning">
-                                    <i class="fas fa-star" style="font-size: 24px;"></i>
+        <div class="col-md-3 col-sm-6 u-mb-16">
+                <div class="card u-margin-4">
+                    <div class="card-header">
+                        {{-- 追蹤 --}}
+                        <div class="row">
+                            <div class="col-12 text-right">
+                                <a href="{{ route('follow.cancel', [get_class($follow->model), $follow->model]) }}" class="text-warning" data-toggle="tooltip" data-placement="right" title="取消追蹤">
+                                    <i class="fas fa-star" style="font-size: 20px;"></i>
                                 </a>
-                                @else
-                                <a href="{{ route('follow', [get_class($follow->model), $follow->model]) }}" class="text-warning">
-                                    <i class="far fa-star" style="font-size: 24px;"></i>
-                                </a>
-                                @endif
+                            </div>
+                        </div>
+                        {{-- 個人資訊 --}}
+                        <a href="{{ $follow->model->getOKrRoute() }}">
+                            <div class="row mb-2">
+                                <div class="col-auto pl-4 pr-0">
+                                    <img src="{{ $follow->model->getAvatar() }}" alt="" class="avatar-md text-center projectAvatar">
+                                </div>
+                                <div class="col text-truncate align-self-center">
+                                    <p class="font-weight-bold text-black-50 mb-0 text-truncate">{{ $follow->model->name }}</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                <a href="{{ $follow->model->getOKrRoute() }}">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-4 text-center pr-0">
+                                <p class="font-weight-bold text-black-50 mb-0" style="font-size: 20px;">{{ $follow->model->countObjective() }}</p>
+                                <span class="text-black-50">Objective</span>
+                            </div>
+                            <div class="col-4 text-center pl-0 pr-0">
+                                    <p class="font-weight-bold text-black-50 mb-0" style="font-size: 20px;">{{ $follow->model->countKRs() }}</p>
+                                    <span class="text-black-50">KRs</span>
+                            </div>
+                            <div class="col-4 text-center pl-0">
+                                    <p class="font-weight-bold text-black-50 mb-0" style="font-size: 20px;">#</p>
+                                    <span class="text-black-50">Follower</span>
                             </div>
                         </div>
                     </div>
-                </div>
-            </a>
+                </a>
+            </div>
         </div>
         @endforeach
     </div>
