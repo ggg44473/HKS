@@ -11,7 +11,7 @@ use App\Traits\HasAvatarTrait;
 use App\Interfaces\HasObjectiveInterface;
 use App\Traits\HasFollowTrait;
 
-class User extends Authenticatable implements HasObjectiveInterface
+class User extends Authenticatable implements MustVerifyEmail, HasObjectiveInterface
 {
     use Notifiable, Commenter, HasObjectiveTrait, HasAvatarTrait, HasFollowTrait;
 
