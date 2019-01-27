@@ -14,10 +14,16 @@ class RolesTableSeeder extends Seeder
     {
         Role::truncate();
         Role::create([
-            'name' => '管理員'
+            'name' => '擁有者'
         ]);
         Role::create([
-            'name' => '一般成員'
+            'name' => '管理者'
+        ]);
+        Role::create([
+            'name' => '編輯'
+        ]);
+        Role::create([
+            'name' => '成員'
         ]);
     }
 }

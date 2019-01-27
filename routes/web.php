@@ -140,12 +140,8 @@ Route::patch('organization/department/{department}/member/{member}/destroy', 'De
 ###### Project ######
 //專案首頁
 Route::get('project', 'ProjectController@index')->name('project');
-//新增專案頁面
-Route::get('project/create', 'ProjectController@create')->name('project.create');
 //儲存新增專案
 Route::post('project/store', 'ProjectController@store')->name('project.store');
-//編輯專案頁面
-Route::get('project/{project}/edit', 'ProjectController@edit')->name('project.edit');
 //更新專案
 Route::patch('project/{project}/update', 'ProjectController@update')->name('project.update');
 //完成專案
@@ -158,8 +154,6 @@ Route::get('project/{project}/okr', 'ProjectController@listOKR')->name('project.
 Route::post('project/{project}/objective/store', 'ProjectController@storeObjective')->name('project.objective.store');
 //專案成員頁面
 Route::get('project/{project}/member', 'ProjectController@member')->name('project.member');
-//專案成員設定頁面
-Route::get('project/{project}/member/setting', 'ProjectController@memberSetting')->name('project.member.setting');
 //發送邀請
 Route::post('project/{project}/member/invite', 'ProjectController@inviteMember')->name('project.member.invite');
 //取消邀請

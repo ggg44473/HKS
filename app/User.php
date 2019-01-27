@@ -77,4 +77,9 @@ class User extends Authenticatable implements HasObjectiveInterface
     {
         return $this->hasMany(Permission::class);
     }
+
+    public function role($model)
+    {
+        return $model->model()->where('user_id', $this->id)->first()->role->name;
+    }
 }

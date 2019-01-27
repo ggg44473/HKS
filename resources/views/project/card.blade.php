@@ -80,10 +80,16 @@
         {{-- 管理員設定 --}}
         <div class="row pr-4">
             <div class="col-12 text-right pb-2">&nbsp
-                @if ($project->user_id == auth()->user()->id)
+                @can('done', $project)
                 <a href="{{ route('project.done', $project) }}" data-toggle="tooltip" data-placement="bottom" title="{{ $project->isdone?'取消關閉':'關閉專案'}}"><i class="far fa-check-square u-margin-4"></i></a>                    
-                <a href="{{ route('project.member.setting', $project) }}" data-toggle="tooltip" data-placement="bottom" title="新增成員"><i class="fas fa-user-plus u-margin-4"></i></a>
+                @endcan
+                @can('memberSetting', $project)
+                <a href="#" data-toggle="modal" data-target="#inviteMember" class="tooltipBtn" data-placement="bottom" title="新增成員"><i class="fas fa-user-plus u-margin-4"></i></a>
+                @endcan
+                @can('update', $project)
                 <a href="#" data-toggle="modal" data-target="#editProject" class="tooltipBtn" data-placement="bottom" title="編輯專案"><i class="fas fa-edit u-margin-4"></i></a>
+                @endcan
+                @can('delete', $project)
                 <a href="#" data-toggle="dropdown" class="tooltipBtn" data-placement="bottom" title="刪除專案"><i class="fas fa-trash-alt"></i></a>
                 <form method="POST" id="projectDelete" action="{{ route('project.destroy', $project) }}">
                     @csrf
@@ -94,9 +100,9 @@
                         </div>
                         <div class="row">
                             <div class="col text-center">
-                                <div class="">刪除專案後，</div>
-                                <div>將失去專案中所有資料！！</div>
-                                <div>確認要刪除專案嗎？</div>
+                                刪除專案後，<br>
+                                將失去專案中所有資料！！<br>
+                                確認要刪除專案嗎？<br>
                             </div>
                         </div>
                         <div class="row justify-content-center mt-3">
@@ -105,10 +111,18 @@
                         </div>
                     </div>
                 </form>
-                @endif
+                @endcan
             </div>
         </div>
     </div>
 </div>
+
 {{-- 編輯專案Modal --}}
+@can('update', $project)
 @include('project.edit')
+@endcan
+
+{{-- 邀請成員Modal --}}
+@can('memberSetting', $project)    
+@include('project.memberSetting')
+@endcan

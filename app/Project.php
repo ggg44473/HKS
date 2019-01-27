@@ -21,27 +21,17 @@ class Project extends Model implements HasObjectiveInterface, HasInvitationInter
      * @var array
      */
     protected $fillable = [
-        'name', 'description', 'user_id', 'isdone'
+        'name', 'description', 'isdone'
     ];
-
-    public function admin()
-    {
-        return $this->belongsTo('App\User', 'user_id');
-    }
 
     public function users()
     {
         return $this->belongsToMany(User::class);
     }
 
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
-
     public function company()
     {
-        return $this->admin->belongsTo(Company::class);
+        return $this->model->where('role_id', 1)->first()->user->belongsTo(Company::class);
     }
 
     public function getOKrRoute()

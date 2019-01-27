@@ -7,6 +7,7 @@ use App\Project;
 use App\Http\Requests\ObjectiveRequest;
 use App\User;
 use App\Invitation;
+use App\Permission;
 
 class ProjectController extends Controller
 {
@@ -16,6 +17,7 @@ class ProjectController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->authorizeResource(Project::class, 'project');
     }
 
     /**
@@ -54,24 +56,13 @@ class ProjectController extends Controller
     {
         $attr['name'] = $request->project_name;
         $attr['description'] = $request->project_description;
-        $attr['user_id'] = auth()->user()->id;
 
         $project = Project::create($attr);
         $project->addAvatar($request);
         $project->users()->attach(auth()->user());
+        $project->createPermission(1);
 
         return redirect()->route('project');
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Project $project
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Project $project)
-    {
-        return view('project.edit', ['project' => $project]);
     }
 
     /**
@@ -141,6 +132,8 @@ class ProjectController extends Controller
      */
     public function done(Project $project)
     {
+        $this->authorize('done', $project);
+
         $project->isdone = !$project->isdone;
         $project->save();
 
@@ -154,9 +147,8 @@ class ProjectController extends Controller
      */
     public function member(Request $request, Project $project)
     {
-        $project['okrs'] = $project->getOkrsWithPage($request)['okrs'];
-
         $builder = $project->users();
+        
         if ($request->input('order', '')) {
             
             # 排序
@@ -178,27 +170,13 @@ class ProjectController extends Controller
         $pages = $builder->paginate(10)->appends([
             'order' => $request->input('order', ''),
         ]);
-
+        
         $data = [
             'project' => $project,
             'members' => $pages,
         ];
 
         return view('project.member', $data);
-    }
-
-    /**
-     * Show the form for inviting a new member.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function memberSetting(Project $project)
-    {
-        $data = [
-            'project' => $project,
-        ];
-
-        return view('project.memberSetting', $data);
     }
 
     /**
@@ -210,9 +188,11 @@ class ProjectController extends Controller
      */
     public function inviteMember(Request $request, Project $project)
     {
+        $this->authorize('memberSetting', $project);
+
         $project->sendInvitation($request);
 
-        return redirect()->route('project.member.setting', $project);
+        return redirect()->route('project.member', $project);
     }
 
     /**
@@ -224,9 +204,11 @@ class ProjectController extends Controller
      */
     public function cancelInvite(Project $project, User $member)
     {
+        $this->authorize('memberSetting', $project);
+
         $project->deleteInvitation($member);
 
-        return redirect()->route('project.member.setting', $project);
+        return redirect()->route('project.member', $project);
     }
 
     /**
@@ -254,6 +236,7 @@ class ProjectController extends Controller
     {
         $project->deleteInvitation($member);
         $project->users()->attach($member);
+        $project->createPermission(3);
 
         return redirect()->route('project');
     }
@@ -287,8 +270,10 @@ class ProjectController extends Controller
      */
     public function destroyMember(Project $project, User $member)
     {
+        $this->authorize('memberSetting', $project);
+
         $project->users()->detach($member);
 
-        return redirect()->route('project.member.setting', $project);
+        return redirect()->route('project.member', $project);
     }
 }

@@ -15,7 +15,7 @@
             <a class="nav-link" id="okr-tab" href="{{ route('project.okr', $project) }}">OKRs</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link active" id="member-tab" href="{{ route('project.member.setting', $project) }}">成員</a>
+            <a class="nav-link active" id="member-tab" href="{{ route('project.member', $project) }}">成員</a>
         </li>
     </ul>
     <div class="row justify-content-md-center">
@@ -44,6 +44,9 @@
                             <th>部門</th>
                             <th>職稱</th>
                             <th>權限</th>
+                            @can('memberSetting', $project)
+                            <th>設定</th>                                
+                            @endcan
                         </tr>
                     </thead>
                     <tbody>
@@ -67,9 +70,23 @@
                             </td>
                             <td data-th="姓名">{{ $member->name }}</td>
                             <td data-th="信箱">{{ $member->email }}</td>
-                            <td data-th="部門">{{ $member->project? $member->project->name:'-' }}</td>
+                            <td data-th="部門">{{ $member->department? $member->department->name:'-' }}</td>
                             <td data-th="職稱">{{ $member->position }}</td>
-                            <td data-th="權限">一般成員</td>
+                            @can('memberSetting', $project)
+                            <td data-th="權限">{{ $member->role($project) }}</td>
+                            <td data-th="設定">
+                                <a href="#" onclick="document.getElementById('memberDelete{{ $member->id }}').submit()"><i
+                                        class="fas fa-trash-alt text-danger"></i></a href="#">
+                                <form name="memberDelete{{ $member->id }}" method="POST" id="memberDelete{{ $member->id }}"
+                                    action="{{ route('project.member.destroy', [$project, $member]) }}">
+                                    @csrf
+                                    {{ method_field('PATCH') }}
+                                </form>
+                            </td>
+                            @endcan
+                            @cannot('memberSetting', $project)
+                            <td data-th="權限">{{ $member->role($project) }}</td>                                
+                            @endcannot
                         </tr>
                         @endforeach
                     </tbody>
@@ -96,7 +113,9 @@
                             <th>信箱</th>
                             <th>部門</th>
                             <th>職稱</th>
-                            <th>設定</th>
+                            @can('memberSetting', $project)
+                            <th>設定</th>                                
+                            @endcan
                         </tr>
                     </thead>
                     <tbody>
@@ -109,8 +128,9 @@
                             </td>
                             <td data-th="姓名">{{ $member->name }}</td>
                             <td data-th="信箱">{{ $member->email }}</td>
-                            <td data-th="部門">{{ $member->department? $member->department->name: $member->company->name }}</td>
+                            <td data-th="部門">{{ $member->department? $member->department->name: '-' }}</td>
                             <td data-th="職稱">{{ $member->position? $member->position:'-' }}</td>
+                            @can('memberSetting', $project)                            
                             <td data-th="設定">
                                 <a href="#" onclick="document.getElementById('memberDelete{{ $member->id }}').submit()"><i
                                         class="fas fa-trash-alt text-danger"></i></a href="#">
@@ -120,6 +140,7 @@
                                     {{ method_field('PATCH') }}
                                 </form>
                             </td>
+                            @endcan
                         </tr>
                         @endforeach
                     </tbody>

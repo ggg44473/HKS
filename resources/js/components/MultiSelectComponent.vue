@@ -1,7 +1,10 @@
 <template>
+<div>
     <div class="row justify-content-md-center">
-        <div class="col-sm-10">邀請成員</div>        
-        <div class="col-sm-8">
+        <div class="col-sm-12">邀請成員</div> 
+    </div>
+    <div class="row justify-content-md-center">           
+        <div class="col-sm-12">
             <multi-list-select :list="memberList"
                             option-value="email"
                             option-text="email"
@@ -12,11 +15,14 @@
                             @searchchange="printSearchText">
             </multi-list-select>    
         </div>
-        <div class="col-sm-2">
+    </div>
+    <div class="row justify-content-md-center mt-4">
+        <div class="col-sm-4">
             <button type="submit" class="btn btn-primary">邀請</button>
         </div>
         <input type="hidden" name="invite" v-bind:value="itemsID">
     </div>
+</div>
 </template>
 
 <script>
