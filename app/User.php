@@ -72,4 +72,9 @@ class User extends Authenticatable implements HasObjectiveInterface
     {
         return $this->hasMany(Follow::class);
     }
+
+    public function permissions()
+    {
+        return $this->hasMany(Permission::class);
+    }
 }

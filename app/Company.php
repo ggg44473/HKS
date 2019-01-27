@@ -9,10 +9,11 @@ use App\Interfaces\HasObjectiveInterface;
 use App\Interfaces\HasInvitationInterface;
 use App\Traits\HasInvitationTrait;
 use App\Traits\HasFollowTrait;
+use App\Traits\HasPermissionTrait;
 
 class Company extends Model implements HasObjectiveInterface, HasInvitationInterface
 {
-    use HasObjectiveTrait, HasAvatarTrait, HasInvitationTrait, HasFollowTrait;
+    use HasObjectiveTrait, HasAvatarTrait, HasInvitationTrait, HasFollowTrait, HasPermissionTrait;
 
     protected $fillable = [
         'name', 'description', 'user_id',
