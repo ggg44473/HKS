@@ -9,6 +9,7 @@ use App\Action;
 use App\Objective;
 use App\Charts\SampleChart;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
