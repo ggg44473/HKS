@@ -1,5 +1,6 @@
 @extends('layouts.master')
 @section('script')
+<script src="{{ asset('js/avatar.js') }}" defer></script>
 <script src="{{ asset('js/tooltip.js') }}" defer></script>
 <script src="{{ asset('js/circle-progress.min.js') }}" defer></script>
 <script src="{{ asset('js/circleProgress.js') }}" defer></script>
@@ -28,7 +29,7 @@
     </ul>
     <div class="tab-content" id="myTabContent">
         <div class="tab-pane fade show active" id="department" role="tabpanel" aria-labelledby="department-tab">
-            <div id="departmentCard" class="row justify-content-md-center u-mt-16">
+            <div id="dragCard" class="row justify-content-md-center u-mt-16">
                 @if (count($departments) == 0)
                     <div class="alert alert-warning alert-dismissible fade show u-mt-32" role="alert">
                         <strong><i class="fas fa-exclamation-circle pl-2 pr-2"></i></strong>

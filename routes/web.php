@@ -156,8 +156,10 @@ Route::delete('project/{project}/destroy', 'ProjectController@destroy')->name('p
 Route::get('project/{project}/okr', 'ProjectController@listOKR')->name('project.okr');
 //專案新增O
 Route::post('project/{project}/objective/store', 'ProjectController@storeObjective')->name('project.objective.store');
+//專案成員頁面
+Route::get('project/{project}/member', 'ProjectController@member')->name('project.member');
 //專案成員設定頁面
-Route::get('project/{project}/member', 'ProjectController@memberSetting')->name('project.member.setting');
+Route::get('project/{project}/member/setting', 'ProjectController@memberSetting')->name('project.member.setting');
 //發送邀請
 Route::post('project/{project}/member/invite', 'ProjectController@inviteMember')->name('project.member.invite');
 //取消邀請

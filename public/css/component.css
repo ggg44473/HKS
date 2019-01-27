@@ -211,6 +211,10 @@ main{
     padding-left: 45px;
     padding-right: 45px;
 }
+.modal-content{
+    border: none;
+    border-radius: 10px;
+}
 /*-------------------------*/
 /* Button */
 /*-------------------------*/

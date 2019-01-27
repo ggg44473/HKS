@@ -28,6 +28,11 @@ class Company extends Model implements HasObjectiveInterface, HasInvitationInter
         return $this->hasMany('App\Department', 'company_id');
     }
 
+    public function projects()
+    {
+        return $this->hasManyThrough(Project::class, User::class, 'company_id', 'user_id');
+    }
+
     public function getOKrRoute()
     {
         return route('company.okr');
@@ -46,5 +51,21 @@ class Company extends Model implements HasObjectiveInterface, HasInvitationInter
     public function getInviteUrl($userId)
     {
         return route('company.index');
+    }
+
+    public function delete()
+    {   
+        foreach ($this->projects as $project) {
+            $project->delete();
+        }
+        foreach ($this->users as $user) {
+            $user->update(['company_id' => null, 'department_id' => null]);
+        }
+        foreach ($this->departments as $department) {
+            $department->delete();
+        }
+        $this->follower()->delete();
+        
+        return parent::delete();
     }
 }

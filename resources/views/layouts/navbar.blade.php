@@ -16,7 +16,7 @@
         <form class="form-inline mr-md-5" action="{{route('search.index') }}">
             @csrf
             <input class="form-control mr-sm-1 search" type="search" placeholder="Search" aria-label="Search" name="search">
-            <button class="btn btn-search my-2 my-sm-0" type="submit" ><i class="fas fa-search"></i></button>
+            <button class="btn btn-search my-2 my-sm-0" type="submit" ><i class="fas fa-search pt-1"></i></button>
             <a class="nav-item nav-link text-muted mt-auto mb-auto btn-search-sm" data-toggle="modal" data-target="#searchModal"><i class="fas fa-search"></i></a>
         </form>
         <a class="nav-item nav-link text-muted mt-auto mb-auto" href="#"><i class="fas fa-bell"></i></a>

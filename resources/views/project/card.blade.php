@@ -1,107 +1,114 @@
-<div class="card-body u-pt-32 u-pb-32">
-    <div class="row justify-content-center">
-        <div class="col-lg-3 text-center">
-            <img src="{{ $project->getAvatar() }}" alt="" class="avatar text-center projectAvatar">
-        </div>
-        <div class="col-lg-7 col-md-10">
-            <div class="row justify-content-center u-mb-8">
-                <div class="col-lg-6 col-md-7">
-                    <h5 class="u-mt-8 u-mb-8 text-black-50 font-weight-bold">{{ $project->name }}</h5>
+<div class="col-md-4 col-sm-6 u-mb-16">
+    <div class="card u-margin-8">
+        <div class="card-header">
+            {{-- 追蹤 --}}
+            <div class="row">
+                <div class="col-12 text-right">
+                    @if ($project->following())
+                    <a href="{{ route('follow.cancel', [get_class($project), $project]) }}" class="text-warning" data-toggle="tooltip" data-placement="right" title="取消追蹤">
+                        <i class="fas fa-star" style="font-size: 20px;"></i>
+                    </a>
+                    @else
+                    <a href="{{ route('follow', [get_class($project), $project]) }}" class="text-warning" data-toggle="tooltip" data-placement="right" title="追蹤">
+                        <i class="far fa-star" style="font-size: 20px;"></i>
+                    </a>
+                    @endif
                 </div>
-                <div class="col-lg-6 col-md-5">
-                    <div class="pt-2 w-100" style="display:inline-block;">
-                        @php
-                        $avg = 0;
-                        foreach ($project->okrs as $okr) {
-                            $sum = 0; $totalWeight = 0;
-                            if($project->okrs){
-                                foreach($okr['keyresults'] as $kr){
-                                $totalWeight += $kr->weight;
-                                $sum += $kr->accomplishRate() * $kr->weight;
-                                }
-                            }
-                            if($totalWeight > 0) $scoreOfObj=round($sum/$totalWeight, 0);
-                            else $scoreOfObj=0;
-                            $avg += $scoreOfObj;
-                        }
-                        if($avg != 0) $avg /= count($project->okrs);
-                        else $avg = 0;
-                        @endphp
-
-                        <div class="progress" style="height:20px;">
-                            @if($avg<0) 
-                                <div class="progress-bar bg-danger" role="progressbar" style="width:{{ abs($avg) }}%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                                    {{ $avg }}%
-                                </div>
-                            @else 
-                                <div class="progress-bar" role="progressbar" style="width:{{ $avg }}%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                                    {{ $avg }}%
-                                </div>
+            </div>
+            {{-- 專案資訊 --}}
+            <a href="{{ route('project.okr', $project) }}">
+                <div class="row pl-4 pr-4">
+                    <div class="col-auto align-self-center pr-0">
+                        <img src="{{ $project->getAvatar() }}" alt="" class="avatar-md" style="vertical-align:top;">
+                    </div>
+                    <div class="col text-truncate">
+                        <p class="font-weight-bold text-black-50 mb-0 text-truncate">{{ $project->name }}</p>
+                        <div class="text-black-50 text-truncate">{{ $project->description }}</div>
+                    </div>
+                </div>
+            </a>
+            {{-- 專案成員 --}}
+            <div class="row pt-2">
+                <div class="col-12 text-right">
+                    @for ($i = 0; $i < count($project->users) && $i < 5; $i++) 
+                        <a href="{{ route('user.okr', $project->users[$i]) }}" class="d-inline-block pt-2" data-toggle="tooltip" data-placement="bottom" title="{{ $project->users[$i]->name }}">
+                            <img src="{{ $project->users[$i]->getAvatar() }}" alt="" class="avatar-xs">
+                        </a>
+                        @if (count($project->users)>5 && $i == 4)
+                        <a class="d-inline-block pt-2" href="#" data-toggle="tooltip" data-placement="bottom" title="與其他 {{ count($project->users)-5 }} 位成員">
+                            <img src="{{ asset('img/icon/more/gray.svg') }}" alt="" class="avatar-xs">
+                        </a>
+                        @endif
+                    @endfor
+                    <a href="{{ route('project.member', $project) }}" class="pl-2">
+                        <span class="text-black-50" style="font-size:10px;">｜共 {{ count($project->users) }} 位成員</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <a href="{{ route('project.okr', $project) }}">
+            <div class="card-body">
+                {{-- objective --}}
+                @if ($project->okrs)
+                @foreach ($project->okrs as $okrs)
+                <div class="row justify-content-center mb-1 mt-2 pl-4 pr-4">
+                    <div class="col-md-7 col text-black-50 text-truncate">{{ $okrs['objective']->title }}</div>
+                    <div class="col-md-5 col">
+                        <div class="progress" style="height:14px;">
+                            @if($okrs['objective']->getScore()<0) 
+                            <div class="progress-bar bg-danger" role="progressbar"
+                                style="width:{{ abs($okrs['objective']->getScore()) }}%;" aria-valuenow="25"
+                                aria-valuemin="0" aria-valuemax="100">{{ $okrs['objective']->getScore() }}%
+                            </div>
+                            @else
+                            <div class="progress-bar" role="progressbar" style="width:{{ $okrs['objective']->getScore() }}%;"
+                                aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{ $okrs['objective']->getScore() }}%
+                            </div>
                             @endif
                         </div>
                     </div>
                 </div>
-            </div>
-            <span class="text-black-50 description">{{ $project->description }}</span>
-        </div>
-    </div>
-    <div class="row justify-content-center">
-        <div class="col-md-10">
-            <hr class="u-mb-16">
-        </div>
-    </div>
-    @if ($project->okrs)
-        @foreach ($project->okrs as $okrs)
-            <div class="row justify-content-center mb-2">
-                <div class="col-lg-3 text-center">
-                    <span class="font-weight-bold text-black-50" style="font-size:14px;">Objective</span>
+                @endforeach
+                @else
+                <div class="row justify-content-center mb-1 mt-2">
+                    <div class="col-12 text-black-50 text-center text-truncate">當前期間尚未建立OKR !!</div>
                 </div>
-                <div class="col-lg-7 text-black-50 text-center text-lg-left">{{ $okrs['objective']->title }}</div>
+                @endif
             </div>
-        @endforeach
-    @else
-        <div class="row justify-content-center">
-            <div class="col-lg-3 text-center mw-100">
-                <span class="font-weight-bold text-black-50" style="font-size: 14px;">Objective</span>
-            </div>
-            <div class="col-lg-7 text-black-50 text-center text-lg-left">尚未具有進行中的Objective
-                @if (!($project->okrs))
-                    <a href="#" data-toggle="modal" data-target="#objective"><i class="fa fa-plus fa-sm"></i></a>
+        </a>
+            
+        {{-- 管理員設定 --}}
+        <div class="row pr-4">
+            <div class="col-12 text-right pb-2">&nbsp
+                @if ($project->user_id == auth()->user()->id)
+                <a href="{{ route('project.done', $project) }}" data-toggle="tooltip" data-placement="bottom" title="{{ $project->isdone?'取消關閉':'關閉專案'}}"><i class="far fa-check-square u-margin-4"></i></a>                    
+                <a href="{{ route('project.member.setting', $project) }}" data-toggle="tooltip" data-placement="bottom" title="新增成員"><i class="fas fa-user-plus u-margin-4"></i></a>
+                <a href="#" data-toggle="modal" data-target="#editProject" class="tooltipBtn" data-placement="bottom" title="編輯專案"><i class="fas fa-edit u-margin-4"></i></a>
+                <a href="#" data-toggle="dropdown" class="tooltipBtn" data-placement="bottom" title="刪除專案"><i class="fas fa-trash-alt"></i></a>
+                <form method="POST" id="projectDelete" action="{{ route('project.destroy', $project) }}">
+                    @csrf
+                    {{ method_field('DELETE') }}
+                    <div class="dropdown-menu u-padding-16">
+                        <div class="row justify-content-center mb-2">
+                            <div class="col-auto text-danger"><i class="fas fa-exclamation-triangle"></i></div>
+                        </div>
+                        <div class="row">
+                            <div class="col text-center">
+                                <div class="">刪除專案後，</div>
+                                <div>將失去專案中所有資料！！</div>
+                                <div>確認要刪除專案嗎？</div>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center mt-3">
+                            <div class="col-auto text-center pr-2"><button class="btn btn-danger pl-4 pr-4" type="submit">刪除</button></div>
+                            <div class="col-auto text-center pl-2"><a class="btn btn-secondary text-white pl-4 pr-4">取消</a></div>
+                        </div>
+                    </div>
+                </form>
                 @endif
             </div>
         </div>
-    @endif
-    <div class="row justify-content-center">
-        <div class="col-md-10">
-            <hr class="u-mb-16">
-        </div>
-    </div>
-    <div class="row justify-content-center">
-        <div class="col-md-10 text-right">
-            @if ($project->user_id == auth()->user()->id)
-            <a href="{{ route('project.done', $project) }}" data-toggle="tooltip" data-placement="bottom" title="{{ $project->isdone?'取消關閉':'關閉專案'}}"><i class="far fa-check-square u-margin-4"></i></a>                    
-            <a href="{{ route('project.member.setting', $project) }}" data-toggle="tooltip" data-placement="bottom" title="新增成員"><i class="fas fa-user-plus u-margin-4"></i></a>
-            <a href="{{ route('project.edit', $project) }}" data-toggle="tooltip" data-placement="bottom" title="編輯專案"><i class="fas fa-edit u-margin-4"></i></a>
-            <a href="#" onclick="document.getElementById('projectDelete').submit()" data-toggle="tooltip" data-placement="bottom" title="刪除專案"><i class="fas fa-trash-alt"></i></a>
-            <form method="POST" id="projectDelete" action="{{ route('project.destroy', $project) }}">
-                @csrf
-                {{ method_field('DELETE') }}
-            </form>
-            @endif
-        </div>
     </div>
 </div>
-
-<!-- Modal -->
-<div class="modal {{ count($errors) == 0 ? 'fade' : '' }}" id="objective" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">
-                    <span>&times;</span>
-                </button>
-            </div>
-            @include('okrs.create', ['route'=>route('project.objective.store', $project)])
-        </div>
-    </div>
-</div>
+{{-- 編輯專案Modal --}}
+@include('project.edit')

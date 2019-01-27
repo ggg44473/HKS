@@ -77,7 +77,7 @@
                     </tbody>
                 </table>
             @else
-                <div id="departmentCard" class="row justify-content-md-center u-mt-16">
+                <div id="dragCard" class="row justify-content-md-center u-mt-16">
                     <div class="alert alert-warning alert-dismissible fade show u-mt-32" role="alert">
                         <strong><i class="fas fa-exclamation-circle pl-2 pr-2"></i></strong>
                         此部門未具有成員 !!

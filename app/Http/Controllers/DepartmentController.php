@@ -28,7 +28,7 @@ class DepartmentController extends Controller
     public function listOKR(Request $request, Department $department)
     {
         $okrsWithPage = $department->getOkrsWithPage($request);
-        $department['okrs'] = $department->getOkrsWithPage($request)['okrs'];
+        $department['okrs'] = $okrsWithPage['okrs'];
 
         $data = [
             'user' => auth()->user(),

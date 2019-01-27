@@ -1,51 +1,63 @@
 @extends('layouts.master')
 @section('script')
-    <script src="{{ asset('js/tooltip.js') }}" defer></script>
+<script src="{{ asset('js/tooltip.js') }}" defer></script>
+<script src="{{ asset('js/avatar.js') }}" defer></script>
+<script src="{{ asset('js/dragula.js') }}" defer></script>
+<script src="{{ asset('js/dragDrop.js') }}" defer></script>
 @endsection
 @section('stylesheet')
 <link href="{{ asset('css/project.css') }}" rel="stylesheet">
+<link href="{{ asset('css/dragula.css') }}" rel="stylesheet"/>
 @endsection
 @section('title','專案綜覽')
 @section('content')
 <div class="container">
+    {{-- 專案邀請 --}}
     @foreach ($invitations as $invitation)
         @include('project.invitation')        
     @endforeach
-    <div class="row m-3">
-        <div class="col-xs-3 mr-auto">
-            <h4>Project</h4>
-        </div>
-        <div class="col-xs-3 text-right pr-3">
-            <a href="{{ route('project.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i> 新增專案</a>
-        </div>
-    </div>
-    <div class="row">
-        @foreach ($projects as $project)
-        <div class="col-md-6 u-mb-16">
-            <a href="{{ route('project.okr', $project) }}">
-                <div class="card u-margin-8">
+    {{-- 進行中/已完成專案切換 --}}
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Project</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Closed</a>
+        </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+        {{-- 進行中專案 --}}
+        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+            <div id="dragCard" class="row pt-4 justify-content-md-center">
+                @foreach ($projects as $project)
                     @include('project.card')
-                </div>
-            </a>
+                @endforeach
+                @if (count($projects) == 0)
+                    <div class="alert alert-warning alert-dismissible fade show u-mt-32" role="alert">
+                        <strong><i class="fas fa-exclamation-circle pl-2 pr-2"></i></strong>
+                        尚未擁有專案 !!
+                    </div>
+                @endif
+            </div>
         </div>
-        @endforeach
-    </div>
-    <hr />
-    <div class="row m-3">
-        <div class="col-xs-3 mr-auto">
-            <h4>Closed</h4>
-        </div>
-    </div>
-    <div class="row">
-        @foreach ($done as $project)
-        <div class="col-md-6 u-mb-16">
-            <a href="{{ route('project.okr', $project) }}">
-                <div class="card u-margin-8">
+        {{-- 已完成專案 --}}
+        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+            <div id="dragCarddone" class="row pt-4 justify-content-md-center">
+                @foreach ($done as $project)
                     @include('project.card')
-                </div>
-            </a>
+                @endforeach
+                @if (count($done) == 0)
+                    <div class="alert alert-warning alert-dismissible fade show u-mt-32" role="alert">
+                        <strong><i class="fas fa-exclamation-circle pl-2 pr-2"></i></strong>
+                        尚未擁有完成專案 !!
+                    </div>
+                @endif
+            </div>
         </div>
-        @endforeach
     </div>
+    {{-- 新增專案按鈕 --}}
+    <a href="#" data-toggle="modal" data-target="#createProject" class="newObjective"><img src="{{ asset('img/icon/add/lightgreen.svg') }}" alt=""></a>        
+    {{-- 新增專案Modal --}}
+    @include('project.create')
 </div>
 @endsection

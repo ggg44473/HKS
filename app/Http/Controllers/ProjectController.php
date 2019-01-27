@@ -45,16 +45,6 @@ class ProjectController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        return view('project.create');
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -71,17 +61,6 @@ class ProjectController extends Controller
         $project->users()->attach(auth()->user());
 
         return redirect()->route('project');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
     }
 
     /**
@@ -110,7 +89,7 @@ class ProjectController extends Controller
 
         $project->addAvatar($request);
 
-        return redirect()->route('project');
+        return redirect()->back();
     }
 
     /**
@@ -135,11 +114,10 @@ class ProjectController extends Controller
     public function listOKR(Request $request, Project $project)
     {
         $okrsWithPage = $project->getOkrsWithPage($request);
+        $project['okrs'] = $okrsWithPage['okrs'];
 
         $data = [
-            'user' => auth()->user(),
-            'owner' => $project,
-            'okrs' => $okrsWithPage['okrs'],
+            'project' => $project,
             'pageInfo' => $okrsWithPage['pageInfo'],
             'st_date' => $request->input('st_date', ''),
             'fin_date' => $request->input('fin_date', ''),
@@ -174,13 +152,53 @@ class ProjectController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function member(Request $request, Project $project)
+    {
+        $project['okrs'] = $project->getOkrsWithPage($request)['okrs'];
+
+        $builder = $project->users();
+        if ($request->input('order', '')) {
+            
+            # 排序
+            if ($order = $request->input('order', '')) { 
+                # 判斷value是以 _asc 或者 _desc 结尾來排序
+                if (preg_match('/^(.+)_(asc|desc)$/', $order, $m)) {
+                    # 判斷是否為指定的接收的參數
+                    if (in_array($m[1], ['name', 'email', 'position'])) {   
+                        # 開始排序              
+                        $builder->orderBy($m[1], $m[2]);
+                    }
+                }
+            }
+        } else {
+            # 預設
+            $builder->orderBy('id');
+        }
+
+        $pages = $builder->paginate(10)->appends([
+            'order' => $request->input('order', ''),
+        ]);
+
+        $data = [
+            'project' => $project,
+            'members' => $pages,
+        ];
+
+        return view('project.member', $data);
+    }
+
+    /**
+     * Show the form for inviting a new member.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function memberSetting(Project $project)
     {
         $data = [
             'project' => $project,
         ];
 
-        return view('project.member', $data);
+        return view('project.memberSetting', $data);
     }
 
     /**

@@ -29,7 +29,7 @@
     </ul>
     <div class="tab-content" id="myTabContent">
         <div class="tab-pane fade show active" id="department" role="tabpanel" aria-labelledby="department-tab">
-            <div id="departmentCard" class="row justify-content-md-center u-mt-16">
+            <div id="dragCard" class="row justify-content-md-center u-mt-16">
                 @foreach ($children as $department)
                     @include('organization.department.card')
                 @endforeach

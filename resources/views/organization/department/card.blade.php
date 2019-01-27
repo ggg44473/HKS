@@ -15,7 +15,7 @@
                 </div>
             </div>
             <a href="{{ count($department->children)>0? route('department.index', $department):route('department.okr', $department) }}">
-                <div class="row">
+                <div class="row pl-4 pr-4">
                     <div class="col-auto align-self-center">
                         <img src="{{ $department->getAvatar() }}" alt="" class="avatar-md" style="vertical-align:top;">
                     </div>
@@ -69,8 +69,8 @@
             @endif
         </div>
         
-        <div class="row">
-            <div class="col-12 text-right pr-4 pb-2">&nbsp
+        <div class="row pr-4">
+            <div class="col-12 text-right pb-2">&nbsp
                 @if ($department->user_id == auth()->user()->id)
                 <a href="{{ route('department.create', $department->id) }}" data-toggle="tooltip" data-placement="bottom"
                     title="新增部門"><i class="fas fa-plus-circle u-margin-4"></i></a>

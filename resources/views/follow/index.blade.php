@@ -14,7 +14,7 @@
             <h4>個人追蹤</h4>
         </div>
     </div>
-    <div id="departmentCard" class="row">
+    <div id="dragCard" class="row">
         @foreach (auth()->user()->follow as $follow)
         <div class="col-md-3 col-sm-6 u-mb-16">
                 <div class="card u-margin-4">
@@ -22,6 +22,7 @@
                         {{-- 追蹤 --}}
                         <div class="row">
                             <div class="col-12 text-right">
+                                {{-- {{ dd(get_class($follow->model)) }} --}}
                                 <a href="{{ route('follow.cancel', [get_class($follow->model), $follow->model]) }}" class="text-warning" data-toggle="tooltip" data-placement="right" title="取消追蹤">
                                     <i class="fas fa-star" style="font-size: 20px;"></i>
                                 </a>
@@ -51,7 +52,7 @@
                                     <span class="text-black-50">KRs</span>
                             </div>
                             <div class="col-4 text-center pl-0">
-                                    <p class="font-weight-bold text-black-50 mb-0" style="font-size: 20px;">#</p>
+                                    <p class="font-weight-bold text-black-50 mb-0" style="font-size: 20px;">{{ count($follow->model->follower) }}</p>
                                     <span class="text-black-50">Follower</span>
                             </div>
                         </div>
