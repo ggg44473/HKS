@@ -144,8 +144,8 @@
     </div>
     <div class="collapse" id="History{{ $okr['objective']->id }}">
         <div class="card card-body">
-            {!! $okr['chart']->container() !!}
-            {!! $okr['chart']->script() !!}
+            {{-- {!! $okr['chart']->container() !!}
+            {!! $okr['chart']->script() !!} --}}
         </div>
     </div>
 </div>

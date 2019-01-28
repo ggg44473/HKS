@@ -72,4 +72,14 @@ class User extends Authenticatable implements MustVerifyEmail, HasObjectiveInter
     {
         return $this->hasMany(Follow::class);
     }
+
+    public function permissions()
+    {
+        return $this->hasMany(Permission::class);
+    }
+
+    public function role($model)
+    {
+        return $model->model()->where('user_id', $this->id)->first()->role->name;
+    }
 }

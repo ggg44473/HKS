@@ -7,10 +7,11 @@ use App\Traits\HasObjectiveTrait;
 use App\Traits\HasAvatarTrait;
 use App\Interfaces\HasObjectiveInterface;
 use App\Traits\HasFollowTrait;
+use App\Traits\HasPermissionTrait;
 
 class Department extends Model implements HasObjectiveInterface
 {
-    use HasObjectiveTrait, HasAvatarTrait, HasFollowTrait;
+    use HasObjectiveTrait, HasAvatarTrait, HasFollowTrait, HasPermissionTrait;
 
     protected $fillable = [
         'name', 'description', 'parent_department_id', 'company_id', 'user_id',

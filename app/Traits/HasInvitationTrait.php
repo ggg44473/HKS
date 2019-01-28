@@ -3,7 +3,6 @@
 namespace App\Traits;
 
 use App\Invitation;
-use App\ProjectUser;
 use App\User;
 use App\Action;
 use Notification;

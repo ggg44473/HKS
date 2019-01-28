@@ -1,7 +1,7 @@
 @extends('layouts.master')
 @section('script')
 <script src="{{ asset('js/tooltip.js') }}" defer></script>
-<script src="{{ asset('js/circle-progress.js') }}" defer></script>
+<script src="{{ asset('js/circle-progress.min.js') }}" defer></script>
 <script src="{{ asset('js/circleProgress.js') }}" defer></script>
 <script src="{{ asset('js/dragula.js') }}" defer></script>
 <script src="{{ asset('js/dragDrop.js') }}" defer></script>
@@ -29,7 +29,7 @@
     </ul>
     <div class="tab-content" id="myTabContent">
         <div class="tab-pane fade show active" id="department" role="tabpanel" aria-labelledby="department-tab">
-            <div id="departmentCard" class="row justify-content-md-center u-mt-16">
+            <div id="dragCard" class="row justify-content-md-center u-mt-16">
                 @foreach ($children as $department)
                     @include('organization.department.card')
                 @endforeach

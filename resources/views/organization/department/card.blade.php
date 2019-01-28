@@ -1,32 +1,31 @@
 <div class="col-md-4 col-lg-3">
     <div class="card u-mt-16 u-margin-4">
-        <div class="card-header">
+        <div class="card-header pb-0">
             <div class="row">
                 <div class="col-12 text-right">
                     @if ($department->following())
-                    <a href="{{ route('follow.cancel', [get_class($department), $department]) }}" class="text-warning" data-toggle="tooltip" data-placement="right" title="取消追蹤" style=" z-index:1000;">
-                        <i class="fas fa-star" style="font-size: 24px;"></i>
+                    <a href="{{ route('follow.cancel', [get_class($department), $department]) }}" class="text-warning" data-toggle="tooltip" data-placement="right" title="取消追蹤">
+                        <i class="fas fa-star" style="font-size: 20px;"></i>
                     </a>
                     @else
-                    <a href="{{ route('follow', [get_class($department), $department]) }}" class="text-warning" data-toggle="tooltip" data-placement="right" title="追蹤" style=" z-index:1000;">
-                        <i class="far fa-star" style="font-size: 24px;"></i>
+                    <a href="{{ route('follow', [get_class($department), $department]) }}" class="text-warning" data-toggle="tooltip" data-placement="right" title="追蹤">
+                        <i class="far fa-star" style="font-size: 20px;"></i>
                     </a>
                     @endif
                 </div>
             </div>
             <a href="{{ count($department->children)>0? route('department.index', $department):route('department.okr', $department) }}">
-                <div class="row">
-                    <div class="col-12 align-self-center">
-                        <img src="{{ $department->getAvatar() }}" alt="" class="avatar-md u-ml-8 u-mr-8">
-                        <div class="d-inline-block mb-0">
-                            <span class="font-weight-bold text-black-50 text-truncate mt-2" style="max-width: 150px;">{{ $department->name }}</span><br>
-                            <span class="font-weight-bold text-black-50 text-truncate" style="max-width: 150px;">{{ $department->description }}</span>
-                        </div><br>
+                <div class="row pl-4 pr-4">
+                    <div class="col-auto align-self-center">
+                        <img src="{{ $department->getAvatar() }}" alt="" class="avatar-md" style="vertical-align:top;">
+                    </div>
+                    <div class="col text-truncate">
+                        <p class="font-weight-bold text-black-50 mb-0 text-truncate">{{ $department->name }}</p>
+                        <div class="text-black-50 text-truncate">{{ $department->description }}</div>
                     </div>
                 </div>
             </a>
-
-            <div class="row">
+            <div class="row pt-2">
                 <div class="col-12 text-right">
                     @if (count($department->children)>0)
                         <a href="{{ route('department.index', $department) }}">
@@ -70,8 +69,8 @@
             @endif
         </div>
         
-        <div class="row">
-            <div class="col-12 text-right pr-4 pb-2">&nbsp
+        <div class="row pr-4">
+            <div class="col-12 text-right pb-2">&nbsp
                 @if ($department->user_id == auth()->user()->id)
                 <a href="{{ route('department.create', $department->id) }}" data-toggle="tooltip" data-placement="bottom"
                     title="新增部門"><i class="fas fa-plus-circle u-margin-4"></i></a>

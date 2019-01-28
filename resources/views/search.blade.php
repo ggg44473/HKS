@@ -8,7 +8,7 @@
     @if($departments)
     <div class="col-12">
         <h4>部門</h4>
-        <table class="rwd-table table">
+        <table class="rwd-table table table-hover">
             <thead>
                 <tr class="bg-primary text-light text-center">
                     <th>
@@ -54,7 +54,7 @@
     @if($members)
     <div class="col-12">
         <h4>同事</h4>
-        <table class="rwd-table table ">
+        <table class="rwd-table table table-hover">
             <thead>
                 <tr class="bg-primary text-light text-center">
                     <th>
@@ -100,7 +100,7 @@
     @if($projects)
     <div class="col-12">
         <h4>專案</h4>
-        <table class="rwd-table table ">
+        <table class="rwd-table table table-hover">
             <thead>
                 <tr class="bg-primary text-light text-center">
                     <th>

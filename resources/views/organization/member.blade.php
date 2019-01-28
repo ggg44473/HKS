@@ -1,7 +1,7 @@
 @extends('layouts.master')
 @section('script')
 <script src="{{ asset('js/tooltip.js') }}" defer></script>
-<script src="{{ asset('js/circle-progress.js') }}" defer></script>
+<script src="{{ asset('js/circle-progress.min.js') }}" defer></script>
 <script src="{{ asset('js/circleProgress.js') }}" defer></script>
 @endsection
 @section('title','組織成員')
@@ -34,7 +34,7 @@
                 </form>
             </div>
             {{ $members->links() }}
-            <table class="rwd-table table">
+            <table class="rwd-table table table-hover">
                 <thead>
                     <tr class="bg-primary text-light text-center">
                         <th>追蹤</th>

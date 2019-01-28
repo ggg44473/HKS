@@ -1823,6 +1823,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
@@ -40932,34 +40938,38 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "row justify-content-md-center" }, [
-    _c("div", { staticClass: "col-sm-10" }, [_vm._v("邀請成員")]),
-    _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "col-sm-8" },
-      [
-        _c("multi-list-select", {
-          attrs: {
-            list: _vm.memberList,
-            "option-value": "email",
-            "option-text": "email",
-            "custom-text": _vm.nameAndEmail,
-            "selected-items": _vm.items,
-            placeholder: "請輸入姓名/信箱"
-          },
-          on: { select: _vm.onSelect, searchchange: _vm.printSearchText }
-        })
-      ],
-      1
-    ),
-    _vm._v(" "),
+  return _c("div", [
     _vm._m(0),
     _vm._v(" "),
-    _c("input", {
-      attrs: { type: "hidden", name: "invite" },
-      domProps: { value: _vm.itemsID }
-    })
+    _c("div", { staticClass: "row justify-content-md-center" }, [
+      _c(
+        "div",
+        { staticClass: "col-sm-12" },
+        [
+          _c("multi-list-select", {
+            attrs: {
+              list: _vm.memberList,
+              "option-value": "email",
+              "option-text": "email",
+              "custom-text": _vm.nameAndEmail,
+              "selected-items": _vm.items,
+              placeholder: "請輸入姓名/信箱"
+            },
+            on: { select: _vm.onSelect, searchchange: _vm.printSearchText }
+          })
+        ],
+        1
+      )
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "row justify-content-md-center mt-4" }, [
+      _vm._m(1),
+      _vm._v(" "),
+      _c("input", {
+        attrs: { type: "hidden", name: "invite" },
+        domProps: { value: _vm.itemsID }
+      })
+    ])
   ])
 }
 var staticRenderFns = [
@@ -40967,7 +40977,15 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-sm-2" }, [
+    return _c("div", { staticClass: "row justify-content-md-center" }, [
+      _c("div", { staticClass: "col-sm-12" }, [_vm._v("邀請成員")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-sm-4" }, [
       _c(
         "button",
         { staticClass: "btn btn-primary", attrs: { type: "submit" } },

@@ -102,4 +102,19 @@ trait HasObjectiveTrait
             ]
         ];
     }
+
+    public function countObjective()
+    {
+        return count($this->objectives);
+    }
+
+    public function countKRs()
+    {
+        $sum = 0;
+        foreach ($this->objectives as $objective){
+            $sum += count($objective->keyresults);
+        }
+        
+        return $sum;
+    }
 }

@@ -10,6 +10,7 @@ use App\Objective;
 use App\Charts\SampleChart;
 use App\Http\Requests\ObjectiveRequest;
 use App\Department;
+use App\Project;
 
 class CompanyController extends Controller
 {
@@ -29,14 +30,12 @@ class CompanyController extends Controller
     public function listOKR(Request $request)
     {
         $company = Company::where('id', auth()->user()->company_id)->first();
-        $company['okrs'] = $company? $company['okrs'] = $company->getOkrsWithPage($request)['okrs'] : null;
-
         $okrsWithPage = $company->getOkrsWithPage($request);
+        $company['okrs'] = $okrsWithPage['okrs'];
 
         $data = [
             'user' => auth()->user(),
             'company' => $company,
-            'okrs' => $okrsWithPage['okrs'],
             'pageInfo' => $okrsWithPage['pageInfo'],
             'st_date' => $request->input('st_date', ''),
             'fin_date' => $request->input('fin_date', ''),
@@ -60,11 +59,11 @@ class CompanyController extends Controller
     public function index(Request $request)
     {
         $company = Company::where('id', auth()->user()->company_id)->first();
-        $company['okrs'] = $company? $company->getOkrsWithPage($request)['okrs'] : null;
+        $company['okrs'] = $company ? $company->getOkrsWithPage($request)['okrs'] : null;
 
         $departments = Department::where(['company_id' => auth()->user()->company_id, 'parent_department_id' => null])->get();
         foreach ($departments as $department) {
-            $department['okrs'] = $department ? $department->getOkrsWithPage($request)['okrs']:null;
+            $department['okrs'] = $department ? $department->getOkrsWithPage($request)['okrs'] : null;
         }
 
         $invitations = auth()->user()->invitation->where('model_type', Company::class);
@@ -158,11 +157,8 @@ class CompanyController extends Controller
      */
     public function destroy()
     {
-        $users = User::where('company_id', auth()->user()->company_id)->get();
-        foreach ($users as $user) {
-            $user->update(['company_id' => null, 'department_id' => null]);
-        }
-        auth()->user()->company()->first()->delete();
+        $company = auth()->user()->company;
+        $company->delete();
 
         return redirect()->route('company.index');
     }
@@ -308,11 +304,11 @@ class CompanyController extends Controller
     public function member(Request $request)
     {
         $company = Company::where('id', auth()->user()->company_id)->first();
-        $company['okrs'] = $company? $company->getOkrsWithPage($request)['okrs'] : null;
+        $company['okrs'] = $company ? $company->getOkrsWithPage($request)['okrs'] : null;
 
         $departments = Department::where(['company_id' => auth()->user()->company_id, 'parent_department_id' => null])->get();
         foreach ($departments as $department) {
-            $department['okrs'] = $department ? $department->getOkrsWithPage($request)['okrs']:null;
+            $department['okrs'] = $department ? $department->getOkrsWithPage($request)['okrs'] : null;
         }
 
         $builder = $company->users();
@@ -323,7 +319,7 @@ class CompanyController extends Controller
                 # 判斷value是以 _asc 或者 _desc 结尾來排序
                 if (preg_match('/^(.+)_(asc|desc)$/', $order, $m)) {
                     # 判斷是否為指定的接收的參數
-                    if (in_array($m[1], ['name', 'email', 'department_id','position'])) {   
+                    if (in_array($m[1], ['name', 'email', 'department_id', 'position'])) {   
                         # 開始排序              
                         $builder->orderBy($m[1], $m[2]);
                     }
@@ -338,7 +334,7 @@ class CompanyController extends Controller
             'order' => $request->input('order', ''),
         ]);
 
-       
+
 
         $data = [
             'members' => $pages,
