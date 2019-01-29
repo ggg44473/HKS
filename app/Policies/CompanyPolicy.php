@@ -5,6 +5,7 @@ namespace App\Policies;
 use App\User;
 use App\Company;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use App\Permission;
 
 class CompanyPolicy
 {
@@ -18,18 +19,6 @@ class CompanyPolicy
      * @return mixed
      */
     public function view(User $user, Company $company)
-    {
-        return true;
-    }
-
-    /**
-     * Determine whether the user can view the company.
-     *
-     * @param  \App\User  $user
-     * @param  \App\Company  $company
-     * @return mixed
-     */
-    public function viewCompany(User $user, Company $company)
     {
         return $company->permissions->where('user_id', $user->id)->first();
     }
@@ -67,7 +56,22 @@ class CompanyPolicy
      */
     public function delete(User $user, Company $company)
     {
-        //
+        $role_id = $company->permissions->where('user_id',$user->id)->first()->role_id;
+        return $role_id <= 1; 
+    }
+
+    /**
+     * Determine whether the user can memberSetting the project.
+     *
+     * @param  \App\User  $user
+     * @param  \App\Company  $company
+     * @return mixed
+     */
+    public function memberSetting(User $user, Company $company)
+    {
+        dd(Permission::where(['user_id'=>$user->id, 'model_type'=>Company::class, 'model_id'=>$company->id])->first()->role_id);
+        $role_id = $company->permissions->where('user_id',$user->id)->first()->role_id;
+        return $role_id <= 2;
     }
 
     /**

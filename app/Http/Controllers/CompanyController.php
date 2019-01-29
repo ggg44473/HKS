@@ -11,6 +11,7 @@ use App\Charts\SampleChart;
 use App\Http\Requests\ObjectiveRequest;
 use App\Department;
 use App\Project;
+use App\Permission;
 
 class CompanyController extends Controller
 {
