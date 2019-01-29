@@ -188,5 +188,5 @@ Route::middleware(['verified'])->group(function () {
     Route::post('comments/{comment}', 'CommentsReplyController@reply');
 
     #通知
-    Route::get('/notifications', 'UsersController@notifications');
+    Route::get('/notifications', 'UserController@notifications');
 });
