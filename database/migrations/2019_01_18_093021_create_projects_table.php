@@ -18,6 +18,8 @@ class CreateProjectsTable extends Migration
             $table->string('name');
             $table->string('description')->nullable();
             $table->boolean('isdone')->default('false');
+            $table->integer('company_id')->unsigned();
+            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
             $table->timestamps();
         });
     }

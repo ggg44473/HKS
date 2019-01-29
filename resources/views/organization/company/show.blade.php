@@ -56,42 +56,54 @@
     </div>
 </div>
 
-@if ($company->user_id == auth()->user()->id)
 <div class="row justify-content-center">
     <div class="col-md-10 col-12 text-right align-self-end">
-        <a href="#" data-toggle="modal" data-target="#createDepartment" class="tooltipBtn" data-placement="top" title="新增部門"><i class="fas fa-plus-circle u-margin-4"></i></a>
-        <a href="#" data-toggle="modal" data-target="#inviteMember" class="tooltipBtn" data-placement="top" title="新增成員"><i class="fas fa-user-plus u-margin-4"></i></a>
-        <a href="#" data-toggle="modal" data-target="#editCompany" class="tooltipBtn" data-placement="top" title="編輯組織"><i class="fas fa-edit u-margin-4"></i></a>
-        <a href="#" data-toggle="dropdown" class="tooltipBtn" data-placement="top" title="刪除組織"><i class="fas fa-trash-alt"></i></a>
-        <form method="POST" id="companyDelete" action="{{ route('company.destroy') }}">
-            @csrf
-            {{ method_field('DELETE') }}
-            <div class="dropdown-menu u-padding-16">
-                <div class="row justify-content-center mb-2">
-                    <div class="col-auto text-danger"><i class="fas fa-exclamation-triangle"></i></div>
-                </div>
-                <div class="row">
-                    <div class="col text-center">
-                        刪除組織後，<br>
-                        將失去組織中所有資料！！<br>
-                        確認要刪除組織嗎？<br>
+        @can('create', App\Department::class)
+            <a href="#" data-toggle="modal" data-target="#createDepartment" class="tooltipBtn" data-placement="top" title="新增部門"><i class="fas fa-plus-circle u-margin-4"></i></a>            
+        @endcan
+        @can('memberSetting', $company)
+            <a href="#" data-toggle="modal" data-target="#inviteMember" class="tooltipBtn" data-placement="top" title="新增成員"><i class="fas fa-user-plus u-margin-4"></i></a>            
+        @endcan
+        @can('update', $company)
+            <a href="#" data-toggle="modal" data-target="#editCompany" class="tooltipBtn" data-placement="top" title="編輯組織"><i class="fas fa-edit u-margin-4"></i></a>            
+        @endcan
+        @can('delete', $company)
+            <a href="#" data-toggle="dropdown" class="tooltipBtn" data-placement="top" title="刪除組織"><i class="fas fa-trash-alt"></i></a>
+            <form method="POST" id="companyDelete" action="{{ route('company.destroy') }}">
+                @csrf
+                {{ method_field('DELETE') }}
+                <div class="dropdown-menu u-padding-16">
+                    <div class="row justify-content-center mb-2">
+                        <div class="col-auto text-danger"><i class="fas fa-exclamation-triangle"></i></div>
+                    </div>
+                    <div class="row">
+                        <div class="col text-center">
+                            刪除組織後，<br>
+                            將失去組織中所有資料！！<br>
+                            確認要刪除組織嗎？<br>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center mt-3">
+                        <div class="col-auto text-center pr-2"><button class="btn btn-danger pl-4 pr-4" type="submit">刪除</button></div>
+                        <div class="col-auto text-center pl-2"><a class="btn btn-secondary text-white pl-4 pr-4">取消</a></div>
                     </div>
                 </div>
-                <div class="row justify-content-center mt-3">
-                    <div class="col-auto text-center pr-2"><button class="btn btn-danger pl-4 pr-4" type="submit">刪除</button></div>
-                    <div class="col-auto text-center pl-2"><a class="btn btn-secondary text-white pl-4 pr-4">取消</a></div>
-                </div>
-            </div>
-        </form>
+            </form>
+        @endcan
     </div>
 </div>
-@endif
 
+@can('create', App\Department::class)
 {{-- 新增部門modal --}}
 @include('organization.department.create', ['parent'=>$company, 'self'=>null, 'children'=>$company->departments])
+@endcan
 
+@can('update', $company)
 {{-- 編輯公司modal --}}
 @include('organization.company.edit')
+@endcan
 
+@can('memberSetting', $company)
 {{-- 邀請成員modal --}}
 @include('organization.inviteMember',['id'=>'', 'action'=>route('company.member.invite', $company), 'api'=>route('company.member.search')])
+@endcan

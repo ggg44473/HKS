@@ -21,7 +21,7 @@ class Project extends Model implements HasObjectiveInterface, HasInvitationInter
      * @var array
      */
     protected $fillable = [
-        'name', 'description', 'isdone'
+        'name', 'description', 'isdone', 'company_id'
     ];
 
     public function users()
@@ -31,7 +31,7 @@ class Project extends Model implements HasObjectiveInterface, HasInvitationInter
 
     public function company()
     {
-        return $this->model->where('role_id', 1)->first()->user->belongsTo(Company::class);
+        return $this->belongsTo(Company::class);
     }
 
     public function getOKrRoute()

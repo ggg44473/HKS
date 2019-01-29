@@ -71,20 +71,20 @@
             </div>
         @endif 
     </div>
-    @if (auth()->user()->id == $department->user_id)
+    @can('storeObjective', $department)
         <a href="#" data-toggle="modal" data-target="#objective" class="newObjective"><img src="{{ asset('img/icon/add/lightgreen.svg') }}" alt=""></a>        
-    @endif
-    <div class="modal {{ count($errors) == 0 ? 'fade' : '' }}" id="objective" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">
-                        <span>&times;</span>
-                    </button>
+        <div class="modal {{ count($errors) == 0 ? 'fade' : '' }}" id="objective" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span>&times;</span>
+                        </button>
+                    </div>
+                    @include('okrs.create', ['route'=>route('department.objective.store', $department->id)])
                 </div>
-                @include('okrs.create', ['route'=>route('department.objective.store', $department->id)])
             </div>
         </div>
-    </div>
+    @endcan
 </div>
 @endsection

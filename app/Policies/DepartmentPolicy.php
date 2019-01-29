@@ -10,6 +10,11 @@ class DepartmentPolicy
 {
     use HandlesAuthorization;
 
+    public function before($user, $ability)
+    {
+        if ($user->isSuperAdmin()) return true;
+    }
+
     /**
      * Determine whether the user can view the department.
      *
@@ -19,7 +24,7 @@ class DepartmentPolicy
      */
     public function view(User $user, Department $department)
     {
-        //
+        return $department->company == $user->company;
     }
 
     /**
@@ -30,7 +35,8 @@ class DepartmentPolicy
      */
     public function create(User $user)
     {
-        //
+        if ($user->role($user->company)->id <= 2) return true;
+        if ($user->department_id != null) return $user->role($user->department)->id <= 2;
     }
 
     /**
@@ -42,7 +48,8 @@ class DepartmentPolicy
      */
     public function update(User $user, Department $department)
     {
-        //
+        if($user->role($department))
+        return $user->role($department)->id <= 2;
     }
 
     /**
@@ -54,8 +61,36 @@ class DepartmentPolicy
      */
     public function delete(User $user, Department $department)
     {
-        //
+        if($user->role($department))
+        return $user->role($department)->id <= 1;
     }
+
+    /**
+     * Determine whether the user can memberSetting the project.
+     *
+     * @param  \App\User  $user
+     * @param  \App\Department  $department
+     * @return mixed
+     */
+    public function memberSetting(User $user, Department $department)
+    {
+        if($user->role($department))
+        return $user->role($department)->id <= 2;
+    }
+
+    /**
+     * Determine whether the user can store Objective for the department.
+     *
+     * @param  \App\User  $user
+     * @param  \App\Department  $department
+     * @return mixed
+     */
+    public function storeObjective(User $user, Department $department)
+    {
+        if($user->role($department))
+        return $user->role($department)->id <= 3;
+    }
+
 
     /**
      * Determine whether the user can restore the department.

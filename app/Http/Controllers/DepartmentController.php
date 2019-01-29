@@ -27,6 +27,8 @@ class DepartmentController extends Controller
      */
     public function listOKR(Request $request, Department $department)
     {
+        $this->authorize('view', $department);
+
         $okrsWithPage = $department->getOkrsWithPage($request);
         $department['okrs'] = $okrsWithPage['okrs'];
 
@@ -44,6 +46,8 @@ class DepartmentController extends Controller
 
     public function storeObjective(ObjectiveRequest $request, Department $department)
     {
+        $this->authorize('storeObjective', $department);
+
         $objective = $department->addObjective($request);
         return redirect()->to(url()->previous() . '#oid-' . $objective->id);
     }
@@ -55,6 +59,8 @@ class DepartmentController extends Controller
      */
     public function index(Request $request, Department $department)
     {
+        $this->authorize('view', $department);
+
         $data['parent'] = $department->parent;
         $department['okrs'] = $department->getOkrsWithPage($request)['okrs'];
         $data['department'] = $department;
@@ -71,40 +77,17 @@ class DepartmentController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('create', Department::class);
+
         $attr['name'] = $request->department_name;
         $attr['description'] = $request->department_description;
         $attr['user_id'] = auth()->user()->id;
         $attr['company_id'] = auth()->user()->company_id;
-        if (substr($request->department_parent, 0, 4) == "self" || substr($request->department_parent, 0, 10) === "department") {
-            $attr['parent_department_id'] = preg_replace('/[^\d]/', '', $request->department_parent);
-        }
+        
         $department = Department::create($attr);
-
         $department->addAvatar($request);
 
         return redirect()->route('company.index');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  Department $department
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Department $department)
-    {
-        return view('organization.department.edit', ['department' => $department]);
     }
 
     /**
@@ -116,6 +99,8 @@ class DepartmentController extends Controller
      */
     public function update(Request $request, Department $department)
     {
+        $this->authorize('update', $department);
+
         $attr['name'] = $request->department_name;
         $attr['description'] = $request->department_description;
         $department->update($attr);
@@ -133,27 +118,14 @@ class DepartmentController extends Controller
      */
     public function destroy(Department $department)
     {
+        $this->authorize('delete', $department);
+
         foreach ($department->users as $user) {
             $user->update(['department_id' => null]);
         }
         $department->delete();
 
         return redirect()->route('company.index');
-    }
-
-    /**
-     * Show the form for inviting a new member.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function memberSetting(Department $department)
-    {
-        $data = [
-            'department'=>$department,
-            'members'=>$department->users,
-        ];
-
-        return view('organization.department.memberSetting', $data);
     }
 
     /**
@@ -177,6 +149,8 @@ class DepartmentController extends Controller
      */
     public function storeMember(Request $request, Department $department)
     {
+        $this->authorize('memberSetting', $department);
+
         $userIds = preg_split("/[,]+/", $request->invite);
         foreach($userIds as $userId){
             $user = User::where('id', $userId)->first();
@@ -184,8 +158,9 @@ class DepartmentController extends Controller
                 $user->update(['department_id' => $department->id]);
             }
         }
+        $department->createPermission(4);
         
-        return redirect()->route('department.member.setting', $department);
+        return redirect()->route('department.member', $department);
     }
 
     /**
@@ -196,6 +171,8 @@ class DepartmentController extends Controller
      */
     public function updateMember(Request $request, Department $department)
     {
+        $this->authorize('memberSetting', $department);
+
         foreach ($department->users as $member) {
             $attr['department_id'] = $request->input('department' . $member->id);
             $attr['position'] = $request->input('position' . $member->id);
@@ -213,6 +190,8 @@ class DepartmentController extends Controller
      */
     public function destroyMember(Department $department, User $member)
     {
+        $this->authorize('memberSetting', $department);
+        Permission::where(['user_id'=>$member->id,'model_type'=>Department::class,'model_id'=>$department->id])->delete();
         $member->update(['department_id'=>null, 'position'=>null]);
 
         return redirect()->route('department.member.setting', $department);
@@ -225,6 +204,8 @@ class DepartmentController extends Controller
      */
     public function member(Request $request, Department $department)
     {
+        $this->authorize('view', $department);
+
         $department['okrs'] = $department->getOkrsWithPage($request)['okrs'];
 
         $builder = $department->users();

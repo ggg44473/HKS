@@ -124,5 +124,5 @@
 
 {{-- 邀請成員Modal --}}
 @can('memberSetting', $project)    
-@include('project.memberSetting')
+@include('project.inviteMember')
 @endcan

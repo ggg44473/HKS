@@ -19,21 +19,27 @@
             <button class="btn btn-search my-2 my-sm-0" type="submit" ><i class="fas fa-search pt-1"></i></button>
             <a class="nav-item nav-link text-muted mt-auto mb-auto btn-search-sm" data-toggle="modal" data-target="#searchModal"><i class="fas fa-search"></i></a>
         </form>
-        <a class="nav-item nav-link text-muted mt-auto mb-auto" href="#"><i class="fas fa-bell"></i></a>
-        <a  data-toggle="dropdown" class="nav-item pl-2 pl-md-3 mt-auto mb-auto"><img src="{{ auth()->user()->getAvatar() }}" class="avatar"></a>
-        <a id="navbarDropdown" class="nav-item dropdown nav-link dropdown-toggle mt-auto mb-auto" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>     
-            <span class="nav-name">{{ Auth::user()->name }}</span><span class="caret"></span>
-        </a>
-
-        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="{{ route('user.settings', auth()->user()->id) }}">帳號設定</a>
-            <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                    document.getElementById('logout-form').submit();">
-                登出
+        <div class="btn-group">
+            <a data-toggle="dropdown" class="nav-item nav-link text-muted mt-auto mb-auto" href="#"><i class="fas fa-bell"></i></a>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="{{ route('user.settings', auth()->user()->id) }}">c8 c8 c8 </a>
+            </div>
+        </div>
+        <div class="btn-group">
+            <a href="#" data-toggle="dropdown" class="nav-item pl-2 pl-md-3 mt-auto mb-auto dropdown-toggle text-black-50"><img src="{{ auth()->user()->getAvatar() }}" class="avatar">
+                <span class="nav-name">{{ Auth::user()->name }}</span>
             </a>
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                @csrf
-            </form>
+
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="{{ route('user.settings', auth()->user()->id) }}">帳號設定</a>
+                <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                        document.getElementById('logout-form').submit();">
+                    登出
+                </a>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
+            </div>
         </div>
     </div>
 </nav>

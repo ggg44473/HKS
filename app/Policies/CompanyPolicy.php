@@ -43,8 +43,7 @@ class CompanyPolicy
      */
     public function update(User $user, Company $company)
     {
-        $role_id = $company->permissions->where('user_id',$user->id)->first()->role_id;
-        return $role_id <= 2;        
+        return $user->role($company)->id <= 2;
     }
 
     /**
@@ -56,12 +55,11 @@ class CompanyPolicy
      */
     public function delete(User $user, Company $company)
     {
-        $role_id = $company->permissions->where('user_id',$user->id)->first()->role_id;
-        return $role_id <= 1; 
+        return $user->role($company)->id <= 1;
     }
 
     /**
-     * Determine whether the user can memberSetting the project.
+     * Determine whether the user can memberSetting the company.
      *
      * @param  \App\User  $user
      * @param  \App\Company  $company
@@ -69,9 +67,19 @@ class CompanyPolicy
      */
     public function memberSetting(User $user, Company $company)
     {
-        dd(Permission::where(['user_id'=>$user->id, 'model_type'=>Company::class, 'model_id'=>$company->id])->first()->role_id);
-        $role_id = $company->permissions->where('user_id',$user->id)->first()->role_id;
-        return $role_id <= 2;
+        return $user->role($company)->id <= 2;
+    }
+
+    /**
+     * Determine whether the user can store Objective for the project.
+     *
+     * @param  \App\User  $user
+     * @param  \App\Company  $company
+     * @return mixed
+     */
+    public function storeObjective(User $user, Company $company)
+    {
+        return $user->role($company)->id <= 3;
     }
 
     /**

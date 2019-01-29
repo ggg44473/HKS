@@ -93,8 +93,6 @@ Route::middleware(['verified'])->group(function () {
     Route::get('organization/company/okr', 'CompanyController@listOKR')->name('company.okr');
     //公司新增O
     Route::post('organization/company/{company}/objective/store', 'CompanyController@storeObjective')->name('company.objective.store');
-    //公司成員設定頁面
-    Route::get('organization/company/member/setting', 'CompanyController@memberSetting')->name('company.member.setting');
     //公司成員頁面
     Route::get('organization/company/member', 'CompanyController@member')->name('company.member');
     //發送邀請

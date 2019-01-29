@@ -44,6 +44,9 @@
                         <th>部門</th>
                         <th>職稱</th>
                         <th>權限</th>
+                        @can('memberSetting', $company)
+                            <th>設定</th>                                
+                        @endcan
                     </tr>
                 </thead>
                 <tbody>
@@ -67,9 +70,34 @@
                         </td>
                         <td data-th="姓名">{{ $member->name }}</td>
                         <td data-th="信箱">{{ $member->email }}</td>
-                        <td data-th="部門">{{ $member->department? $member->department->name:'-' }}</td>
-                        <td data-th="職稱">{{ $member->position }}</td>
-                        <td data-th="權限">一般成員</td>
+                        @cannot('memberSetting', $company)
+                            <td data-th="部門">{{ $member->department? $member->department->name:$company->name }}</td>
+                            <td data-th="職稱">{{ $member->position }}</td>
+                            <td data-th="權限">{{ $member->role($company)->name }}</td>
+                        @endcannot
+                        @can('memberSetting', $company)
+                            <td data-th="部門">
+                                <select name="department{{ $member->id }}" id="department{{ $member->id }}" class="form-control">
+                                    <option value="{{$company->id}}">{{ $company->name }}</option>
+                                    @foreach ($departments as $department)
+                                    @if ($department->id == $member->department_id)
+                                    <option value="{{ $department->id }}" selected>{{ $department->name }}</option>
+                                    @else
+                                    <option value="{{ $department->id }}">{{ $department->name }}</option>
+                                    @endif
+                                    @endforeach
+                                </select>
+                            </td>
+                            <td data-th="職稱">
+                                <input name="position{{ $member->id }}" type="text" class="form-control" value="{{ $member->position }}">
+                            </td>
+                            <td data-th="權限">{{ $member->role($company)->name }}</td>
+                            <td data-th="設定">
+                                <a href="#" onclick="document.getElementById('memberDelete{{ $member->id }}').submit()">
+                                    <i class="fas fa-trash-alt text-danger"></i>
+                                </a>
+                            </td>
+                        @endcan
                     </tr>
                     @endforeach
                 </tbody>

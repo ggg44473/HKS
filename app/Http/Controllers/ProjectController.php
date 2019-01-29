@@ -56,6 +56,7 @@ class ProjectController extends Controller
     {
         $attr['name'] = $request->project_name;
         $attr['description'] = $request->project_description;
+        $attr['company_id'] = auth()->user()->company_id;
 
         $project = Project::create($attr);
         $project->addAvatar($request);
@@ -276,7 +277,7 @@ class ProjectController extends Controller
     public function destroyMember(Project $project, User $member)
     {
         $this->authorize('memberSetting', $project);
-
+        Permission::where(['user_id'=>$member->id,'model_type'=>Project::class,'model_id'=>$project->id])->delete();
         $project->users()->detach($member);
 
         return redirect()->route('project.member', $project);

@@ -21,7 +21,6 @@ class CompanyController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->authorizeResource(Company::class, 'company');
     }
 
     /**
@@ -32,6 +31,8 @@ class CompanyController extends Controller
     public function listOKR(Request $request)
     {
         $company = Company::where('id', auth()->user()->company_id)->first();
+        $this->authorize('view', $company);
+
         $okrsWithPage = $company->getOkrsWithPage($request);
         $company['okrs'] = $okrsWithPage['okrs'];
 
@@ -49,6 +50,8 @@ class CompanyController extends Controller
 
     public function storeObjective(ObjectiveRequest $request, Company $company)
     {
+        $this->authorize('storeObjective', $company);
+
         $objective = $company->addObjective($request);
         return redirect()->to(url()->previous() . '#oid-' . $objective->id);
     }
@@ -87,6 +90,8 @@ class CompanyController extends Controller
      */
     public function store(CompanyRequest $request)
     {
+        $this->authorize('create', Company::class);
+
         $attr['name'] = $request->input('company_name');
         $attr['description'] = $request->input('company_description');
         $attr['user_id'] = auth()->user()->id;
@@ -101,20 +106,6 @@ class CompanyController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function edit()
-    {
-        $company = auth()->user()->company()->first();
-        $data = [
-            'company' => $company,
-        ];
-        return view('organization.company.edit', $data);
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -123,6 +114,8 @@ class CompanyController extends Controller
     public function update(Request $request)
     {
         $company = Company::find(auth()->user()->company_id);
+        $this->authorize('update', $company);
+
         $attr['name'] = $request->company_name;
         $attr['description'] = $request->company_description;
         $company->update($attr);
@@ -140,25 +133,11 @@ class CompanyController extends Controller
     public function destroy()
     {
         $company = auth()->user()->company;
+        $this->authorize('delete', $company);
+
         $company->delete();
 
         return redirect()->route('company.index');
-    }
-
-    /**
-     * Show the form for inviting a new member.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function memberSetting()
-    {
-        $data = [
-            'company' => auth()->user()->company,
-            'members' => User::where([['company_id', auth()->user()->company_id], ['id', '!=', auth()->user()->id]])->get(),
-            'departments' => Department::where('company_id', auth()->user()->company_id)->get(),
-        ];
-
-        return view('organization.company.memberSetting', $data);
     }
 
     /**
@@ -170,9 +149,10 @@ class CompanyController extends Controller
      */
     public function inviteMember(Request $request, Company $company)
     {
+        $this->authorize('memberSetting', $company);
         $company->sendInvitation($request);
 
-        return redirect()->route('company.member.setting', $company);
+        return redirect()->route('company.member', $company);
     }
 
     /**
@@ -184,6 +164,7 @@ class CompanyController extends Controller
      */
     public function cancelInvite(Company $company, User $member)
     {
+        $this->authorize('memberSetting', $company);
         $company->deleteInvitation($member);
 
         return redirect()->route('company.member.setting', $company);
@@ -213,6 +194,7 @@ class CompanyController extends Controller
     public function agreeInvite(Company $company, User $member)
     {
         $company->deleteInvitation($member);
+        $company->createPermission(4);
         $member->update(['company_id' => $company->id]);
 
         return redirect()->route('company.index');
@@ -239,12 +221,13 @@ class CompanyController extends Controller
      */
     public function storeMember(Request $request)
     {
+        $this->authorize('memberSetting', $company);
         $userIds = preg_split("/[,]+/", $request->invite);
         foreach ($userIds as $userId) {
             User::where('id', $userId)->update(['company_id' => auth()->user()->company_id]);
         }
 
-        return redirect()->route('company.member.setting');
+        return redirect()->route('company.member');
     }
 
     /**
@@ -255,6 +238,7 @@ class CompanyController extends Controller
      */
     public function updateMember(Request $request)
     {
+        $this->authorize('memberSetting', $company);
         $members = User::where('company_id', auth()->user()->company_id)->get();
         foreach ($members as $member) {
             $attr['department_id'] = $request->input('department' . $member->id);
@@ -262,7 +246,7 @@ class CompanyController extends Controller
             $member->update($attr);
         }
 
-        return redirect()->route('company.member.setting');
+        return redirect()->route('company.member');
     }
 
     /**
@@ -273,9 +257,11 @@ class CompanyController extends Controller
      */
     public function destroyMember(User $member)
     {
+        $this->authorize('memberSetting', $company);
+        Permission::where(['user_id' => $member->id, 'model_type' => Company::class, 'model_id' => $company->id])->delete();
         $member->update(['company_id' => null, 'department_id' => null, 'position' => null]);
 
-        return redirect()->route('company.member.setting');
+        return redirect()->route('company.member');
     }
 
     /**
@@ -286,6 +272,7 @@ class CompanyController extends Controller
     public function member(Request $request)
     {
         $company = Company::where('id', auth()->user()->company_id)->first();
+        $this->authorize('view', $company);
         $company['okrs'] = $company ? $company->getOkrsWithPage($request)['okrs'] : null;
 
         $departments = Department::where(['company_id' => auth()->user()->company_id, 'parent_department_id' => null])->get();

@@ -73,19 +73,32 @@
                             <td data-th="部門">{{ $member->department? $member->department->name:'-' }}</td>
                             <td data-th="職稱">{{ $member->position }}</td>
                             @can('memberSetting', $project)
-                            <td data-th="權限">{{ $member->role($project) }}</td>
+                            <td data-th="權限">{{ $member->role($project)->name }}</td>
                             <td data-th="設定">
-                                <a href="#" onclick="document.getElementById('memberDelete{{ $member->id }}').submit()"><i
-                                        class="fas fa-trash-alt text-danger"></i></a href="#">
+                                <a href="#" data-toggle="dropdown" class="tooltipBtn text-danger"><i class="fas fa-trash-alt"></i></a>
                                 <form name="memberDelete{{ $member->id }}" method="POST" id="memberDelete{{ $member->id }}"
-                                    action="{{ route('project.member.destroy', [$project, $member]) }}">
+                                        action="{{ route('project.member.destroy', [$project, $member]) }}">
                                     @csrf
                                     {{ method_field('PATCH') }}
+                                    <div class="dropdown-menu u-padding-16">
+                                        <div class="row justify-content-center mb-2">
+                                            <div class="col-auto text-danger"><i class="fas fa-exclamation-triangle"></i></div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col text-center">
+                                                確認要刪除成員{{ $member->name }}嗎？<br>
+                                            </div>
+                                        </div>
+                                        <div class="row justify-content-center mt-3">
+                                            <div class="col-auto text-center pr-2"><button class="btn btn-danger pl-4 pr-4" type="submit">刪除</button></div>
+                                            <div class="col-auto text-center pl-2"><a class="btn btn-secondary text-white pl-4 pr-4">取消</a></div>
+                                        </div>
+                                    </div>
                                 </form>
                             </td>
                             @endcan
                             @cannot('memberSetting', $project)
-                            <td data-th="權限">{{ $member->role($project) }}</td>                                
+                            <td data-th="權限">{{ $member->role($project)->name }}</td>                                
                             @endcannot
                         </tr>
                         @endforeach

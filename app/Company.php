@@ -31,7 +31,7 @@ class Company extends Model implements HasObjectiveInterface, HasInvitationInter
 
     public function projects()
     {
-        return $this->hasManyThrough(Project::class, User::class, 'company_id', 'user_id');
+        return $this->hasMany(Project::class);
     }
 
     public function getOKrRoute()
@@ -56,9 +56,9 @@ class Company extends Model implements HasObjectiveInterface, HasInvitationInter
 
     public function delete()
     {   
-        foreach ($this->projects as $project) {
-            $project->delete();
-        }
+        // foreach ($this->projects as $project) {
+        //     $project->delete();
+        // }
         foreach ($this->users as $user) {
             $user->update(['company_id' => null, 'department_id' => null]);
         }

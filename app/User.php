@@ -45,7 +45,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasObjectiveInter
 
     public function actions()
     {
-        return $this->hasMany('App\Action','user_id');
+        return $this->hasMany('App\Action', 'user_id');
     }
 
     public function company()
@@ -80,6 +80,19 @@ class User extends Authenticatable implements MustVerifyEmail, HasObjectiveInter
 
     public function role($model)
     {
-        return $model->model()->where('user_id', $this->id)->first()->role->name;
+        $attr['user_id'] = $this->id;
+        $attr['model_type'] = get_class($model);
+        $attr['model_id'] = $model->id;
+        $permission = Permission::where($attr)->first();
+        if ($permission != null) return $permission->role;
+        else return null;
+    }
+
+    public function isSuperAdmin()
+    {
+        $attr['user_id'] = $this->id;
+        $attr['model_type'] = Company::class;
+
+        return Permission::where($attr)->first()->role->id <= 2;
     }
 }

@@ -42,7 +42,7 @@ class ProjectPolicy
      */
     public function create(User $user)
     {
-        return true;
+        return $user->company_id;
     }
 
     /**
@@ -54,8 +54,7 @@ class ProjectPolicy
      */
     public function update(User $user, Project $project)
     {
-        $role_id = $project->permissions->where('user_id',$user->id)->first()->role_id;
-        return $role_id <= 2;
+        return $user->role($project)->id <= 2;
     }
 
     /**
@@ -67,8 +66,7 @@ class ProjectPolicy
      */
     public function delete(User $user, Project $project)
     {
-        $role_id = $project->permissions->where('user_id',$user->id)->first()->role_id;
-        return $role_id == 1;
+        return $user->role($project)->id == 1;
     }
 
     /**
@@ -80,8 +78,7 @@ class ProjectPolicy
      */
     public function done(User $user, Project $project)
     {
-        $role_id = $project->permissions->where('user_id',$user->id)->first()->role_id;
-        return $role_id <= 2;
+        return $user->role($project)->id <= 2;
     }
 
     /**
@@ -93,8 +90,7 @@ class ProjectPolicy
      */
     public function memberSetting(User $user, Project $project)
     {
-        $role_id = $project->permissions->where('user_id',$user->id)->first()->role_id;
-        return $role_id <= 2;
+        return $user->role($project)->id <= 2;
     }
 
     /**
@@ -106,8 +102,7 @@ class ProjectPolicy
      */
     public function storeObjective(User $user, Project $project)
     {
-        $role_id = $project->permissions->where('user_id',$user->id)->first()->role_id;
-        return $role_id <= 3;
+        return $user->role($project)->id <= 3;
     }
 
     /**
