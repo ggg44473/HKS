@@ -12,6 +12,8 @@ use App\Company;
 use App\Policies\CompanyPolicy;
 use App\Department;
 use App\Policies\DepartmentPolicy;
+use App\Action;
+use App\Policies\ActionPolicy;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -26,6 +28,7 @@ class AuthServiceProvider extends ServiceProvider
         Company::class => CompanyPolicy ::class,
         Department::class => DepartmentPolicy::class,
         Project::class => ProjectPolicy::class,
+        Action::class => ActionPolicy::class,
     ];
 
     /**
@@ -41,5 +44,6 @@ class AuthServiceProvider extends ServiceProvider
         Gate::resource('departments', 'DepartmentPolicy');
         Gate::resource('projects', 'ProjectPolicy');
         Gate::resource('users', 'UserPolicy');
+        Gate::resource('actions', 'ActionPolicy');
     }
 }

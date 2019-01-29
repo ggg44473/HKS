@@ -6,6 +6,7 @@ use App\User;
 use App\Company;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use App\Permission;
+use App\Action;
 
 class CompanyPolicy
 {

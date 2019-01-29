@@ -10,7 +10,7 @@
             <span class="badge badge-pill badge-secondary">關聯KR : {{$action->keyresult->title}}</span>
         </div>
         <div class="col">
-            @if(auth()->user()->id== $action->user_id)
+            @can('update', $action)
             <a class="btn-group mt-2 mr-2 text-success float-right" href="#" data-toggle="dropdown" aria-haspopup="true"
                 aria-expanded="false"><i class="fas fa-pencil-alt"></i></a>
             <div class="dropdown-menu">
@@ -28,7 +28,7 @@
                     {{ method_field('DELETE') }}
                 </form>
             </div>
-            @endif
+            @endcan            
         </div>
     </div>
     <div class="row align-items-center mb-4">

@@ -27,6 +27,8 @@ class ActionsController extends Controller
 
     public function create(Objective $objective)
     {
+        $this->authorize('storeObjective', $objective->model);       
+
         $priorities = Priority::all();
         $user = User::where('id', '=', auth()->user()->id)->first();
         $keyresults = KeyResult::where('objective_id', '=', $objective->id)->get();
@@ -42,6 +44,8 @@ class ActionsController extends Controller
 
     public function store(ActionRequest $request)
     {
+        $this->authorize('storeObjective', KeyResult::find($request->krs_id)->objective->model);       
+
         $attr['user_id'] = auth()->user()->id;
         $attr['related_kr'] = $request->input('krs_id');
         $attr['priority'] = $request->input('priority');
@@ -77,6 +81,8 @@ class ActionsController extends Controller
 
     public function edit(Action $action)
     {
+        $this->authorize('update', $action);
+
         $priorities = Priority::all();
         $user = User::where('id', '=', auth()->user()->id)->first();
 
@@ -101,6 +107,7 @@ class ActionsController extends Controller
 
     public function update(ActionRequest $request, Action $action)
     {
+        $this->authorize('update', $action);
         
         if ($request->input('invite') && $request->input('invite') != $action->user_id){
             $action->sendInvitation($request);
@@ -125,18 +132,24 @@ class ActionsController extends Controller
 
     public function destroy(Action $action)
     {
+        $this->authorize('delete', $action);
+
         $action->delete();
         return redirect()->back();
     }
 
     public function destroyFile(Action $action, Media $media)
     {
+        $this->authorize('delete', $action);
+
         $media->delete();
         return redirect()->route('actions.edit', $action);
     }
 
     public function done(Action $action)
     {
+        $this->authorize('update', $action);
+
         $act = Action::find($action->id);
         $act->isdone = 'true';
         $act->save();

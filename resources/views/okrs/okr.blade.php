@@ -130,14 +130,16 @@
 
     <div class="collapse" id="Action{{ $okr['objective']->id }}">
         <div class="card card-body">
-            @if($okr['keyresults']->toArray())
-            <a class="btn btn-success mb-3" href="{{ route('actions.create',$okr['objective']->id) }}"><i class="fa fa-plus fa-sm"></i>
-                Action</a>
-            @else
-            <button type="button" class="btn btn-secondary" disabled><i class="fa fa-lock fa-sm"></i> 請先新增 Key Results
-                (關鍵指標)</button>
-            @endif
-            @include('okrs.listaction',$okr)
+            @can('storeObjective', $owner)
+                @if($okr['keyresults']->toArray())
+                <a class="btn btn-success mb-3" href="{{ route('actions.create',$okr['objective']->id) }}"><i class="fa fa-plus fa-sm"></i>
+                    Action</a>
+                @else
+                <button type="button" class="btn btn-secondary" disabled><i class="fa fa-lock fa-sm"></i> 請先新增 Key Results
+                    (關鍵指標)</button>
+                @endif
+                @include('okrs.listaction',$okr)
+            @endcan
         </div>
     </div>
     <div class="collapse" id="Msg{{ $okr['objective']->id }}">
