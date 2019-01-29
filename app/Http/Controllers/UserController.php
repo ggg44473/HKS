@@ -165,5 +165,20 @@ class UserController extends Controller
         //
     }
 
+    public function notifications()
+    {
+        return auth()->user()->unreadNotifications()->limit(10)->get()->toArray();
+    }
 
+    public function readAllNotification() {
+        auth()->user()->unreadNotifications->markAsRead();
+        return redirect()->back();
+    }
+
+    public function listNotification() {
+        $data = [
+            'notifications' => auth()->user()->notifications()->get(),
+        ];
+        return view('user.notifications' , $data);
+    }
 }

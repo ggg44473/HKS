@@ -12,6 +12,12 @@ class InviteNotification extends Notification implements ShouldQueue
     use Queueable;
 
     private $invitation;
+    public $userName;
+    public $userId;
+    public $modelType;
+    public $model;
+    public $modelName;
+
     /**
      * Create a new notification instance.
      *
@@ -20,6 +26,12 @@ class InviteNotification extends Notification implements ShouldQueue
     public function __construct($invitation)
     {
         $this->invitation = $invitation;
+
+        $this->userName = $this->invitation->user->name;
+        $this->userId = $this->invitation->user->id;
+        $this->modelType = substr($this->invitation->model_type, 4);
+        $this->model = $this->invitation->model;
+        $this->modelName = $this->model->name ?? $this->model->title;
     }
 
     /**
@@ -30,7 +42,8 @@ class InviteNotification extends Notification implements ShouldQueue
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        // return ['mail', 'database', 'broadcast'];
+        return ['database', 'broadcast'];
     }
 
     /**
@@ -41,16 +54,10 @@ class InviteNotification extends Notification implements ShouldQueue
      */
     public function toMail($notifiable)
     {
-        $userName = $this->invitation->user->name;
-        $userId = $this->invitation->user->id;
-        $modelType = substr($this->invitation->model_type, 4);
-        $model = $this->invitation->model;
-        $modelName = $model->name ?? $model->title;
-
         return (new MailMessage)
-            ->greeting('Dear ' . $userName)
-            ->line('You have been invited into ' . $modelType . ' ' . $modelName)
-            ->action('Go to see the invitation', $model->getInviteUrl($userId))
+            ->greeting('Dear ' . $this->userName)
+            ->line('You have been invited into ' . $this->modelType . ' ' . $this->modelName)
+            ->action('Go to see the invitation', $this->model->getInviteUrl($this->userId))
             ->line('You care your goals, we care you.');
     }
 
@@ -63,7 +70,13 @@ class InviteNotification extends Notification implements ShouldQueue
     public function toArray($notifiable)
     {
         return [
-            //
+            'id' => $this->id,
+            'read_at' => null,
+            'data' => [
+                'message' => '您被邀請至' . $this->modelType . ' ' . $this->modelName,
+                'icon' => $this->model->getAvatar(),
+                'link' => $this->model->getInviteUrl($this->userId),
+            ],
         ];
     }
 }

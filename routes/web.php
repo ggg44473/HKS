@@ -180,4 +180,9 @@ Route::middleware(['verified'])->group(function () {
 
     # 留言
     Route::post('comments/{comment}', 'CommentsReplyController@reply');
+
+    #通知
+    Route::get('/notifications', 'UserController@notifications');
+    Route::get('/notifications/read/all', 'UserController@readAllNotification');
+    Route::get('/notifications/all', 'UserController@listNotification')->name('user.notifications');
 });
