@@ -20,6 +20,7 @@ class CompanyController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->authorizeResource(Company::class, 'company');
     }
 
     /**
@@ -78,16 +79,6 @@ class CompanyController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  App\Http\Requests\CompanyRequest  $request
@@ -101,21 +92,11 @@ class CompanyController extends Controller
         $company = Company::create($attr);
 
         $company->addAvatar($request);
+        $company->createPermission(1);
 
         auth()->user()->update(['company_id' => $company->id]);
 
         return redirect()->route('company.index');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
     }
 
     /**
@@ -333,8 +314,6 @@ class CompanyController extends Controller
         $pages = $builder->paginate(10)->appends([
             'order' => $request->input('order', ''),
         ]);
-
-
 
         $data = [
             'members' => $pages,

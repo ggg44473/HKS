@@ -23,6 +23,18 @@ class ProjectPolicy
     }
 
     /**
+     * Determine whether the user can view the project.
+     *
+     * @param  \App\User  $user
+     * @param  \App\Project  $project
+     * @return mixed
+     */
+    public function viewProject(User $user, Project $project)
+    {
+        return $project->permissions->where('user_id', $user->id)->first();
+    }
+
+    /**
      * Determine whether the user can create projects.
      *
      * @param  \App\User  $user
@@ -42,7 +54,7 @@ class ProjectPolicy
      */
     public function update(User $user, Project $project)
     {
-        $role_id = $project->model->where('user_id',$user->id)->first()->role_id;
+        $role_id = $project->permissions->where('user_id',$user->id)->first()->role_id;
         return $role_id <= 2;
     }
 
@@ -55,7 +67,7 @@ class ProjectPolicy
      */
     public function delete(User $user, Project $project)
     {
-        $role_id = $project->model->where('user_id',$user->id)->first()->role_id;
+        $role_id = $project->permissions->where('user_id',$user->id)->first()->role_id;
         return $role_id == 1;
     }
 
@@ -68,7 +80,7 @@ class ProjectPolicy
      */
     public function done(User $user, Project $project)
     {
-        $role_id = $project->model->where('user_id',$user->id)->first()->role_id;
+        $role_id = $project->permissions->where('user_id',$user->id)->first()->role_id;
         return $role_id <= 2;
     }
 
@@ -81,8 +93,21 @@ class ProjectPolicy
      */
     public function memberSetting(User $user, Project $project)
     {
-        $role_id = $project->model->where('user_id',$user->id)->first()->role_id;
+        $role_id = $project->permissions->where('user_id',$user->id)->first()->role_id;
         return $role_id <= 2;
+    }
+
+    /**
+     * Determine whether the user can store Objective for the project.
+     *
+     * @param  \App\User  $user
+     * @param  \App\Project  $project
+     * @return mixed
+     */
+    public function storeObjective(User $user, Project $project)
+    {
+        $role_id = $project->permissions->where('user_id',$user->id)->first()->role_id;
+        return $role_id <= 3;
     }
 
     /**

@@ -4,11 +4,11 @@
         <div class="row">
             <div class="col-md-12 ml-auto text-right">
                 <span class="font-weight-light pl-2 pr-4">{{ $okr['objective']->started_at }}~{{ $okr['objective']->finished_at }}</span>
-                @if (auth()->user()->id == $admin)
+                {{-- @if (auth()->user()->id == $admin) --}}
                 <a class="close okr-close-btn">
                     <i class="far fa-edit"></i>
                 </a>
-                @endif
+                {{-- @endif --}}
             </div>
         </div>
     </div>
@@ -93,13 +93,13 @@
             @endforeach
         </div>
     </div>
-    @if (auth()->user()->id == $admin)
+    {{-- @if (auth()->user()->id == $admin) --}}
     <div class="col-md-10 offset-md-2">
         <div class="row">
             @include('okrs.newkr',$okr['objective'])
         </div>
     </div>
-    @endif
+    {{-- @endif --}}
 </div>
 
 <div class="card-footer text-muted mt-3">

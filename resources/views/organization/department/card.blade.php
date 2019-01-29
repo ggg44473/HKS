@@ -71,21 +71,42 @@
         
         <div class="row pr-4">
             <div class="col-12 text-right pb-2">&nbsp
-                @if ($department->user_id == auth()->user()->id)
-                <a href="{{ route('department.create', $department->id) }}" data-toggle="tooltip" data-placement="bottom"
-                    title="新增部門"><i class="fas fa-plus-circle u-margin-4"></i></a>
-                <a href="{{ route('department.member.setting', $department) }}" data-toggle="tooltip" data-placement="bottom"
-                    title="新增成員"><i class="fas fa-user-plus u-margin-4"></i></a>
-                <a href="{{ route('department.edit', $department->id) }}" data-toggle="tooltip" data-placement="bottom"
-                    title="編輯部門"><i class="fas fa-edit u-margin-4"></i></a>
-                <a href="#" onclick="document.getElementById('departmentDelete{{ $department->id }}').submit()" data-toggle="tooltip"
-                    data-placement="bottom" title="刪除部門"><i class="fas fa-trash-alt"></i></a>
+                {{-- @if ($department->user_id == auth()->user()->id) --}}
+                <a href="#" data-toggle="modal" data-target="#createDepartment" class="tooltipBtn" data-placement="top" title="新增部門"><i class="fas fa-plus-circle u-margin-4"></i></a>
+                <a href="#" data-toggle="modal" data-target="#inviteMember{{ $department->id }}" class="tooltipBtn" data-placement="top" title="新增成員"><i class="fas fa-user-plus u-margin-4"></i></a>                
+                <a href="#" data-toggle="modal" data-target="#editDepartment" class="tooltipBtn" data-placement="top" title="編輯組織"><i class="fas fa-edit u-margin-4"></i></a>
+                <a href="#" data-toggle="dropdown" class="tooltipBtn" data-placement="top" title="刪除部門"><i class="fas fa-trash-alt"></i></a>
                 <form method="POST" id="departmentDelete{{ $department->id }}" action="{{ route('department.destroy', $department->id) }}">
                     @csrf
                     {{ method_field('DELETE') }}
+                    <div class="dropdown-menu u-padding-16">
+                        <div class="row justify-content-center mb-2">
+                            <div class="col-auto text-danger"><i class="fas fa-exclamation-triangle"></i></div>
+                        </div>
+                        <div class="row">
+                            <div class="col text-center">
+                                刪除部門後，<br>
+                                將失去部門中所有資料！！<br>
+                                確認要刪除部門嗎？<br>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center mt-3">
+                            <div class="col-auto text-center pr-2"><button class="btn btn-danger pl-4 pr-4" type="submit">刪除</button></div>
+                            <div class="col-auto text-center pl-2"><a class="btn btn-secondary text-white pl-4 pr-4">取消</a></div>
+                        </div>
+                    </div>
                 </form>
-                @endif
+                {{-- @endif --}}
             </div>
         </div>
     </div>
 </div>
+
+{{-- 新增部門modal --}}
+@include('organization.department.create', ['parent'=>null, 'self'=>$department, 'children'=>$department->children])
+
+{{-- 編輯部門modal --}}
+@include('organization.department.edit')
+
+{{-- 邀請成員modal --}}
+@include('organization.inviteMember',['id'=>$department->id,'action'=>route('department.member.store', $department), 'api'=>route('department.member.search', $department->company)])

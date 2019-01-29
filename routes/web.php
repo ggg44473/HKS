@@ -112,10 +112,6 @@ Route::middleware(['verified'])->group(function () {
 
     //顯示子部門頁面
     Route::get('organization/department/{department}', 'DepartmentController@index')->name('department.index');
-    //新增全部部門頁面
-    Route::get('organization/department/root/create', 'DepartmentController@createRoot')->name('department.root.create');
-    //新增子部門頁面
-    Route::get('organization/department/{department}/create', 'DepartmentController@create')->name('department.create');
     //儲存新增部門
     Route::post('organization/department/store', 'DepartmentController@store')->name('department.store');
     //編輯部門頁面

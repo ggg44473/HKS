@@ -1,5 +1,6 @@
 @extends('layouts.master')
 @section('script')
+<script src="{{ asset('js/closeProject.js') }}" defer></script>
 <script src="{{ asset('js/tooltip.js') }}" defer></script>
 <script src="{{ asset('js/avatar.js') }}" defer></script>
 <script src="{{ asset('js/dragula.js') }}" defer></script>
@@ -19,15 +20,15 @@
     {{-- 進行中/已完成專案切換 --}}
     <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item">
-            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Project</a>
+            <a class="nav-link active" id="project-tab" data-toggle="tab" href="#project" role="tab" aria-controls="project" aria-selected="true">Project</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Closed</a>
+            <a class="nav-link" id="closeProject-tab" data-toggle="tab" href="#closeProject" role="tab" aria-controls="closeProject" aria-selected="false">Closed</a>
         </li>
     </ul>
     <div class="tab-content" id="myTabContent">
         {{-- 進行中專案 --}}
-        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+        <div class="tab-pane fade show active" id="project" role="tabpanel" aria-labelledby="project-tab">
             <div id="dragCard" class="row pt-4 justify-content-md-center">
                 @foreach ($projects as $project)
                     @include('project.card')
@@ -35,13 +36,13 @@
                 @if (count($projects) == 0)
                     <div class="alert alert-warning alert-dismissible fade show u-mt-32" role="alert">
                         <strong><i class="fas fa-exclamation-circle pl-2 pr-2"></i></strong>
-                        尚未擁有專案 !!
+                        尚未擁有進行中專案 !!
                     </div>
                 @endif
             </div>
         </div>
         {{-- 已完成專案 --}}
-        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+        <div class="tab-pane fade" id="closeProject" role="tabpanel" aria-labelledby="profile-tab">
             <div id="dragCarddone" class="row pt-4 justify-content-md-center">
                 @foreach ($done as $project)
                     @include('project.card')
@@ -49,7 +50,7 @@
                 @if (count($done) == 0)
                     <div class="alert alert-warning alert-dismissible fade show u-mt-32" role="alert">
                         <strong><i class="fas fa-exclamation-circle pl-2 pr-2"></i></strong>
-                        尚未擁有完成專案 !!
+                        尚未擁有已完成專案 !!
                     </div>
                 @endif
             </div>

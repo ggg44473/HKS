@@ -6,6 +6,10 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use App\Project;
 use App\Policies\ProjectPolicy;
+use App\Company;
+use App\Policies\CompanyPolicy;
+use App\Department;
+use App\Policies\DepartmentPolicy;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -16,6 +20,8 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         'App\Model' => 'App\Policies\ModelPolicy',
+        Company::class => CompanyPolicy ::class,
+        Department::class => DepartmentPolicy::class,
         Project::class => ProjectPolicy::class,
     ];
 
@@ -28,6 +34,8 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
+        Gate::resource('companys', 'CompanyPolicy');
+        Gate::resource('departments', 'DepartmentPolicy');
         Gate::resource('projects', 'ProjectPolicy');
     }
 }

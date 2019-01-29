@@ -8,9 +8,9 @@ use App\Permission;
 trait HasPermissionTrait
 {
     /**
-     * Returns all invitation for this model.
+     * Returns all permission for this model.
      */
-    public function model()
+    public function permissions()
     {
         return $this->morphMany(Permission::class, 'model');
     }

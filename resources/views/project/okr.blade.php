@@ -68,6 +68,7 @@
             </div>
         @endif
     </div>
+    @can('storeObjective', $project)
     {{-- 新增O按鈕 --}}
     <a href="#" data-toggle="modal" data-target="#objective" class="newObjective"><img src="{{ asset('img/icon/add/lightgreen.svg') }}" alt=""></a>        
     {{-- 新增O modal --}}
@@ -83,5 +84,6 @@
             </div>
         </div>
     </div>
+    @endcan
 </div>
 @endsection

@@ -104,6 +104,8 @@ class ProjectController extends Controller
      */
     public function listOKR(Request $request, Project $project)
     {
+        $this->authorize('viewProject', $project);
+
         $okrsWithPage = $project->getOkrsWithPage($request);
         $project['okrs'] = $okrsWithPage['okrs'];
 
@@ -120,6 +122,8 @@ class ProjectController extends Controller
 
     public function storeObjective(ObjectiveRequest $request, Project $project)
     {
+        $this->authorize('storeObjective', $project);
+
         $objective = $project->addObjective($request);
         return redirect()->to(url()->previous() . '#oid-' . $objective->id);
     }
@@ -137,7 +141,8 @@ class ProjectController extends Controller
         $project->isdone = !$project->isdone;
         $project->save();
 
-        return redirect()->route('project');
+        if ($project->isdone) return redirect()->back();
+        else return redirect()->to(url()->previous() . '#closeProject');
     }
 
     /**
@@ -148,7 +153,7 @@ class ProjectController extends Controller
     public function member(Request $request, Project $project)
     {
         $builder = $project->users();
-        
+
         if ($request->input('order', '')) {
             
             # 排序
@@ -170,7 +175,7 @@ class ProjectController extends Controller
         $pages = $builder->paginate(10)->appends([
             'order' => $request->input('order', ''),
         ]);
-        
+
         $data = [
             'project' => $project,
             'members' => $pages,
