@@ -29,14 +29,14 @@
                 <div class="dropdown-container dropdown-menu">
                     <div class="dropdown-toolbar">
                         <div class="dropdown-toolbar-actions">
-                            <a href="/notifications/read/all">Mark all as read</a>
+                            <a href="/notifications/read/all">全部標示為已讀</a>
                         </div>
-                        <h3 class="dropdown-toolbar-title">Notifications (<span class="notif-count">0</span>)</h3>
+                        <h3 class="dropdown-toolbar-title">未讀數 (<span class="notif-count">0</span>)</h3>
                     </div>
                     <ul class="dropdown-content">
                     </ul>
                     <div class="dropdown-footer text-center">
-                        <a href="#">View All</a>
+                    <a href="{{ route('user.notifications') }}">顯示全部</a>
                     </div>
                 </div>
             </div>

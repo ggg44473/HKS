@@ -171,4 +171,11 @@ class UserController extends Controller
         auth()->user()->unreadNotifications->markAsRead();
         return redirect()->back();
     }
+
+    public function listNotification() {
+        $data = [
+            'notifications' => auth()->user()->notifications()->get(),
+        ];
+        return view('user.notifications' , $data);
+    }
 }

@@ -190,4 +190,5 @@ Route::middleware(['verified'])->group(function () {
     #通知
     Route::get('/notifications', 'UserController@notifications');
     Route::get('/notifications/read/all', 'UserController@readAllNotification');
+    Route::get('/notifications/all', 'UserController@listNotification')->name('user.notifications');
 });
