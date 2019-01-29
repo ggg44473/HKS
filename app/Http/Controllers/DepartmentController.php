@@ -9,6 +9,7 @@ use App\Objective;
 use App\Http\Requests\ObjectiveRequest;
 use App\Charts\SampleChart;
 use App\User;
+use App\Permission;
 
 class DepartmentController extends Controller
 {
@@ -156,10 +157,10 @@ class DepartmentController extends Controller
             $user = User::where('id', $userId)->first();
             if($user->company_id == $department->company_id){
                 $user->update(['department_id' => $department->id]);
+                Permission::create(['user_id' => $user->id, 'model_type'=>Department::class,'model_id'=>$department->id,'role_id'=>4]);
             }
         }
-        $department->createPermission(4);
-        
+
         return redirect()->route('department.member', $department);
     }
 

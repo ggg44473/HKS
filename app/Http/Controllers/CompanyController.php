@@ -12,6 +12,7 @@ use App\Http\Requests\ObjectiveRequest;
 use App\Department;
 use App\Project;
 use App\Permission;
+use App\Follow;
 
 class CompanyController extends Controller
 {
@@ -257,8 +258,10 @@ class CompanyController extends Controller
      */
     public function destroyMember(User $member)
     {
-        $this->authorize('memberSetting', $company);
-        Permission::where(['user_id' => $member->id, 'model_type' => Company::class, 'model_id' => $company->id])->delete();
+        $this->authorize('memberSetting', $member->company);
+        Permission::where('user_id', $member->id)->delete();
+        Follow::where('user_id',$member->id)->delete();
+        Follow::where(['model_type'=>User::class,'model_id'=>$member->id])->delete();
         $member->update(['company_id' => null, 'department_id' => null, 'position' => null]);
 
         return redirect()->route('company.member');

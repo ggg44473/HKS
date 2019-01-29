@@ -102,8 +102,9 @@ class UserController extends Controller
 
     public function storeObjective(ObjectiveRequest $request, User $user)
     {
+        $this->authorize('storeObjective', $user);       
+
         $objective = $user->addObjective($request);
-        ship($objective->id);
         
         return redirect()->to(url()->previous() . '#oid-' . $objective->id);
     }
@@ -144,6 +145,8 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
+        $this->authorize('update', $user);        
+
         $attr['name'] = $request->name;
         $user->update($attr);
         $user->addAvatar($request);

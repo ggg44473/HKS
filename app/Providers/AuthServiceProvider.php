@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use App\User;
+use App\Policies\UserPolicy;
 use App\Project;
 use App\Policies\ProjectPolicy;
 use App\Company;
@@ -20,6 +22,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         'App\Model' => 'App\Policies\ModelPolicy',
+        User::class => UserPolicy::class,
         Company::class => CompanyPolicy ::class,
         Department::class => DepartmentPolicy::class,
         Project::class => ProjectPolicy::class,
@@ -37,5 +40,6 @@ class AuthServiceProvider extends ServiceProvider
         Gate::resource('companys', 'CompanyPolicy');
         Gate::resource('departments', 'DepartmentPolicy');
         Gate::resource('projects', 'ProjectPolicy');
+        Gate::resource('users', 'UserPolicy');
     }
 }

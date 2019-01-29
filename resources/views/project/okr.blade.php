@@ -57,7 +57,7 @@
         {{-- okr --}}
         @if ($project->okrs)
             @foreach($project->okrs as $okr)
-                @include('okrs.okr', ['okr' => $okr, 'admin' => $project->user_id])
+                @include('okrs.okr', ['okr' => $okr, 'owner'=>$project])
             @endforeach
         @else
             <div id="dragCard" class="row justify-content-md-center u-mt-16">

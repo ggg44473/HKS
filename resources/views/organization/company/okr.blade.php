@@ -58,7 +58,7 @@
         </div>
         @if ($company->okrs)
             @foreach($company->okrs as $okr)
-                @include('okrs.okr', ['okr' => $okr, 'admin' => $company->user_id])
+                @include('okrs.okr', ['okr' => $okr, 'owner'=>$company])
             @endforeach
         @else
             <div id="dragCard" class="row justify-content-md-center u-mt-16">

@@ -105,4 +105,10 @@
         </div>
     </div>
 </div>
+@foreach($members as $member)
+<form name="memberDelete{{ $member->id }}" method="POST" id="memberDelete{{ $member->id }}" action="{{ route('company.member.destroy', $member ) }}">
+    @csrf
+    {{ method_field('PATCH') }}
+</form>
+@endforeach
 @endsection

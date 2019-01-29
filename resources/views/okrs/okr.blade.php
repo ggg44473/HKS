@@ -4,11 +4,11 @@
         <div class="row">
             <div class="col-md-12 ml-auto text-right">
                 <span class="font-weight-light pl-2 pr-4">{{ $okr['objective']->started_at }}~{{ $okr['objective']->finished_at }}</span>
-                {{-- @if (auth()->user()->id == $admin) --}}
-                <a class="close okr-close-btn">
-                    <i class="far fa-edit"></i>
-                </a>
-                {{-- @endif --}}
+                @can('storeObjective', $owner)
+                    <a class="close okr-close-btn">
+                        <i class="far fa-edit"></i>
+                    </a>
+                @endcan
             </div>
         </div>
     </div>
@@ -37,15 +37,17 @@
                                 @endif
                             </div>
                         </div>
-                        <div class="pt-2 pl-3 pr-2 btn-edit-group" style="display:none;">
-                            <a class="pl-2 pr-2 text-success" href="{{ route('okr.edit', $okr['objective']->id) }}"><i class="fas fa-pencil-alt"></i></a>
-                            <a class="pl-2 pr-2 text-danger" href="#" onclick="document.getElementById('deleteKR{{ $okr['objective']->id }}').submit()"><i
-                                    class="fas fa-trash"></i></a>
-                            <form method="POST" id="deleteKR{{ $okr['objective']->id }}" action="{{ route('objective.destroy', $okr['objective']->id) }}">
-                                @csrf
-                                {{ method_field('DELETE') }}
-                            </form>
-                        </div>
+                        @can('storeObjective', $owner)
+                            <div class="pt-2 pl-3 pr-2 btn-edit-group" style="display:none;">
+                                <a class="pl-2 pr-2 text-success" href="{{ route('okr.edit', $okr['objective']->id) }}"><i class="fas fa-pencil-alt"></i></a>
+                                <a class="pl-2 pr-2 text-danger" href="#" onclick="document.getElementById('deleteKR{{ $okr['objective']->id }}').submit()"><i
+                                        class="fas fa-trash"></i></a>
+                                <form method="POST" id="deleteKR{{ $okr['objective']->id }}" action="{{ route('objective.destroy', $okr['objective']->id) }}">
+                                    @csrf
+                                    {{ method_field('DELETE') }}
+                                </form>
+                            </div>
+                        @endcan
                     </div>
                 </div>
             </div>
@@ -79,27 +81,29 @@
                             @endif
                         </div>
                     </div>
-                    <div class="pt-2 pl-3 pr-2 btn-edit-group" style="display:none;">
-                        <a class="pl-2 pr-2 text-success" href="{{ route('okr.edit', $okr['objective']->id) }}"><i class="fas fa-pencil-alt"></i></a>
-                        <a class="pl-2 pr-2 text-danger" href="#" onclick="document.getElementById('deleteKR{{ $kr->id }}').submit()"><i
-                                class="fas fa-trash"></i></a>
-                        <form method="POST" id="deleteKR{{ $kr->id }}" action="{{ route('kr.destroy', $kr->id) }}">
-                            @csrf
-                            {{ method_field('DELETE') }}
-                        </form>
-                    </div>
+                    @can('storeObjective', $owner)
+                        <div class="pt-2 pl-3 pr-2 btn-edit-group" style="display:none;">
+                            <a class="pl-2 pr-2 text-success" href="{{ route('okr.edit', $okr['objective']->id) }}"><i class="fas fa-pencil-alt"></i></a>
+                            <a class="pl-2 pr-2 text-danger" href="#" onclick="document.getElementById('deleteKR{{ $kr->id }}').submit()"><i
+                                    class="fas fa-trash"></i></a>
+                            <form method="POST" id="deleteKR{{ $kr->id }}" action="{{ route('kr.destroy', $kr->id) }}">
+                                @csrf
+                                {{ method_field('DELETE') }}
+                            </form>
+                        </div>
+                    @endcan
                 </div>
             </div>
             @endforeach
         </div>
     </div>
-    {{-- @if (auth()->user()->id == $admin) --}}
-    <div class="col-md-10 offset-md-2">
-        <div class="row">
-            @include('okrs.newkr',$okr['objective'])
+    @can('storeObjective', $owner)
+        <div class="col-md-10 offset-md-2">
+            <div class="row">
+                @include('okrs.newkr',$okr['objective'])
+            </div>
         </div>
-    </div>
-    {{-- @endif --}}
+    @endcan
 </div>
 
 <div class="card-footer text-muted mt-3">
