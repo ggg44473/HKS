@@ -29,7 +29,7 @@
                 <div class="dropdown-container dropdown-menu">
                     <div class="dropdown-toolbar">
                         <div class="dropdown-toolbar-actions">
-                            <a href="#">Mark all as read</a>
+                            <a href="/notifications/read/all">Mark all as read</a>
                         </div>
                         <h3 class="dropdown-toolbar-title">Notifications (<span class="notif-count">0</span>)</h3>
                     </div>
