@@ -9,11 +9,12 @@
 @section('title','個人追蹤')
 @section('content')
 <div class="container">
-    <div class="row m-3">
-        <div class="col-xs-3 mr-auto">
-            <h4>個人追蹤</h4>
+    @if (count(auth()->user()->follow) == 0 )
+        <div class="alert alert-warning alert-dismissible fade show u-mt-32 text-center" role="alert">
+            <strong><i class="fas fa-exclamation-circle pl-2 pr-2"></i></strong>
+            尚未擁有追蹤 !!
         </div>
-    </div>
+    @endif
     <div id="dragCard" class="row">
         @foreach (auth()->user()->follow as $follow)
         <div class="col-md-3 col-sm-6 u-mb-16">
@@ -22,7 +23,6 @@
                         {{-- 追蹤 --}}
                         <div class="row">
                             <div class="col-12 text-right">
-                                {{-- {{ dd(get_class($follow->model)) }} --}}
                                 <a href="{{ route('follow.cancel', [get_class($follow->model), $follow->model]) }}" class="text-warning" data-toggle="tooltip" data-placement="right" title="取消追蹤">
                                     <i class="fas fa-star" style="font-size: 20px;"></i>
                                 </a>
