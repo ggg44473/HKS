@@ -186,4 +186,7 @@ Route::middleware(['verified'])->group(function () {
 
     # 留言
     Route::post('comments/{comment}', 'CommentsReplyController@reply');
+
+    #通知
+    Route::get('/notifications', 'UsersController@notifications');
 });

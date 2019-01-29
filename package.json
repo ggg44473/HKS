@@ -26,6 +26,8 @@
     "dependencies": {
         "dragula": "^3.7.2",
         "jquery-circle-progress": "^1.2.2",
+        "laravel-echo": "^1.5.2",
+        "pusher-js": "^4.3.1",
         "vue-search-select": "^2.7.1"
     }
 }
