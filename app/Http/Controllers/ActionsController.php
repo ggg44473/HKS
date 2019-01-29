@@ -149,7 +149,6 @@ class ActionsController extends Controller
         return response()->json($results);
     }
 
-
     /**
      * 拒絕邀請
      *

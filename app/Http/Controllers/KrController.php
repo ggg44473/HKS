@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\KeyResultRequest;
 use App\KeyResult;
 use App\User;
+use App\Objective;
 
 class KrController extends Controller
 {
@@ -45,6 +46,8 @@ class KrController extends Controller
      */
     public function store(KeyResultRequest $request)
     {
+        $this->authorize('storeObjective', Objective::find($request->krs_owner)->model);       
+
         $attr['objective_id'] = $request->input('krs_owner');
         $attr['title'] = $request->input('krs_title');
         $attr['confidence'] = $request->input('krs_conf');
@@ -53,6 +56,7 @@ class KrController extends Controller
         $attr['current_value'] = $request->input('krs_now');
         $attr['weight'] = $request->input('krs_weight');
         KeyResult::create($attr);
+
         return redirect()->back();
     }
 
@@ -98,6 +102,8 @@ class KrController extends Controller
      */
     public function destroy(KeyResult $keyresult)
     {
+        $this->authorize('storeObjective', $keyresult->objective->model);       
+
         //要刪除的Krs
         $keyresult->delete();
         return redirect()->back();

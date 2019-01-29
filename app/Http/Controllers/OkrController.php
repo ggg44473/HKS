@@ -22,6 +22,8 @@ class OkrController extends Controller
 
     public function edit(Objective $objective)
     {
+        $this->authorize('storeObjective', $objective->model);       
+        
         $user = User::where('id', '=', auth()->user()->id)->first();        
         //使用者的krs
         $keyresults = KeyResult::where('objective_id', '=', $objective->id)->get();
@@ -35,6 +37,8 @@ class OkrController extends Controller
 
     public function update(Request $request, Objective $objective)
     {
+        $this->authorize('storeObjective', $objective->model);       
+
         $objAttr['title'] = $request->input('obj_title');
         $objAttr['started_at'] = $request->input('st_date');
         $objAttr['finished_at'] = $request->input('fin_date');

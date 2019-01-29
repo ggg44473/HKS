@@ -9,6 +9,14 @@ use App\Objective;
 class ObjectiveController extends Controller
 {
     /**
+     * 要登入才能用的Controller
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
+    /**
      * Remove the specified resource from storage.
      *
      * @param  Objective $objective
@@ -16,6 +24,7 @@ class ObjectiveController extends Controller
      */
     public function destroy(Objective $objective)
     {
+        $this->authorize('storeObjective', $objective->model);       
         $objective->delete();
         return redirect()->back();
     }
