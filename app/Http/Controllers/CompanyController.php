@@ -250,15 +250,21 @@ class CompanyController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function updateMember(Request $request)
+    public function updateMember(Request $request, User $member)
     {
-        $this->authorize('memberSetting', $company);
-        $members = User::where('company_id', auth()->user()->company_id)->get();
-        foreach ($members as $member) {
-            $attr['department_id'] = $request->input('department' . $member->id);
-            $attr['position'] = $request->input('position' . $member->id);
-            $member->update($attr);
+        $this->authorize('memberSetting', $member->company);
+
+        $attr['department_id'] = $request->input('department');
+        if ($request->input('department') != null) {
+            if ($permission = $member->permissions()->where('model_type', Department::class)->first()) {
+                $permission->update(['role_id' => 4]);
+            } else {
+                Permission::create(['user_id' => $member->id, 'model_type' => Department::class, 'model_id' => $request->input('department'), 'role_id' => 4]);
+            }
         }
+        $attr['position'] = $request->input('position');
+        $member->update($attr);
+        if ($member->id != auth()->user()->id) $member->permissions()->where('model_type', Company::class)->update(['role_id' => $request->input('permission')]);
 
         return redirect()->route('company.member');
     }
@@ -366,10 +372,10 @@ class CompanyController extends Controller
 
         if ($request->department == $user->id) return redirect()->back();
         else Permission::where(['user_id' => $request->department, 'model_type' => Department::class])->update(['role_id' => 1]);
-        
+
         if ($request->invite == $user->id) return redirect()->back();
         else Permission::where(['user_id' => $request->invite, 'model_type' => Company::class])->update(['role_id' => 1]);
-        
+
         $user->update(['company_id' => null, 'department_id' => null]);
         $user->permissions()->delete();
         $user->invitation->delete();
