@@ -48,7 +48,6 @@ class KeyResultRequest extends FormRequest
 
     public function messages()
     {
-        // dd($this->validationData()['krs_owner']);
         return [
             'krs_title.required' => '不可空白!',
             'krs_conf.required' => '不可空白!',

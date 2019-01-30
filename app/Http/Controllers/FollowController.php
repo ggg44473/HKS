@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Follow;
+use Notification;
+use App\Notifications\FollowNotification;
 
 class FollowController extends Controller
 {
@@ -30,7 +32,11 @@ class FollowController extends Controller
         $attr['user_id'] = auth()->user()->id;
         $attr['model_type'] = $type;
         $attr['model_id'] =  $owner;
-        Follow::create($attr);
+        $follow = Follow::create($attr);
+        if($follow){
+            $users =$follow->model->getNotifiableUser();
+            Notification::send($users, new FollowNotification($follow));
+        }
 
         return redirect()->back();
     }

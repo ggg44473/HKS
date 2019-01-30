@@ -46,6 +46,6 @@ class Project extends Model implements HasObjectiveInterface, HasInvitationInter
 
     public function getInviteUrl($userId)
     {
-        return route('project');
+        return route('project', [], false);
     }
 }

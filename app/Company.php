@@ -51,7 +51,7 @@ class Company extends Model implements HasObjectiveInterface, HasInvitationInter
 
     public function getInviteUrl($userId)
     {
-        return route('company.index');
+        return route('company.index', [], false);
     }
 
     public function delete()
@@ -66,7 +66,7 @@ class Company extends Model implements HasObjectiveInterface, HasInvitationInter
             $department->delete();
         }
         $this->follower()->delete();
-        
+
         return parent::delete();
     }
 }
