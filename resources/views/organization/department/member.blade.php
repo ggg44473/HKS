@@ -1,10 +1,11 @@
 @extends('layouts.master')
 @section('script')
+<script src="{{ asset('js/avatar.js') }}" defer></script>
 <script src="{{ asset('js/tooltip.js') }}" defer></script>
 <script src="{{ asset('js/circle-progress.min.js') }}" defer></script>
 <script src="{{ asset('js/circleProgress.js') }}" defer></script>
 @endsection
-@section('title','組織成員')
+@section('title','部門成員')
 @section('content')
 <div class="container">
     @include('organization.department.show')
@@ -40,12 +41,13 @@
                     <thead>
                         <tr class="bg-primary text-light text-center">
                             <th>追蹤</th>
-                            <th>頭像</th>
                             <th>姓名</th>
-                            <th>信箱</th>
                             <th>部門</th>
                             <th>職稱</th>
                             <th>權限</th>
+                            @can('memberSetting', $department)
+                                <th>設定</th>                                
+                            @endcan
                         </tr>
                     </thead>
                     <tbody>
@@ -62,16 +64,65 @@
                                 </a>
                                 @endif
                             </td>
-                            <td data-th="頭像">
-                                <a href="{{ route('user.okr', $member->id) }}" class="u-ml-8 u-mr-8">
+                            <td data-th="姓名" class="text-left">
+                                <a href="{{ route('user.okr', $member->id) }}" class="text-black-50">
                                     <img src="{{ $member->getAvatar() }}" alt="" class="avatar-sm text-center bg-white">
+                                    {{ $member->name }}
                                 </a>
                             </td>
-                            <td data-th="姓名">{{ $member->name }}</td>
-                            <td data-th="信箱">{{ $member->email }}</td>
-                            <td data-th="部門">{{ $member->department? $member->department->name:'-' }}</td>
+                            {{-- 有變更權限 --}}
+                            {{-- 管理者，可以設定比自己低的人 --}}
+                            @can('permissionCange', [$member, $department])
+                            <td data-th="部門">
+                                <select name="department" id="department" class="form-control" form="memberUpdate{{ $member->id }}">
+                                    <option value="{{ $department->id }}" selected>{{ $department->name }}</option>
+                                    @foreach ($department->children as $child)
+                                        <option value="{{ $child->id }}">{{ $child->name }}</option>
+                                    @endforeach
+                                </select>
+                            </td>
+                            <td data-th="職稱">
+                                <input name="position" type="text" class="form-control" value="{{ $member->position }}" form="memberUpdate{{ $member->id }}">
+                            </td>
+                            <td data-th="權限">
+                                <select name="permission" id="permission" class="form-control" form="memberUpdate{{ $member->id }}">
+                                    <option value="2">管理者</option>
+                                    <option value="3" {{ $member->role($department)->id == 3?'selected':''}}>編輯</option>
+                                    <option value="4" {{ $member->role($department)->id == 4?'selected':''}}>成員</option>
+                                </select>
+                            </td>
+                            <td data-th="設定">
+                                <a href="#"  onclick="document.getElementById('memberUpdate{{ $member->id }}').submit()" class="pr-2 text-black-50"><i class="fas fa-save"></i></a>
+                                <a href="#" data-toggle="dropdown"><i class="fas fa-trash-alt text-danger"></i></a>
+                                <div class="dropdown-menu u-padding-16">
+                                    <div class="row justify-content-center mb-2">
+                                        <div class="col-auto text-danger"><i class="fas fa-exclamation-triangle"></i></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col text-center">
+                                            從{{ $department->name }}中<br>
+                                            刪除{{ $member->name }}成員嗎？<br>
+                                        </div>
+                                    </div>
+                                    <div class="row justify-content-center mt-3">
+                                        <div class="col-auto text-center pr-2"><button class="btn btn-danger pl-4 pr-4" onclick="document.getElementById('memberDelete{{ $member->id }}').submit()">刪除</button></div>
+                                        <div class="col-auto text-center pl-2"><a class="btn btn-secondary text-white pl-4 pr-4">取消</a></div>
+                                    </div>
+                                </div>
+                            </td>
+                        {{-- 一般成員 --}}
+                        @elsecan('memberSetting', $department)
+                            <td data-th="部門">{{ $department->name }}</td>
                             <td data-th="職稱">{{ $member->position }}</td>
-                            <td data-th="權限">一般成員</td>
+                            <td data-th="權限">{{ $member->role($department)->name }}</td>
+                            <td data-th="設定"></td>
+                        @endcan
+                        {{-- 無變更權限 --}}
+                        @cannot('memberSetting', $department)
+                            <td data-th="部門">{{ $department->name }}</td>
+                            <td data-th="職稱">{{ $member->position }}</td>
+                            <td data-th="權限">{{ $member->role($department)->name }}</td>
+                        @endcannot
                         </tr>
                         @endforeach
                     </tbody>
@@ -87,4 +138,18 @@
         </div>
     </div>
 </div>
+@foreach($members as $member)
+@can('memberSetting', $department)
+    <form name="memberUpdate{{ $member->id }}" method="POST" id="memberUpdate{{ $member->id }}" action="{{ route('department.member.update', [$department, $member] ) }}">
+        @csrf
+        {{ method_field('PATCH') }}
+    </form>    
+@endcan
+@can('memberDelete', [$member, $department])
+    <form name="memberDelete{{ $member->id }}" method="POST" id="memberDelete{{ $member->id }}" action="{{ route('department.member.destroy', [$department, $member] ) }}">
+        @csrf
+        {{ method_field('PATCH') }}
+    </form>
+@endcan
+@endforeach
 @endsection

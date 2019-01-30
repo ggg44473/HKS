@@ -133,7 +133,7 @@ Route::middleware(['verified'])->group(function () {
     //新增部門成員
     Route::post('organization/department/{department}/member/store', 'DepartmentController@storeMember')->name('department.member.store');
     //更新部門成員
-    Route::patch('organization/department/{department}/member/update', 'DepartmentController@updateMember')->name('department.member.update');
+    Route::patch('organization/department/{department}/member/{member}/update', 'DepartmentController@updateMember')->name('department.member.update');
     //刪除部門成員
     Route::patch('organization/department/{department}/member/{member}/destroy', 'DepartmentController@destroyMember')->name('department.member.destroy');
 

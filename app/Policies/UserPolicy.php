@@ -43,6 +43,7 @@ class UserPolicy
      */
     public function adminCange(User $current_user, User $user, $model)
     {
+        if ($current_user->role($current_user->company)->id == 1) return true;
         if ($current_user->role($model)->id == 1 && $current_user->id == $user->id) return true;
     }
 
@@ -56,6 +57,7 @@ class UserPolicy
      */
     public function permissionCange(User $current_user, User $user, $model)
     {
+        if ($current_user->role($current_user->company)->id == 1) return true;
         $current_user_role = $current_user->role($model)->id;
         if ($current_user_role == 1) return true;
         elseif ($current_user_role > 2) return false;
@@ -72,6 +74,7 @@ class UserPolicy
      */
     public function memberDelete(User $current_user, User $user, $model)
     {
+        if ($current_user->role($current_user->company)->id == 1) return true;
         $current_user_role = $current_user->role($model)->id;
         if ($current_user_role == 1) return true;
         elseif ($current_user_role > 2) return false;

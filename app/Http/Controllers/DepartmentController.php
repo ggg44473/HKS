@@ -170,17 +170,23 @@ class DepartmentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function updateMember(Request $request, Department $department)
+    public function updateMember(Request $request, Department $department, User $member)
     {
         $this->authorize('memberSetting', $department);
 
-        foreach ($department->users as $member) {
-            $attr['department_id'] = $request->input('department' . $member->id);
-            $attr['position'] = $request->input('position' . $member->id);
-            $member->update($attr);
+        $attr['department_id'] = $request->input('department');
+        if ($request->input('department') != $department->id ) {
+            if ($permission = $member->permissions()->where('model_type', Department::class)->first()) {
+                $permission->update(['role_id' => 4]);
+            } else {
+                Permission::create(['user_id' => $member->id, 'model_type' => Department::class, 'model_id' => $request->input('department'), 'role_id' => 4]);
+            }
         }
+        $attr['position'] = $request->input('position');
+        $member->update($attr);
+        $member->permissions()->where('model_type', Department::class)->update(['role_id' => $request->input('permission')]);
 
-        return redirect()->route('department.member.setting', $department);
+        return redirect()->route('department.member', $department);
     }
     
     /**
@@ -195,7 +201,7 @@ class DepartmentController extends Controller
         Permission::where(['user_id'=>$member->id,'model_type'=>Department::class,'model_id'=>$department->id])->delete();
         $member->update(['department_id'=>null, 'position'=>null]);
 
-        return redirect()->route('department.member.setting', $department);
+        return redirect()->route('department.member', $department);
     }
 
     /**
