@@ -35,7 +35,7 @@ function addNotification(notification) {
               <strong class="notification-title">` + notification.data.message + `</strong>
               <!--p class="notification-desc">Extra description can go here</p-->
               <div class="notification-meta">
-                <small class="timestamp">about a minute ago</small>
+                <small class="timestamp">` + notification.created_at + `</small>
               </div>
             </div>
           </div>
