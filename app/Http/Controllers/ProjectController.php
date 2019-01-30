@@ -95,7 +95,7 @@ class ProjectController extends Controller
         $project->users()->detach();
         $project->invitation()->delete();
         $project->delete();
-        
+
         return redirect('project');
     }
 
@@ -269,6 +269,21 @@ class ProjectController extends Controller
     }
 
     /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function updateMember(Request $request, Project $project, User $member)
+    {
+        $this->authorize('memberSetting', $project);
+
+        if ($member->id != auth()->user()->id) $project->permissions()->where('user_id', $member->id)->update(['role_id' => $request->permission]);
+
+        return redirect()->route('project.member', $project);
+    }
+
+    /**
      * Remove department_id and position from storage.
      *
      * @param  \App\Project $project
@@ -278,9 +293,46 @@ class ProjectController extends Controller
     public function destroyMember(Project $project, User $member)
     {
         $this->authorize('memberSetting', $project);
-        Permission::where(['user_id'=>$member->id,'model_type'=>Project::class,'model_id'=>$project->id])->delete();
+        Permission::where(['user_id' => $member->id, 'model_type' => Project::class, 'model_id' => $project->id])->delete();
         $project->users()->detach($member);
 
         return redirect()->route('project.member', $project);
+    }
+
+    /**
+     * 變更最高權限管理者
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function changeAdmin(Request $request, Project $project)
+    {
+        $this->authorize('adminCange', [auth()->user(), $project]);
+
+        Permission::where(['user_id' => $request->invite, 'model_type' => Project::class, 'model_id' => $project->id])->update(['role_id' => 1]);
+        Permission::where(['user_id' => auth()->user()->id, 'model_type' => Project::class, 'model_id' => $project->id])->update(['role_id' => 2]);
+
+        return redirect()->back();
+    }
+
+    /**
+     * 刪除最高權限管理者
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function deleteAdmin(Request $request, Project $project)
+    {
+        $user = auth()->user();
+        $this->authorize('adminCange', [$user, $project]);
+
+        if ($request->project == $user->id) return redirect()->back();
+        else {
+            $permission->where('user_id', $request->project)->update(['role_id' => 1]);
+            $permission->model->users()->detach($user);
+            $permission->delete();
+        }
+
+        return redirect()->back();
     }
 }

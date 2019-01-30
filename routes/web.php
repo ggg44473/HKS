@@ -163,9 +163,13 @@ Route::middleware(['verified'])->group(function () {
     //同意邀請
     Route::get('project/{project}/member/{member}/invite/agree', 'ProjectController@agreeInvite')->name('project.member.invite.agree');
     //更新專案成員
-    Route::patch('project/{project}/member/update', 'ProjectController@updateMember')->name('project.member.update');
+    Route::patch('project/{project}/member/{member}/update', 'ProjectController@updateMember')->name('project.member.update');
     //刪除專案成員
     Route::patch('project/{project}/member/{member}/destroy', 'ProjectController@destroyMember')->name('project.member.destroy');
+    //變更專案管理者
+    Route::patch('project/{project}/admin/change', 'ProjectController@changeAdmin')->name('project.admin.change');
+    //刪除專案管理者
+    Route::patch('project/{project}/admin/delete', 'ProjectController@deleteAdmin')->name('project.admin.delete');
 
     //回傳未有公司的使用者
     Route::get('search/member/nonCompany', 'CompanyController@searchNoncompany')->name('noncompany.member.search');
