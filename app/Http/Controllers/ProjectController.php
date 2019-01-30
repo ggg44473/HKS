@@ -93,8 +93,9 @@ class ProjectController extends Controller
     public function destroy(Project $project)
     {
         $project->users()->detach();
+        $project->invitation()->delete();
         $project->delete();
-
+        
         return redirect('project');
     }
 

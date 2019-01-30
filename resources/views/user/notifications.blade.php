@@ -20,7 +20,7 @@
         @foreach($notifications as $n)
         <tr class="text-center">
             <td data-th="圖片">
-                <img src="{{ $n->data['data']['icon'] }}" alt="">
+                <img src="{{ $n->data['data']['icon'] }}" alt="" class="avatar-sm">
             </td>
             <td data-th="訊息">
                 {{ $n->data['data']['message'] }}
