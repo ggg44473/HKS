@@ -9,19 +9,6 @@ var notifications = notificationsWrapper.find('ul.dropdown-content');
 function addNotification(notification) {
     var existingNotifications = notifications.html();
     var avatar = notification.data.icon;
-    if (('Notification' in window)) {
-        if (Notification.permission === 'default' || Notification.permission === 'undefined') {
-            Notification.requestPermission(function (permission) {});
-        }
-        var notify = new Notification('Goal Care', {
-            body: notification.data.message,
-            icon: notification.data.icon
-        });
-        notify.onclick = function (notify) { // 綁定點擊事件
-            notify.preventDefault(); // prevent the browser from focusing the Notification's tab
-            window.open(`${notification.data.link}?readNid=${notification.id}`); // 打開特定網頁
-        }
-    }
     var newNotificationHtml = `
       <li class="notification active">
       <a href="${notification.data.link}?readNid=${notification.id}">
@@ -62,4 +49,17 @@ $(document).ready(function () {
 Echo.private('App.User.' + userId)
     .notification((notification) => {
         addNotification(notification);
+        if (('Notification' in window)) {
+          if (Notification.permission === 'default' || Notification.permission === 'undefined') {
+              Notification.requestPermission(function (permission) {});
+          }
+          var notify = new Notification('Goal Care', {
+              body: notification.data.message,
+              icon: notification.data.icon
+          });
+          notify.onclick = function (notify) { // 綁定點擊事件
+              notify.preventDefault(); // prevent the browser from focusing the Notification's tab
+              window.open(`${notification.data.link}?readNid=${notification.id}`); // 打開特定網頁
+          }
+      }
     });
