@@ -41,7 +41,7 @@ class Project extends Model implements HasObjectiveInterface, HasInvitationInter
 
     public function getNotifiableUser()
     {
-        return $this->admin;
+        return $this->users;
     }
 
     public function getInviteUrl($userId)
