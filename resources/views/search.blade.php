@@ -2,56 +2,14 @@
 @section('title','搜尋結果')
 @section('content')
 <div class="container">
-    @if(!($departments&&$members))
-    <h4>查無資料</h4>
-    @endif
-    @if($departments)
-    <div class="col-12">
-        <h4>部門</h4>
-        <table class="rwd-table table table-hover">
-            <thead>
-                <tr class="bg-primary text-light text-center">
-                    <th>
-                        頭像
-                    </th>
-                    <th>
-                        部門
-                    </th>
-                    <th>
-                        描述
-                    </th>
-                    <th>
-                        歸屬
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($departments as $department)
-                <tr class="text-center">
-                    <td data-th="頭像">
-                        <a href="{{ route('department.okr', $department->id) }}" class="u-ml-8 u-mr-8">
-                            <img src="{{ $department->getAvatar() }}" alt="" class="avatar-sm text-center bg-white">
-                        </a>
-                    </td>
-                    <td data-th="部門">
-                        {{$department->name}}
-                    </td>
-                    <td data-th="描述">
-                        {{$department->description}}
-                    </td>
-                    <td data-th="歸屬">
-                        @if($department->parent)
-                        {{$department->parent->name}}
-                        @endif
-                    </td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
+    @if( $projectsCount == 0 && $usersCount == 0 )
+    <div class="alert alert-warning alert-dismissible fade show u-mt-32 text-center" role="alert">
+        <strong><i class="fas fa-exclamation-circle pl-2 pr-2"></i></strong>
+        查無任何資料 !!
     </div>
     @endif
 
-    @if($members)
+    @if($usersCount)
     <div class="col-12">
         <h4>同事</h4>
         <table class="rwd-table table table-hover">
@@ -68,6 +26,9 @@
                     </th>
                     <th>
                         職稱
+                    </th>
+                    <th>
+                        被追蹤
                     </th>
                 </tr>
             </thead>
@@ -90,6 +51,9 @@
                     <td data-th="職稱">
                         {{$member->position}}
                     </td>
+                    <td data-th="被追蹤">
+                        {{$member->follower->count()}}
+                    </td>
                 </tr>
                 @endforeach
             </tbody>
@@ -97,7 +61,7 @@
     </div>
     @endif
 
-    @if($projects)
+    @if($projectsCount)
     <div class="col-12">
         <h4>專案</h4>
         <table class="rwd-table table table-hover">
@@ -108,9 +72,6 @@
                     </th>
                     <th>
                         簡述
-                    </th>
-                    <th>
-                        創建
                     </th>
                     <th>
                         狀態
@@ -128,9 +89,6 @@
                     </td>
                     <td data-th="簡述">
                         {{$project->description}}
-                    </td>
-                    <td data-th="創建">
-                        {{$project->admin->name}}
                     </td>
                     <td data-th="狀態">
                         {{$project->isdone ? '完成' : '未完成'}}

@@ -18,44 +18,47 @@ class SearchController extends Controller
     public function index(Request $request)
     {
         #判斷公司是否存在到要查詢
+        $usersCount = 0;
+        $projectsCount = 0;
         if (auth()->user()->company_id) {
             #判斷搜索是否為空        
             if ($search = $request->input('search', '')) {
                 $company = Company::query()->where('id', '=', auth()->user()->company_id)->first();
                 $usersBuilder = $company->users();
-                $departmentsBuilder = $company->departments();
                 $projectsBuilder = auth()->user()->projects();
             #定義模糊查詢                
                 $like = '%' . $search . '%';
 
                 $usersBuilder->where(function ($query) use ($like) {
                     $query->where('name', 'like', $like)
-                        ->orWhere('email', 'like', $like);
-                });
-                $departmentsBuilder->where(function ($query) use ($like) {
-                    $query->where('name', 'like', $like);
+                        ->orWhere('email', 'like', $like)
+                        ->orWhere('position', 'like', $like)
+                        ->orWhereHas('department', function ($query) use ($like) {
+                            $query->where('name', 'like', $like);
+                        });
+                   ;
                 });
                 $projectsBuilder->where(function ($query) use ($like) {
                     $query->where('name', 'like', $like)
-                    ->orWhere('description', 'like', $like);
+                        ->orWhere('description', 'like', $like);
                 });
+
+                $usersCount = $usersBuilder->getResults()->count();
+                $projectsCount = $projectsBuilder->getResults()->count();
             }
         }
         //     ->orWhere('email', 'like', $like)
         // #第一個參數是模型關聯的方法名 , 第二個參數繼承上一步的query , 第三個參數使用模糊查詢字
-        //     ->orWhereHas('keyresults', function ($query) use ($like) {
-        //         $query->where('title', 'like', $like);
-        //     });
+            // ->orWhereHas('keyresults', function ($query) use ($like) {
+            //     $query->where('title', 'like', $like);
+            // });
        
-        #使用分頁(依照單頁O的筆數上限)
-        // $pages = $departmentsBuilder->union($usersBuilder)->paginate(5)->appends(['search' => $request->input('search', '')]);
-
         $data = [
-            'departments' => isset($departmentsBuilder) ? $departmentsBuilder->getResults() : '',
-            'members' => isset($usersBuilder) ? $usersBuilder->getResults() : '',
-            'projects' => isset($projectsBuilder) ? $projectsBuilder->getResults() : '',
+            'usersCount' => $usersCount,
+            'projectsCount' => $projectsCount,
+            'members' => $usersCount != 0 ? $usersBuilder->getResults() : 'false',
+            'projects' => $projectsCount != 0 ? $projectsBuilder->getResults() : 'false',
         ];
-        
 
         return view('search', $data);
     }

@@ -133,8 +133,8 @@ class ActionsController extends Controller
     public function destroy(Action $action)
     {
         $this->authorize('delete', $action);
-
         $action->delete();
+        $action->model->getInviteUrl($action->user->id);
         return redirect()->back();
     }
 
