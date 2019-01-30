@@ -207,9 +207,22 @@ class CompanyController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function search()
+    public function searchNoncompany()
     {
         $results = User::where('company_id', null)->get();
+
+        return response()->json($results);
+    }
+
+    /**
+     * 搜尋使用者名稱或信箱
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function search()
+    {
+        $results = User::where('company_id', auth()->user()->company_id)->get();
 
         return response()->json($results);
     }
@@ -260,8 +273,8 @@ class CompanyController extends Controller
     {
         $this->authorize('memberSetting', $member->company);
         Permission::where('user_id', $member->id)->delete();
-        Follow::where('user_id',$member->id)->delete();
-        Follow::where(['model_type'=>User::class,'model_id'=>$member->id])->delete();
+        Follow::where('user_id', $member->id)->delete();
+        Follow::where(['model_type' => User::class, 'model_id' => $member->id])->delete();
         $member->update(['company_id' => null, 'department_id' => null, 'position' => null]);
 
         return redirect()->route('company.member');
@@ -314,4 +327,56 @@ class CompanyController extends Controller
 
         return view('organization.member', $data);
     }
+
+    /**
+     * 變更最高權限管理者
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function changeAdmin(Request $request)
+    {
+        $this->authorize('adminCange', [auth()->user(), auth()->user()->company]);
+
+        Permission::where(['user_id' => $request->invite, 'model_type' => Company::class])->update(['role_id' => 1]);
+        Permission::where(['user_id' => auth()->user()->id, 'model_type' => Company::class])->update(['role_id' => 2]);
+
+        return redirect()->back();
+    }
+
+    /**
+     * 刪除最高權限管理者
+     *
+     * @param  \Illuminate\Http\Requests\CompanyRequest  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function deleteAdmin(Request $request)
+    {
+        $user = auth()->user();
+        $this->authorize('adminCange', [$user, $user->company]);
+
+        foreach ($user->permissions()->where(['model_type' => Project::class, 'role_id' => 1])->with('model')->get() as $permission) {
+            if ($request->input('project' . $permission->model->id) == $user->id) return redirect()->back();
+            else {
+                $permission->where('user_id', $request->input('project' . $permission->model->id))->update(['role_id' => 1]);
+                $permission->model->users()->detach($user);
+                $permission->delete();
+            }
+        }
+
+        if ($request->department == $user->id) return redirect()->back();
+        else Permission::where(['user_id' => $request->department, 'model_type' => Department::class])->update(['role_id' => 1]);
+        
+        if ($request->invite == $user->id) return redirect()->back();
+        else Permission::where(['user_id' => $request->invite, 'model_type' => Company::class])->update(['role_id' => 1]);
+        
+        $user->update(['company_id' => null, 'department_id' => null]);
+        $user->permissions()->delete();
+        $user->invitation->delete();
+        Follow::where('user_id', $user->id)->delete();
+        Follow::where(['model_type' => User::class, 'model_id' => $user->id])->delete();
+
+        return redirect()->back();
+    }
+
 }

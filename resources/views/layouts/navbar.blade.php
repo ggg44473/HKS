@@ -2,7 +2,7 @@
 
     <!-- 左側選單按鈕 -->
     <div class="btn btn-menu text-primary">
-        <i class="fas fa-bars"></i>
+        <i class="fas fa-bars pt-1"></i>
     </div>
 
     <!-- LOGO -->

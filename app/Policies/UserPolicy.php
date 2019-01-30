@@ -32,4 +32,49 @@ class UserPolicy
     {
         return $current_user->id === $user->id;
     }
+
+    /**
+     * Determine whether the user can update the user.
+     *
+     * @param  \App\User  $current_user
+     * @param  \App\User  $user
+     * @param  $model
+     * @return mixed
+     */
+    public function adminCange(User $current_user, User $user, $model)
+    {
+        if ($current_user->role($model)->id == 1 && $current_user->id == $user->id) return true;
+    }
+
+    /**
+     * Determine whether the user can update the user.
+     *
+     * @param  \App\User  $current_user
+     * @param  \App\User  $user
+     * @param  $model
+     * @return mixed
+     */
+    public function permissionCange(User $current_user, User $user, $model)
+    {
+        $current_user_role = $current_user->role($model)->id;
+        if ($current_user_role == 1) return true;
+        elseif ($current_user_role > 2) return false;
+        return $current_user_role < $user->role($model)->id;
+    }
+
+    /**
+     * Determine whether the user can update the user.
+     *
+     * @param  \App\User  $current_user
+     * @param  \App\User  $user
+     * @param  $model
+     * @return mixed
+     */
+    public function memberDelete(User $current_user, User $user, $model)
+    {
+        $current_user_role = $current_user->role($model)->id;
+        if ($current_user_role == 1) return true;
+        elseif ($current_user_role > 2) return false;
+        return $current_user_role < $user->role($model)->id;
+    }
 }

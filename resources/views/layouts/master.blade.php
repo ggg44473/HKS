@@ -46,7 +46,7 @@
     <div id="app">
         @include('layouts.navbar')
         @include('layouts.sidebar')
-        <main class="py-4 content">
+        <main class="py-4 content u-pb-48">
             @yield('content')
         </main>
     </div>

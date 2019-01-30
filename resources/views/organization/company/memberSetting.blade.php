@@ -10,7 +10,7 @@
     <div class="mb-4">
         <form action="{{ route('company.member.invite', $company) }}" method="post">
             @csrf
-            <search-component api={{ route('company.member.search') }}></search-component>
+            <search-component api={{ route('noncompany.member.search') }}></search-component>
         </form>
     </div>
     <div class="row justify-content-md-center">

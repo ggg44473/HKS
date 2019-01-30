@@ -107,6 +107,10 @@ Route::middleware(['verified'])->group(function () {
     Route::patch('organization/company/member/update', 'CompanyController@updateMember')->name('company.member.update');
     //刪除公司成員
     Route::patch('organization/company/member/{member}/destroy', 'CompanyController@destroyMember')->name('company.member.destroy');
+    //變更公司管理者
+    Route::patch('organization/company/admin/change', 'CompanyController@changeAdmin')->name('company.admin.change');
+    //刪除公司管理者
+    Route::patch('organization/company/admin/delete', 'CompanyController@deleteAdmin')->name('company.admin.delete');
 
     //顯示子部門頁面
     Route::get('organization/department/{department}', 'DepartmentController@index')->name('department.index');
@@ -164,11 +168,13 @@ Route::middleware(['verified'])->group(function () {
     Route::patch('project/{project}/member/{member}/destroy', 'ProjectController@destroyMember')->name('project.member.destroy');
 
     //回傳未有公司的使用者
-    Route::get('search/member/nonCompany/', 'CompanyController@search')->name('company.member.search');
+    Route::get('search/member/nonCompany', 'CompanyController@searchNoncompany')->name('noncompany.member.search');
     //回傳無部門的公司成員
-    Route::get('search/company/{company}/member/nonDepartment/', 'DepartmentController@search')->name('department.member.search');
+    Route::get('search/company/{company}/member/nonDepartment', 'DepartmentController@search')->name('department.member.search');
     //回傳不屬於此專案的公司成員
     Route::get('search/company/member/project/{project}', 'ProjectController@search')->name('project.member.search');
+    //回傳同公司成員
+    Route::get('search/member/company', 'CompanyController@search')->name('company.member.search');
 
     # 追蹤
     //專案首頁

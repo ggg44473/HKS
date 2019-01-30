@@ -105,5 +105,5 @@
 
 @can('memberSetting', $company)
 {{-- 邀請成員modal --}}
-@include('organization.inviteMember',['id'=>'', 'action'=>route('company.member.invite', $company), 'api'=>route('company.member.search')])
+@include('organization.inviteMember',['id'=>'', 'action'=>route('company.member.invite', $company), 'api'=>route('noncompany.member.search')])
 @endcan

@@ -21,6 +21,7 @@
                 aria-selected="false">成員</a>
         </li>
     </ul>
+    {{-- 分頁＋搜尋 --}}
     <div class="row justify-content-md-center">
         <div class="col-sm-10 mt-4">
             <div class="float-right mb-2">
@@ -35,18 +36,21 @@
                 </form>
             </div>
             {{ $members->links() }}
+        </div>
+    </div>
+    {{-- 成員表 --}}
+    <div class="row justify-content-md-center">
+        <div class="col-sm-10 mt-4"> 
             <table class="rwd-table table table-hover">
                 <thead>
                     <tr class="bg-primary text-light text-center">
                         <th>追蹤</th>
-                        <th>頭像</th>
                         <th>姓名</th>
-                        <th>信箱</th>
                         <th>部門</th>
                         <th>職稱</th>
                         <th>權限</th>
                         @can('memberSetting', $company)
-                            <th>設定</th>                                
+                            <th>刪除</th>                                
                         @endcan
                     </tr>
                 </thead>
@@ -64,19 +68,36 @@
                             </a>
                             @endif
                         </td>
-                        <td data-th="頭像">
-                            <a href="{{ route('user.okr', $member->id) }}" class="u-ml-8 u-mr-8">
-                                <img src="{{ $member->getAvatar() }}" alt="" class="avatar-sm text-center bg-white">
+                        <td data-th="姓名" class="text-left">
+                            <a href="{{ route('user.okr', $member->id) }}" class="text-black-50">
+                                <img src="{{ $member->getAvatar() }}" alt="" class="avatar-sm text-center bg-white mr-4">
+                                {{ $member->name }}
                             </a>
                         </td>
-                        <td data-th="姓名">{{ $member->name }}</td>
-                        <td data-th="信箱">{{ $member->email }}</td>
-                        @cannot('memberSetting', $company)
-                            <td data-th="部門">{{ $member->department? $member->department->name:$company->name }}</td>
-                            <td data-th="職稱">{{ $member->position }}</td>
-                            <td data-th="權限">{{ $member->role($company)->name }}</td>
-                        @endcannot
-                        @can('memberSetting', $company)
+                        {{-- 有變更權限 --}}
+                        {{-- 權限最高，設定自己 --}}
+                        @can('adminCange', [$member, $company])
+                            <td data-th="部門">
+                                <select name="department{{ $member->id }}" id="department{{ $member->id }}" class="form-control">
+                                    <option value="{{$company->id}}">{{ $company->name }}</option>
+                                    @foreach ($departments as $department)
+                                        @if ($department->id == $member->department_id)
+                                        <option value="{{ $department->id }}" selected>{{ $department->name }}</option>
+                                        @else
+                                        <option value="{{ $department->id }}">{{ $department->name }}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                            </td>
+                            <td data-th="職稱">
+                                <input name="position{{ $member->id }}" type="text" class="form-control" value="{{ $member->position }}">
+                            </td>
+                            <td data-th="權限"><a href="#" data-toggle="modal" data-target="#changAdmin" class="tooltipBtn" data-placement="top" title="變更擁有者">{{ $member->role($company)->name }}</a></td>
+                            <td data-th="刪除">
+                                <a href="#" data-toggle="modal" data-target="#deleteAdmin" class="tooltipBtn" data-placement="top" title="變更擁有者後刪除"><i class="fas fa-trash-alt text-danger"></i></a>
+                            </td>
+                        {{-- 管理者，可以設定比自己低的人 --}}
+                        @elsecan('permissionCange', [$member, $company])
                             <td data-th="部門">
                                 <select name="department{{ $member->id }}" id="department{{ $member->id }}" class="form-control">
                                     <option value="{{$company->id}}">{{ $company->name }}</option>
@@ -92,13 +113,43 @@
                             <td data-th="職稱">
                                 <input name="position{{ $member->id }}" type="text" class="form-control" value="{{ $member->position }}">
                             </td>
-                            <td data-th="權限">{{ $member->role($company)->name }}</td>
-                            <td data-th="設定">
-                                <a href="#" onclick="document.getElementById('memberDelete{{ $member->id }}').submit()">
-                                    <i class="fas fa-trash-alt text-danger"></i>
-                                </a>
+                            <td data-th="權限">
+                                <select name="permission{{ $member->id }}" id="permission{{ $member->id }}" class="form-control">
+                                    <option value="2">管理者</option>
+                                    <option value="3" {{ $member->role($company)->id == 3?'selected':''}}>編輯</option>
+                                    <option value="4" {{ $member->role($company)->id == 4?'selected':''}}>成員</option>
+                                </select>
                             </td>
+                            <td data-th="刪除"><a href="#" data-toggle="dropdown"><i class="fas fa-trash-alt text-danger"></i></a>
+                                <div class="dropdown-menu u-padding-16">
+                                    <div class="row justify-content-center mb-2">
+                                        <div class="col-auto text-danger"><i class="fas fa-exclamation-triangle"></i></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col text-center">
+                                            從{{ $company->name }}中<br>
+                                            刪除{{ $member->name }}成員嗎？<br>
+                                        </div>
+                                    </div>
+                                    <div class="row justify-content-center mt-3">
+                                        <div class="col-auto text-center pr-2"><button class="btn btn-danger pl-4 pr-4" onclick="document.getElementById('memberDelete{{ $member->id }}').submit()">刪除</button></div>
+                                        <div class="col-auto text-center pl-2"><a class="btn btn-secondary text-white pl-4 pr-4">取消</a></div>
+                                    </div>
+                                </div>
+                            </td>
+                        {{-- 一般成員 --}}
+                        @elsecan('memberSetting', $company)
+                            <td data-th="部門">{{ $member->department? $member->department->name:$company->name }}</td>
+                            <td data-th="職稱">{{ $member->position }}</td>
+                            <td data-th="權限">{{ $member->role($company)->name }}</td>
+                            <td data-th="刪除"></td>
                         @endcan
+                        {{-- 無變更權限 --}}
+                        @cannot('memberSetting', $company)
+                            <td data-th="部門">{{ $member->department? $member->department->name:$company->name }}</td>
+                            <td data-th="職稱">{{ $member->position }}</td>
+                            <td data-th="權限">{{ $member->role($company)->name }}</td>
+                        @endcannot
                     </tr>
                     @endforeach
                 </tbody>
@@ -107,9 +158,107 @@
     </div>
 </div>
 @foreach($members as $member)
-<form name="memberDelete{{ $member->id }}" method="POST" id="memberDelete{{ $member->id }}" action="{{ route('company.member.destroy', $member ) }}">
-    @csrf
-    {{ method_field('PATCH') }}
-</form>
+@can('memberDelete', [$member, $company])
+    <form name="memberDelete{{ $member->id }}" method="POST" id="memberDelete{{ $member->id }}" action="{{ route('company.member.destroy', $member ) }}">
+        @csrf
+        {{ method_field('PATCH') }}
+    </form>
+@endcan
 @endforeach
+@can('memberDelete', [$member, $company])
+{{-- 變更擁有者modal --}}
+<div class="modal fade" id="changAdmin" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row mb-4">
+                    <div class="col-12 text-center font-weight-bold"><h5>變更公司管理人</h5></div>
+                </div>
+                <form action="{{ route('company.admin.change') }}" method="post">
+                    @csrf
+                    {{ method_field('PATCH') }}
+                    <div class="row pb-4">
+                        <div class="col-12">
+                            <label class="mb-0">公司管理人</label>                                                                               
+                            <search-only-component api={{ route('company.member.search') }}></search-only-component>
+                        </div>
+                    </div>
+                    <div class="row pb-4">
+                        <div class="col-12 text-right">
+                            <button type="submit" class="btn btn-primary">變更</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{{-- 變更權限後刪除 --}}
+<div class="modal fade" id="deleteAdmin" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row mb-4">
+                    <div class="col-12 text-center font-weight-bold"><h5><i class="fas fa-exclamation-triangle text-danger pr-3"></i>變更管理權限後刪除</h5></div>
+                </div>
+                <form action="{{ route('company.admin.delete') }}" method="post">
+                    @csrf
+                    {{ method_field('PATCH') }}
+                    <div class="row pb-4">
+                        <div class="col-12">
+                            <label class="mb-0">公司｜{{ $company->name }}</label>
+                            <search-only-component api={{ route('company.member.search') }}></search-only-component>
+                        </div>
+                    </div>
+                    @if (auth()->user()->permissions()->where(['model_type'=>App\Department::class,'role_id'=>1])->first())
+                    <div class="row pb-4">
+                            <div class="col-12">
+                                <label class="mb-0">部門｜{{ auth()->user()->department->name }}</label>
+                                <select name="department" id="department" class="form-control">
+                                    @foreach (auth()->user()->department->users as $user)
+                                        @if ($user->id!=auth()->user()->id)
+                                            <option value="{{ $user->id }}">{{ $user->name }}</option>                                        
+                                        @endif
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    @endif
+                    @foreach (auth()->user()->permissions()->where(['model_type'=>App\Project::class,'role_id'=>1])->get() as $permission)
+                        <div class="row pb-4">
+                            <div class="col-12">
+                                <label class="mb-0">專案｜{{ $permission->model->name }}</label>
+                                <select name="project{{ $permission->model->id }}" id="project{{ $permission->model->id }}" class="form-control">
+                                    @foreach ($permission->model->users as $user)
+                                        @if ($user->id!=auth()->user()->id)
+                                            <option value="{{ $user->id }}">{{ $user->name }}</option>                                        
+                                        @endif
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    @endforeach
+                    <div class="row pb-4 pt-4">
+                        <div class="col-12 text-center">
+                            <button type="submit" class="btn btn-danger pl-4 pr-4">變更後刪除</button>
+                            <a class="btn btn-secondary text-white pl-4 pr-4" data-dismiss="modal">取消刪除</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@endcan
+
 @endsection

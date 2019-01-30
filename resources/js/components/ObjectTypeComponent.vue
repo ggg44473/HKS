@@ -1,13 +1,12 @@
 <template>
   <div>
-    <label class="mb-0">執行人</label>
     <model-list-select
       class="form-control"
       :list="memberList"
       option-value="name"
       option-text="name"
       v-model="selectedMember"
-      placeholder="請選擇執行人"
+      placeholder="請選擇成員"
       @searchchange="searchMember"
     ></model-list-select>
     <input type="hidden" name="invite" v-bind:value="selectedMember.id">

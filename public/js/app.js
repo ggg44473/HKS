@@ -1905,7 +1905,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -51115,15 +51114,13 @@ var render = function() {
   return _c(
     "div",
     [
-      _c("label", { staticClass: "mb-0" }, [_vm._v("執行人")]),
-      _vm._v(" "),
       _c("model-list-select", {
         staticClass: "form-control",
         attrs: {
           list: _vm.memberList,
           "option-value": "name",
           "option-text": "name",
-          placeholder: "請選擇執行人"
+          placeholder: "請選擇成員"
         },
         on: { searchchange: _vm.searchMember },
         model: {
@@ -65953,7 +65950,7 @@ if (token) {
 window.Pusher = __webpack_require__(/*! pusher-js */ "./node_modules/pusher-js/dist/web/pusher.js");
 window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   broadcaster: 'pusher',
-  key: "03bdb566fb81deea018e",
+  key: "f56e428d5f2378629a40",
   cluster: "ap3",
   encrypted: true
 });
@@ -66185,8 +66182,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\Sean\wamp.net\www\HKS\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\Sean\wamp.net\www\HKS\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Users/apple/LaravelProject/HKS/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Users/apple/LaravelProject/HKS/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
