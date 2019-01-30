@@ -9,6 +9,19 @@ var notifications = notificationsWrapper.find('ul.dropdown-content');
 function addNotification(notification) {
     var existingNotifications = notifications.html();
     var avatar = notification.data.icon;
+    if (('Notification' in window)) {
+        if (Notification.permission === 'default' || Notification.permission === 'undefined') {
+            Notification.requestPermission(function (permission) {});
+        }
+        var notify = new Notification('Goal Care', {
+            body: notification.data.message,
+            icon: notification.data.icon
+        });
+        notify.onclick = function (notify) { // 綁定點擊事件
+            notify.preventDefault(); // prevent the browser from focusing the Notification's tab
+            window.open(`${notification.data.link}?readNid=${notification.id}`); // 打開特定網頁
+        }
+    }
     var newNotificationHtml = `
       <li class="notification active">
       <a href="${notification.data.link}?readNid=${notification.id}">
@@ -48,16 +61,5 @@ $(document).ready(function () {
 
 Echo.private('App.User.' + userId)
     .notification((notification) => {
-        var notifyConfig = {
-            body: notification.data.data.message, // 設定內容
-            icon: '/images/favicon.ico' // 設定 icon
-        };
-        if (Notification.permission === 'default' || Notification.permission === 'undefined') {
-            Notification.requestPermission(function (permission) {
-                if (permission === 'granted') { // 使用者同意授權
-                    var notification = new Notification('Goal Care', notifyConfig); // 建立通知
-                }
-            });
-        }
         addNotification(notification);
     });
