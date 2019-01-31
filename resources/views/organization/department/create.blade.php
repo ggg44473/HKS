@@ -15,10 +15,10 @@
                     {{-- 上傳頭像 --}}
                     <div class="row">
                         <div class="col-12 text-center">
-                            <input id="imgUpload" name="avatar" type="file" class="u-hidden" accept="image/*"/>
-                            <img id="avatarImg" class="avatar u-hidden u-margin-16" src="" alt="">
-                            <img id="avatarImgUpload" class="avatar u-hidden u-margin-16" src="/img/icon/upload/gray.svg" alt="">
-                            <div id="departmentIcon" class="avatar text-center uploadIcon">
+                            <input name="avatar" type="file" class="u-hidden imgUpload" accept="image/*"/>
+                            <img class="avatar u-hidden u-margin-16 avatarImg" src="" alt="">
+                            <img class="avatar u-hidden u-margin-16 avatarImgUpload" src="/img/icon/upload/gray.svg" alt="">
+                            <div class="avatar text-center uploadIcon">
                                 <i class="fas fa-images text-white"></i>
                                 <i class="fas fa-upload text-white"></i>
                             </div>

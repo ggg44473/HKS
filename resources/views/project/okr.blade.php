@@ -1,5 +1,6 @@
 @extends('layouts.master')
 @section('script')
+<script src="{{ asset('js/avatar.js') }}" defer></script>
 <script src="{{ asset('js/tooltip.js') }}" defer></script>
 <script src="{{ asset('js/editbtn.js') }}" defer></script>
 {{-- Chartjs --}}

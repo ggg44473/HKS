@@ -15,9 +15,9 @@
                     {{-- 上傳頭像 --}}
                     <div class="row">
                         <div class="col-12 text-center">
-                            <input id="imgUpload" name="avatar" type="file" class="u-hidden" accept="image/*"/>
-                            <img id="avatarImg" class="avatar u-hidden mt-4 mb-0" src="" alt="">
-                            <div id="departmentIcon" class="avatar text-center uploadIcon mt-4 mb-0">
+                            <input name="avatar" type="file" class="u-hidden imgUpload" accept="image/*"/>
+                            <img class="avatar u-hidden mt-4 mb-0 avatarImg" src="" alt="">
+                            <div class="avatar text-center uploadIcon mt-4 mb-0">
                                 <i class="fas fa-images text-white"></i>
                                 <i class="fas fa-upload text-white"></i>
                             </div>

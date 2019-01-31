@@ -16,16 +16,9 @@
                     {{-- 上傳頭像 --}}
                     <div class="row">
                         <div class="col-12 text-center">
-                            <input id="imgUpload" name="avatar" type="file" class="u-hidden" accept="image/*"/>
-                            @if ($company->avatar)
-                                <img id="avatarImg" class="avatar u-margin-16" src="{{ $company->getAvatar() }}" alt="">
-                                <img id="avatarImgUpload" class="avatar u-hidden u-margin-16" src="/img/icon/upload/gray.svg" alt="">
-                            @else
-                                <div id="companyIcon" class="avatar text-center companyIcon">
-                                    <i class="fas fa-building text-white"></i>
-                                    <i class="fas fa-upload text-white"></i>
-                                </div>
-                            @endif
+                            <input name="avatar" type="file" class="u-hidden imgUpload" accept="image/*"/>
+                            <img class="avatar u-margin-16 avatarImg" src="{{ $company->getAvatar() }}" alt="">
+                            <img class="avatar u-hidden u-margin-16 avatarImgUpload" src="/img/icon/upload/gray.svg" alt="">
                         </div>
                     </div>
                     {{-- 公司名稱 --}}    
