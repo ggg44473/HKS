@@ -13,4 +13,10 @@ class Activity extends Model
         'started_at',
         'finished_at'
     ];
+
+    
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
