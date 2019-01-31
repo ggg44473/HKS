@@ -41,6 +41,8 @@ Route::middleware(['verified'])->group(function () {
     Route::patch('user/{user}/update', 'UserController@update')->name('user.update');
     // 新增個人O
     Route::post('user/{user}/objective/store', 'UserController@storeObjective')->name('user.objective.store');
+    //變更密碼
+    Route::post('user/resetPassword','UserController@resetPassword')->name('user.resetPassword');
 
     # OKR
     // 刪除O

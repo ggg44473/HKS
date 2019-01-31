@@ -10,6 +10,16 @@
 @section('content')
 <div class="container">
     <div class="row m-3 justify-content-center pb-4">
+        @if (session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
+        @if (session('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
+        @endif
         <h4 class="col-md-10">基本資料<hr class="u-mt-8"></h4>
         <div class="col-md-10">
             <div class="row">
@@ -23,7 +33,27 @@
                         <p class="mb-0 font-weight-bold text-truncate">{{ $user->name }}</p>
                         <p class="mb-0 text-truncate">{{ $user->email }}</p>
                     </a>
-                    <hr>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row m-3 justify-content-center pb-4 pt-4">
+        <h4 class="col-md-10">帳號設定<hr class="u-mt-8"></h4>
+        <div class="col-md-10">
+            <div class="row">
+                <div class="col-2 align-self-center text-truncate text-right">
+                    <span class="mb-0 font-weight-bold text-truncate text-primary pr-4"><i class="fas fa-envelope"></i>Ｅmail</span>
+                </div>
+                <div class="col-8">
+                    <span class="mb-0 text-truncate text-black-50">{{ $user->email }}</span>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-2 align-self-center text-truncate text-right">
+                    <span class="mb-0 font-weight-bold text-truncate text-primary pr-4"><i class="fas fa-lock"></i> Password</span>
+                </div>
+                <div class="col-8">
+                    <a class="mb-0" href="#" data-toggle="modal" data-target="#resetPassword" >變更密碼</a>
                 </div>
             </div>
         </div>
@@ -124,5 +154,74 @@
             </form>
         </div> --}}
     {{-- </div> --}}
+</div>
+{{-- 重設密碼modal --}}
+<div class="modal fade " id="resetPassword" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row pb-4">
+                    <div class="col-12 text-center font-weight-bold"><h5>變更密碼</h5></div>
+                </div>
+                <form method="POST" action="{{ route('user.resetPassword') }}" enctype="multipart/form-data">
+                    @csrf
+                    {{-- 舊密碼 --}}
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label class="text-primary" for="current_password">現在密碼<strong class="invalid-feedback"></strong></label>
+                                <input type="password" class="form-control {{ $errors->has('current_password') ? ' is-invalid' : '' }}" id="current_password" name="current_password" placeholder="請輸入現在密碼">
+                                @if ($errors->has('current_password'))
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('current_password') }}</strong>
+                                </span>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                    {{-- 新設密碼 --}}    
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label class="text-primary" for="password">新設密碼<strong class="invalid-feedback"></strong></label>
+                                <input type="password" class="form-control {{ $errors->has('password') ? ' is-invalid' : '' }}" id="password" name="password" placeholder="請輸入新設密碼">
+                                @if ($errors->has('password'))
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('password') }}</strong>
+                                </span>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                    {{-- 新設密碼 --}}    
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label class="text-primary" for="password_confirmation">新設密碼確認<strong class="invalid-feedback"></strong></label>
+                                <input type="password" class="form-control {{ $errors->has('password_confirmation') ? ' is-invalid' : '' }}" id="password_confirmation" name="password_confirmation" placeholder="請確認新設密碼">
+                                @if ($errors->has('password_confirmation'))
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('password_confirmation') }}</strong>
+                                </span>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+ 
+                    {{-- 建立按鈕 --}}
+                    <div class="form-row u-mt-16 u-mb-32 justify-content-end">
+                        <div class="form-group">
+                            <button class="btn btn-primary" type="submit">變更</button>   
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 @endsection

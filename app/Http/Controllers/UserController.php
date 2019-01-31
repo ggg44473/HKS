@@ -10,6 +10,8 @@ use App\Objective;
 use App\Charts\SampleChart;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\UserRequest;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -166,5 +168,22 @@ class UserController extends Controller
             'notifications' => auth()->user()->notifications()->get(),
         ];
         return view('user.notifications', $data);
+    }
+
+    public function resetPassword(UserRequest $request)
+    {
+        if(!Auth::Check()) return redirect()->route('user.okr');
+
+        $current_password = Auth::User()->password;
+        if (Hash::check($request['current_password'], $current_password)) {
+            $user_id = Auth::User()->id;
+            $obj_user = User::find($user_id);
+            $obj_user->password = Hash::make($request['password']);;
+            $obj_user->save();
+            return redirect()->back()->with("success","密碼變更成功！");
+        } else {
+            $error = array('current_password' => 'Please enter correct current password');
+            return redirect()->back()->with("error","密碼輸入錯誤，請重新輸入！");
+        }
     }
 }
