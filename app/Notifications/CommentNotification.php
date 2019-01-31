@@ -11,16 +11,39 @@ class CommentNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
+    private $comment;
     private $details;
+    private $link;
+    private $icon;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($details)
+    public function __construct($comment, $icon)
     {
-        $this->details = $details;
+        $this->comment = $comment;
+        $this->icon = $icon;
+        if ($comment->parent == null) {
+            $users = $comment->commentable->getNotifiable();
+            $this->details['name'] = is_a($users, 'App\User') ? $users->name : 'All';
+            $this->details['body'] = ' 留言在 ' . $comment->commentable->getHasCommentMessage();
+        } else {
+            $users = $comment->parent->commenter;
+            $this->details['name'] = $users->name;
+            $this->details['body'] = ' 回覆您的留言';
+            $this->details['parentComment'] = $comment->parent->comment;
+        }
+
+        $this->details['commenter'] = $comment->commenter->name;
+        $this->details['comment'] = $comment->comment;
+
+        if (is_a($comment->commentable, 'App\Objective')) {
+            $this->link = $comment->commentable->model->getOKrRoute() . '#comment-' . $comment->id;
+        } elseif (is_a($comment->commentable, 'App\Action')) {
+            $this->link = route('actions.show', $comment->commentable->id);
+        }
     }
 
     /**
@@ -31,8 +54,7 @@ class CommentNotification extends Notification implements ShouldQueue
      */
     public function via($notifiable)
     {
-        //return ['mail', 'database'];
-        return ['mail'];
+        return ['mail', 'database', 'broadcast'];
     }
 
     /**
@@ -47,7 +69,7 @@ class CommentNotification extends Notification implements ShouldQueue
             ->subject('[Goal Care] New Comment')
             ->greeting('Dear ' . $this->details['name'])
             ->line($this->details['commenter'] . $this->details['body'])
-            ->line(array_key_exists('parentComment', $this->details) ? $this->details['parentComment']:'')
+            ->line(array_key_exists('parentComment', $this->details) ? $this->details['parentComment'] : '')
             ->line('The comment is')
             ->line($this->details['comment'])
             ->line('You care your goals, we care you.');
@@ -59,10 +81,17 @@ class CommentNotification extends Notification implements ShouldQueue
      * @param  mixed  $notifiable
      * @return array
      */
-    public function toDatabase($notifiable)
+    public function toArray($notifiable)
     {
         return [
-            //'order_id' => $this->details['order_id']
+            'id' => $this->id,
+            'created_at' => now()->toDateTimeString(),
+            'read_at' => null,
+            'data' => [
+                'message' => $this->details['commenter'] . $this->details['body'],
+                'icon' => $this->icon,
+                'link' => $this->link,
+            ],
         ];
     }
 }

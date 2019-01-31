@@ -16,7 +16,6 @@ class CommentEventSubscriber
      */
     public function __construct()
     {
-        //
     }
 
     /**
@@ -25,22 +24,13 @@ class CommentEventSubscriber
     public function onCommentCreated($event)
     {
         $comment = $event->comment;
-
         if ($comment->parent == null) {
             $users = $comment->commentable->getNotifiable();
-            $details['name'] = is_a($users, 'App\User') ? $users->name : 'All';
-            $details['body'] = ' commented on ' . $comment->commentable->getHasCommentMessage();
         } else {
             $users = $comment->parent->commenter;
-            $details['name'] = $users->name;
-            $details['body'] = ' replied on your comment';
-            $details['parentComment'] = $comment->parent->comment;
         }
-
-        $details['commenter'] = $comment->commenter->name;
-        $details['comment'] = $comment->comment;
-
-        Notification::send($users, new CommentNotification($details));
+        $icon = asset($comment->commenter->getAvatar());
+        Notification::send($users, new CommentNotification($comment, $icon));
     }
 
     /**
@@ -68,15 +58,13 @@ class CommentEventSubscriber
             'Laravelista\Comments\Events\CommentCreated',
             'App\Listeners\CommentEventSubscriber@onCommentCreated'
         );
-
-        $events->listen(
-            'Laravelista\Comments\Events\CommentDeleted',
-            'App\Listeners\CommentEventSubscriber@onCommentDeleted'
-        );
-
-        $events->listen(
-            'Laravelista\Comments\Events\CommentUpdated',
-            'App\Listeners\CommentEventSubscriber@onCommentUpdated'
-        );
+        // $events->listen(
+        //     'Laravelista\Comments\Events\CommentDeleted',
+        //     'App\Listeners\CommentEventSubscriber@onCommentDeleted'
+        // );
+        // $events->listen(
+        //     'Laravelista\Comments\Events\CommentUpdated',
+        //     'App\Listeners\CommentEventSubscriber@onCommentUpdated'
+        // );
     }
 }
