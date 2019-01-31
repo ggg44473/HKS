@@ -38,12 +38,12 @@ trait HasAvatarTrait
         } else {
             switch (get_class($this)) {
                 case 'App\User':
-                    return '/img/icon/user/green.svg';
+                    return '/img/icon/user/green.png';
                 case 'App\Company':
                 case 'App\Department':
-                    return '/img/icon/building/g.svg';
+                    return '/img/icon/building/g.png';
                 case 'App\Project':
-                    return '/img/icon/project/gc.svg';
+                    return '/img/icon/project/gc.png';
             }
         }
     }

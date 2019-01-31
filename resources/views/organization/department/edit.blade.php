@@ -1,4 +1,4 @@
-<div class="modal fade " id="editDepartment" tabindex="-1" role="dialog">
+<div class="modal fade " id="editDepartment{{ $department->id }}" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-dialog-centered modal-md" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -16,16 +16,9 @@
                     {{-- 上傳頭像 --}}
                     <div class="row">
                         <div class="col-12 text-center">
-                            <input id="imgUpload" name="avatar" type="file" class="u-hidden" accept="image/*"/>
-                            @if ($department->avatar)
-                                <img id="avatarImg" class="avatar u-margin-16" src="{{ $department->getAvatar() }}" alt="">
-                                <img id="avatarImgUpload" class="avatar u-hidden u-margin-16" src="/img/icon/upload/gray.svg" alt="">
-                            @else
-                                <div id="departmentIcon" class="avatar text-center departmentIcon">
-                                    <i class="fas fa-images text-white"></i>
-                                    <i class="fas fa-upload text-white"></i>
-                                </div>
-                            @endif
+                            <input name="avatar" type="file" class="u-hidden imgUpload" accept="image/*"/>
+                            <img class="avatar u-margin-16 avatarImg" src="{{ $department->getAvatar() }}" alt="">
+                            <img class="avatar u-hidden u-margin-16 avatarImgUpload" src="/img/icon/upload/gray.svg" alt="">
                         </div>
                     </div>
                     {{-- 部門名稱 --}}    

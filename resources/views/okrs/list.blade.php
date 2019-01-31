@@ -90,7 +90,7 @@
 </div>
 @can('storeObjective', $owner)
     {{-- 新增O按鈕 --}}
-    <a href="#" data-toggle="modal" data-target="#objective" class="newObjective" style="z-index: 1001;"><img src="{{ asset('img/icon/add/lightgreen.svg') }}" alt=""></a>        
+    <a href="#" data-toggle="modal" data-target="#objective" class="newObjective"><img src="{{ asset('img/icon/add/lightgreen.svg') }}" alt=""></a>        
     {{-- 新增O modal --}}
     <div class="modal {{ count($errors) == 0 ? 'fade' : '' }}" id="objective" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-dialog-centered modal-sm" role="document">

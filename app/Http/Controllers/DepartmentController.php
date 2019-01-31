@@ -82,13 +82,15 @@ class DepartmentController extends Controller
 
         $attr['name'] = $request->department_name;
         $attr['description'] = $request->department_description;
+        if(preg_match("/department(\d+$)/", $request->department_parent, $matchs)||preg_match("/self(\d+$)/", $request->department_parent, $matchs)){
+            $attr['parent_department_id'] = $matchs[1];
+        }
         $attr['user_id'] = auth()->user()->id;
         $attr['company_id'] = auth()->user()->company_id;
-        
         $department = Department::create($attr);
         $department->addAvatar($request);
 
-        return redirect()->route('company.index');
+        return redirect()->back();
     }
 
     /**
@@ -104,11 +106,14 @@ class DepartmentController extends Controller
 
         $attr['name'] = $request->department_name;
         $attr['description'] = $request->department_description;
+        if(preg_match("/department(\d+$)/", $request->department_parent, $matchs)||preg_match("/self(\d+$)/", $request->department_parent, $matchs)){
+            $attr['parent_department_id'] = $matchs[1];
+        }
         $department->update($attr);
 
         $department->addAvatar($request);
 
-        return redirect()->route('company.index');
+        return redirect()->back();
     }
 
     /**

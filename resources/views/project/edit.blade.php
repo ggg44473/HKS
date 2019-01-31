@@ -16,16 +16,9 @@
                     {{-- 上傳頭像 --}}
                     <div class="row">
                         <div class="col-12 text-center">
-                            <input id="imgUpload" name="avatar" type="file" class="u-hidden" accept="image/*"/>
-                            @if ($project->avatar)
-                                <img id="avatarImg" class="avatar u-margin-16" src="{{ $project->getAvatar() }}" alt="">
-                                <img id="avatarImgUpload" class="avatar u-hidden u-margin-16" src="/img/icon/upload/gray.svg" alt="">
-                            @else
-                                <div id="projectIcon" class="avatar text-center projectIcon">
-                                    <i class="fas fa-images text-white"></i>
-                                    <i class="fas fa-upload text-white"></i>
-                                </div>
-                            @endif
+                            <input name="avatar" type="file" class="u-hidden imgUpload" accept="image/*"/>
+                            <img class="avatar u-margin-16 avatarImg" src="{{ $project->getAvatar() }}" alt="">
+                            <img class="avatar u-hidden u-margin-16 avatarImgUpload" src="/img/icon/upload/gray.svg" alt="">
                         </div>
                     </div>
                     {{-- 專案名稱 --}}    

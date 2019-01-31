@@ -95,7 +95,7 @@
 
 @can('create', App\Department::class)
 {{-- 新增部門modal --}}
-@include('organization.department.create', ['parent'=>$company, 'self'=>null, 'children'=>$company->departments])
+@include('organization.department.create', ['parent'=>$company, 'self'=>null, 'children'=>$company->departments, 'department'=>''])
 @endcan
 
 @can('update', $company)

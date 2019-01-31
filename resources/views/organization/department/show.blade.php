@@ -63,13 +63,13 @@
 <div class="row justify-content-center">
     <div class="col-md-10 col-12 text-right align-self-end">
         @can('create', App\Department::class)
-            <a href="#" data-toggle="modal" data-target="#createDepartment" class="tooltipBtn" data-placement="top" title="新增部門"><i class="fas fa-plus-circle u-margin-4"></i></a>
+            <a href="#" data-toggle="modal" data-target="#createDepartment{{ $department->id }}" class="tooltipBtn" data-placement="top" title="新增部門"><i class="fas fa-plus-circle u-margin-4"></i></a>
         @endcan
         @can('memberSetting', $department)
             <a href="#" data-toggle="modal" data-target="#inviteMember{{ $department->id }}" class="tooltipBtn" data-placement="top" title="新增成員"><i class="fas fa-user-plus u-margin-4"></i></a>                    
         @endcan
         @can('update', $department)
-            <a href="#" data-toggle="modal" data-target="#editDepartment" class="tooltipBtn" data-placement="top" title="編輯組織"><i class="fas fa-edit u-margin-4"></i></a>                    
+            <a href="#" data-toggle="modal" data-target="#editDepartment{{ $department->id }}" class="tooltipBtn" data-placement="top" title="編輯組織"><i class="fas fa-edit u-margin-4"></i></a>                    
         @endcan
         @can('delete', $department)
             <a href="#" data-toggle="dropdown" class="tooltipBtn" data-placement="top" title="刪除部門"><i class="fas fa-trash-alt"></i></a>
