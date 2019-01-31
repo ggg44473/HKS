@@ -47,7 +47,7 @@ class ActivityNotification extends Notification implements ShouldQueue
             'id' => $this->id,
             'data' => [
                 'message' => '您安排的行程 [ ' . $this->freshIssue->title . '  ] ' . Carbon::parse($this->freshIssue->started_at)->diffForHumans() . '後開始，請盡早預備',
-                'icon' => asset('img/logo/favicon.ico'),
+                'icon' =>  $this->freshIssue->getAvatar(),
                 'link' => route('calendar.show', $this->freshIssue->id),
             ],
         ];

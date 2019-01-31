@@ -82,9 +82,9 @@ class ActivityController extends Controller
         $activities->user_id = $user->id;
         $activities->title = $request->input('title');
         $activities->color = $request->input('color');
-        $activities->started_at = $request->input('st_date') . " " . date("H:m:s", strtotime($request->input('st_time')));
+        $activities->started_at = $request->input('st_date') . " " . $request->input('st_time');
         if ($request->input('fin_date'))
-            $activities->finished_at = $request->input('fin_date') . " " . date("H:m:s", strtotime($request->input('fin_time')));
+            $activities->finished_at = $request->input('fin_date') . " " . $request->input('fin_time');
         $activities->save();
         return redirect('calendar');
     }
@@ -131,9 +131,9 @@ class ActivityController extends Controller
     {
         $actAttr['title'] = $request->input('title');
         $actAttr['color'] = $request->input('color');
-        $actAttr['started_at'] = $request->input('st_date') . " " . date("H:m:s", strtotime($request->input('st_time')));
+        $actAttr['started_at'] = $request->input('st_date') . " " . $request->input('st_time');
         if ($request->input('fin_date'))
-            $actAttr['finished_at'] = $request->input('fin_date') . " " . date("H:m:s", strtotime($request->input('fin_time')));
+            $actAttr['finished_at'] = $request->input('fin_date') . " " . $request->input('fin_time');
         $activity->update($actAttr);
 
         return redirect('calendar');

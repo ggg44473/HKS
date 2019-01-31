@@ -44,9 +44,7 @@ class Kernel extends ConsoleKernel
             $activities = Activity::where('started_at', '<=', $future)->where('started_at', '>=', $now)->get();
             foreach ($activities as $activity) {
                 // 四十分鐘內將進行的，會提醒行事曆上的活動即將開始
-                if ($activity->started_at <= $future) {
                     Notification::send($activity->user, new ActivityNotification($activity));
-                }
             }
         })->everyThirtyMinutes();
 

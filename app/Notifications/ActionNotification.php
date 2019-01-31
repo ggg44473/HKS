@@ -46,7 +46,7 @@ class ActionNotification extends Notification implements ShouldQueue
             'id' => $this->id,
             'data' => [
                 'message' => '您的 Action [ ' . $this->deadIssue->title . '  ] 於 ' . $this->deadIssue->finished_at . ' 到期，請確認是否需要延期(postpone)',
-                'icon' => asset('img/logo/favicon.ico'),
+                'icon' => $this->deadIssue->getAvatar(),
                 'link' => route('actions.show', $this->deadIssue->id),
             ],
         ];

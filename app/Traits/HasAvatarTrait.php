@@ -46,6 +46,8 @@ trait HasAvatarTrait
                     return '/img/icon/project/gc.png';
                 case 'App\Action':
                     return '/img/logo/favicon.ico';
+                case 'App\Activity':
+                    return '/img/logo/favicon.ico';
             }
         }
     }
