@@ -70,7 +70,7 @@ class CommentNotification extends Notification implements ShouldQueue
             ->greeting('Dear ' . $this->details['name'])
             ->line($this->details['commenter'] . $this->details['body'])
             ->line(array_key_exists('parentComment', $this->details) ? $this->details['parentComment'] : '')
-            ->line('The comment is')
+            ->line('留言內容為')
             ->line($this->details['comment'])
             ->line('You care your goals, we care you.');
     }

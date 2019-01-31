@@ -53,7 +53,7 @@ $(document).ready(function () {
     axios.get('/notifications').then(({
         data
     }) => {
-        data.forEach(notification => {
+        data.reverse().forEach(notification => {
             addNotification(notification.data);
         });
     });
