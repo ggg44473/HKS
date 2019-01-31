@@ -49,6 +49,8 @@ class FollowNotification extends Notification implements ShouldQueue
     {
         return [
             'id' => $this->id,
+            'created_at' => now()->toDateTimeString(),
+            'read_at' => null,
             'data' => [
                 'message' => $this->follow->user->name . '正在追蹤' .  $this->modelType .' '. $this->modelName ,
                 'icon' => $this->model->getAvatar(),
