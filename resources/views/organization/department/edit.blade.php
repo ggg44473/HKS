@@ -1,4 +1,4 @@
-<div class="modal fade " id="editDepartment" tabindex="-1" role="dialog">
+<div class="modal fade " id="editDepartment{{ $department->id }}" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-dialog-centered modal-md" role="document">
         <div class="modal-content">
             <div class="modal-header">
