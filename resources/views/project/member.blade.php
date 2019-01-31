@@ -202,7 +202,7 @@
             </div>
             <div class="modal-body">
                 <div class="row mb-4">
-                    <div class="col-12 text-center font-weight-bold"><h5>變更公司管理人</h5></div>
+                    <div class="col-12 text-center font-weight-bold"><h5>變更專案管理人</h5></div>
                 </div>
                 <form action="{{ route('project.admin.change', $project) }}" method="post">
                     @csrf
