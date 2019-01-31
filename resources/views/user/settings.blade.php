@@ -9,11 +9,62 @@
 
 @section('content')
 <div class="container">
-    <div class="row m-3 justify-content-center">
-        <h4 class="col-md-7">帳號設定</h4>
+    <div class="row m-3 justify-content-center pb-4">
+        <h4 class="col-md-10">基本資料<hr class="u-mt-8"></h4>
+        <div class="col-md-10">
+            <div class="row">
+                <div class="col-auto">
+                    <a class="u-ml-8 u-mr-8" href="#">
+                        <img src="{{ $user->getAvatar() }}" alt="" class="avatar text-center bg-white">
+                    </a>
+                </div>
+                <div class="col-auto align-self-center text-truncate">
+                    <a href="#">
+                        <p class="mb-0 font-weight-bold text-truncate">{{ $user->name }}</p>
+                        <p class="mb-0 text-truncate">{{ $user->email }}</p>
+                    </a>
+                    <hr>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="row justify-content-center">
-        <div class="col-md-6">
+    <div class="row m-3 justify-content-center pt-4">
+        <h4 class="col-md-10 u-mb-8">帳號權限</h4>
+        <div class="col-md-10">
+            <table class="table table-hover text-center">
+                <thead>
+                    <tr>
+                    <th scope="col">tpye</th>
+                    <th scope="col">name</th>
+                    <th scope="col">permission</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>公司</td>
+                        <td>{{ $user->company->name }}</td>
+                        <td>{{ $user->role($user->company)->name }}</td>
+                    </tr>
+                    <tr>
+                        <td>部門</td>
+                        <td>{{ $user->department?$user->department->name:'-' }}</td>
+                        <td>{{ $user->department?$user->role($user->department)->name:'-' }}</td>
+                    </tr>
+                    @foreach ($user->projects as $project)
+                        <tr>
+                            <td>專案</td>
+                            <td>{{ $project->name }}</td>
+                            <td>{{ $user->role($project)->name }}</td>
+                        </tr>
+                    @endforeach
+                    
+                </tbody>
+                </table>
+        </div>
+    </div>
+    {{-- <div class="row justify-content-center"> --}}
+        
+        {{-- <div class="col-md-6">
             <form name="form" method="POST" action="{{ route('user.update', auth()->user()->id) }}" enctype="multipart/form-data">
                 @csrf {{ method_field('PATCH') }}
 
@@ -71,7 +122,7 @@
                     </div>
                 </div>
             </form>
-        </div>
-    </div>
+        </div> --}}
+    {{-- </div> --}}
 </div>
 @endsection

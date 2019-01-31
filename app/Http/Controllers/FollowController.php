@@ -31,10 +31,11 @@ class FollowController extends Controller
     {
         $attr['user_id'] = auth()->user()->id;
         $attr['model_type'] = $type;
-        $attr['model_id'] =  $owner;
+        $attr['model_id'] = $owner;
+        if (Follow::where($attr)->first()) return redirect()->back();
         $follow = Follow::create($attr);
-        if($follow){
-            $users =$follow->model->getNotifiableUser();
+        if ($follow) {
+            $users = $follow->model->getNotifiableUser();
             Notification::send($users, new FollowNotification($follow));
         }
 
@@ -45,7 +46,7 @@ class FollowController extends Controller
     {
         $attr['user_id'] = auth()->user()->id;
         $attr['model_type'] = $type;
-        $attr['model_id'] =  $owner;
+        $attr['model_id'] = $owner;
         Follow::where($attr)->delete();
 
         return redirect()->back();
