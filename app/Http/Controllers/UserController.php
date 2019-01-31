@@ -156,16 +156,12 @@ class UserController extends Controller
 
     public function readAllNotification()
     {
-        $this->authorize('update', $user);
-
         auth()->user()->unreadNotifications->markAsRead();
         return redirect()->back();
     }
 
     public function listNotification()
     {
-        $this->authorize('update', $user);
-
         $data = [
             'notifications' => auth()->user()->notifications()->get(),
         ];
