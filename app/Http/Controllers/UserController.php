@@ -23,6 +23,8 @@ class UserController extends Controller
 
     public function listOKR(Request $request, User $user)
     {
+        $this->authorize('view', $user);
+
         $okrsWithPage = $user->getOkrsWithPage($request);
 
         $data = [
@@ -38,6 +40,8 @@ class UserController extends Controller
 
     public function listAction(Request $request, User $user)
     {
+        $this->authorize('view', $user);
+
         $builder = $user->actions();
 
         if ($request->input('order', '')) {
@@ -102,10 +106,10 @@ class UserController extends Controller
 
     public function storeObjective(ObjectiveRequest $request, User $user)
     {
-        $this->authorize('storeObjective', $user);       
+        $this->authorize('storeObjective', $user);
 
         $objective = $user->addObjective($request);
-        
+
         return redirect()->to(url()->previous() . '#oid-' . $objective->id);
     }
 
@@ -116,6 +120,8 @@ class UserController extends Controller
      */
     public function settings(User $user)
     {
+        $this->authorize('view', $user);
+
         if ($user->id != auth()->user()->id) return redirect()->to(url()->previous());
 
         $data = [
@@ -123,17 +129,6 @@ class UserController extends Controller
         ];
 
         return view('user.settings', $data);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
     }
 
     /**
@@ -145,7 +140,7 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        $this->authorize('update', $user);        
+        $this->authorize('update', $user);
 
         $attr['name'] = $request->name;
         $user->update($attr);
@@ -154,31 +149,26 @@ class UserController extends Controller
         return redirect()->route('user.settings', auth()->user()->id);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
-
     public function notifications()
     {
         return auth()->user()->unreadNotifications()->limit(10)->get()->toArray();
     }
 
-    public function readAllNotification() {
+    public function readAllNotification()
+    {
+        $this->authorize('update', $user);
+
         auth()->user()->unreadNotifications->markAsRead();
         return redirect()->back();
     }
 
-    public function listNotification() {
+    public function listNotification()
+    {
+        $this->authorize('update', $user);
+
         $data = [
             'notifications' => auth()->user()->notifications()->get(),
         ];
-        return view('user.notifications' , $data);
+        return view('user.notifications', $data);
     }
 }

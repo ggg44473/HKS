@@ -10,6 +10,18 @@ class UserPolicy
     use HandlesAuthorization;
 
     /**
+     * Determine whether the user can view the company.
+     *
+     * @param  \App\User  $user
+     * @param  \App\Company  $company
+     * @return mixed
+     */
+    public function view(User $current_user, User $user)
+    {
+        return $current_user->company_id === $user->company_id;
+    }
+    
+    /**
      * Determine whether the user can store Objective for the user.
      *
      * @param  \App\User  $current_user
