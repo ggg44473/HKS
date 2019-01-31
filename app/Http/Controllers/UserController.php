@@ -118,7 +118,7 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function settings(User $user)
+    public function settings(Request $request, User $user)
     {
         $this->authorize('view', $user);
 
