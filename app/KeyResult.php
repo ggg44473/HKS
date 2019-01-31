@@ -6,6 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class KeyResult extends Model
 {
+
+    // 紀錄KR更新，表示該張O有定期更新
+    protected $touches = ['objective'];
+
     protected $fillable = [
         'objective_id',
         'title',
@@ -18,7 +22,7 @@ class KeyResult extends Model
 
     public function objective()
     {
-        return $this->belongsTo(Objective::class);
+        return $this->belongsTo('App\Objective');
     }
 
     public function keyResultRecords()
