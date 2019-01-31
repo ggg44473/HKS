@@ -44,7 +44,7 @@
                             <th>姓名</th>
                             <th>部門</th>
                             <th>職稱</th>
-                            <th>權限</th>
+                            <th>權限<a href="" data-toggle="modal" data-target="#rolePermission"><i class="fas fa-question-circle text-white pl-2"></i></a></th>
                             @can('memberSetting', $department)
                                 <th>設定</th>                                
                             @endcan
@@ -152,4 +152,6 @@
     </form>
 @endcan
 @endforeach
+{{-- 權限說明modal --}}
+@include('permission.rolePermission', ['type'=>'部門'])
 @endsection

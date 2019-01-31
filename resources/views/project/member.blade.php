@@ -41,9 +41,9 @@
                             <th>姓名</th>
                             <th>部門</th>
                             <th>職稱</th>
-                            <th>權限</th>
+                            <th>權限<a href="" data-toggle="modal" data-target="#rolePermission"><i class="fas fa-question-circle text-white pl-2"></i></a></th>
                             @can('memberSetting', $project)
-                                <th>設定</th>                              
+                                <th>設定</th>
                             @endcan
                         </tr>
                     </thead>
@@ -269,4 +269,6 @@
     </div>
 </div>
 @endcan
+{{-- 權限說明modal --}}
+@include('permission.rolePermission', ['type'=>'專案'])
 @endsection
