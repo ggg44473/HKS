@@ -26,6 +26,8 @@ Route::middleware(['verified'])->group(function () {
     Route::get('calendar/activity/{activity}/show', 'ActivityController@show')->name('calendar.show');
     Route::patch('calendar/activity/{activity}/update', 'ActivityController@update')->name('calendar.update');
     Route::delete('calendar/activity/{activity}/destroy', 'ActivityController@destroy')->name('calendar.destroy');
+    // 取得ical格式
+    Route::get("ical-events", "IcalendarController@getEventsICalObject")->name('calendar.ical');
 
     # 搜尋
     Route::get('search', 'SearchController@index')->name('search.index');

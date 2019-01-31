@@ -40,7 +40,9 @@
         <option class="btn-light" value="2">作為 Action</option>
         <option class="btn-light" value="3">行程 Activity</option>
     </select>
-    
+    <button id="copyBT" class="btn btn-secondary mb-2 btn-sm">複製ical日曆網址</button>
+    <a id="icalcontent" href="{{route('calendar.ical')}}">{{route('calendar.ical')}}</a>
+   
     <div id="calendar" data-uid="{{auth()->user()->id}}"></div>
     <form action="{{route('calendar.create', auth()->user()->id) }}" method="post">
         @csrf
