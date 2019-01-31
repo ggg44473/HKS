@@ -89,7 +89,7 @@
 .sidebar .nav-link {
     padding-top: 1rem;
     padding-left: 1.3rem;
-    color: #fff !important;
+    color: #fff;
 }
 #sidebar-text{
     top: 0;
