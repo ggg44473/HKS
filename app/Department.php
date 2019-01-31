@@ -24,7 +24,7 @@ class Department extends Model implements HasObjectiveInterface
 
     public function users()
     {
-        return $this->hasMany('App\User','department_id');
+        return $this->hasMany('App\User', 'department_id');
     }
 
     public function admin()
@@ -55,6 +55,9 @@ class Department extends Model implements HasObjectiveInterface
 
     public function getNotifiableUser()
     {
-        return $this->users;
+        foreach ($this->permissions->where('role_id', '<=', '2') as $index => $permission) {
+            $users = [$index => $permission->user];
+        }
+        return $users;
     }
 }

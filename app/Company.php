@@ -41,7 +41,10 @@ class Company extends Model implements HasObjectiveInterface, HasInvitationInter
 
     public function getNotifiableUser()
     {
-        return $this->users;
+        foreach ($this->permissions->where('role_id', '<=', '2') as $index => $permission) {
+            $users = [$index => $permission->user];
+        }
+        return $users;
     }
 
     public function admin()

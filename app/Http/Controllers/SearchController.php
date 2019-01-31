@@ -30,17 +30,17 @@ class SearchController extends Controller
                 $like = '%' . $search . '%';
 
                 $usersBuilder->where(function ($query) use ($like) {
-                    $query->where('name', 'like', $like)
-                        ->orWhere('email', 'like', $like)
-                        ->orWhere('position', 'like', $like)
+                    $query->where('name', 'iLike', $like)
+                        ->orWhere('email', 'iLike', $like)
+                        ->orWhere('position', 'iLike', $like)
                         ->orWhereHas('department', function ($query) use ($like) {
-                            $query->where('name', 'like', $like);
+                            $query->where('name', 'iLike', $like);
                         });
                    ;
                 });
                 $projectsBuilder->where(function ($query) use ($like) {
-                    $query->where('name', 'like', $like)
-                        ->orWhere('description', 'like', $like);
+                    $query->where('name', 'iLike', $like)
+                        ->orWhere('description', 'iLike', $like);
                 });
 
                 $usersCount = $usersBuilder->getResults()->count();
