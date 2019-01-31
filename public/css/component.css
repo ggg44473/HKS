@@ -86,9 +86,12 @@
 #sidebar{
     width: 60px;
 }
-.sidebar .nav-link {
+.sidebar .nav-link{
     padding-top: 1rem;
     padding-left: 1.3rem;
+    color: #fff;
+}
+.sidebar-sm .nav-link{
     color: #fff;
 }
 #sidebar-text{

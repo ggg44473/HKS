@@ -23,9 +23,9 @@
     <a class="nav-link text-center nav-follow" href="{{ route('follow.index') }}"><i class="fas fa-star" style="line-height: 24px"></i></a>
 </nav>
 <div class="row u-pl-8 u-pr-8 bg-primary u-pt-8 sidebar-sm ml-0 mr-0">
-    <a class="col text-center text-white ml-auto mr-auto nav-user" href="{{ route('user.okr', auth()->user()->id) }}"><img src="{{ asset('/img/icon/home/w.svg') }}" alt=""><p class="mb-0 small">OKR</p></a>
-    <a class="col text-center text-white ml-auto mr-auto nav-organization" href="{{ route('company.index') }}"><i class="fas fa-sitemap" style="line-height: 24px"></i><p class="mb-0 small">組織</p></a>
-    <a class="col text-center text-white ml-auto mr-auto nav-project" href="{{ route('project') }}"><i class="fas fa-file-invoice" style="line-height: 24px"></i><p class="mb-0 small">專案</p></a>
-    <a class="col text-center text-white ml-auto mr-auto nav-calendar" href="{{ route('calendar.index') }}"><i class="fas fa-calendar-alt" style="line-height: 24px"></i><p class="mb-0 small">日曆</p></a>
-    <a class="col text-center text-white ml-auto mr-auto nav-follow" href="{{ route('follow.index') }}"><i class="fas fa-star" style="line-height: 24px"></i><p class="mb-0 small">追蹤</p></a>
+    <a class="nav-link col text-center ml-auto mr-auto nav-user" href="{{ route('user.okr', auth()->user()->id) }}"><i class="fas fa-home" style="line-height: 24px; font-size: 24px;"></i><p class="mb-0 small">OKR</p></a>
+    <a class="nav-link col text-center ml-auto mr-auto nav-organization" href="{{ route('company.index') }}"><i class="fas fa-sitemap" style="line-height: 24px; font-size: 24px;"></i><p class="mb-0 small">組織</p></a>
+    <a class="nav-link col text-center ml-auto mr-auto nav-project" href="{{ route('project') }}"><i class="fas fa-file-invoice" style="line-height: 24px; font-size: 24px;"></i><p class="mb-0 small">專案</p></a>
+    <a class="nav-link col text-center ml-auto mr-auto nav-calendar" href="{{ route('calendar.index') }}"><i class="fas fa-calendar-alt" style="line-height: 24px; font-size: 24px;"></i><p class="mb-0 small">日曆</p></a>
+    <a class="nav-link col text-center ml-auto mr-auto nav-follow" href="{{ route('follow.index') }}"><i class="fas fa-star" style="line-height: 24px; font-size: 24px;"></i><p class="mb-0 small">追蹤</p></a>
 </div>
