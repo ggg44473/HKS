@@ -54,6 +54,7 @@
 @media (max-width: 575px){
     .content{
         margin-left: 0 !important;
+        margin-bottom: 80px;
     }
     .search{
         display: none;
@@ -332,6 +333,14 @@ main{
     right: 36px;
     border-radius: 50%;
     box-shadow: 3px 3px 30px rgba(20%,20%,20%,0.7);
+    z-index: 1001;
+}
+
+@media(max-width: 575px){
+    .newObjective{
+        right: 15px;
+        bottom: 100px;
+    }
 }
 
 /*-------------------------*/
