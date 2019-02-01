@@ -24,7 +24,7 @@ class CreateUsersTable extends Migration
             $table->integer('company_id')->unsigned()->nullable();
             $table->integer('department_id')->unsigned()->nullable();
             $table->string('position')->nullable();
-            $table->string('motto')->nullable();
+            $table->string('description')->nullable();
             $table->boolean('enable')->default(true);
         });
     }
