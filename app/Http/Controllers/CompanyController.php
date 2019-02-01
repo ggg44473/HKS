@@ -13,6 +13,8 @@ use App\Department;
 use App\Project;
 use App\Permission;
 use App\Follow;
+use Notification;
+use App\Notifications\DepartmentNotification;
 
 class CompanyController extends Controller
 {
@@ -53,7 +55,7 @@ class CompanyController extends Controller
     {
         $this->authorize('storeObjective', $company);
 
-        $objective = $company->addObjective($request);
+        $objective = $company->addObjective($request, $company);
         return redirect()->to(url()->previous() . '#oid-' . $objective->id);
     }
 
@@ -256,11 +258,18 @@ class CompanyController extends Controller
 
         $attr['department_id'] = $request->input('department');
         if ($request->input('department') != null) {
-            if ($permission = $member->permissions()->where('model_type', Department::class)->first()) {
-                $permission->update(['role_id' => 4]);
-            } else {
-                Permission::create(['user_id' => $member->id, 'model_type' => Department::class, 'model_id' => $request->input('department'), 'role_id' => 4]);
+            if ($request->input('department') != $member->department_id) {
+                if ($permission = $member->permissions()->where('model_type', Department::class)->first()) {
+                    $permission->update(['role_id' => 4, 'model_id' => $request->input('department')]);
+                } else {
+                    Permission::create(['user_id' => $member->id, 'model_type' => Department::class, 'model_id' => $request->input('department'), 'role_id' => 4]);
+                }
+                Notification::send($member, new DepartmentNotification(Department::find($request->input('department'))));
             }
+        } elseif ($member->department_id) {
+            Notification::send($member, new DepartmentNotification($member->department, 'out'));
+            Permission::where(['user_id' => $member->id, 'model_type' => Department::class, 'model_id' => $member->department_id])->delete();
+            $member->update(['department_id' => null, 'position' => null]);
         }
         $attr['position'] = $request->input('position');
         $member->update($attr);

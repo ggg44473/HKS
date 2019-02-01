@@ -80,7 +80,7 @@
                             <td data-th="部門">
                                 <select name="department" id="department" class="form-control" form="memberUpdate{{ $member->id }}">
                                     <option value="{{$company->id}}">{{ $company->name }}</option>
-                                    @foreach ($departments as $department)
+                                    @foreach ($company->departments as $department)
                                         @if ($department->id == $member->department_id)
                                         <option value="{{ $department->id }}" selected>{{ $department->name }}</option>
                                         @else
@@ -102,7 +102,7 @@
                             <td data-th="部門">
                                 <select name="department" id="department" class="form-control" form="memberUpdate{{ $member->id }}">
                                     <option value="{{$company->id}}">{{ $company->name }}</option>
-                                    @foreach ($departments as $department)
+                                    @foreach ($company->departments as $department)
                                     @if ($department->id == $member->department_id)
                                     <option value="{{ $department->id }}" selected>{{ $department->name }}</option>
                                     @else

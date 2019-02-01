@@ -126,7 +126,7 @@ class ProjectController extends Controller
     {
         $this->authorize('storeObjective', $project);
 
-        $objective = $project->addObjective($request);
+        $objective = $project->addObjective($request, $project);
         return redirect()->to(url()->previous() . '#oid-' . $objective->id);
     }
 

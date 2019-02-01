@@ -10,6 +10,8 @@ use App\Http\Requests\ObjectiveRequest;
 use App\Charts\SampleChart;
 use App\User;
 use App\Permission;
+use Notification;
+use App\Notifications\DepartmentNotification;
 
 class DepartmentController extends Controller
 {
@@ -49,7 +51,7 @@ class DepartmentController extends Controller
     {
         $this->authorize('storeObjective', $department);
 
-        $objective = $department->addObjective($request);
+        $objective = $department->addObjective($request, $department);
         return redirect()->to(url()->previous() . '#oid-' . $objective->id);
     }
 
@@ -66,7 +68,7 @@ class DepartmentController extends Controller
         $department['okrs'] = $department->getOkrsWithPage($request)['okrs'];
         $data['department'] = $department;
         $data['children'] = $department->children;
-            
+
         return view('organization.department.index', $data);
     }
 
@@ -82,7 +84,7 @@ class DepartmentController extends Controller
 
         $attr['name'] = $request->department_name;
         $attr['description'] = $request->department_description;
-        if(preg_match("/department(\d+$)/", $request->department_parent, $matchs)||preg_match("/self(\d+$)/", $request->department_parent, $matchs)){
+        if (preg_match("/department(\d+$)/", $request->department_parent, $matchs) || preg_match("/self(\d+$)/", $request->department_parent, $matchs)) {
             $attr['parent_department_id'] = $matchs[1];
         }
         $attr['user_id'] = auth()->user()->id;
@@ -106,7 +108,7 @@ class DepartmentController extends Controller
 
         $attr['name'] = $request->department_name;
         $attr['description'] = $request->department_description;
-        if(preg_match("/department(\d+$)/", $request->department_parent, $matchs)||preg_match("/self(\d+$)/", $request->department_parent, $matchs)){
+        if (preg_match("/department(\d+$)/", $request->department_parent, $matchs) || preg_match("/self(\d+$)/", $request->department_parent, $matchs)) {
             $attr['parent_department_id'] = $matchs[1];
         }
         $department->update($attr);
@@ -142,7 +144,7 @@ class DepartmentController extends Controller
      */
     public function search(Company $company)
     {
-        $results = User::where([['company_id', $company->id],['department_id', null]])->get();
+        $results = User::where([['company_id', $company->id], ['department_id', null]])->get();
 
         return response()->json($results);
     }
@@ -158,11 +160,12 @@ class DepartmentController extends Controller
         $this->authorize('memberSetting', $department);
 
         $userIds = preg_split("/[,]+/", $request->invite);
-        foreach($userIds as $userId){
+        foreach ($userIds as $userId) {
             $user = User::where('id', $userId)->first();
-            if($user->company_id == $department->company_id){
+            if ($user->company_id == $department->company_id) {
                 $user->update(['department_id' => $department->id]);
-                Permission::create(['user_id' => $user->id, 'model_type'=>Department::class,'model_id'=>$department->id,'role_id'=>4]);
+                Permission::create(['user_id' => $user->id, 'model_type' => Department::class, 'model_id' => $department->id, 'role_id' => 4]);
+                Notification::send($user, new DepartmentNotification($department));
             }
         }
 
@@ -180,12 +183,13 @@ class DepartmentController extends Controller
         $this->authorize('memberSetting', $department);
 
         $attr['department_id'] = $request->input('department');
-        if ($request->input('department') != $department->id ) {
+        if ($request->input('department') != $department->id) {
             if ($permission = $member->permissions()->where('model_type', Department::class)->first()) {
-                $permission->update(['role_id' => 4]);
+                $permission->update(['role_id' => 4, 'model_id' => $request->input('department')]);
             } else {
                 Permission::create(['user_id' => $member->id, 'model_type' => Department::class, 'model_id' => $request->input('department'), 'role_id' => 4]);
             }
+            Notification::send($member, new DepartmentNotification(Department::find($request->input('department'))));
         }
         $attr['position'] = $request->input('position');
         $member->update($attr);
@@ -193,7 +197,7 @@ class DepartmentController extends Controller
 
         return redirect()->route('department.member', $department);
     }
-    
+
     /**
      * Remove company_id, department_id and position from storage.
      *
@@ -203,8 +207,9 @@ class DepartmentController extends Controller
     public function destroyMember(Department $department, User $member)
     {
         $this->authorize('memberSetting', $department);
-        Permission::where(['user_id'=>$member->id,'model_type'=>Department::class,'model_id'=>$department->id])->delete();
-        $member->update(['department_id'=>null, 'position'=>null]);
+        Permission::where(['user_id' => $member->id, 'model_type' => Department::class, 'model_id' => $department->id])->delete();
+        $member->update(['department_id' => null, 'position' => null]);
+        Notification::send($member, new DepartmentNotification($department, 'out'));
 
         return redirect()->route('department.member', $department);
     }

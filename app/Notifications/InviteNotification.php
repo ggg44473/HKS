@@ -74,7 +74,7 @@ class InviteNotification extends Notification implements ShouldQueue
             'created_at' => now()->toDateTimeString(),
             'read_at' => null,
             'data' => [
-                'message' => '您被邀請至'  . ' ( ' . $this->modelType . ' ) ' . $this->modelName,
+                'message' => '您被邀請至' . $this->modelType . '[' . $this->modelName . ']',
                 'icon' => $this->model->getAvatar(),
                 'link' => $this->model->getInviteUrl($this->userId),
             ],
