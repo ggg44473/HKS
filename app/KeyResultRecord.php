@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class KeyResultRecord extends Model
@@ -20,6 +21,11 @@ class KeyResultRecord extends Model
     public function accomplishRate()
     {
         return $this->keyresult()->getResults()->historyAcpRate($this->history_value);
+    }
+
+    public function getUpdatedAtAttribute($date)
+    {
+        return Carbon::parse($date)->toDateString();
     }
 
 }
