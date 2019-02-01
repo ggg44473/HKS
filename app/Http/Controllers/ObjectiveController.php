@@ -28,4 +28,9 @@ class ObjectiveController extends Controller
         $objective->delete();
         return redirect()->back();
     }
+
+    public function getArray(Objective $objective)
+    {
+        return $objective->getRelatedKrRecord();
+    }
 }

@@ -69,6 +69,7 @@ class Objective extends Model implements HasNotifiableInterface
         foreach ($collections as $collection) {
             // 需要達成率合併
             foreach ($collection as $collect) {
+                $color = $collect->keyresult->color();
                 $merged->push(collect($collect)->merge(['rate' => $collect->accomplishRate()])->toArray());
             }
             $kr_id = $merged->pluck('key_results_id')->first();
@@ -76,7 +77,7 @@ class Objective extends Model implements HasNotifiableInterface
             $kr_acop = $merged->pluck('history_confidence')->all();
             $kr_conf = $merged->pluck('rate')->all();
             $merged = collect();
-            $kr_record = array('kr_id' => $kr_id, 'update' => $kr_date, 'confidence' => $kr_acop, 'accomplish' => $kr_conf);
+            $kr_record = array('kr_color' => $color, 'kr_id' => $kr_id, 'update' => $kr_date, 'confidence' => $kr_acop, 'accomplish' => $kr_conf);
             array_push($kr_record_array, $kr_record);
         }
         return $kr_record_array;
@@ -103,4 +104,5 @@ class Objective extends Model implements HasNotifiableInterface
         if ($totalWeight > 0) return round($sum / $totalWeight, 0);
         else return 0;
     }
+
 }
