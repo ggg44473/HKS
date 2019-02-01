@@ -2,8 +2,12 @@ $('#avatar').on('click', function () {
     form.avatar.click();
 });
 
+$('#avatar').on('hover', function () {
+    $(this).children('.avatar').attr('src', '/img/icon/upload/gray.svg');
+});
+
 $("#input").change(function () {
-    readURL(this);
+    $('#avatarForm').submit();
 });
 
 //上傳頭像顯示
@@ -17,27 +21,27 @@ $('.uploadIcon').hover(function(){
     $(this).children('.fa-upload').hide();
 });
 
-$('#avatarImg').mouseover(function(){
+$('.avatarImg').mouseover(function(){
     $(this).hide();
-    $('#avatarImgUpload').removeClass('u-hidden');
+    $(this).siblings('.avatarImgUpload').removeClass('u-hidden');
 });
 
-$('#avatarImgUpload').mouseleave(function(){
-    $('#avatarImg').show();
+$('.avatarImgUpload').mouseleave(function(){
+    $(this).siblings('.avatarImg').show();
     $(this).addClass('u-hidden');
 });
 
 $('.uploadIcon').click(function(){
-    $('#imgUpload').click();
+    $(this).siblings('.imgUpload').click();
 });
 
-$('#avatarImgUpload').click(function(){
-    $('#imgUpload').click();
+$('.avatarImgUpload').click(function(){
+    $(this).siblings('.imgUpload').click();
 });
 
-$('#imgUpload').change(function(){
+$('.imgUpload').change(function(){
     readURL(this);
-    $('#avatarImg').removeClass('u-hidden');
+    $(this).siblings('.avatarImg').removeClass('u-hidden');
     $('.uploadIcon').hide();
 });
 
@@ -45,8 +49,9 @@ function readURL(input){
     if(input.files && input.files[0]){
         var reader = new FileReader();
         reader.onload = function (e) {
-            $("#avatarImg").attr('src', e.target.result);
-            $('#avatar').attr('src', e.target.result);
+            console.log(input);
+            $(input).siblings('.avatarImg').attr('src', e.target.result);
+            $(input).siblings('.avatar').attr('src', e.target.result);
         }
         reader.readAsDataURL(input.files[0]);
     }

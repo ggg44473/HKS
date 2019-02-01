@@ -9,6 +9,9 @@ use App\Objective;
 use App\Http\Requests\ObjectiveRequest;
 use App\Charts\SampleChart;
 use App\User;
+use App\Permission;
+use Notification;
+use App\Notifications\DepartmentNotification;
 
 class DepartmentController extends Controller
 {
@@ -27,8 +30,10 @@ class DepartmentController extends Controller
      */
     public function listOKR(Request $request, Department $department)
     {
+        $this->authorize('view', $department);
+
         $okrsWithPage = $department->getOkrsWithPage($request);
-        $department['okrs'] = $department->getOkrsWithPage($request)['okrs'];
+        $department['okrs'] = $okrsWithPage['okrs'];
 
         $data = [
             'user' => auth()->user(),
@@ -44,7 +49,9 @@ class DepartmentController extends Controller
 
     public function storeObjective(ObjectiveRequest $request, Department $department)
     {
-        $objective = $department->addObjective($request);
+        $this->authorize('storeObjective', $department);
+
+        $objective = $department->addObjective($request, $department);
         return redirect()->to(url()->previous() . '#oid-' . $objective->id);
     }
 
@@ -55,46 +62,14 @@ class DepartmentController extends Controller
      */
     public function index(Request $request, Department $department)
     {
+        $this->authorize('view', $department);
+
         $data['parent'] = $department->parent;
         $department['okrs'] = $department->getOkrsWithPage($request)['okrs'];
         $data['department'] = $department;
         $data['children'] = $department->children;
-            
+
         return view('organization.department.index', $data);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function createRoot()
-    {
-        $company = Company::where('id', auth()->user()->company_id)->first();
-        $departments = Department::where('company_id', $company->id)->get();
-        $data = [
-            'parent' => $company,
-            'self' => '',
-            'children' => $departments,
-        ];
-
-        return view('organization.department.create', $data);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create(Department $department)
-    {
-        $data = [
-            'parent' => '',
-            'self' => $department,
-            'children' => $department->children,
-        ];
-
-        return view('organization.department.create', $data);
     }
 
     /**
@@ -105,40 +80,19 @@ class DepartmentController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('create', Department::class);
+
         $attr['name'] = $request->department_name;
         $attr['description'] = $request->department_description;
+        if (preg_match("/department(\d+$)/", $request->department_parent, $matchs) || preg_match("/self(\d+$)/", $request->department_parent, $matchs)) {
+            $attr['parent_department_id'] = $matchs[1];
+        }
         $attr['user_id'] = auth()->user()->id;
         $attr['company_id'] = auth()->user()->company_id;
-        if (substr($request->department_parent, 0, 4) == "self" || substr($request->department_parent, 0, 10) === "department") {
-            $attr['parent_department_id'] = preg_replace('/[^\d]/', '', $request->department_parent);
-        }
         $department = Department::create($attr);
-
         $department->addAvatar($request);
 
-        return redirect()->route('company.index');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  Department $department
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Department $department)
-    {
-        return view('organization.department.edit', ['department' => $department]);
+        return redirect()->back();
     }
 
     /**
@@ -150,13 +104,18 @@ class DepartmentController extends Controller
      */
     public function update(Request $request, Department $department)
     {
+        $this->authorize('update', $department);
+
         $attr['name'] = $request->department_name;
         $attr['description'] = $request->department_description;
+        if (preg_match("/department(\d+$)/", $request->department_parent, $matchs) || preg_match("/self(\d+$)/", $request->department_parent, $matchs)) {
+            $attr['parent_department_id'] = $matchs[1];
+        }
         $department->update($attr);
 
         $department->addAvatar($request);
 
-        return redirect()->route('company.index');
+        return redirect()->back();
     }
 
     /**
@@ -167,27 +126,14 @@ class DepartmentController extends Controller
      */
     public function destroy(Department $department)
     {
+        $this->authorize('delete', $department);
+
         foreach ($department->users as $user) {
             $user->update(['department_id' => null]);
         }
         $department->delete();
 
         return redirect()->route('company.index');
-    }
-
-    /**
-     * Show the form for inviting a new member.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function memberSetting(Department $department)
-    {
-        $data = [
-            'department'=>$department,
-            'members'=>$department->users,
-        ];
-
-        return view('organization.department.memberSetting', $data);
     }
 
     /**
@@ -198,7 +144,7 @@ class DepartmentController extends Controller
      */
     public function search(Company $company)
     {
-        $results = User::where([['company_id', $company->id],['department_id', null]])->get();
+        $results = User::where([['company_id', $company->id], ['department_id', null]])->get();
 
         return response()->json($results);
     }
@@ -211,15 +157,19 @@ class DepartmentController extends Controller
      */
     public function storeMember(Request $request, Department $department)
     {
+        $this->authorize('memberSetting', $department);
+
         $userIds = preg_split("/[,]+/", $request->invite);
-        foreach($userIds as $userId){
+        foreach ($userIds as $userId) {
             $user = User::where('id', $userId)->first();
-            if($user->company_id == $department->company_id){
+            if ($user->company_id == $department->company_id) {
                 $user->update(['department_id' => $department->id]);
+                Permission::create(['user_id' => $user->id, 'model_type' => Department::class, 'model_id' => $department->id, 'role_id' => 4]);
+                Notification::send($user, new DepartmentNotification($department));
             }
         }
-        
-        return redirect()->route('department.member.setting', $department);
+
+        return redirect()->route('department.member', $department);
     }
 
     /**
@@ -228,17 +178,26 @@ class DepartmentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function updateMember(Request $request, Department $department)
+    public function updateMember(Request $request, Department $department, User $member)
     {
-        foreach ($department->users as $member) {
-            $attr['department_id'] = $request->input('department' . $member->id);
-            $attr['position'] = $request->input('position' . $member->id);
-            $member->update($attr);
-        }
+        $this->authorize('memberSetting', $department);
 
-        return redirect()->route('department.member.setting', $department);
+        $attr['department_id'] = $request->input('department');
+        if ($request->input('department') != $department->id) {
+            if ($permission = $member->permissions()->where('model_type', Department::class)->first()) {
+                $permission->update(['role_id' => 4, 'model_id' => $request->input('department')]);
+            } else {
+                Permission::create(['user_id' => $member->id, 'model_type' => Department::class, 'model_id' => $request->input('department'), 'role_id' => 4]);
+            }
+            Notification::send($member, new DepartmentNotification(Department::find($request->input('department'))));
+        }
+        $attr['position'] = $request->input('position');
+        $member->update($attr);
+        $member->permissions()->where('model_type', Department::class)->update(['role_id' => $request->input('permission')]);
+
+        return redirect()->route('department.member', $department);
     }
-    
+
     /**
      * Remove company_id, department_id and position from storage.
      *
@@ -247,9 +206,12 @@ class DepartmentController extends Controller
      */
     public function destroyMember(Department $department, User $member)
     {
-        $member->update(['department_id'=>null, 'position'=>null]);
+        $this->authorize('memberSetting', $department);
+        Permission::where(['user_id' => $member->id, 'model_type' => Department::class, 'model_id' => $department->id])->delete();
+        $member->update(['department_id' => null, 'position' => null]);
+        Notification::send($member, new DepartmentNotification($department, 'out'));
 
-        return redirect()->route('department.member.setting', $department);
+        return redirect()->route('department.member', $department);
     }
 
     /**
@@ -259,6 +221,8 @@ class DepartmentController extends Controller
      */
     public function member(Request $request, Department $department)
     {
+        $this->authorize('view', $department);
+
         $department['okrs'] = $department->getOkrsWithPage($request)['okrs'];
 
         $builder = $department->users();

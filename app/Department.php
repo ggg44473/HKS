@@ -7,10 +7,11 @@ use App\Traits\HasObjectiveTrait;
 use App\Traits\HasAvatarTrait;
 use App\Interfaces\HasObjectiveInterface;
 use App\Traits\HasFollowTrait;
+use App\Traits\HasPermissionTrait;
 
 class Department extends Model implements HasObjectiveInterface
 {
-    use HasObjectiveTrait, HasAvatarTrait, HasFollowTrait;
+    use HasObjectiveTrait, HasAvatarTrait, HasFollowTrait, HasPermissionTrait;
 
     protected $fillable = [
         'name', 'description', 'parent_department_id', 'company_id', 'user_id',
@@ -23,7 +24,7 @@ class Department extends Model implements HasObjectiveInterface
 
     public function users()
     {
-        return $this->hasMany('App\User','department_id');
+        return $this->hasMany('App\User', 'department_id');
     }
 
     public function admin()
@@ -54,6 +55,9 @@ class Department extends Model implements HasObjectiveInterface
 
     public function getNotifiableUser()
     {
-        return $this->users;
+        foreach ($this->permissions->where('role_id', '<=', '2') as $index => $permission) {
+            $users = [$index => $permission->user];
+        }
+        return $users;
     }
 }

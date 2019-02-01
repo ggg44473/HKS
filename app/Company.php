@@ -9,10 +9,11 @@ use App\Interfaces\HasObjectiveInterface;
 use App\Interfaces\HasInvitationInterface;
 use App\Traits\HasInvitationTrait;
 use App\Traits\HasFollowTrait;
+use App\Traits\HasPermissionTrait;
 
 class Company extends Model implements HasObjectiveInterface, HasInvitationInterface
 {
-    use HasObjectiveTrait, HasAvatarTrait, HasInvitationTrait, HasFollowTrait;
+    use HasObjectiveTrait, HasAvatarTrait, HasInvitationTrait, HasFollowTrait, HasPermissionTrait;
 
     protected $fillable = [
         'name', 'description', 'user_id',
@@ -28,6 +29,11 @@ class Company extends Model implements HasObjectiveInterface, HasInvitationInter
         return $this->hasMany('App\Department', 'company_id');
     }
 
+    public function projects()
+    {
+        return $this->hasMany(Project::class);
+    }
+
     public function getOKrRoute()
     {
         return route('company.okr');
@@ -35,7 +41,10 @@ class Company extends Model implements HasObjectiveInterface, HasInvitationInter
 
     public function getNotifiableUser()
     {
-        return $this->users;
+        foreach ($this->permissions->where('role_id', '<=', '2') as $index => $permission) {
+            $users = [$index => $permission->user];
+        }
+        return $users;
     }
 
     public function admin()
@@ -45,6 +54,22 @@ class Company extends Model implements HasObjectiveInterface, HasInvitationInter
 
     public function getInviteUrl($userId)
     {
-        return route('company.index');
+        return route('company.index', [], false);
+    }
+
+    public function delete()
+    {   
+        // foreach ($this->projects as $project) {
+        //     $project->delete();
+        // }
+        foreach ($this->users as $user) {
+            $user->update(['company_id' => null, 'department_id' => null]);
+        }
+        foreach ($this->departments as $department) {
+            $department->delete();
+        }
+        $this->follower()->delete();
+
+        return parent::delete();
     }
 }

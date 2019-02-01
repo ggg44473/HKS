@@ -5,8 +5,10 @@
     </div>
     <div class="form-group col-md">
         @if($action)
+            <label class="mb-0">執行人</label>
             <search-only-component api={{ route('actions.user.search', $action->objective) }}></search-only-component>
         @else
+            <label class="mb-0">執行人</label>
             <search-only-component api={{ route('actions.user.search', $objective) }}></search-only-component>
         @endif
     </div>

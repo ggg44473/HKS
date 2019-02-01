@@ -54,6 +54,7 @@
 @media (max-width: 575px){
     .content{
         margin-left: 0 !important;
+        margin-bottom: 80px;
     }
     .search{
         display: none;
@@ -86,10 +87,13 @@
 #sidebar{
     width: 60px;
 }
-.sidebar .nav-link {
+.sidebar .nav-link{
     padding-top: 1rem;
     padding-left: 1.3rem;
-    color: #fff !important;
+    color: #fff;
+}
+.sidebar-sm .nav-link{
+    color: #fff;
 }
 #sidebar-text{
     top: 0;
@@ -106,7 +110,6 @@
 /* btn-menu */
 .btn-menu{
     border-radius: 50%;
-    background-color: transparent;
 }
 .btn-menu:hover{
     background-color: #F2F2F2;
@@ -169,7 +172,6 @@
 /*-------------------------*/
 .fas{
     font-size: 18px;
-    padding-top: 0.2rem;
 }
 
 /*-------------------------*/
@@ -212,6 +214,10 @@ main{
     padding-top: 0;
     padding-left: 45px;
     padding-right: 45px;
+}
+.modal-content{
+    border: none;
+    border-radius: 10px;
 }
 /*-------------------------*/
 /* Button */
@@ -299,6 +305,10 @@ main{
     border-radius: 10px;
     box-shadow: 3px 3px 30px rgba(20%,20%,20%,0.5);
 }
+.card-header, .card-header:first-child{
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
 /*-------------------------*/
 /* OKR */
 /*-------------------------*/
@@ -323,6 +333,14 @@ main{
     right: 36px;
     border-radius: 50%;
     box-shadow: 3px 3px 30px rgba(20%,20%,20%,0.7);
+    z-index: 1001;
+}
+
+@media(max-width: 575px){
+    .newObjective{
+        right: 15px;
+        bottom: 100px;
+    }
 }
 
 /*-------------------------*/

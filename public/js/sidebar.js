@@ -3,6 +3,25 @@ var isOpen;
 $().ready(function(){
     isOpen = (getCookie('openSideBar')=='true')? true : false
     sidebar(isOpen);
+    var path = $(location).attr('pathname').substr(1).split("/", 1);
+
+    switch(path[0]){
+        case 'user':
+            $('.nav-user').css('color', '#F8F684');
+            break;
+        case 'organization':
+            $('.nav-organization').css('color', '#F8F684');
+            break;
+        case 'project':
+            $('.nav-project').css('color', '#F8F684');
+            break;
+        case 'calendar':
+            $('.nav-calendar').css('color', '#F8F684');
+            break;
+        case 'follow':
+            $('.nav-follow').css('color', '#F8F684');
+            break;
+    }
 });
 
 $('.btn-menu').click(function(){
@@ -37,10 +56,12 @@ function sidebar(isOpen){
         $('.btn-menu').addClass('text-white');
         $('.btn-menu').css('background-color','#3BA99C');
     }else{
+        $('.btn-menu').css('background-color','');
         $('#sidebar-text').css('left','-30px');
         $('.content').css('margin-left','60px');
         $('.btn-menu').addClass('text-primary');
         $('.btn-menu').removeClass('text-white');
-        $('.btn-menu').css('background-color','');
     }
 }
+
+

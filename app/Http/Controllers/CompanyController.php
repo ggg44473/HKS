@@ -10,6 +10,11 @@ use App\Objective;
 use App\Charts\SampleChart;
 use App\Http\Requests\ObjectiveRequest;
 use App\Department;
+use App\Project;
+use App\Permission;
+use App\Follow;
+use Notification;
+use App\Notifications\DepartmentNotification;
 
 class CompanyController extends Controller
 {
@@ -29,14 +34,14 @@ class CompanyController extends Controller
     public function listOKR(Request $request)
     {
         $company = Company::where('id', auth()->user()->company_id)->first();
-        $company['okrs'] = $company? $company['okrs'] = $company->getOkrsWithPage($request)['okrs'] : null;
+        $this->authorize('view', $company);
 
         $okrsWithPage = $company->getOkrsWithPage($request);
+        $company['okrs'] = $okrsWithPage['okrs'];
 
         $data = [
             'user' => auth()->user(),
             'company' => $company,
-            'okrs' => $okrsWithPage['okrs'],
             'pageInfo' => $okrsWithPage['pageInfo'],
             'st_date' => $request->input('st_date', ''),
             'fin_date' => $request->input('fin_date', ''),
@@ -48,7 +53,9 @@ class CompanyController extends Controller
 
     public function storeObjective(ObjectiveRequest $request, Company $company)
     {
-        $objective = $company->addObjective($request);
+        $this->authorize('storeObjective', $company);
+
+        $objective = $company->addObjective($request, $company);
         return redirect()->to(url()->previous() . '#oid-' . $objective->id);
     }
 
@@ -60,11 +67,11 @@ class CompanyController extends Controller
     public function index(Request $request)
     {
         $company = Company::where('id', auth()->user()->company_id)->first();
-        $company['okrs'] = $company? $company->getOkrsWithPage($request)['okrs'] : null;
+        $company['okrs'] = $company ? $company->getOkrsWithPage($request)['okrs'] : null;
 
         $departments = Department::where(['company_id' => auth()->user()->company_id, 'parent_department_id' => null])->get();
         foreach ($departments as $department) {
-            $department['okrs'] = $department ? $department->getOkrsWithPage($request)['okrs']:null;
+            $department['okrs'] = $department ? $department->getOkrsWithPage($request)['okrs'] : null;
         }
 
         $invitations = auth()->user()->invitation->where('model_type', Company::class);
@@ -79,16 +86,6 @@ class CompanyController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  App\Http\Requests\CompanyRequest  $request
@@ -96,41 +93,19 @@ class CompanyController extends Controller
      */
     public function store(CompanyRequest $request)
     {
+        $this->authorize('create', Company::class);
+
         $attr['name'] = $request->input('company_name');
         $attr['description'] = $request->input('company_description');
         $attr['user_id'] = auth()->user()->id;
         $company = Company::create($attr);
 
         $company->addAvatar($request);
+        $company->createPermission(1);
 
         auth()->user()->update(['company_id' => $company->id]);
 
         return redirect()->route('company.index');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function edit()
-    {
-        $company = auth()->user()->company()->first();
-        $data = [
-            'company' => $company,
-        ];
-        return view('organization.company.edit', $data);
     }
 
     /**
@@ -142,6 +117,8 @@ class CompanyController extends Controller
     public function update(Request $request)
     {
         $company = Company::find(auth()->user()->company_id);
+        $this->authorize('update', $company);
+
         $attr['name'] = $request->company_name;
         $attr['description'] = $request->company_description;
         $company->update($attr);
@@ -158,29 +135,12 @@ class CompanyController extends Controller
      */
     public function destroy()
     {
-        $users = User::where('company_id', auth()->user()->company_id)->get();
-        foreach ($users as $user) {
-            $user->update(['company_id' => null, 'department_id' => null]);
-        }
-        auth()->user()->company()->first()->delete();
+        $company = auth()->user()->company;
+        $this->authorize('delete', $company);
+
+        $company->delete();
 
         return redirect()->route('company.index');
-    }
-
-    /**
-     * Show the form for inviting a new member.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function memberSetting()
-    {
-        $data = [
-            'company' => auth()->user()->company,
-            'members' => User::where([['company_id', auth()->user()->company_id], ['id', '!=', auth()->user()->id]])->get(),
-            'departments' => Department::where('company_id', auth()->user()->company_id)->get(),
-        ];
-
-        return view('organization.company.memberSetting', $data);
     }
 
     /**
@@ -192,9 +152,10 @@ class CompanyController extends Controller
      */
     public function inviteMember(Request $request, Company $company)
     {
+        $this->authorize('memberSetting', $company);
         $company->sendInvitation($request);
 
-        return redirect()->route('company.member.setting', $company);
+        return redirect()->route('company.member', $company);
     }
 
     /**
@@ -206,6 +167,7 @@ class CompanyController extends Controller
      */
     public function cancelInvite(Company $company, User $member)
     {
+        $this->authorize('memberSetting', $company);
         $company->deleteInvitation($member);
 
         return redirect()->route('company.member.setting', $company);
@@ -235,6 +197,7 @@ class CompanyController extends Controller
     public function agreeInvite(Company $company, User $member)
     {
         $company->deleteInvitation($member);
+        $company->createPermission(4);
         $member->update(['company_id' => $company->id]);
 
         return redirect()->route('company.index');
@@ -246,9 +209,22 @@ class CompanyController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function search()
+    public function searchNoncompany()
     {
         $results = User::where('company_id', null)->get();
+
+        return response()->json($results);
+    }
+
+    /**
+     * 搜尋使用者名稱或信箱
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function search()
+    {
+        $results = User::where('company_id', auth()->user()->company_id)->get();
 
         return response()->json($results);
     }
@@ -261,12 +237,13 @@ class CompanyController extends Controller
      */
     public function storeMember(Request $request)
     {
+        $this->authorize('memberSetting', $company);
         $userIds = preg_split("/[,]+/", $request->invite);
         foreach ($userIds as $userId) {
             User::where('id', $userId)->update(['company_id' => auth()->user()->company_id]);
         }
 
-        return redirect()->route('company.member.setting');
+        return redirect()->route('company.member');
     }
 
     /**
@@ -275,16 +252,30 @@ class CompanyController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function updateMember(Request $request)
+    public function updateMember(Request $request, User $member)
     {
-        $members = User::where('company_id', auth()->user()->company_id)->get();
-        foreach ($members as $member) {
-            $attr['department_id'] = $request->input('department' . $member->id);
-            $attr['position'] = $request->input('position' . $member->id);
-            $member->update($attr);
-        }
+        $this->authorize('memberSetting', $member->company);
 
-        return redirect()->route('company.member.setting');
+        $attr['department_id'] = $request->input('department');
+        if ($request->input('department') != null) {
+            if ($request->input('department') != $member->department_id) {
+                if ($permission = $member->permissions()->where('model_type', Department::class)->first()) {
+                    $permission->update(['role_id' => 4, 'model_id' => $request->input('department')]);
+                } else {
+                    Permission::create(['user_id' => $member->id, 'model_type' => Department::class, 'model_id' => $request->input('department'), 'role_id' => 4]);
+                }
+                Notification::send($member, new DepartmentNotification(Department::find($request->input('department'))));
+            }
+        } elseif ($member->department_id) {
+            Notification::send($member, new DepartmentNotification($member->department, 'out'));
+            Permission::where(['user_id' => $member->id, 'model_type' => Department::class, 'model_id' => $member->department_id])->delete();
+            $member->update(['department_id' => null, 'position' => null]);
+        }
+        $attr['position'] = $request->input('position');
+        $member->update($attr);
+        if ($member->id != auth()->user()->id) $member->permissions()->where('model_type', Company::class)->update(['role_id' => $request->input('permission')]);
+
+        return redirect()->route('company.member');
     }
 
     /**
@@ -295,9 +286,13 @@ class CompanyController extends Controller
      */
     public function destroyMember(User $member)
     {
+        $this->authorize('memberSetting', $member->company);
+        Permission::where('user_id', $member->id)->delete();
+        Follow::where('user_id', $member->id)->delete();
+        Follow::where(['model_type' => User::class, 'model_id' => $member->id])->delete();
         $member->update(['company_id' => null, 'department_id' => null, 'position' => null]);
 
-        return redirect()->route('company.member.setting');
+        return redirect()->route('company.member');
     }
 
     /**
@@ -308,11 +303,12 @@ class CompanyController extends Controller
     public function member(Request $request)
     {
         $company = Company::where('id', auth()->user()->company_id)->first();
-        $company['okrs'] = $company? $company->getOkrsWithPage($request)['okrs'] : null;
+        $this->authorize('view', $company);
+        $company['okrs'] = $company ? $company->getOkrsWithPage($request)['okrs'] : null;
 
         $departments = Department::where(['company_id' => auth()->user()->company_id, 'parent_department_id' => null])->get();
         foreach ($departments as $department) {
-            $department['okrs'] = $department ? $department->getOkrsWithPage($request)['okrs']:null;
+            $department['okrs'] = $department ? $department->getOkrsWithPage($request)['okrs'] : null;
         }
 
         $builder = $company->users();
@@ -323,7 +319,7 @@ class CompanyController extends Controller
                 # 判斷value是以 _asc 或者 _desc 结尾來排序
                 if (preg_match('/^(.+)_(asc|desc)$/', $order, $m)) {
                     # 判斷是否為指定的接收的參數
-                    if (in_array($m[1], ['name', 'email', 'department_id','position'])) {   
+                    if (in_array($m[1], ['name', 'email', 'department_id', 'position'])) {   
                         # 開始排序              
                         $builder->orderBy($m[1], $m[2]);
                     }
@@ -338,8 +334,6 @@ class CompanyController extends Controller
             'order' => $request->input('order', ''),
         ]);
 
-       
-
         $data = [
             'members' => $pages,
             'company' => $company,
@@ -348,4 +342,56 @@ class CompanyController extends Controller
 
         return view('organization.member', $data);
     }
+
+    /**
+     * 變更最高權限管理者
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function changeAdmin(Request $request)
+    {
+        $this->authorize('adminCange', [auth()->user(), auth()->user()->company]);
+
+        Permission::where(['user_id' => $request->invite, 'model_type' => Company::class])->update(['role_id' => 1]);
+        Permission::where(['user_id' => auth()->user()->id, 'model_type' => Company::class])->update(['role_id' => 2]);
+
+        return redirect()->back();
+    }
+
+    /**
+     * 刪除最高權限管理者
+     *
+     * @param  \Illuminate\Http\Requests\CompanyRequest  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function deleteAdmin(Request $request)
+    {
+        $user = auth()->user();
+        $this->authorize('adminCange', [$user, $user->company]);
+
+        foreach ($user->permissions()->where(['model_type' => Project::class, 'role_id' => 1])->with('model')->get() as $permission) {
+            if ($request->input('project' . $permission->model->id) == $user->id) return redirect()->back();
+            else {
+                $permission->where('user_id', $request->input('project' . $permission->model->id))->update(['role_id' => 1]);
+                $permission->model->users()->detach($user);
+                $permission->delete();
+            }
+        }
+
+        if ($request->department == $user->id) return redirect()->back();
+        else Permission::where(['user_id' => $request->department, 'model_type' => Department::class])->update(['role_id' => 1]);
+
+        if ($request->invite == $user->id) return redirect()->back();
+        else Permission::where(['user_id' => $request->invite, 'model_type' => Company::class])->update(['role_id' => 1]);
+
+        $user->update(['company_id' => null, 'department_id' => null]);
+        $user->permissions()->delete();
+        $user->invitation->delete();
+        Follow::where('user_id', $user->id)->delete();
+        Follow::where(['model_type' => User::class, 'model_id' => $user->id])->delete();
+
+        return redirect()->back();
+    }
+
 }

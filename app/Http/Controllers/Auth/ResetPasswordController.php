@@ -16,7 +16,7 @@ class ResetPasswordController extends Controller
     | and uses a simple trait to include this behavior. You're free to
     | explore this trait and override any methods you wish to tweak.
     |
-    */
+     */
 
     use ResetsPasswords;
 
@@ -25,7 +25,7 @@ class ResetPasswordController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/okrs';
+    // protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -35,5 +35,17 @@ class ResetPasswordController extends Controller
     public function __construct()
     {
         $this->middleware('guest');
+    }
+
+    /**
+     * Where to redirect users after login.
+     * 如果沒有定義此方法，會使用$redirectTo
+     * 詳見 RedirectsUsers
+     *
+     * @return string
+     */
+    public function redirectTo()
+    {
+        return "user/" . auth()->user()->id . "/okr";
     }
 }

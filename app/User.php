@@ -11,7 +11,7 @@ use App\Traits\HasAvatarTrait;
 use App\Interfaces\HasObjectiveInterface;
 use App\Traits\HasFollowTrait;
 
-class User extends Authenticatable implements HasObjectiveInterface
+class User extends Authenticatable implements MustVerifyEmail, HasObjectiveInterface
 {
     use Notifiable, Commenter, HasObjectiveTrait, HasAvatarTrait, HasFollowTrait;
 
@@ -45,7 +45,7 @@ class User extends Authenticatable implements HasObjectiveInterface
 
     public function actions()
     {
-        return $this->hasMany('App\Action','user_id');
+        return $this->hasMany('App\Action', 'user_id');
     }
 
     public function company()
@@ -71,5 +71,28 @@ class User extends Authenticatable implements HasObjectiveInterface
     public function follow()
     {
         return $this->hasMany(Follow::class);
+    }
+
+    public function permissions()
+    {
+        return $this->hasMany(Permission::class);
+    }
+
+    public function role($model)
+    {
+        $attr['user_id'] = $this->id;
+        $attr['model_type'] = get_class($model);
+        $attr['model_id'] = $model->id;
+        $permission = Permission::where($attr)->first();
+        if ($permission != null) return $permission->role;
+        else return null;
+    }
+
+    public function isSuperAdmin()
+    {
+        $attr['user_id'] = $this->id;
+        $attr['model_type'] = Company::class;
+
+        return Permission::where($attr)->first()->role->id <= 2;
     }
 }

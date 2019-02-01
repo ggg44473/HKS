@@ -4,6 +4,9 @@ namespace App\Traits;
 
 use App\Objective;
 use Illuminate\Http\Request;
+use Notification;
+use App\Notifications\NewObjectiveNotification;
+use App\Project;
 
 trait HasObjectiveTrait
 {
@@ -15,15 +18,25 @@ trait HasObjectiveTrait
         return $this->morphMany(Objective::class, 'model');
     }
 
-    public function addObjective(Request $request)
+    public function addObjective(Request $request, $model = null)
     {
         $attr['model_id'] = $this->id;
         $attr['model_type'] = get_class($this);
         $attr['title'] = $request->input('obj_title');
         $attr['started_at'] = $request->input('st_date');
         $attr['finished_at'] = $request->input('fin_date');
+        $objective = Objective::create($attr);
 
-        return Objective::create($attr);
+        if ($model) {
+            if (get_class($model) == Project::class) {
+                $users = $model->users()->where('user_id', '!=', auth()->user()->id)->get();
+            } else {
+                $users = $model->users()->where('id', '!=', auth()->user()->id)->get();
+            }
+            Notification::send($users, new NewObjectiveNotification($model, $objective));
+        }
+
+        return $objective;
     }
 
     public function hasObjectives()
@@ -98,8 +111,46 @@ trait HasObjectiveTrait
             'okrs' => $okrs,
             'pageInfo' => [
                 'link' => $pages->render(),
-                'totalItem' =>$pages->total()
+                'totalItem' => $pages->total()
             ]
         ];
+    }
+
+    public function countObjective()
+    {
+        return count($this->objectives);
+    }
+
+    public function countKRs()
+    {
+        $sum = 0;
+        foreach ($this->objectives as $objective) {
+            $sum += count($objective->keyresults);
+        }
+
+        return $sum;
+    }
+
+    public function complianceRate()
+    {
+        $complianceRate = [0, 0, 0, 0];
+        $sum = 0;
+        foreach($this->objectives as $objective){
+            if($objective->getScore()<0.5){
+                $complianceRate[0]++;
+            }elseif($objective->getScore()<0.75){
+                $complianceRate[1]++;
+            }elseif($objective->getScore()<1){
+                $complianceRate[2]++;
+            }else{
+                $complianceRate[3]++;
+            }
+            $sum++;
+        }
+        foreach($complianceRate as $index=>$item){
+            $complianceRate[$index] = $item / $sum; 
+        }
+
+        return $complianceRate;
     }
 }

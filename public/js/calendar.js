@@ -1,3 +1,15 @@
+// 複製連結
+function copyArticle(event) {
+    const range = document.createRange();
+    range.selectNode(document.getElementById('icalcontent'));
+    const selection = window.getSelection();
+    if (selection.rangeCount > 0) selection.removeAllRanges();
+    selection.addRange(range);
+    document.execCommand('copy');
+    alert("複製成功！");
+}
+document.getElementById('copyBT').addEventListener('click', copyArticle, false);
+
 // 系統時間
 var st_d = new Date();
 var y = st_d.getFullYear();

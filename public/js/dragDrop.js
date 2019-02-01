@@ -1,3 +1,4 @@
 var dragulaKanban = dragula([
-    document.querySelector('#departmentCard')
+    document.querySelector('#dragCard'),
+    document.querySelector('#dragCarddone'),
 ]);

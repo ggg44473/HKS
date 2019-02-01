@@ -11,11 +11,11 @@ use Spatie\MediaLibrary\Models\Media;
 use App\Interfaces\HasNotifiableInterface;
 use App\Interfaces\HasInvitationInterface;
 use App\Traits\HasInvitationTrait;
-
+use App\Traits\HasAvatarTrait;
 
 class Action extends Model implements HasMedia, HasNotifiableInterface, HasInvitationInterface
 {
-    use Commentable, HasMediaTrait, HasInvitationTrait;
+    use Commentable, HasMediaTrait, HasInvitationTrait, HasAvatarTrait;
 
     protected $fillable = [
         'user_id',
@@ -104,6 +104,6 @@ class Action extends Model implements HasMedia, HasNotifiableInterface, HasInvit
 
     public function getInviteUrl($userId)
     {
-        return route('user.action', $userId);
+        return route('user.action', $userId, false);
     }
 }
