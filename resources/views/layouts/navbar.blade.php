@@ -43,7 +43,7 @@
         </div>
 
         <div class="btn-group">
-            <a data-toggle="dropdown" class="nav-item pl-2 pl-md-3 mt-auto mb-auto"><img src="{{ auth()->user()->getAvatar() }}"
+            <a data-toggle="dropdown" class="nav-item pl-2 pl-md-3 mt-auto mb-auto" href=""><img src="{{ auth()->user()->getAvatar() }}"
                     class="avatar"></a>
             <a id="navbarDropdown" class="nav-item dropdown nav-link dropdown-toggle mt-auto mb-auto" href="#" role="button"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>

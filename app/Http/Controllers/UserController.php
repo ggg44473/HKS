@@ -144,8 +144,8 @@ class UserController extends Controller
     {
         $this->authorize('update', $user);
 
-        $attr['name'] = $request->name;
-        $user->update($attr);
+        if($request->name != null) $user->update(['name' => $request->name]);
+        if($request->description != null) $user->update(['description' => $request->description]);
         $user->addAvatar($request);
 
         return redirect()->route('user.settings', auth()->user()->id);
