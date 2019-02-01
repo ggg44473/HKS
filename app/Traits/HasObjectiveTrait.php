@@ -130,4 +130,27 @@ trait HasObjectiveTrait
 
         return $sum;
     }
+
+    public function complianceRate()
+    {
+        $complianceRate = [0, 0, 0, 0];
+        $sum = 0;
+        foreach($this->objectives as $objective){
+            if($objective->getScore()<0.5){
+                $complianceRate[0]++;
+            }elseif($objective->getScore()<0.75){
+                $complianceRate[1]++;
+            }elseif($objective->getScore()<1){
+                $complianceRate[2]++;
+            }else{
+                $complianceRate[3]++;
+            }
+            $sum++;
+        }
+        foreach($complianceRate as $index=>$item){
+            $complianceRate[$index] = $item / $sum; 
+        }
+
+        return $complianceRate;
+    }
 }

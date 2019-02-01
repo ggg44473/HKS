@@ -2,8 +2,12 @@ $('#avatar').on('click', function () {
     form.avatar.click();
 });
 
+$('#avatar').on('hover', function () {
+    $(this).children('.avatar').attr('src', '/img/icon/upload/gray.svg');
+});
+
 $("#input").change(function () {
-    readURL(this);
+    $('#avatarForm').submit();
 });
 
 //上傳頭像顯示

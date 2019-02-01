@@ -92,4 +92,16 @@ class UserPolicy
         elseif ($current_user_role > 2) return false;
         return $current_user_role < $user->role($model)->id;
     }
+
+    /**
+     * Determine whether the user can restore the project.
+     *
+     * @param  \App\User  $current_user
+     * @param  \App\User  $user
+     * @return mixed
+     */
+    public function restore(User $current_user, User $user)
+    {
+        return true;
+    }
 }
