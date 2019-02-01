@@ -55,6 +55,8 @@ Route::middleware(['verified'])->group(function () {
     Route::post('kr/store', 'KrController@store')->name('kr.store');
     // 刪除KR
     Route::delete('kr/{keyresult}/destroy', 'KrController@destroy')->name('kr.destroy');
+    // json api
+    Route::get('objective/{objective}/getArray', 'ObjectiveController@getArray')->name('objective.getArray');
 
     # Action
     // 新增Action頁面

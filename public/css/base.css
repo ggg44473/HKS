@@ -615,3 +615,7 @@ pre {
         text-align: center;
     }
 }
+
+.wrapper {
+    height: 500px !important;
+}
