@@ -1,9 +1,5 @@
-$('#avatar').on('click', function () {
-    form.avatar.click();
-});
-
-$('#avatar').on('hover', function () {
-    $(this).children('.avatar').attr('src', '/img/icon/upload/gray.svg');
+$('#avatar').click(function () {
+    $('#input').click();
 });
 
 $("#input").change(function () {

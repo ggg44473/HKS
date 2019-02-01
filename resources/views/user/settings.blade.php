@@ -4,6 +4,7 @@
 <script src="{{ asset('js/avatar.js') }}" defer></script>
 <script src="{{ asset('js/circle-progress.min.js') }}" defer></script>
 <script src="{{ asset('js/circleProgress.js') }}" defer></script>
+<script src="{{ asset('js/setting.js') }}" defer></script>
 @endsection
 
 @section('stylesheet')
@@ -32,14 +33,23 @@
                     <form id="avatarForm" name="form" method="POST" action="{{ route('user.update', auth()->user()->id) }}" enctype="multipart/form-data">
                         @csrf {{ method_field('PATCH') }}
                         <a id="avatar" class="u-ml-8 u-mr-8" href="#">
-                            <img src="{{ $user->getAvatar() }}" alt="" class="avatar text-center bg-white">
+                            <img class="avatar u-margin-16 avatarImg" src="{{ $user->getAvatar() }}" alt="">
+                            <img class="avatar u-hidden u-margin-16 avatarImgUpload" src="/img/icon/upload/gray.svg" alt="">
                         </a>
                         <input type="file" class="u-hidden" id="input" name="avatar" value="{{ $user->name }}" accept="image/*">
                     </form>
                 </div>
                 <div class="col align-self-center text-truncate">
-                    <p class="mb-0 font-weight-bold text-truncate">{{ $user->name }}<span class="pl-4 font-weight-normal" style="font-size:14px">{{ $user->position }}</span></p>
-                    <p class="mb-0 text-truncate text-black-50" style="font-size:14px">座右銘</p>
+                    <form id="userForm" name="form" method="POST" action="{{ route('user.update', auth()->user()->id) }}" enctype="multipart/form-data">
+                        @csrf {{ method_field('PATCH') }}
+                        <p class="mb-0 font-weight-bold text-truncate">
+                            <span class="name">{{ $user->name }}</span>
+                            <input type="text" class="u-hidden name-input" name="name" id="name" value="{{ $user->name }}" style="color: #495057; border: 1px solid #ced4da; background-color: #fff;">
+                            <span class="pl-4 font-weight-normal" style="font-size:14px">{{ $user->position }}</span>
+                        </p>
+                        <p class="mb-0 text-truncate text-black-50 motto" style="font-size:14px">{{ $user->description }}</p>
+                        <input type="text" class="{{ $user->description?'u-hidden':'' }} motto-input w-75 pt-2" name="description" id="description" value="{{ $user->description }}" placeholder="請輸入座右銘" style="color: #495057; border: 1px solid #ced4da; background-color: #fff;">
+                    </form>
                 </div>
                 <div class="row col-md-6 pt-4">
                     <div class="col-4 text-center mb-4">
@@ -174,68 +184,6 @@
             @endfor
         </div>
     </div>
-    {{-- <div class="row justify-content-center"> --}}
-
-        {{-- <div class="col-md-6">
-            <form name="form" method="POST" action="{{ route('user.update', auth()->user()->id) }}" enctype="multipart/form-data">
-                @csrf {{ method_field('PATCH') }}
-
-                <div class="u-pl-32 u-pr-32 form-group row">
-                    <div class="col-12">
-                        <span class="u-pl-8 u-pr-8">帳號</span>
-                        <span class="u-pl-8 u-pr-8">{{ $user->email }}</span>
-                    </div>
-                </div>
-                <div class="u-pl-32 u-pr-32 form-group row">
-                    <div class="col-12">
-                        <span class="u-pl-8 u-pr-8">姓名</span>
-                        <input type="text" class="u-pl-8 u-pr-8" name="name" id="name" value="{{ $user->name }}" style="color: #495057; border: 1px solid #ced4da; background-color: #fff;">
-                    </div>
-                </div>
-                <div class="u-pl-32 u-pr-32 u-pt-16 u-pb-16 form-group row">
-                    <div class="col-12">
-                        <span for="avatar" class="u-pl-8 u-pr-8">頭像</span>
-                        <img id="avatar" class="avatar" src="{{ $user->getAvatar() }}">
-                        <input type="file" class="u-ml-8 u-mr-8 align-self-bottom" id="input" name="avatar" value="{{ $user->name }}"
-                            accept="image/*">
-                    </div>
-                </div>
-
-                @if ($user->compan)
-                <div class="u-pl-32 u-pr-32 form-group row">
-                    <div class="col-12">
-                        <span class="u-pl-8 u-pr-8">組織</span>
-                        <span class="u-pl-8 u-pr-8">{{ $user->company->name }}</span>
-                    </div>
-                </div>
-                @endif
-
-                @if ($user->department)
-                <div class="u-pl-32 u-pr-32 form-group row">
-                    <div class="col-12">
-                        <span class="u-pl-8 u-pr-8">部門</span>
-                        <span class="u-pl-8 u-pr-8">{{ $user->department->name }}</span>
-                    </div>
-                </div>
-                @endif
-
-                @if ($user->position)
-                <div class="u-pl-32 u-pr-32 form-group row">
-                    <div class="col-12">
-                        <span class="u-pl-8 u-pr-8">職稱</span>
-                        <span class="u-pl-8 u-pr-8">{{ $user->position }}</span>
-                    </div>
-                </div>
-                @endif
-
-                <div class="u-pl-32 u-pr-32 form-group row justify-content-end">
-                    <div class="col-2">
-                        <button type="submit" class="btn btn-primary">變更</button>
-                    </div>
-                </div>
-            </form>
-        </div> --}}
-        {{-- </div> --}}
 </div>
 {{-- 重設密碼modal --}}
 <div class="modal fade " id="resetPassword" tabindex="-1" role="dialog">
