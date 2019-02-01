@@ -46,14 +46,9 @@
     
             </div>
     
-            <div class="row form-group mt-5 mb-3">
+            <div class="row form-group mt-5 mb-3 justify-content-center">
                 <div class="col-md-6 mb-2">
                     <button type="submit" class="btn btn-primary w-100">登入</button>
-                </div>
-                <div class="col-md-6 mb-2">
-                    <button class="btn btn-primary w-100 btn-cmoney">
-                        <span style="color:crimson;">ＣM</span>oney
-                    </button>
                 </div>
             </div>
     
