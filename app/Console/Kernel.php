@@ -84,7 +84,7 @@ class Kernel extends ConsoleKernel
                     Notification::send($act->user, new ActionNotification($act));
                 }
             }
-        })->everyMinute();
+        })->dailyAt('16:00');
     }
 
     /**
