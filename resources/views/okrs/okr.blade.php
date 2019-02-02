@@ -124,8 +124,9 @@
             </button>
         </div>
         <div class="col-sm-4 align-self-center">
-            <button class="btn btn-outline-primary border-0 historybtn" type="button" data-toggle="collapse" data-target="#History{{ $okr['objective']->id }}"
-                aria-expanded="false" aria-controls="History" data-oid={{ $okr['objective']->id }}>
+            <button class="btn btn-outline-primary border-0 historybtn" type="button" data-toggle="collapse"
+                data-target="#History{{ $okr['objective']->id }}" aria-expanded="false" aria-controls="History"
+                data-oid={{ $okr['objective']->id }}>
                 <i class="fas fa-chart-line"></i> 歷史數據
             </button>
         </div>
@@ -155,9 +156,13 @@
         <div class="row">
             <div class="col-12">
                 <div class="card card-body" style="position: relative;">
+                    @if($okr['objective']->started_at < now()->toDateString())
                     <canvas id="speedChart{{$okr['objective']->id}}"></canvas>
-                    {{-- {!! $okr['chart']->container() !!}
-                    {!! $okr['chart']->script() !!} --}}
+                    @else
+                    <div class="alert alert-info" role="alert">
+                        此目標尚未有歷史紀錄，故無圖表。
+                    </div>
+                    @endif
                 </div>
             </div>
         </div>
