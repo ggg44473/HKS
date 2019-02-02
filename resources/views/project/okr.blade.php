@@ -4,18 +4,8 @@
 <script src="{{ asset('js/tooltip.js') }}" defer></script>
 <script src="{{ asset('js/editbtn.js') }}" defer></script>
 {{-- Chartjs --}}
-{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js" charset="utf-8"></script> --}}
-{{-- Highcharts --}}
-{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/6.0.6/highcharts.js" charset="utf-8"></script> --}}
-{{-- Fusioncharts --}}
-{{-- <script src="https://cdn.jsdelivr.net/npm/fusioncharts@3.12.2/fusioncharts.js" charset="utf-8"></script> --}}
-{{-- Echarts --}}
-{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/4.0.2/echarts-en.min.js" charset="utf-8"></script> --}}
-{{-- Frappe --}}
-{{-- <script src="https://cdn.jsdelivr.net/npm/frappe-charts@1.1.0/dist/frappe-charts.min.iife.js"></script> --}}
-{{-- C3 --}}
-{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.7.0/d3.min.js"></script> --}}
-{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.6.7/c3.min.js"></script> --}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js" charset="utf-8"></script>
+<script src="{{ asset('js/chart.js') }}" defer></script>
 @endsection
 @section('title','專案OKR')
 @section('content')
@@ -57,21 +47,21 @@
         </div>
         {{-- okr --}}
         @if ($project->okrs)
-            @foreach($project->okrs as $okr)
-                @include('okrs.okr', ['okr' => $okr, 'owner'=>$project])
-            @endforeach
+        @foreach($project->okrs as $okr)
+        @include('okrs.okr', ['okr' => $okr, 'owner'=>$project])
+        @endforeach
         @else
-            <div id="dragCard" class="row justify-content-md-center u-mt-16">
-                <div class="alert alert-warning alert-dismissible fade show u-mt-32" role="alert">
-                    <strong><i class="fas fa-exclamation-circle pl-2 pr-2"></i></strong>
-                    當前期間尚未建立OKR !!
-                </div>
+        <div id="dragCard" class="row justify-content-md-center u-mt-16">
+            <div class="alert alert-warning alert-dismissible fade show u-mt-32" role="alert">
+                <strong><i class="fas fa-exclamation-circle pl-2 pr-2"></i></strong>
+                當前期間尚未建立OKR !!
             </div>
+        </div>
         @endif
     </div>
     @can('storeObjective', $project)
     {{-- 新增O按鈕 --}}
-    <a href="#" data-toggle="modal" data-target="#objective" class="newObjective"><img src="{{ asset('img/icon/add/lightgreen.svg') }}" alt=""></a>        
+    <a href="#" data-toggle="modal" data-target="#objective" class="newObjective"><img src="{{ asset('img/icon/add/lightgreen.svg') }}" alt=""></a>
     {{-- 新增O modal --}}
     <div class="modal {{ count($errors) == 0 ? 'fade' : '' }}" id="objective" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
