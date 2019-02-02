@@ -42,8 +42,13 @@ class ActionPolicy
      */
     public function update(User $user, Action $action)
     {
-        if($user->id === $action->user_id) return true;
-        return $user->role($action->objective->model)->id <=3;
+        if ($user->id === $action->user_id) return true;
+        if (isset($user->role($action->objective->model)->id)) {
+            return $user->role($action->objective->model)->id <= 3;
+        } else {
+            return false;
+        }
+
     }
 
     /**
@@ -55,8 +60,8 @@ class ActionPolicy
      */
     public function delete(User $user, Action $action)
     {
-        if($user->id === $action->user_id) return true;
-        return $user->role($action->objective->model)->id <=3;
+        if ($user->id === $action->user_id) return true;
+        return $user->role($action->objective->model)->id <= 3;
     }
 
     /**

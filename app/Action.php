@@ -106,4 +106,9 @@ class Action extends Model implements HasMedia, HasNotifiableInterface, HasInvit
     {
         return route('user.action', $userId, false);
     }
+
+    public function getUrl()
+    {
+        return route('actions.show', $this->id, false);
+    }
 }
