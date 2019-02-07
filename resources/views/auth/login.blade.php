@@ -1,7 +1,9 @@
 @extends('welcome')
 
 @section('title','登入')
-
+@section('script')
+<script src="{{ asset('js/modal.js') }}" defer></script>    
+@endsection
 @section('modal')
     <!-- Login -->
     <div class="modal-body" id="login">
@@ -57,5 +59,4 @@
             </div>
         </form>
     </div>
-    <script src="{{ asset('js/modal.js') }}" defer></script>
 @endsection

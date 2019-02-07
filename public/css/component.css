@@ -296,6 +296,16 @@ main{
     border-radius: 50%;
     object-fit: cover;
 }
+.avatar-lg{
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.avatar-lg.uploadIcon>i{
+    font-size: 40px;
+    line-height: 90px;
+}
 
 /*-------------------------*/
 /* Card */

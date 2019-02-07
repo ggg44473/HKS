@@ -1,16 +1,26 @@
 @extends('welcome')
 
 @section('title','註冊')
-
+@section('script')
+<script src="{{ asset('js/modal.js') }}" defer></script>
+<script src="{{ asset('js/avatar.js') }}" defer></script>
+@endsection
 @section('modal')
     <!-- Register -->
     <div class="modal-body" id="register">
-        <div class="text-center mb-3">
-            <img src="{{ asset('/img/icon/user/green.svg')}}" alt="" style="width: 90px; height: 90px;">
-        </div>
-        <form method="POST" action="{{ route('register') }}">
+        <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
             @csrf
-    
+            <div class="row">
+                <div class="col-12 text-center">
+                    <input name="avatar" type="file" class="u-hidden imgUpload" accept="image/*"/>
+                    <img class="avatar-lg u-hidden u-margin-16 avatarImg" src="" alt="">
+                    <img class="avatar-lg u-hidden u-margin-16 avatarImgUpload" src="/img/icon/upload/gray.svg" alt="">
+                    <div class="avatar-lg text-center uploadIcon">
+                        <i class="fas fa-images text-white"></i>
+                        <i class="fas fa-upload text-white"></i>
+                    </div>
+                </div>
+            </div>
             <div class="form-group row">
                 <label for="name" class="col-md-12 text-primary">姓名</label>
     
@@ -74,5 +84,4 @@
             </div>
         </form>
     </div>
-    <script src="{{ asset('js/modal.js') }}" defer></script>
 @endsection

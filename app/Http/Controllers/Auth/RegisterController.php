@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\WelcomeNewUser;
+use App\Avatar;
 
 class RegisterController extends Controller
 {
@@ -75,6 +76,19 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+        if (isset($data['avatar'])) {
+            $file = $data['avatar'];
+            $filename = date('YmdHis') . '.' . $file->getClientOriginalExtension();
+            if ($user->avatar()->first()) {
+                $avatar = $user->avatar()->first();
+            } else {
+                $attr['model_id'] = $user->id;
+                $attr['model_type'] = get_class($user);
+                $avatar = Avatar::create($attr);
+            }
+            $avatar->update(['path' => '/storage/avatar/' . $avatar->id . '/' . $filename]);
+            $file->storeAs('public/avatar/' . $avatar->id, $filename);
+        }
 
         if (is_a($user, User::class)) {
             Mail::to($user)
