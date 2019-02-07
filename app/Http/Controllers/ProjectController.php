@@ -154,33 +154,9 @@ class ProjectController extends Controller
      */
     public function member(Request $request, Project $project)
     {
-        $builder = $project->users();
-
-        if ($request->input('order', '')) {
-            
-            # 排序
-            if ($order = $request->input('order', '')) { 
-                # 判斷value是以 _asc 或者 _desc 结尾來排序
-                if (preg_match('/^(.+)_(asc|desc)$/', $order, $m)) {
-                    # 判斷是否為指定的接收的參數
-                    if (in_array($m[1], ['name', 'email', 'position'])) {   
-                        # 開始排序              
-                        $builder->orderBy($m[1], $m[2]);
-                    }
-                }
-            }
-        } else {
-            # 預設
-            $builder->orderBy('id');
-        }
-
-        $pages = $builder->paginate(10)->appends([
-            'order' => $request->input('order', ''),
-        ]);
-
         $data = [
             'project' => $project,
-            'members' => $pages,
+            'members' => $project->sortMember(),
         ];
 
         return view('project.member', $data);
@@ -278,7 +254,7 @@ class ProjectController extends Controller
     {
         $this->authorize('memberSetting', $project);
 
-        if ($member->id != auth()->user()->id) $project->permissions()->where('user_id', $member->id)->update(['role_id' => $request->permission]);
+        $project->updateMember($request, $member);
 
         return redirect()->route('project.member', $project);
     }
@@ -309,8 +285,7 @@ class ProjectController extends Controller
     {
         $this->authorize('adminCange', [auth()->user(), $project]);
 
-        Permission::where(['user_id' => $request->invite, 'model_type' => Project::class, 'model_id' => $project->id])->update(['role_id' => 1]);
-        Permission::where(['user_id' => auth()->user()->id, 'model_type' => Project::class, 'model_id' => $project->id])->update(['role_id' => 2]);
+        $project->changeAdmin($request);
 
         return redirect()->back();
     }
