@@ -20,7 +20,7 @@ class UserPolicy
     {
         return $current_user->company_id === $user->company_id;
     }
-    
+
     /**
      * Determine whether the user can store Objective for the user.
      *
@@ -56,7 +56,7 @@ class UserPolicy
     public function adminCange(User $current_user, User $user, $model)
     {
         if ($current_user->role($model)->id == 1 && $current_user->id == $user->id) return true;
-        if ($current_user->role($current_user->company)->id == 1 && get_class($model)==Department::class) return true;
+        if ($current_user->role($current_user->company)->id == 1 && get_class($model) == Department::class) return true;
     }
 
     /**

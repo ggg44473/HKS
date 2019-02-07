@@ -54,6 +54,7 @@ class ProjectPolicy
      */
     public function update(User $user, Project $project)
     {
+        if ($project->isdone) return false;
         return $user->role($project)->id <= 2;
     }
 
@@ -102,6 +103,7 @@ class ProjectPolicy
      */
     public function storeObjective(User $user, Project $project)
     {
+        if ($project->isdone) return false;
         return $user->role($project)->id <= 3;
     }
 
