@@ -10,10 +10,11 @@ use App\Traits\HasInvitationTrait;
 use App\Traits\HasFollowTrait;
 use App\Interfaces\HasInvitationInterface;
 use App\Traits\HasPermissionTrait;
+use App\Traits\HasMemberTrait;
 
 class Project extends Model implements HasObjectiveInterface, HasInvitationInterface
 {
-    use HasObjectiveTrait, HasAvatarTrait, HasInvitationTrait, HasFollowTrait, HasPermissionTrait;
+    use HasObjectiveTrait, HasAvatarTrait, HasInvitationTrait, HasFollowTrait, HasPermissionTrait, HasMemberTrait;
 
     /**
      * The attributes that are mass assignable.

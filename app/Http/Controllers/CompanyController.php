@@ -256,25 +256,8 @@ class CompanyController extends Controller
     {
         $this->authorize('memberSetting', $member->company);
 
-        $attr['department_id'] = $request->input('department');
-        if ($request->input('department') != null) {
-            if ($request->input('department') != $member->department_id) {
-                if ($permission = $member->permissions()->where('model_type', Department::class)->first()) {
-                    $permission->update(['role_id' => 4, 'model_id' => $request->input('department')]);
-                } else {
-                    Permission::create(['user_id' => $member->id, 'model_type' => Department::class, 'model_id' => $request->input('department'), 'role_id' => 4]);
-                }
-                Notification::send($member, new DepartmentNotification(Department::find($request->input('department'))));
-            }
-        } elseif ($member->department_id) {
-            Notification::send($member, new DepartmentNotification($member->department, 'out'));
-            Permission::where(['user_id' => $member->id, 'model_type' => Department::class, 'model_id' => $member->department_id])->delete();
-            $member->update(['department_id' => null, 'position' => null]);
-        }
-        $attr['position'] = $request->input('position');
-        $member->update($attr);
-        if ($member->id != auth()->user()->id) $member->permissions()->where('model_type', Company::class)->update(['role_id' => $request->input('permission')]);
-
+        $member->company->updateMember($request, $member);
+        
         return redirect()->route('company.member');
     }
 
@@ -302,7 +285,7 @@ class CompanyController extends Controller
      */
     public function member(Request $request)
     {
-        $company = Company::where('id', auth()->user()->company_id)->first();
+        $company = auth()->user()->company;
         $this->authorize('view', $company);
         $company['okrs'] = $company ? $company->getOkrsWithPage($request)['okrs'] : null;
 
@@ -311,31 +294,8 @@ class CompanyController extends Controller
             $department['okrs'] = $department ? $department->getOkrsWithPage($request)['okrs'] : null;
         }
 
-        $builder = $company->users();
-        if ($request->input('order', '')) {
-            
-            # 排序
-            if ($order = $request->input('order', '')) { 
-                # 判斷value是以 _asc 或者 _desc 结尾來排序
-                if (preg_match('/^(.+)_(asc|desc)$/', $order, $m)) {
-                    # 判斷是否為指定的接收的參數
-                    if (in_array($m[1], ['name', 'email', 'department_id', 'position'])) {   
-                        # 開始排序              
-                        $builder->orderBy($m[1], $m[2]);
-                    }
-                }
-            }
-        } else {
-            # 預設
-            $builder->orderBy('id');
-        }
-
-        $pages = $builder->paginate(10)->appends([
-            'order' => $request->input('order', ''),
-        ]);
-
         $data = [
-            'members' => $pages,
+            'members' => $company->sortMember(),
             'company' => $company,
             'departments' => $departments,
         ];
@@ -353,8 +313,7 @@ class CompanyController extends Controller
     {
         $this->authorize('adminCange', [auth()->user(), auth()->user()->company]);
 
-        Permission::where(['user_id' => $request->invite, 'model_type' => Company::class])->update(['role_id' => 1]);
-        Permission::where(['user_id' => auth()->user()->id, 'model_type' => Company::class])->update(['role_id' => 2]);
+        $company->changeAdmin($request);
 
         return redirect()->back();
     }
