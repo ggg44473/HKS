@@ -295,7 +295,7 @@ class CompanyController extends Controller
         }
 
         $data = [
-            'members' => $company->sortMember(),
+            'members' => $company->sortMember($request),
             'company' => $company,
             'departments' => $departments,
         ];

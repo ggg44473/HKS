@@ -25,6 +25,7 @@ $().ready(function(){
 
 $('.btn-menu').click(function(){
     isOpen = !isOpen;
+    addTransition();
     sidebar(isOpen);
     setCookie('openSideBar', isOpen);
 });
@@ -52,4 +53,8 @@ function sidebar(isOpen){
     }
 }
 
-
+function addTransition(){
+    $('#sidebar-text').css('transition','all 0.5s ease-in');
+    $('.content').css('transition','all 0.5s ease-in');
+    $('.sidebar').css('transition','all 0.5s ease-in');
+}

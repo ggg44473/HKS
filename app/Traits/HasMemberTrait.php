@@ -33,7 +33,7 @@ trait HasMemberTrait
         if ($member->id != auth()->user()->id && isset($request->permission)) $member->permissions()->where(['model_type' => get_class($this), 'model_id' => $this->id])->update(['role_id' => $request->permission]);
     }
 
-    public function sortMember()
+    public function sortMember($request)
     {
         $builder = $this->users();
         if (get_class($this) == Company::class) $attr = ['name', 'email', 'department_id', 'position'];

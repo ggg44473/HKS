@@ -156,7 +156,7 @@ class ProjectController extends Controller
     {
         $data = [
             'project' => $project,
-            'members' => $project->sortMember(),
+            'members' => $project->sortMember($request),
         ];
 
         return view('project.member', $data);
