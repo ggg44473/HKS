@@ -15,11 +15,12 @@ function addNotification(notification) {
           <div class="media">
             <div class="media-left">
               <div class="media-object">
-                <img src="${avatar}" class="img-circle" alt="50x50" style="width: 50px; height: 50px;">
+                <img src="${avatar}" class="img-circle avatar-md mr-2 mt-1">
               </div>
             </div>
             <div class="media-body">
-              <strong class="notification-title">` + notification.data.message + `</strong>
+              <strong class="notification-title" style=" white-space: pre-wrap;
+              word-wrap: break-word;">` + notification.data.message + `</strong>
               <!--p class="notification-desc">Extra description can go here</p-->
               <div class="notification-meta">
                 <small class="timestamp">` + notification.created_at + `</small>

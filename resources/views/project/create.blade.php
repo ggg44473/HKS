@@ -16,8 +16,9 @@
                     <div class="row">
                         <div class="col-12 text-center">
                             <input name="avatar" type="file" class="u-hidden imgUpload" accept="image/*"/>
-                            <img class="avatar u-hidden mt-4 mb-0 avatarImg" src="" alt="">
-                            <div class="avatar text-center uploadIcon mt-4 mb-0">
+                            <img class="avatar u-hidden u-margin-16 avatarImg" src="" alt="">
+                            <img class="avatar u-hidden u-margin-16 avatarImgUpload" src="/img/icon/upload/gray.svg" alt="">
+                            <div class="avatar text-center uploadIcon">
                                 <i class="fas fa-images text-white"></i>
                                 <i class="fas fa-upload text-white"></i>
                             </div>

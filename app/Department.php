@@ -56,9 +56,22 @@ class Department extends Model implements HasObjectiveInterface
 
     public function getNotifiableUser()
     {
+        $users = [];
         foreach ($this->permissions->where('role_id', '<=', '2') as $index => $permission) {
             $users = [$index => $permission->user];
         }
         return $users;
+    }
+
+    public function preDelete()
+    {
+        foreach ($this->children as $child) {
+            $child->preDelete();
+        }
+        foreach ($this->users as $user) {
+            $user->update(['department_id' => null]);
+        }
+        $this->delete();
+
     }
 }

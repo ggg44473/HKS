@@ -48,9 +48,6 @@
                     <div class="circle-progress-text">{{ $company->okrs[$i]['objective']->title }}</div>
                 </div>
                 @endfor
-                @if (count($company->okrs)>4)
-                    <a href="{{ route('company.okr') }}" class="col-12 {{ $company->user_id == auth()->user()->id? :'u-pb-32' }} text-black-50 align-self-center">more...</a>
-                @endif
             @endif
         </div>
     </div>

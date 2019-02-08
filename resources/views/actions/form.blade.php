@@ -3,15 +3,12 @@
         <label for="action_title">Action 具體作為</label>
         <input type="text" class="form-control" name="act_title" id="action_title" value="{{ $action ? $action->title:old('act_title')  }}">
     </div>
+    @if(get_class($objective->model)!=App\User::class)
     <div class="form-group col-md">
-        @if($action)
-            <label class="mb-0">執行人</label>
-            <search-only-component api={{ route('actions.user.search', $action->objective) }}></search-only-component>
-        @else
-            <label class="mb-0">執行人</label>
-            <search-only-component api={{ route('actions.user.search', $objective) }}></search-only-component>
-        @endif
+        <label class="mb-0">執行人</label>
+        <search-only-component api={{ route('actions.user.search', $objective) }}></search-only-component>
     </div>
+    @endif
     <div class="form-group col-md-2">
         <label for="started_at">起始日</label>
         <input autocomplete="off" class="form-control" name="st_date" id="started_at" value="{{  $action ? $action->started_at:old('st_date') }}">
