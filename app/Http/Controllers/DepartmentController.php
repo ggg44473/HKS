@@ -127,12 +127,8 @@ class DepartmentController extends Controller
     public function destroy(Department $department)
     {
         $this->authorize('delete', $department);
-
-        foreach ($department->users as $user) {
-            $user->update(['department_id' => null]);
-        }
-        $department->delete();
-
+        $department->preDelete();
+        
         return redirect()->route('company.index');
     }
 

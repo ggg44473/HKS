@@ -7,16 +7,14 @@
             <h4>編輯 Action</h4>
             <a href="{{url()->previous()}}" class="btn btn-primary btn-sm float-right">返回</a>
         </div>
-        @include('actions.error',[$errors]) 
+        @include('actions.error',[$errors])
         @foreach($actions as $action)
         <form method="POST" action="{{ route('actions.update',$action->id) }}" enctype="multipart/form-data">
             @csrf
             {{ method_field('PATCH') }}
-            @include('actions.form',[$user,$keyresults,$priorities,$action,$files]) 
+            @include('actions.form',[$user,$keyresults,$priorities,$action,$files,'objective'=>$action->objective])
         </form>
         @endforeach
     </div>
 </div>
 @endsection
-
-    

@@ -23,18 +23,18 @@
 
         <div class="btn-group">
             <div class="dropdown dropdown-notifications nav-item nav-link text-muted mt-auto mb-auto">
-                <a href="#notifications-panel" class="dropdown-toggle" data-toggle="dropdown">
+                <a href="#notifications-panel" data-toggle="dropdown">
                     <i data-count="0" class="fas fa-bell notification-icon"></i>
                 </a>
                 <div class="dropdown-container dropdown-menu pb-0">
                     <div class="dropdown-toolbar">
-                        <div class="dropdown-toolbar-actions">
+                        <span class="dropdown-toolbar-title">未讀數 (<span class="notif-count">0</span>)</span>
+                        <span class="dropdown-toolbar-actions">
                             <a href="/notifications/read/all">全部標示為已讀</a>
-                        </div>
-                        <h3 class="dropdown-toolbar-title">未讀數 (<span class="notif-count">0</span>)</h3>
+                        </span>
                     </div>
                     <ul class="dropdown-content"></ul>
-                    <div class="dropdown-footer text-center">
+                    <div class="dropdown-footer text-center bg-light">
                         <a href="{{ route('user.notifications') }}">顯示全部</a>
                     </div>
                 </div>
@@ -46,7 +46,8 @@
                     class="avatar"></a>
             <a id="navbarDropdown" class="nav-item dropdown nav-link dropdown-toggle mt-auto mb-auto" href="#" role="button"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                <span id="userName" class="nav-name" data-uid="{{ auth()->user()->id }}">{{ Auth::user()->name }}</span><span class="caret"></span>
+                <span id="userName" class="nav-name" data-uid="{{ auth()->user()->id }}">{{ Auth::user()->name }}</span><span
+                    class="caret"></span>
             </a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                 <a class="dropdown-item" href="{{ route('user.settings', auth()->user()->id) }}">帳號設定</a>
