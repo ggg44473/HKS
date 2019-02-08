@@ -14,7 +14,7 @@
 @section('content')
 <div class="container">
     @cannot('create', App\Project::class)
-        <a class="row pt-4 justify-content-md-center" href="{{ route('company.index') }}">
+        <a class="row pt-4 justify-content-center" href="{{ route('company.index') }}">
             <div class="alert alert-danger alert-dismissible fade show u-mt-32" role="alert">
                 <strong><i class="fas fa-exclamation-circle pl-2 pr-2"></i></strong>
                 請先成立或加入組織 !!
@@ -38,7 +38,7 @@
         <div class="tab-content" id="myTabContent">
             {{-- 進行中專案 --}}
             <div class="tab-pane fade show active" id="project" role="tabpanel" aria-labelledby="project-tab">
-                <div id="dragCard" class="row pt-4 justify-content-md-center">
+                <div id="dragCard" class="row pt-4 justify-content-center">
                     @foreach ($projects as $project)
                         @include('project.card')
                     @endforeach
@@ -52,7 +52,7 @@
             </div>
             {{-- 已完成專案 --}}
             <div class="tab-pane fade" id="closeProject" role="tabpanel" aria-labelledby="profile-tab">
-                <div id="dragCarddone" class="row pt-4 justify-content-md-center">
+                <div id="dragCarddone" class="row pt-4 justify-content-center">
                     @foreach ($done as $project)
                         @include('project.card')
                     @endforeach

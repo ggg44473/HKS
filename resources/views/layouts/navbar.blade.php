@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand navbar-light navbar-laravel tab-content">
 
     <!-- 左側選單按鈕 -->
-    <div class="btn btn-menu text-primary">
+    <div class="btn btn-menu {{ $_COOKIE['openSideBar'] == 'true'? 'open':'' }}">
         <i class="fas fa-bars pt-1"></i>
     </div>
 
