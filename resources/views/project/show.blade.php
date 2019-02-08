@@ -4,7 +4,7 @@
             <i class="fas fa-chevron-left"></i> 返回
         </a>
     </div>
-    <div class="col align-self-end text-right">
+    <div class="col col-md-10 align-self-end text-right">
         @if ($project->following())
         <a href="{{ route('follow.cancel', [get_class($project), $project]) }}" class="text-warning" data-toggle="tooltip" data-placement="right" title="取消追蹤">
             <i class="fas fa-star" style="font-size: 24px;"></i>

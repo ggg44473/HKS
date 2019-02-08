@@ -1,5 +1,5 @@
 <div class="row justify-content-center">
-    <div class="col align-self-end text-right">
+    <div class="col col-md-10 align-self-end text-right">
         @if ($company->following())
         <a href="{{ route('follow.cancel', [get_class($company), $company]) }}" class="text-warning" data-toggle="tooltip" data-placement="right" title="取消追蹤">
             <i class="fas fa-star" style="font-size: 24px;"></i>
