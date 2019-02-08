@@ -35,6 +35,7 @@
                                     <img src="{{ $follow->model->getAvatar() }}" alt="" class="avatar-md text-center projectAvatar">
                                 </div>
                                 <div class="col text-truncate align-self-center">
+                                    <span class="font-weight-bold text-black-50 mb-0 text-truncate">{{ str_replace('App\\','',get_class($follow->model)) }}</span>
                                     <p class="font-weight-bold text-black-50 mb-0 text-truncate">{{ $follow->model->name }}</p>
                                 </div>
                             </div>
