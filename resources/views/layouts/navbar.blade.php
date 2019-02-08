@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand navbar-light navbar-laravel tab-content">
 
     <!-- 左側選單按鈕 -->
-    <div class="btn btn-menu {{ $_COOKIE['openSideBar'] == 'true'? 'open':'' }}">
+    <div class="btn btn-menu {{ isset($_COOKIE['openSideBar']) && $_COOKIE['openSideBar'] == 'true'? 'open':'' }}">
         <i class="fas fa-bars pt-1"></i>
     </div>
 
@@ -26,17 +26,16 @@
                 <a href="#notifications-panel" class="dropdown-toggle" data-toggle="dropdown">
                     <i data-count="0" class="fas fa-bell notification-icon"></i>
                 </a>
-                <div class="dropdown-container dropdown-menu">
+                <div class="dropdown-container dropdown-menu pb-0">
                     <div class="dropdown-toolbar">
                         <div class="dropdown-toolbar-actions">
                             <a href="/notifications/read/all">全部標示為已讀</a>
                         </div>
                         <h3 class="dropdown-toolbar-title">未讀數 (<span class="notif-count">0</span>)</h3>
                     </div>
-                    <ul class="dropdown-content">
-                    </ul>
+                    <ul class="dropdown-content"></ul>
                     <div class="dropdown-footer text-center">
-                    <a href="{{ route('user.notifications') }}">顯示全部</a>
+                        <a href="{{ route('user.notifications') }}">顯示全部</a>
                     </div>
                 </div>
             </div>
