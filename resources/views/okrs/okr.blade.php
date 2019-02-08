@@ -156,7 +156,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="card card-body" style="position: relative;">
-                    @if($okr['objective']->started_at < now()->toDateString())
+                    @if(isset($okr['objective']->keyresult->keyResultRecords))
                     <canvas id="speedChart{{$okr['objective']->id}}"></canvas>
                     @else
                     <div class="alert alert-info" role="alert">
