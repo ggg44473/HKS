@@ -1,8 +1,7 @@
 var isOpen;
 
 $().ready(function(){
-    isOpen = (getCookie('openSideBar')=='true')? true : false
-    sidebar(isOpen);
+    isOpen = (getCookie('openSideBar'))? true : false
     var path = $(location).attr('pathname').substr(1).split("/", 1);
 
     switch(path[0]){
@@ -26,7 +25,6 @@ $().ready(function(){
 
 $('.btn-menu').click(function(){
     isOpen = !isOpen;
-    setTransition();
     sidebar(isOpen);
     setCookie('openSideBar', isOpen);
 });
@@ -42,25 +40,15 @@ function getCookie(key) {
     return keyValue ? keyValue[2] : null;
 }
 
-function setTransition(){
-    $('.sidebar').css('transition','all 0.5s ease-in');
-    $('.content').css('transition','all 0.5s ease-in');
-    $('#sidebar-text').css('transition','all 0.5s ease-in');
-}
-
 function sidebar(isOpen){
     if(isOpen){
-        $('#sidebar-text').css('left','60px');
-        $('.content').css('margin-left','150px');
-        $('.btn-menu').removeClass('text-primary');
-        $('.btn-menu').addClass('text-white');
-        $('.btn-menu').css('background-color','#3BA99C');
+        $('#sidebar-text').addClass('open');
+        $('.content').addClass('open');
+        $('.btn-menu').addClass('open');
     }else{
-        $('.btn-menu').css('background-color','');
-        $('#sidebar-text').css('left','-30px');
-        $('.content').css('margin-left','60px');
-        $('.btn-menu').addClass('text-primary');
-        $('.btn-menu').removeClass('text-white');
+        $('#sidebar-text').removeClass('open');
+        $('.content').removeClass('open');
+        $('.btn-menu').removeClass('open');
     }
 }
 

@@ -42,6 +42,7 @@
     background-color: #21897E;
     height: 100%;
     padding-top: 60px;
+    transition: all 0.5s ease-in;
 }
 @media (max-width: 768px){
     .navbar{
@@ -99,23 +100,36 @@
     top: 0;
     left: -30px;
     width: 90px;
+    transition: all 0.5s ease-in;
 }
 #sidebar-text .nav-link {   
     padding-top: 1.3rem;
     padding-left: 0;
 }
+#sidebar-text.open{
+    left: 60px;
+}
 .content{
     margin-left: 60px;
+    transition: all 0.5s ease-in;
+}
+.content.open{
+    margin-left: 150px;
 }
 /* btn-menu */
 .btn-menu{
     border-radius: 50%;
+    color: #3490dc;
 }
 .btn-menu:hover{
     background-color: #F2F2F2;
 }
 .btn-menu:focus{
     box-shadow: none;
+}
+.btn-menu.open{
+    color: #fff;
+    background-color: #3BA99C;
 }
 /* Search */
 .form-control.search{
