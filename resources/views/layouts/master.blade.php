@@ -46,7 +46,7 @@
     <div id="app">
         @include('layouts.navbar')
         @include('layouts.sidebar')
-        <main class="py-4 content u-pb-48 {{ $_COOKIE['openSideBar'] == 'true'? 'open':'' }}">
+        <main class="py-4 content u-pb-48 {{ isset($_COOKIE['openSideBar']) && $_COOKIE['openSideBar'] == 'true'? 'open':'' }}">
             @yield('content')
         </main>
     </div>

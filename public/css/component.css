@@ -116,10 +116,11 @@
 /* btn-menu */
 .btn-menu{
     border-radius: 50%;
-    color: #3490dc;
+    color: #21897E;
 }
 .btn-menu:hover{
     background-color: #F2F2F2;
+    color: #21897E;
 }
 .btn-menu:focus{
     box-shadow: none;
