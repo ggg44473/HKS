@@ -1,4 +1,4 @@
-<nav class="nav flex-column sidebar" id="sidebar-text">
+<nav class="nav flex-column sidebar {{ $_COOKIE['openSideBar'] == 'true'? 'open':'' }}" id="sidebar-text">
     <a class="nav-link nav-user" href="{{ route('user.okr', auth()->user()->id) }}">
         <span>我的OKR</span>
     </a>
