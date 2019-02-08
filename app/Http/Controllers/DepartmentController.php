@@ -216,7 +216,7 @@ class DepartmentController extends Controller
 
         $data = [
             'department' => $department,
-            'members' => $department->sortMember(),
+            'members' => $department->sortMember($request),
         ];
 
         return view('organization.department.member', $data);

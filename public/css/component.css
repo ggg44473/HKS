@@ -42,7 +42,6 @@
     background-color: #21897E;
     height: 100%;
     padding-top: 60px;
-    transition: all 0.5s ease-in;
 }
 @media (max-width: 768px){
     .navbar{
@@ -100,7 +99,6 @@
     top: 0;
     left: -30px;
     width: 90px;
-    transition: all 0.5s ease-in;
 }
 #sidebar-text .nav-link {   
     padding-top: 1.3rem;
@@ -111,7 +109,6 @@
 }
 .content{
     margin-left: 60px;
-    transition: all 0.5s ease-in;
 }
 .content.open{
     margin-left: 150px;

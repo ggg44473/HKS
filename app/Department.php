@@ -35,7 +35,7 @@ class Department extends Model implements HasObjectiveInterface
 
     public function getOKrRoute()
     {
-        return route('department.okr');
+        return route('department.okr', $this->id);
     }
 
     /**
