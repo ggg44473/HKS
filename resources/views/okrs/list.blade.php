@@ -54,10 +54,10 @@
     </ul>
     <div class="tab-pane fade show pl-sm-4 pr-sm-4">
         <div class="row m-3 pt-4 justify-content-center">
-            <div class="col-md-2">
+            <div class="col-auto">
                 {{ $pageInfo['link'] }}
             </div>
-            <div class="col-md-8 mb-2">
+            <div class="col-auto mb-2">
                 <form action="{{ $owner->getOKrRoute() }}" class="form-inline search-form">
                     <input autocomplete="off" class="form-control input-sm" name="st_date" id="filter_started_at" value=""
                         placeholder="起始日">

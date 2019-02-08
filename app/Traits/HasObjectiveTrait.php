@@ -85,7 +85,7 @@ trait HasObjectiveTrait
     {
         $builder = $this->getObjectivesBuilder($request);
 
-        $pages = $builder->paginate(5)->appends([
+        $pages = $builder->paginate(4)->appends([
             'st_date' => $request->input('st_date', ''),
             'fin_date' => $request->input('fin_date', ''),
             'order' => $request->input('order', '')

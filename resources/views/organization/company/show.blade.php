@@ -41,7 +41,7 @@
         <div class="row">
             @if ($company->okrs)
                 @for ($i = 0; $i < 4 && $i < count($company->okrs); $i++)
-                <div class="col-auto align-self-center">
+                <div class="col-3 align-self-center">
                     <div class="circle" data-value="{{ $company->okrs[$i]['objective']->getScore()/100 }}">
                         <div>{{ $company->okrs[$i]['objective']->getScore() }}%</div>
                     </div>
