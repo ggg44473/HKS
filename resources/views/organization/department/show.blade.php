@@ -46,12 +46,12 @@
         @if ($department->okrs)
             <div class="row u-padding-16">
                 @for ($i = 0; $i < 4 && $i < count($department->okrs); $i++)
-                <div class="col-3 align-self-center">
+                <a class="col-3 align-self-center" href="#oid-{{$department->okrs[$i]['objective']->id}}">
                     <div class="circle" data-value="{{ $department->okrs[$i]['objective']->getScore()/100 }}">
                         <div>{{ $department->okrs[$i]['objective']->getScore() }}%</div>
                     </div>
                     <div class="circle-progress-text">{{ $department->okrs[$i]['objective']->title }}</div>
-                </div>
+                </a>
                 @endfor
             </div>
         @endif

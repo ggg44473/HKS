@@ -85,6 +85,7 @@
                 <table class="rwd-table table table-hover">
                     <thead>
                         <tr class="bg-primary text-light text-center">
+                            <th>完成</th>
                             <th>優先度</th>
                             <th>結算日</th>
                             <th>來源</th>
@@ -97,27 +98,33 @@
                     <tbody>
                         @foreach($actions as $action)
                         <tr class="text-center">
-                            <td data-th="優先度" class="alert-{{$action->priority()->getResults()->color}}">
+                            <td data-th="完成" class="align-middle">
+                                <form action="{{ route('actions.done', $action->id) }}" method="post" id="doneAct{{ $action->id }}">
+                                    @csrf
+                                    <input type="checkbox" name="" id="" {{ $action->isdone? 'checked="checked"':'' }}  onclick="document.getElementById('doneAct{{ $action->id }}').submit()">
+                                </form>
+                            </td>
+                            <td data-th="優先度" class="alert-{{$action->priority()->getResults()->color}} align-middle">
                                 {{$action->priority()->getResults()->priority}}
                             </td>
-                            <td data-th="結算日">
+                            <td data-th="結算日" class="align-middle">
                                 {{$action->finished_at}}
                             </td>
-                            <td data-th="來源">
+                            <td data-th="來源" class="align-middle">
                                 {{str_split($action->objective->model_type,4)[1]}}
                             </td>
-                            <td data-th="標題">
+                            <td data-th="標題" class="align-middle">
                                 <a href="{{ route('actions.show',$action->id) }}">
                                     {{$action->title}}
                                 </a>
                             </td>
-                            <td data-th="附檔">
+                            <td data-th="附檔" class="align-middle">
                                 {{count($action->getRelatedFiles())}}
                             </td>
-                            <td data-th="回覆">
+                            <td data-th="回覆" class="align-middle">
                                 {{$action->comments->count()}}
                             </td>
-                            <td data-th="最後更新">
+                            <td data-th="最後更新" class="align-middle">
                                 {{$action->updated_at}}
                             </td>
                         </tr>

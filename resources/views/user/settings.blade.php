@@ -150,20 +150,20 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>公司</td>
-                        <td>{{ isset($user->company)?$user->company->name:'-' }}</td>
-                        <td>{{ isset($user->company)?$user->role($user->company)->name:'-' }}</td>
+                        <td class="align-middle">公司</td>
+                        <td class="align-middle">{{ isset($user->company)?$user->company->name:'-' }}</td>
+                        <td class="align-middle">{{ isset($user->company)?$user->role($user->company)->name:'-' }}</td>
                     </tr>
                     <tr>
-                        <td>部門</td>
-                        <td>{{ isset($user->department) && $user->department?$user->department->name:'-' }}</td>
-                        <td>{{ isset($user->department) && $user->department?$user->role($user->department)->name:'-' }}</td>
+                        <td class="align-middle">部門</td>
+                        <td class="align-middle">{{ isset($user->department) && $user->department?$user->department->name:'-' }}</td>
+                        <td class="align-middle">{{ isset($user->department) && $user->department?$user->role($user->department)->name:'-' }}</td>
                     </tr>
                     @foreach ($user->projects as $project)
                     <tr>
-                        <td>專案</td>
-                        <td>{{ isset($project->name) }}</td>
-                        <td>{{ isset($project->name)?$user->role($project)->name:'' }}</td>
+                        <td class="align-middle">專案</td>
+                        <td class="align-middle">{{ isset($project->name) }}</td>
+                        <td class="align-middle">{{ isset($project->name)?$user->role($project)->name:'' }}</td>
                     </tr>
                     @endforeach
 

@@ -1,4 +1,5 @@
-<div id="oid-{{ $okr['objective']->id }}" class="card m-4 okr-card">
+<span class="anchor" id="oid-{{ $okr['objective']->id }}"></span>
+<div class="card m-4 okr-card">
     <div class="card-header bg-transparent" style="border-bottom: none;">
         {{-- 卡片時間 --}}
         <div class="row">

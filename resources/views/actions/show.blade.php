@@ -15,7 +15,7 @@
                 aria-expanded="false"><i class="fas fa-pencil-alt"></i></a>
             <div class="dropdown-menu">
                 <a class="dropdown-item text-primary" href="#" onclick="document.getElementById('doneAct{{ $action->id }}').submit()"><i
-                        class="fas fa-check-circle"></i> 完成 Action</a>
+                        class="fas fa-check-circle"></i> {{ $action->isdone?'取消完成 Action':'完成 Action' }}</a>
                 <form method="POST" id="doneAct{{ $action->id }}" action="{{ route('actions.done',$action->id) }}">
                     @csrf
                 </form>

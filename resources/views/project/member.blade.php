@@ -35,7 +35,7 @@
                 </div>
                 {{ $members->links() }}
                 {{-- 成員表 --}}
-                <table class="rwd-table table table-hover">
+                <table class="rwd-table table table-hover">部門成員
                     <thead>
                         <tr class="bg-primary text-light text-center">
                             <th>追蹤</th>
@@ -51,43 +51,45 @@
                     <tbody>
                         @foreach($members as $member)
                         <tr class="text-center">
-                            <td data-th="追蹤">
-                                @if ($member->following())
-                                <a href="{{ route('follow.cancel', [get_class($member), $member]) }}" class="text-warning">
-                                    <i class="fas fa-star" style="font-size: 24px;"></i>
-                                </a>
-                                @else
-                                <a href="{{ route('follow', [get_class($member), $member]) }}" class="text-warning">
-                                    <i class="far fa-star" style="font-size: 24px;"></i>
-                                </a>
+                            <td data-th="追蹤" class="align-middle">
+                                @if ($member->id != auth()->user()->id)
+                                    @if ($member->following())
+                                    <a href="{{ route('follow.cancel', [get_class($member), $member]) }}" class="text-warning">
+                                        <i class="fas fa-star" style="font-size: 24px;"></i>
+                                    </a>
+                                    @else
+                                    <a href="{{ route('follow', [get_class($member), $member]) }}" class="text-warning">
+                                        <i class="far fa-star" style="font-size: 24px;"></i>
+                                    </a>
+                                    @endif
                                 @endif
                             </td>
-                            <td data-th="姓名" class="text-left">
+                            <td data-th="姓名" class="text-left align-middle">
                                 <a href="{{ route('user.okr', $member->id) }}" class="text-black-50">
                                     <img src="{{ $member->getAvatar() }}" alt="" class="avatar-sm text-center bg-white">
                                     {{ $member->name }}
                                 </a>
                             </td>
-                            <td data-th="部門">{{ $member->department? $member->department->name:'-' }}</td>
-                            <td data-th="職稱">{{ $member->position }}</td>
+                            <td data-th="部門" class="align-middle">{{ $member->department? $member->department->name:'-' }}</td>
+                            <td data-th="職稱" class="align-middle">{{ $member->position }}</td>
                             {{-- 有變更權限 --}}
                             {{-- 權限最高，設定自己 --}}
                             @can('adminCange', [$member, $project])
-                                <td data-th="權限"><a href="#" data-toggle="modal" data-target="#changAdmin" class="tooltipBtn" data-placement="top" title="變更擁有者">{{ $member->role($project)->name }}</a></td>
-                                <td data-th="設定">
+                                <td data-th="權限" class="align-middle"><a href="#" data-toggle="modal" data-target="#changAdmin" class="tooltipBtn" data-placement="top" title="變更擁有者">{{ $member->role($project)->name }}</a></td>
+                                <td data-th="設定" class="align-middle">
                                     <a href="#"  onclick="document.getElementById('memberUpdate{{ $member->id }}').submit()" class="pr-2 text-black-50"><i class="fas fa-save"></i></a>
                                     <a href="#" data-toggle="modal" data-target="#deleteAdmin" class="tooltipBtn" data-placement="top" title="變更擁有者後刪除"><i class="fas fa-trash-alt text-danger"></i></a>
                                 </td>
                             {{-- 管理者，可以設定比自己低的人 --}}
                             @elsecan('permissionCange', [$member, $project])
-                                <td data-th="權限">
+                                <td data-th="權限" class="align-middle">
                                     <select name="permission" id="permission" class="form-control" form="memberUpdate{{ $member->id }}">
                                         <option value="2">管理者</option>
                                         <option value="3" {{ $member->role($project)->id == 3?'selected':''}}>編輯</option>
                                         <option value="4" {{ $member->role($project)->id == 4?'selected':''}}>成員</option>
                                     </select>
                                 </td>
-                                <td data-th="設定">
+                                <td data-th="設定" class="align-middle">
                                     <a href="#"  onclick="document.getElementById('memberUpdate{{ $member->id }}').submit()" class="pr-2 text-black-50"><i class="fas fa-save"></i></a>
                                     <a href="#" data-toggle="dropdown"><i class="fas fa-trash-alt text-danger"></i></a>
                                     <div class="dropdown-menu u-padding-16">
@@ -108,12 +110,12 @@
                                 </td>
                             {{-- 一般成員 --}}
                             @elsecan('memberSetting', $project)
-                                <td data-th="權限">{{ $member->role($project)->name }}</td>
-                                <td data-th="設定"></td>
+                                <td data-th="權限" class="align-middle">{{ $member->role($project)->name }}</td>
+                                <td data-th="設定" class="align-middle"></td>
                             @endcan
                             {{-- 無變更權限 --}}
                             @cannot('memberSetting', $project)
-                                <td data-th="權限">{{ $member->role($project)->name }}</td>
+                                <td data-th="權限" class="align-middle">{{ $member->role($project)->name }}</td>
                             @endcannot
                         </tr>
                         @endforeach
@@ -149,17 +151,15 @@
                     <tbody>
                         @foreach($project->getInvitationUsers() as $member)
                         <tr class="text-center">
-                            <td data-th="頭像">
-                                <a href="{{ route('user.okr', $member->id) }}" class="u-ml-8 u-mr-8">
-                                    <img src="{{ $member->getAvatar() }}" alt="" class="avatar-sm text-center bg-white">
-                                </a>
+                            <td data-th="頭像" class="align-middle">
+                                <img src="{{ $member->getAvatar() }}" alt="" class="avatar-sm text-center bg-white">
                             </td>
-                            <td data-th="姓名">{{ $member->name }}</td>
-                            <td data-th="信箱">{{ $member->email }}</td>
-                            <td data-th="部門">{{ $member->department? $member->department->name: '-' }}</td>
-                            <td data-th="職稱">{{ $member->position? $member->position:'-' }}</td>
+                            <td data-th="姓名" class="align-middle">{{ $member->name }}</td>
+                            <td data-th="信箱" class="align-middle">{{ $member->email }}</td>
+                            <td data-th="部門" class="align-middle">{{ $member->department? $member->department->name: '-' }}</td>
+                            <td data-th="職稱" class="align-middle">{{ $member->position? $member->position:'-' }}</td>
                             @can('memberSetting', $project)                            
-                            <td data-th="設定">
+                            <td data-th="設定" class="align-middle">
                                 <a href="#" onclick="document.getElementById('memberDelete{{ $member->id }}').submit()"><i
                                         class="fas fa-trash-alt text-danger"></i></a href="#">
                                 <form name="memberDelete{{ $member->id }}" method="POST" id="memberDelete{{ $member->id }}"
