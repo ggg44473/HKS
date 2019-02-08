@@ -55,7 +55,7 @@ class Company extends Model implements HasObjectiveInterface, HasInvitationInter
 
     public function getInviteUrl($userId)
     {
-        return route('company.index', [], false);
+        return route('company.index');
     }
 
     public function delete()
