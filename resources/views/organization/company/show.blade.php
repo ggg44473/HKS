@@ -1,5 +1,5 @@
 <div class="row justify-content-center">
-    <div class="col col-md-10 align-self-end text-right">
+    <div class="col align-self-end text-right">
         @if ($company->following())
         <a href="{{ route('follow.cancel', [get_class($company), $company]) }}" class="text-warning" data-toggle="tooltip" data-placement="right" title="取消追蹤">
             <i class="fas fa-star" style="font-size: 24px;"></i>
@@ -53,8 +53,8 @@
     </div>
 </div>
 
-<div class="row justify-content-center">
-    <div class="col-md-10 col-12 text-right align-self-end">
+<div class="row justify-content-end">
+    <div class="col text-right align-self-end">
         @can('create', App\Department::class)
             <a href="#" data-toggle="modal" data-target="#createDepartment" class="tooltipBtn" data-placement="top" title="新增部門"><i class="fas fa-plus-circle u-margin-4"></i></a>            
         @endcan

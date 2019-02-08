@@ -4,7 +4,7 @@
             <i class="fas fa-chevron-left"></i> 返回
         </a>
     </div>
-    <div class="col col-md-10 align-self-end text-right">
+    <div class="col align-self-end text-right">
         @if ($project->following())
         <a href="{{ route('follow.cancel', [get_class($project), $project]) }}" class="text-warning" data-toggle="tooltip" data-placement="right" title="取消追蹤">
             <i class="fas fa-star" style="font-size: 24px;"></i>
@@ -39,8 +39,8 @@
     </div>
 </div>
 
-<div class="row justify-content-center">
-    <div class="col-md-10 col-12 text-right align-self-end">
+<div class="row justify-content-end">
+    <div class="col text-right align-self-end">
         @can('done', $project)
         <a href="{{ route('project.done', $project) }}" data-toggle="tooltip" data-placement="bottom" title="{{ $project->isdone?'取消關閉':'關閉專案'}}"><i class="far fa-check-square u-margin-4"></i></a>                    
         @endcan

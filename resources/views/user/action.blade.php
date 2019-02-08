@@ -14,7 +14,7 @@
     </div>
     @endcan
     @cannot('update', $owner)
-    <div class="row mr-sm-4">
+    <div class="row">
         <div class="col align-self-end text-right">
             @if ($owner->following())
             <a href="{{ route('follow.cancel', [get_class($owner), $owner]) }}" class="text-warning">
@@ -27,19 +27,23 @@
             @endif
         </div>
     </div>
-    <div class="row">
-        <div class="col-auto">
-            <a class="u-ml-8" href="{{ $owner->getOKrRoute() }}">
-                <img src="{{ $owner->getAvatar() }}" alt="" class="avatar text-center bg-white">
-            </a>
-        </div>
-        <div class="col align-self-center text-truncate">
-            <a href="{{ $owner->getOKrRoute() }}">
-                <span class="text-black-50 text-truncate" style="line-height:30px;">{{ isset($owner->department)?$owner->department->name:$owner->company->name }}</span>
-                <span class="text-black-50 text-truncate pl-4" style="line-height:30px;">{{ $owner->position }}</span>
-                <h5 class="font-weight-bold text-black-50 text-truncate">{{ $owner->name }}</h5>
-                <p class="mb-0 text-black-50 text-truncate">{{ $owner->description }}</p>
-            </a>
+    <div class="row justify-content-center">
+        <div class="col-md-10 col">
+            <div class="row">
+                <div class="col-auto">
+                    <a class="u-ml-8" href="{{ $owner->getOKrRoute() }}">
+                        <img src="{{ $owner->getAvatar() }}" alt="" class="avatar text-center bg-white">
+                    </a>
+                </div>
+                <div class="col align-self-center text-truncate">
+                    <a href="{{ $owner->getOKrRoute() }}">
+                        <span class="text-black-50 text-truncate" style="line-height:30px;">{{ isset($owner->department)?$owner->department->name:$owner->company->name }}</span>
+                        <span class="text-black-50 text-truncate pl-4" style="line-height:30px;">{{ $owner->position }}</span>
+                        <h5 class="font-weight-bold text-black-50 text-truncate">{{ $owner->name }}</h5>
+                        <p class="mb-0 text-black-50 text-truncate">{{ $owner->description }}</p>
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
     @endcannot
