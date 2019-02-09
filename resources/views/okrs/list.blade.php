@@ -1,10 +1,3 @@
-@section('script')
-{{-- Chartjs --}}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js" charset="utf-8"></script>
-<script src="{{ asset('js/chart.js') }}" defer></script>
-<script src="{{ asset('js/editbtn.js') }}" defer></script>
-@endsection
-
 <div class="container">
     @can('update', $owner)
     <div class="row m-3">

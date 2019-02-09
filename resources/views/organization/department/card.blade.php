@@ -16,7 +16,7 @@
             </div>
             <a href="{{ count($department->children)>0? route('department.index', $department):route('department.okr', $department) }}">
                 <div class="row pl-4 pr-4">
-                    <div class="col-auto align-self-center">
+                    <div class="col-auto align-self-center pr-0 pl-1">
                         <img src="{{ $department->getAvatar() }}" alt="" class="avatar-md" style="vertical-align:top;">
                     </div>
                     <div class="col text-truncate">

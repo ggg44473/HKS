@@ -55,16 +55,20 @@
     </div>
     <div class="col-md-12">
         @if(!empty($files))
-        <div class="row">
-            @foreach($files as $file)
-            <div class="col-xs-12 col-md-6 col-lg-4">
-                {{ $file['updated_at'] }} <br>
-                <a href="{{ route('actions.destroyFile', ['action' => $action->id, 'media' => $file['media_id']]) }}">
-                    <i class="fas fa-times" style="color: red"></i>
-                </a>
-                <a href="{{ $file['url'] }}">{{ $file['name'] }}</a>
+        <div class="row justify-content-center pt-4 pb-4">
+            <div class="col">
+                <i class="fas fa-paperclip text-muted pr-2"></i>
+                <label class="text-muted">附件</label>
+                @foreach($files as $file)
+                <div class="row ml-3 mt-2">
+                    <div class="col-auto">{{ $file['updated_at'] }}</div>
+                    <a href="{{ route('actions.destroyFile', ['action' => $action->id, 'media' => $file['media_id']]) }}">
+                        <i class="fas fa-times" style="color: red"></i>
+                    </a>
+                    <div class="col-auto"><a href="{{ $file['url'] }}">{{ $file['name'] }}</a></div>
+                </div>
+                @endforeach
             </div>
-            @endforeach
         </div>
         @endif
     </div>

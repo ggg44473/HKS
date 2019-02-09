@@ -10,7 +10,7 @@
 <script src="{{ asset('js/chart.js') }}" defer></script>
 <script src="{{ asset('js/okr.js') }}" defer></script>
 @endsection
-@section('title','組織OKR')
+@section('title','部門OKR')
 @section('content')
 <div class="container">
     @include('organization.department.show')

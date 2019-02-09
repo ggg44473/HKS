@@ -4,7 +4,6 @@ $(function () {
 
 $('.collapse').on('show.bs.collapse', function () {
     setCookie("open", $(this).attr("id"));
-    console.log(getCookie("open"));
 })
 
 function setCookie(key, value) {
