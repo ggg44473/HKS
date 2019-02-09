@@ -17,7 +17,7 @@
     @endif
     <div id="dragCard" class="row">
         @foreach (auth()->user()->follow as $follow)
-        <div class="col-md-3 col-sm-6 u-mb-16">
+        <div id="{{ $follow->id }}" class="col-md-3 col-sm-6 u-mb-16">
                 <div class="card u-margin-4">
                     <div class="card-header">
                         {{-- 追蹤 --}}

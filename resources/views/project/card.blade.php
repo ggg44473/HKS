@@ -1,4 +1,4 @@
-<div class="col-md-4 col-sm-6 u-mb-16">
+<div id="{{ $project->id }}" class="col-md-4 col-sm-6 u-mb-16">
     <div class="card u-margin-8">
         <div class="card-header">
             {{-- 追蹤 --}}
@@ -115,7 +115,6 @@
             </div>
         </div>
     </div>
-</div>
 
 {{-- 編輯專案Modal --}}
 @can('update', $project)
@@ -126,3 +125,5 @@
 @can('memberSetting', $project)    
 @include('project.inviteMember')
 @endcan
+
+</div>

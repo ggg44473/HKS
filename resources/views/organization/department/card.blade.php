@@ -1,4 +1,4 @@
-<div class="col-md-4 col-lg-3">
+<div id="{{ $department->id }}" class="col-md-4 col-lg-3">
     <div class="card u-mt-16 u-margin-4">
         <div class="card-header pb-0">
             <div class="row">
