@@ -1,5 +1,8 @@
 @extends('layouts.master')
 @section('title','個人OKR')
+@section('script')
+<script src="{{ asset('js/okr.js') }}" defer></script>
+@endsection
 @section('content')
 @include('okrs.list', ['actionlist'=>true,'admin' => $owner->id, 'routeSearch' => route('user.okr',$owner->id),
 'routeObjectiveStore' => route('user.objective.store', auth()->user()->id)])
