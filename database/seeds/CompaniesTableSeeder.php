@@ -15,8 +15,8 @@ class CompaniesTableSeeder extends Seeder
     {
         Company::truncate();
         Company::create([
-            'name' => 'CMoney 公司',
-            'description' => 'Create More Money !',
+            'name' => 'CMoney',
+            'description' => 'creates more money !',
             'user_id' => 1,
         ]);
     }
