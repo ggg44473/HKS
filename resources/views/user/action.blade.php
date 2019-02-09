@@ -71,7 +71,7 @@
                         <option value="future">未來</option>
                     </select>
                     <select name="order" class="form-control input-sm mr-2 ml-2">
-                        <option value="finished_at_asc">結算日排序</option>
+                        <option value="finished_at_asc">期限排序</option>
                         <option value="started_at_asc">起始日排序</option>
                         <option value="priority_asc">優先度排序</option>
                     </select>
@@ -87,7 +87,7 @@
                         <tr class="bg-primary text-light text-center">
                             <th>完成</th>
                             <th>優先度</th>
-                            <th>結算日</th>
+                            <th>期限</th>
                             <th>來源</th>
                             <th>標題</th>
                             <th>附檔</th>
@@ -107,7 +107,7 @@
                             <td data-th="優先度" class="alert-{{$action->priority()->getResults()->color}} align-middle">
                                 {{$action->priority()->getResults()->priority}}
                             </td>
-                            <td data-th="結算日" class="align-middle">
+                            <td data-th="期限" class="align-middle">
                                 {{$action->finished_at}}
                             </td>
                             <td data-th="來源" class="align-middle">

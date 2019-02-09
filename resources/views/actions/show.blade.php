@@ -4,69 +4,108 @@
 <div class="container">
     <div class="row mb-2">
         <div class="col">
-            <a href="{{url()->previous()}}" class="text-primary mt-2 mr-2 float-left"><i class="fa fa-arrow-left fa-lg"></i></a><br/>
-            <h4 class="d-inline-block">{{$action->title}}</h4>
-            <span class="badge badge-pill badge-{{$action->priority()->getResults()->color}}">{{$action->priority()->getResults()->priority}}</span>
-            <span class="badge badge-pill badge-secondary">關聯KR : {{$action->keyresult->title}}</span>
+            <a href="{{url()->previous()}}" class="text-black-50"><i class="fas fa-chevron-left"></i> 返回</a>
         </div>
-        <div class="col">
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-10 col-12">
+            {{-- 編輯 --}}
             @can('update', $action)
-            <a class="btn-group mt-2 mr-2 text-success float-right" href="#" data-toggle="dropdown" aria-haspopup="true"
-                aria-expanded="false"><i class="fas fa-pencil-alt"></i></a>
-            <div class="dropdown-menu">
-                <a class="dropdown-item text-primary" href="#" onclick="document.getElementById('doneAct{{ $action->id }}').submit()"><i
-                        class="fas fa-check-circle"></i> {{ $action->isdone?'取消完成 Action':'完成 Action' }}</a>
-                <form method="POST" id="doneAct{{ $action->id }}" action="{{ route('actions.done',$action->id) }}">
-                    @csrf
-                </form>
-                <a class="dropdown-item text-primary" href="{{ route('actions.edit',$action->id) }}"><i class="fas fa-pencil-alt"></i>
-                    編輯 Action</a>
-                <a class="dropdown-item text-danger" href="#" onclick="document.getElementById('deleteAct{{ $action->id }}').submit()"><i
-                        class="fas fa-trash"></i> 刪除 Action</a>
-                <form method="POST" id="deleteAct{{ $action->id }}" action="{{ route('actions.destroy',$action->id) }}">
-                    @csrf
-                    {{ method_field('DELETE') }}
-                </form>
-            </div>
-            @endcan            
-        </div>
-    </div>
-    <div class="row align-items-center mb-4">
-        <div class="col-md-6">
-            負責:
-            <a href="{{ route('user.okr', $action->user->id) }}" title="{{$action->user->name}}">
-                <img src="{{ $action->user->getAvatar() }}" class="avatar-sm mr-1">
-            </a>
-        </div>
-        <div class="col-md-2">Start: {{$action->started_at}}</div>
-        <div class="col-md-2">Finish: {{$action->finished_at}}</div>
-        <div class="col-md-2">Updated: {{$action->updated_at}}</div>
-    </div>
-    <div class="row">
-        <div class="col-12">
-            <label>說明</label>
-            <div class="ml-4">
-                <pre>{{$action->content}}</pre>
-            </div>
-        </div>
-        <div class="col-12">
-            <label>附件</label>
-            @if(!empty($files))
-            <div class="row ml-3">
-                @foreach($files as $file)
-                <div class="col-xs-12 col-md-6 col-lg-4">
-                    {{ $file['updated_at'] }} <br>
-                    <a href="{{ $file['url'] }}">{{ $file['name'] }}</a>
+            <div class="row justify-content-end">
+                <div class="col-auto">
+                    <a class="text-info" href="#" onclick="document.getElementById('doneAct{{ $action->id }}').submit()"><i class="fas fa-check-circle"></i> {{ $action->isdone?'取消完成':'完成' }}</a>
+                    <form method="POST" id="doneAct{{ $action->id }}" action="{{ route('actions.done',$action->id) }}">
+                        @csrf
+                    </form>
                 </div>
-                @endforeach
+                <div class="col-auto">
+                    <a class="text-info" href="{{ route('actions.edit',$action->id) }}"><i class="fas fa-edit"></i> 編輯</a>
+                </div>
+                <div class="col-auto">
+                    <a href="#" data-toggle="dropdown" class="text-info"><i class="fas fa-trash-alt"></i> 刪除</a>
+                    <form method="POST" id="deleteAct{{ $action->id }}" action="{{ route('actions.destroy', $action->id) }}">
+                        @csrf
+                        {{ method_field('DELETE') }}
+                        <div class="dropdown-menu u-padding-16">
+                            <div class="row justify-content-center mb-2">
+                                <div class="col-auto text-danger"><i class="fas fa-exclamation-triangle"></i></div>
+                            </div>
+                            <div class="row">
+                                <div class="col text-center">
+                                    確認要Action嗎？<br>
+                                </div>
+                            </div>
+                            <div class="row justify-content-center mt-3">
+                                <div class="col text-center pr-0"><button class="btn btn-danger" type="submit">刪除</button></div>
+                                <div class="col text-center pl-0"><a class="btn btn-secondary text-white">取消</a></div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            @endcan
+            {{-- kr --}}
+            <div class="row">
+                <div class="col-auto font-weight-bold text-muted align-self-center">
+                    <div class="badge badge-pill pl-4 pr-4 text-white mr-2"  style="line-height: 18px; background-color:{{ $action->keyresult->color() }};">KR</div>
+                    {{ $action->keyresult->title }}
+                </div>
+            </div>
+            {{-- Action title --}}
+            <div class="row mt-4 mb-4">
+                <div class="col-auto">
+                    <h4>{{ $action->title }}</h4>
+                </div>
+                <div class="col-auto text-right text-muted align-self-center">{{ $action->updated_at }}更新</div>
+            </div>
+            <div class="row mt-4 mb-4">
+                <div class="col-auto align-self-center text-muted pr-md-4" style="line-height: 24px;">
+                    期限｜
+                    <i class="far fa-clock pr-2"></i>
+                    {{ date('M. d, Y', strtotime($action->finished_at)) }}
+                </div>
+                <div class="col-auto align-self-center text-muted pl-md-4 pr-md-4" style="line-height: 24px;">
+                    負責人｜
+                    <a href="{{ route('user.okr', $action->user->id) }}" title="{{ $action->user->name }}">
+                        <img src="{{ $action->user->getAvatar() }}" class="avatar-xs mr-1">
+                        <span>{{ $action->user->name }}</span>
+                    </a>
+                </div>
+                <div class="col-auto text-center align-self-center text-muted pl-md-4" style="line-height: 24px;">
+                    優先度｜
+                    <div class="badge badge-pill badge-{{ $action->priority()->getResults()->color }} pl-4 pr-4">{{ $action->priority()->getResults()->priority }}</div>
+                </div>
+            </div>
+            <hr/>
+            <div class="row pl-md-4 pr-md-4">
+                <div class="col-12">
+                    <div>
+                        <pre style="line-height: 28px;">{{$action->content}}</pre>
+                    </div>
+                </div>
+            </div>
+            @if(!empty($files))
+            <div class="row justify-content-center pt-4 pb-4">
+                <div class="col">
+                    <i class="fas fa-paperclip text-muted pr-2"></i>
+                    <label class="text-muted">附件</label>
+                    @foreach($files as $file)
+                        <div class="row ml-3 mt-2">
+                            <div class="col-auto">{{ $file['updated_at'] }}</div>
+                            <div class="col-auto"><a href="{{ $file['url'] }}">{{ $file['name'] }}</a></div>
+                        </div>
+                    @endforeach
+                </div>
             </div>
             @endif
+            <hr>
+            <div class="row">
+                <div class="col">
+                    @comments(['model' => $action])
+                    @endcomments
+                </div>
+            </div>
         </div>
-    </div>
-    <hr>
-    <div class="row">
-        @comments(['model' => $action])
-        @endcomments
     </div>
 </div>
 @endsection

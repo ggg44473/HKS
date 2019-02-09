@@ -35,7 +35,7 @@
                 </div>
                 {{ $members->links() }}
                 {{-- 成員表 --}}
-                <table class="rwd-table table table-hover">部門成員
+                <table class="rwd-table table table-hover">
                     <thead>
                         <tr class="bg-primary text-light text-center">
                             <th>追蹤</th>

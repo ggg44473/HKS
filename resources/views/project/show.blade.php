@@ -42,16 +42,16 @@
 <div class="row justify-content-end">
     <div class="col text-right align-self-end">
         @can('done', $project)
-        <a href="{{ route('project.done', $project) }}" data-toggle="tooltip" data-placement="bottom" title="{{ $project->isdone?'取消關閉':'關閉專案'}}"><i class="far fa-check-square u-margin-4"></i></a>                    
+        <a href="{{ route('project.done', $project) }}" data-toggle="tooltip" class="tooltipBtn text-info" data-placement="bottom" title="{{ $project->isdone?'取消關閉':'關閉專案'}}"><i class="far fa-check-square u-margin-4"></i></a>                    
         @endcan
         @can('memberSetting', $project)
-        <a href="#" data-toggle="modal" data-target="#inviteMember" class="tooltipBtn" data-placement="bottom" title="新增成員"><i class="fas fa-user-plus u-margin-4"></i></a>
+        <a href="#" data-toggle="modal" data-target="#inviteMember" class="tooltipBtn text-info" data-placement="bottom" title="新增成員"><i class="fas fa-user-plus u-margin-4"></i></a>
         @endcan
         @can('update', $project)
-        <a href="#" data-toggle="modal" data-target="#editProject" class="tooltipBtn" data-placement="bottom" title="編輯專案"><i class="fas fa-edit u-margin-4"></i></a>
+        <a href="#" data-toggle="modal" data-target="#editProject" class="tooltipBtn text-info" data-placement="bottom" title="編輯專案"><i class="fas fa-edit u-margin-4"></i></a>
         @endcan
         @can('delete', $project)
-        <a href="#" data-toggle="dropdown" class="tooltipBtn" data-placement="bottom" title="刪除專案"><i class="fas fa-trash-alt"></i></a>
+        <a href="#" data-toggle="dropdown" class="tooltipBtn text-info" data-placement="bottom" title="刪除專案"><i class="fas fa-trash-alt"></i></a>
         <form method="POST" id="projectDelete" action="{{ route('project.destroy', $project) }}">
             @csrf
             {{ method_field('DELETE') }}
