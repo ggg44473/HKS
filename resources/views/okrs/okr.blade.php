@@ -156,13 +156,10 @@
         <div class="row">
             <div class="col-12">
                 <div class="card card-body" style="position: relative;">
-                    @if(isset($okr['objective']->keyresult->keyResultRecords))
                     <canvas id="speedChart{{$okr['objective']->id}}"></canvas>
-                    @else
-                    <div class="alert alert-info" role="alert">
+                    <div class="alert alert-info" role="alert" style="display: none;" id="ChartShow{{ $okr['objective']->id }}">
                         此目標尚未有歷史紀錄，故無圖表。
                     </div>
-                    @endif
                 </div>
             </div>
         </div>
