@@ -6,30 +6,47 @@
     @foreach ($invitations as $invitation)
         @include('actions.invitation')
     @endforeach
+    @can('update', $owner)
     <div class="row m-3">
-        @can('update', $owner)
-            <div class="col-md-7 font-weight-light">
-                <h4>我的Action</h4>
-            </div>
-        @endcan
-        @cannot('update', $owner)
-            <div class="col-md-7">
-                <a href="{{ $owner->getOKrRoute() }}">
-                    <img class="avatar u-ml-8 u-mr-8" src="{{ $owner->getAvatar() }}">
-                    <h4 class="list-inline-item u-ml-8 text-black-50">{{ $owner->name }}</h4>
-                </a>
-                @if ($owner->following())
-                <a href="{{ route('follow.cancel', [get_class($owner), $owner]) }}" class="text-warning">
-                    <i class="fas fa-star" style="font-size: 24px;"></i>
-                </a>
-                @else
-                <a href="{{ route('follow', [get_class($owner), $owner]) }}" class="text-warning">
-                    <i class="far fa-star" style="font-size: 24px;"></i>
-                </a>
-                @endif
-            </div>
-        @endcannot
+        <div class="col font-weight-light">
+            <h4>我的Action</h4>
+        </div>
     </div>
+    @endcan
+    @cannot('update', $owner)
+    <div class="row">
+        <div class="col align-self-end text-right">
+            @if ($owner->following())
+            <a href="{{ route('follow.cancel', [get_class($owner), $owner]) }}" class="text-warning">
+                <i class="fas fa-star" style="font-size: 24px;"></i>
+            </a>
+            @else
+            <a href="{{ route('follow', [get_class($owner), $owner]) }}" class="text-warning">
+                <i class="far fa-star" style="font-size: 24px;"></i>
+            </a>
+            @endif
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-10 col">
+            <div class="row">
+                <div class="col-auto">
+                    <a class="u-ml-8" href="{{ $owner->getOKrRoute() }}">
+                        <img src="{{ $owner->getAvatar() }}" alt="" class="avatar text-center bg-white">
+                    </a>
+                </div>
+                <div class="col align-self-center text-truncate">
+                    <a href="{{ $owner->getOKrRoute() }}">
+                        <span class="text-black-50 text-truncate" style="line-height:30px;">{{ isset($owner->department)?$owner->department->name:$owner->company->name }}</span>
+                        <span class="text-black-50 text-truncate pl-4" style="line-height:30px;">{{ $owner->position }}</span>
+                        <h5 class="font-weight-bold text-black-50 text-truncate">{{ $owner->name }}</h5>
+                        <p class="mb-0 text-black-50 text-truncate">{{ $owner->description }}</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endcannot
     {{-- okrs/action換頁標籤 --}}
     <ul class="nav nav-tabs justify-content-end" id="myTab" role="tablist">
         <li class="nav-item">
@@ -54,7 +71,7 @@
                         <option value="future">未來</option>
                     </select>
                     <select name="order" class="form-control input-sm mr-2 ml-2">
-                        <option value="finished_at_asc">結算日排序</option>
+                        <option value="finished_at_asc">期限排序</option>
                         <option value="started_at_asc">起始日排序</option>
                         <option value="priority_asc">優先度排序</option>
                     </select>
@@ -68,8 +85,9 @@
                 <table class="rwd-table table table-hover">
                     <thead>
                         <tr class="bg-primary text-light text-center">
+                            <th>完成</th>
                             <th>優先度</th>
-                            <th>結算日</th>
+                            <th>期限</th>
                             <th>來源</th>
                             <th>標題</th>
                             <th>附檔</th>
@@ -80,27 +98,33 @@
                     <tbody>
                         @foreach($actions as $action)
                         <tr class="text-center">
-                            <td data-th="優先度" class="alert-{{$action->priority()->getResults()->color}}">
+                            <td data-th="完成" class="align-middle">
+                                <form action="{{ route('actions.done', $action->id) }}" method="post" id="doneAct{{ $action->id }}">
+                                    @csrf
+                                    <input type="checkbox" name="" id="" {{ $action->isdone? 'checked="checked"':'' }}  onclick="document.getElementById('doneAct{{ $action->id }}').submit()">
+                                </form>
+                            </td>
+                            <td data-th="優先度" class="alert-{{$action->priority()->getResults()->color}} align-middle">
                                 {{$action->priority()->getResults()->priority}}
                             </td>
-                            <td data-th="結算日">
+                            <td data-th="期限" class="align-middle">
                                 {{$action->finished_at}}
                             </td>
-                            <td data-th="來源">
+                            <td data-th="來源" class="align-middle">
                                 {{str_split($action->objective->model_type,4)[1]}}
                             </td>
-                            <td data-th="標題">
+                            <td data-th="標題" class="align-middle">
                                 <a href="{{ route('actions.show',$action->id) }}">
                                     {{$action->title}}
                                 </a>
                             </td>
-                            <td data-th="附檔">
+                            <td data-th="附檔" class="align-middle">
                                 {{count($action->getRelatedFiles())}}
                             </td>
-                            <td data-th="回覆">
+                            <td data-th="回覆" class="align-middle">
                                 {{$action->comments->count()}}
                             </td>
-                            <td data-th="最後更新">
+                            <td data-th="最後更新" class="align-middle">
                                 {{$action->updated_at}}
                             </td>
                         </tr>

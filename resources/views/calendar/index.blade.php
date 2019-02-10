@@ -47,7 +47,7 @@
     <form action="{{route('calendar.create', auth()->user()->id) }}" method="post">
         @csrf
         <div class="modal fade" tabindex="-1" role="dialog" id="mdlEvent">
-            <div class="modal-dialog modal-dialog-centered modal-sm" role="document" style="width:80">
+            <div class="modal-dialog modal-dialog-centered modal-md" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">新增行程</h5>
@@ -62,7 +62,7 @@
                         </div>
                         <div class="form-group col-md-12">
                             <label for="started_at">起始日</label>
-                            <input class="form-control" name="st_date" id="started_at">
+                            <input autocomplete="off" class="form-control" name="st_date" id="started_at">
                         </div>
                         <div class="form-group col-md-12">
                             <label for="st_time">起始時間</label>
@@ -70,7 +70,7 @@
                         </div>
                         <div class="form-group col-md-12">
                             <label for="finished_at">完成日</label>
-                            <input class="form-control" name="fin_date" id="finished_at">
+                            <input autocomplete="off" class="form-control" name="fin_date" id="finished_at">
                         </div>
                         <div class="form-group col-md-12">
                             <label for="fin_time">完成時間</label>

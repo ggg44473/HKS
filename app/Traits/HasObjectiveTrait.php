@@ -85,7 +85,7 @@ trait HasObjectiveTrait
     {
         $builder = $this->getObjectivesBuilder($request);
 
-        $pages = $builder->paginate(5)->appends([
+        $pages = $builder->paginate(4)->appends([
             'st_date' => $request->input('st_date', ''),
             'fin_date' => $request->input('fin_date', ''),
             'order' => $request->input('order', '')
@@ -135,22 +135,30 @@ trait HasObjectiveTrait
     {
         $complianceRate = [0, 0, 0, 0];
         $sum = 0;
-        foreach($this->objectives as $objective){
-            if($objective->getScore()<0.5){
-                $complianceRate[0]++;
-            }elseif($objective->getScore()<0.75){
-                $complianceRate[1]++;
-            }elseif($objective->getScore()<1){
-                $complianceRate[2]++;
-            }else{
-                $complianceRate[3]++;
-            }
+        foreach ($this->objectives as $objective) {
+            $complianceRate[3]++;
+            if ($objective->getScore() < 100) $complianceRate[2]++;
+            if ($objective->getScore() < 75) $complianceRate[1]++;
+            if ($objective->getScore() < 50) $complianceRate[0]++;
             $sum++;
         }
-        foreach($complianceRate as $index=>$item){
-            $complianceRate[$index] = $item / $sum; 
+        if ($sum == 0) return [0, 0, 0, 0];
+        else {
+            foreach ($complianceRate as $index => $item) {
+                $complianceRate[$index] = $item / $sum;
+            }
         }
 
         return $complianceRate;
+    }
+
+    public function complianceRateAvg()
+    {
+        $sum = 0;
+        foreach ($this->objectives as $objective) {
+            $sum += $objective->getScore();
+        }
+        if (count($this->objectives) == 0) return 0;
+        else return $sum/count($this->objectives);
     }
 }

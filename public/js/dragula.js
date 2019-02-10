@@ -395,7 +395,8 @@ function dragula (initialContainers, options) {
     if (!_mirror) {
       return;
     }
-    e.preventDefault();
+    // e.preventDefault();
+    window.event.returnValue=false;
 
     var clientX = getCoord('clientX', e);
     var clientY = getCoord('clientY', e);

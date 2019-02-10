@@ -23,8 +23,8 @@
 
         <div class="btn-group">
             <div class="dropdown dropdown-notifications nav-item nav-link text-muted mt-auto mb-auto">
-                <a href="#notifications-panel" data-toggle="dropdown">
-                    <i data-count="0" class="fas fa-bell notification-icon"></i>
+                <a href="#notifications-panel" data-toggle="dropdown" style="width: 37px;" class="text-left">
+                    <i data-count="0" id="bell" class="fas fa-bell {{ count(auth()->user()->unreadNotifications)?'notification-icon':'text-muted mr-2' }} mt-1"></i>
                 </a>
                 <div class="dropdown-container dropdown-menu pb-0">
                     <div class="dropdown-toolbar">

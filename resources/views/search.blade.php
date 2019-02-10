@@ -35,23 +35,23 @@
             <tbody>
                 @foreach($members as $member)
                 <tr class="text-center">
-                    <td data-th="頭像">
+                    <td data-th="頭像" class="align-middle">
                         <a href="{{ route('user.okr', $member->id) }}" class="u-ml-8 u-mr-8">
                             <img src="{{ $member->getAvatar() }}" alt="" class="avatar-sm text-center bg-white">
                         </a>
                     </td>
-                    <td data-th="姓名">
+                    <td data-th="姓名" class="align-middle">
                         {{$member->name}}
                     </td>
-                    <td data-th="部門">
+                    <td data-th="部門" class="align-middle">
                         @if($member->department)
                         {{$member->department->name}}
                         @endif
                     </td>
-                    <td data-th="職稱">
+                    <td data-th="職稱" class="align-middle">
                         {{$member->position}}
                     </td>
-                    <td data-th="被追蹤">
+                    <td data-th="被追蹤" class="align-middle">
                         {{$member->follower->count()}}
                     </td>
                 </tr>

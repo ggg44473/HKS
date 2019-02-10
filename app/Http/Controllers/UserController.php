@@ -49,7 +49,8 @@ class UserController extends Controller
         if ($request->input('order', '')) {
 
             #Action是否完成
-            $builder->where('isdone', '=', $request->input('isdone', ''));
+            if($request->input('isdone', '') == 'true') $builder->whereNotNull('isdone');
+            elseif($request->input('isdone', '') == 'false') $builder->where('isdone', null);
             
             #Action狀態
             $now = now()->toDateString();
@@ -125,9 +126,16 @@ class UserController extends Controller
         $this->authorize('view', $user);
 
         if ($user->id != auth()->user()->id) return redirect()->to(url()->previous());
+        $complete = $user->actions()->whereNotNull('isdone');
+        $actionComplianceRate = [
+            'all' => count($user->actions),
+            'complete' => count($complete->get()),
+            'delay' => count($complete->whereRaw('finished_at < isdone')->get()),
+        ];
 
         $data = [
             'user' => $user,
+            'actionComplianceRate' => $actionComplianceRate,
         ];
 
         return view('user.settings', $data);
@@ -144,8 +152,8 @@ class UserController extends Controller
     {
         $this->authorize('update', $user);
 
-        if($request->name != null) $user->update(['name' => $request->name]);
-        if($request->description != null) $user->update(['description' => $request->description]);
+        if ($request->name != null) $user->update(['name' => $request->name]);
+        if ($request->description != null) $user->update(['description' => $request->description]);
         $user->addAvatar($request);
 
         return redirect()->route('user.settings', auth()->user()->id);
@@ -153,7 +161,8 @@ class UserController extends Controller
 
     public function notifications()
     {
-        return auth()->user()->unreadNotifications()->get()->toArray();
+        if (count(auth()->user()->unreadNotifications()->get()) > 4) return auth()->user()->unreadNotifications()->get()->toArray();
+        return auth()->user()->notifications()->take(4)->get()->toArray();
     }
 
     public function readAllNotification()
@@ -172,7 +181,7 @@ class UserController extends Controller
 
     public function resetPassword(UserRequest $request)
     {
-        if(!Auth::Check()) return redirect()->route('user.okr');
+        if (!Auth::Check()) return redirect()->route('user.okr');
 
         $current_password = Auth::User()->password;
         if (Hash::check($request['current_password'], $current_password)) {
@@ -180,10 +189,10 @@ class UserController extends Controller
             $obj_user = User::find($user_id);
             $obj_user->password = Hash::make($request['password']);;
             $obj_user->save();
-            return redirect()->back()->with("success","密碼變更成功！");
+            return redirect()->back()->with("success", "密碼變更成功！");
         } else {
             $error = array('current_password' => 'Please enter correct current password');
-            return redirect()->back()->with("error","密碼輸入錯誤，請重新輸入！");
+            return redirect()->back()->with("error", "密碼輸入錯誤，請重新輸入！");
         }
     }
 }

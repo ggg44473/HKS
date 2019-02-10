@@ -60,30 +60,25 @@
                         <div style="position:absolute; top: 35%; left:50%; transform: translate(-50%, -50%);">
                             <div class="row">
                                 <div class="col-auto pl-0 pr-0 align-self-center">
-                                    <span>{{ count($user->objectives()->where('finished_at','<=',now()->toDateTimeString())->get()) }}</span><br>
-                                    <span style="font-size:4px">完成</span>
-                                </div>
-                                <div class="col-auto pl-1 pr-1 ">/</div>
-                                <div class="col-auto pl-0 pr-0 align-self-center">
-                                    <span>{{ $user->countObjective() }}</span><br>
-                                    <span style="font-size:4px">總數</span>
+                                    <span>{{ $user->complianceRateAvg() }}％</span><br>
+                                    <span style="font-size:4px">達成率</span>
                                 </div>
                             </div>
                         </div>
                         <div class="text-black-50" style="position:absolute; bottom: 0; left:50%; transform: translate(-50%, -50%);">Objective</div>
                     </div>
                     <div class="col-4 text-center mb-4">
-                        <div class="circle circle-1" data-value="0.2" style="position:absolute; top: 35%; left:50%; transform: translate(-50%, -50%);"></div>
-                        <div class="circle circle-2" data-value="0.3" style="position:absolute; top: 35%; left:50%; transform: translate(-50%, -50%);"></div>
+                        <div class="circle circle-1" data-value="{{ $actionComplianceRate['all']!=0? $actionComplianceRate['complete']/$actionComplianceRate['all'] : 0 }}" style="position:absolute; top: 35%; left:50%; transform: translate(-50%, -50%);"></div>
+                        <div class="circle circle-4" data-value="{{ $actionComplianceRate['all']!=0? $actionComplianceRate['delay']/$actionComplianceRate['all'] : 0  }}" style="position:absolute; top: 35%; left:50%; transform: translate(-50%, -50%);"></div>
                         <div style="position:absolute; top: 35%; left:50%; transform: translate(-50%, -50%);">
                             <div class="row">
                                 <div class="col-auto pl-0 pr-0 align-self-center">
-                                    <span>{{ count($user->actions()->where('isdone',true)->get()) }}</span><br>
+                                    <span>{{ $actionComplianceRate['complete'] }}</span><br>
                                     <span style="font-size:4px">完成</span>
                                 </div>
                                 <div class="col-auto pl-1 pr-1 ">/</div>
                                 <div class="col-auto pl-0 pr-0 align-self-center">
-                                    <span>{{ count($user->actions) }}</span><br>
+                                    <span>{{ $actionComplianceRate['all'] }}</span><br>
                                     <span style="font-size:4px">總數</span>
                                 </div>
                             </div>
@@ -91,7 +86,7 @@
                         <div class="text-black-50" style="position:absolute; bottom: 0; left:50%; transform: translate(-50%, -50%);">Action</div>
                     </div>
                     <div class="col-4 text-center mb-4" style="height: 120px;">
-                        <div class="circle circle-1" data-value="{{ $user->complianceRate()[3] }}" style="position:absolute; top: 35%; left:50%; transform: translate(-50%, -50%);"></div>
+                        <div class="circle circle-1" data-value="{{ count($user->projects)!=0?count($user->projects()->where('isdone',true)->get())/count($user->projects):0 }}" style="position:absolute; top: 35%; left:50%; transform: translate(-50%, -50%);"></div>
                         <div style="position:absolute; top: 35%; left:50%; transform: translate(-50%, -50%);">
                             <div class="row">
                                 <div class="col-auto pl-0 pr-0 align-self-center">
@@ -150,20 +145,20 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>公司</td>
-                        <td>{{ isset($user->company)?$user->company->name:'-' }}</td>
-                        <td>{{ isset($user->company)?$user->role($user->company)->name:'-' }}</td>
+                        <td class="align-middle">公司</td>
+                        <td class="align-middle">{{ isset($user->company)?$user->company->name:'-' }}</td>
+                        <td class="align-middle">{{ isset($user->company)?$user->role($user->company)->name:'-' }}</td>
                     </tr>
                     <tr>
-                        <td>部門</td>
-                        <td>{{ isset($user->department) && $user->department?$user->department->name:'-' }}</td>
-                        <td>{{ isset($user->department) && $user->department?$user->role($user->department)->name:'-' }}</td>
+                        <td class="align-middle">部門</td>
+                        <td class="align-middle">{{ isset($user->department) && $user->department?$user->department->name:'-' }}</td>
+                        <td class="align-middle">{{ isset($user->department) && $user->department?$user->role($user->department)->name:'-' }}</td>
                     </tr>
                     @foreach ($user->projects as $project)
                     <tr>
-                        <td>專案</td>
-                        <td>{{ isset($project->name) }}</td>
-                        <td>{{ isset($project->name)?$user->role($project)->name:'' }}</td>
+                        <td class="align-middle">專案</td>
+                        <td class="align-middle">{{ isset($project->name) }}</td>
+                        <td class="align-middle">{{ isset($project->name)?$user->role($project)->name:'' }}</td>
                     </tr>
                     @endforeach
 
