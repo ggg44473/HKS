@@ -154,7 +154,8 @@ class ActionsController extends Controller
         $this->authorize('update', $action);
 
         $act = Action::find($action->id);
-        $act->isdone = !$act->isdone;
+        if($act->isdone) $act->isdone = null;
+        else $act->isdone = now();
         $act->save();
         return redirect()->back();
     }

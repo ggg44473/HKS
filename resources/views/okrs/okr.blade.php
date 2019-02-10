@@ -130,7 +130,7 @@
                 <a class="btn btn-success mb-3 w-100" href="{{ route('actions.create',$okr['objective']->id) }}"><i class="fa fa-plus fa-sm"></i>
                     Action</a>
                 @else
-                <button type="button" class="btn btn-secondary" disabled><i class="fa fa-lock fa-sm"></i> 請先新增 Key Results
+                <button type="button" class="btn btn-secondary w-100" disabled><i class="fa fa-lock fa-sm"></i> 請先新增 Key Results
                     (關鍵指標)</button>
                 @endif
                 @include('okrs.listaction',$okr)

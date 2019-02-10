@@ -1,6 +1,6 @@
 @foreach($okr['actions'] as $action)
     <div class="row mt-2">
-        @if(!$action->isdone)
+        @if($action->isdone == null)
         <div class="col-auto align-self-center mb-3 pr-0">
             {{ $action->finished_at }}
             <span class="badge badge-pill badge-{{$action->priority()->getResults()->color}} ml-md-2 mr-md-2" style="width:100px">{{$action->priority()->getResults()->priority}}</span>
