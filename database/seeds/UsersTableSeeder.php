@@ -44,7 +44,7 @@ class UsersTableSeeder extends Seeder
             'email_verified_at' => now(),
         ]);
         User::unguard();
-        factory(User::class, 120)->create();
+        // factory(User::class, 120)->create();
         User::reguard();
 
     }

@@ -41,7 +41,7 @@
         <div class="row">
             @if ($company->okrs)
                 @for ($i = 0; $i < 4 && $i < count($company->okrs); $i++)
-                <div class="col-auto align-self-center">
+                <div class="col-3 align-self-center">
                     <div class="circle" data-value="{{ $company->okrs[$i]['objective']->getScore()/100 }}">
                         <div>{{ $company->okrs[$i]['objective']->getScore() }}%</div>
                     </div>
@@ -53,19 +53,19 @@
     </div>
 </div>
 
-<div class="row justify-content-center">
-    <div class="col-md-10 col-12 text-right align-self-end">
+<div class="row justify-content-end">
+    <div class="col text-right align-self-end">
         @can('create', App\Department::class)
-            <a href="#" data-toggle="modal" data-target="#createDepartment" class="tooltipBtn" data-placement="top" title="新增部門"><i class="fas fa-plus-circle u-margin-4"></i></a>            
+            <a href="#" data-toggle="modal" data-target="#createDepartment" class="tooltipBtn text-info" data-placement="top" title="新增部門"><i class="fas fa-plus-circle u-margin-4"></i></a>            
         @endcan
         @can('memberSetting', $company)
-            <a href="#" data-toggle="modal" data-target="#inviteMember" class="tooltipBtn" data-placement="top" title="新增成員"><i class="fas fa-user-plus u-margin-4"></i></a>            
+            <a href="#" data-toggle="modal" data-target="#inviteMember" class="tooltipBtn text-info" data-placement="top" title="新增成員"><i class="fas fa-user-plus u-margin-4"></i></a>            
         @endcan
         @can('update', $company)
-            <a href="#" data-toggle="modal" data-target="#editCompany" class="tooltipBtn" data-placement="top" title="編輯組織"><i class="fas fa-edit u-margin-4"></i></a>            
+            <a href="#" data-toggle="modal" data-target="#editCompany" class="tooltipBtn text-info" data-placement="top" title="編輯組織"><i class="fas fa-edit u-margin-4"></i></a>            
         @endcan
         @can('delete', $company)
-            <a href="#" data-toggle="dropdown" class="tooltipBtn" data-placement="top" title="刪除組織"><i class="fas fa-trash-alt"></i></a>
+            <a href="#" data-toggle="dropdown" class="tooltipBtn text-info" data-placement="top" title="刪除組織"><i class="fas fa-trash-alt"></i></a>
             <form method="POST" id="companyDelete" action="{{ route('company.destroy') }}">
                 @csrf
                 {{ method_field('DELETE') }}

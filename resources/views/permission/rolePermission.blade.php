@@ -25,38 +25,38 @@
                         <tbody>
                             <tr>
                                 <td scope="row" data-th="權限" class="text-center">刪除{{ $type }}</td>
-                                <td data-th="擁有者" class="text-center text-primary"><i class="fas fa-check"></i></td>
-                                <td data-th="管理者" class="text-center text-primary"></td>
-                                <td data-th="編輯" class="text-center text-primary"></td>
-                                <td data-th="成員" class="text-center text-primary"></td>
+                                <td data-th="擁有者" class="text-center text-primary align-middle"><i class="fas fa-check"></i></td>
+                                <td data-th="管理者" class="text-center text-primary align-middle"></td>
+                                <td data-th="編輯" class="text-center text-primary align-middle"></td>
+                                <td data-th="成員" class="text-center text-primary align-middle"></td>
                             </tr>
                             <tr>
                                 <td scope="row" data-th="權限">變更成員設定</td>
-                                <td data-th="擁有者" class="text-center text-primary"><i class="fas fa-check"></i></td>
-                                <td data-th="管理者" class="text-center text-primary"><i class="fas fa-check"></i></td>
-                                <td data-th="編輯" class="text-center text-primary"></td>
-                                <td data-th="成員" class="text-center text-primary"></td>
+                                <td data-th="擁有者" class="text-center text-primary align-middle"><i class="fas fa-check"></i></td>
+                                <td data-th="管理者" class="text-center text-primary align-middle"><i class="fas fa-check"></i></td>
+                                <td data-th="編輯" class="text-center text-primary align-middle"></td>
+                                <td data-th="成員" class="text-center text-primary align-middle"></td>
                             </tr>
                             <tr>
                                 <td scope="row" data-th="權限">編輯{{ $type }}資訊</td>
-                                <td data-th="擁有者" class="text-center text-primary"><i class="fas fa-check"></i></td>
-                                <td data-th="管理者" class="text-center text-primary"><i class="fas fa-check"></i></td>
-                                <td data-th="編輯" class="text-center text-primary"></td>
-                                <td data-th="成員" class="text-center text-primary"></td>
+                                <td data-th="擁有者" class="text-center text-primary align-middle"><i class="fas fa-check"></i></td>
+                                <td data-th="管理者" class="text-center text-primary align-middle"><i class="fas fa-check"></i></td>
+                                <td data-th="編輯" class="text-center text-primary align-middle"></td>
+                                <td data-th="成員" class="text-center text-primary align-middle"></td>
                             </tr>
                             <tr>
                                 <td scope="row" data-th="權限">編輯OKR內容</td>
-                                <td data-th="擁有者" class="text-center text-primary"><i class="fas fa-check"></i></td>
-                                <td data-th="管理者" class="text-center text-primary"><i class="fas fa-check"></i></td>
-                                <td data-th="編輯" class="text-center text-primary"><i class="fas fa-check"></i></td>
-                                <td data-th="成員" class="text-center text-primary"></td>
+                                <td data-th="擁有者" class="text-center text-primary align-middle"><i class="fas fa-check"></i></td>
+                                <td data-th="管理者" class="text-center text-primary align-middle"><i class="fas fa-check"></i></td>
+                                <td data-th="編輯" class="text-center text-primary align-middle"><i class="fas fa-check"></i></td>
+                                <td data-th="成員" class="text-center text-primary align-middle"></td>
                             </tr>
                             <tr>
                                 <td scope="row" data-th="權限">查看{{ $type }}內容</td>
-                                <td data-th="擁有者" class="text-center text-primary"><i class="fas fa-check"></i></td>
-                                <td data-th="管理者" class="text-center text-primary"><i class="fas fa-check"></i></td>
-                                <td data-th="編輯" class="text-center text-primary"><i class="fas fa-check"></i></td>
-                                <td data-th="成員" class="text-center text-primary"><i class="fas fa-check"></i></td>
+                                <td data-th="擁有者" class="text-center text-primary align-middle"><i class="fas fa-check"></i></td>
+                                <td data-th="管理者" class="text-center text-primary align-middle"><i class="fas fa-check"></i></td>
+                                <td data-th="編輯" class="text-center text-primary align-middle"><i class="fas fa-check"></i></td>
+                                <td data-th="成員" class="text-center text-primary align-middle"><i class="fas fa-check"></i></td>
                                 </tr>
                         </tbody>
                         </table>

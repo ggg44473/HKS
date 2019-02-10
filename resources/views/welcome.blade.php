@@ -58,14 +58,12 @@
             <div class="container">
                 <div class="introduction mt-2" id="about">
                     <div class="card mt-5">
-                        <div class="row">
-                            <div class="col-md-5">
-                                <div class="text-center">
-                                    <img src="img/icon/welcome/bgray.svg" class="rounded float-md-left img-fluid " alt="Card image cap">
-                                </div>
+                        <div class="row align-items-center">
+                            <div class="col-md-5 text-center">
+                                <img src="img/icon/welcome/gray.svg" class="rounded float-md-left img-fluid " alt="Card image cap">
                             </div>
-                            <div class="col-md m-3">
-                                <h4 class="card-title pt-3">關於我們</h4>
+                            <div class="col-md m-3 ">
+                                <h4 class="card-title pt-3 ">關於我們</h4>
 
                                 <p class="card-text">#免費 #PMS #目標管理</p>
                                 <p class="card-text">現代知識密集型企業越來越多，變化也愈加快速，傳統的KPI指標難以有效管理，OKR管理法源於英特爾和谷歌，以目標導向的方式，上由企業下至個人，抓住工作核心、及衡量和判定抽象的目標。OKR管理法可以說是思考和溝通的工具，促使團隊不斷的深入思考和使用。</p>

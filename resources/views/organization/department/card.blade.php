@@ -1,4 +1,4 @@
-<div class="col-md-4 col-lg-3">
+<div id="{{ $department->id }}" class="col-md-4 col-lg-3">
     <div class="card u-mt-16 u-margin-4">
         <div class="card-header pb-0">
             <div class="row">
@@ -16,7 +16,7 @@
             </div>
             <a href="{{ count($department->children)>0? route('department.index', $department):route('department.okr', $department) }}">
                 <div class="row pl-4 pr-4">
-                    <div class="col-auto align-self-center">
+                    <div class="col-auto align-self-center pr-0 pl-1">
                         <img src="{{ $department->getAvatar() }}" alt="" class="avatar-md" style="vertical-align:top;">
                     </div>
                     <div class="col text-truncate">
@@ -72,16 +72,16 @@
         <div class="row pr-4">
             <div class="col-12 text-right pb-2">&nbsp
                 @can('create', App\Department::class)
-                    <a href="#" data-toggle="modal" data-target="#createDepartment{{ $department->id }}" class="tooltipBtn" data-placement="top" title="新增部門"><i class="fas fa-plus-circle u-margin-4"></i></a>
+                    <a href="#" data-toggle="modal" data-target="#createDepartment{{ $department->id }}" class="tooltipBtn text-info" data-placement="top" title="新增部門"><i class="fas fa-plus-circle u-margin-4"></i></a>
                 @endcan
                 @can('memberSetting', $department)
-                    <a href="#" data-toggle="modal" data-target="#inviteMember{{ $department->id }}" class="tooltipBtn" data-placement="top" title="新增成員"><i class="fas fa-user-plus u-margin-4"></i></a>                    
+                    <a href="#" data-toggle="modal" data-target="#inviteMember{{ $department->id }}" class="tooltipBtn text-info" data-placement="top" title="新增成員"><i class="fas fa-user-plus u-margin-4"></i></a>                    
                 @endcan
                 @can('update', $department)
-                    <a href="#" data-toggle="modal" data-target="#editDepartment{{ $department->id }}" class="tooltipBtn" data-placement="top" title="編輯組織"><i class="fas fa-edit u-margin-4"></i></a>                    
+                    <a href="#" data-toggle="modal" data-target="#editDepartment{{ $department->id }}" class="tooltipBtn text-info" data-placement="top" title="編輯組織"><i class="fas fa-edit u-margin-4"></i></a>                    
                 @endcan
                 @can('delete', $department)
-                    <a href="#" data-toggle="dropdown" class="tooltipBtn" data-placement="top" title="刪除部門"><i class="fas fa-trash-alt"></i></a>
+                    <a href="#" data-toggle="dropdown" class="tooltipBtn text-info" data-placement="top" title="刪除部門"><i class="fas fa-trash-alt"></i></a>
                     <form method="POST" id="departmentDelete{{ $department->id }}" action="{{ route('department.destroy', $department->id) }}">
                         @csrf
                         {{ method_field('DELETE') }}

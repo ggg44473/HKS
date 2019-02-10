@@ -15,7 +15,7 @@ class ActionsTableSeeder extends Seeder
     {
         Action::truncate();
         Action::unguard();
-        factory(Action::class, 800)->create();
+        // factory(Action::class, 800)->create();
         Action::reguard();
     }
 }

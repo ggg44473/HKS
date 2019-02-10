@@ -41,13 +41,13 @@
         <option class="btn-light" value="3">行程 Activity</option>
     </select>
     <button id="copyBT" class="btn btn-secondary mb-2 btn-sm">複製ical日曆網址</button>
-    <a id="icalcontent" href="{{route('calendar.ical')}}">{{route('calendar.ical')}}</a>
+    <a class="btn btn-danger mb-2 btn-sm" id="icalcontent" href="{{route('calendar.ical')}}">下載ical檔</a>
    
     <div id="calendar" data-uid="{{auth()->user()->id}}"></div>
     <form action="{{route('calendar.create', auth()->user()->id) }}" method="post">
         @csrf
         <div class="modal fade" tabindex="-1" role="dialog" id="mdlEvent">
-            <div class="modal-dialog modal-dialog-centered modal-sm" role="document" style="width:80">
+            <div class="modal-dialog modal-dialog-centered modal-md" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">新增行程</h5>
@@ -62,7 +62,7 @@
                         </div>
                         <div class="form-group col-md-12">
                             <label for="started_at">起始日</label>
-                            <input class="form-control" name="st_date" id="started_at">
+                            <input autocomplete="off" class="form-control" name="st_date" id="started_at">
                         </div>
                         <div class="form-group col-md-12">
                             <label for="st_time">起始時間</label>
@@ -70,7 +70,7 @@
                         </div>
                         <div class="form-group col-md-12">
                             <label for="finished_at">完成日</label>
-                            <input class="form-control" name="fin_date" id="finished_at">
+                            <input autocomplete="off" class="form-control" name="fin_date" id="finished_at">
                         </div>
                         <div class="form-group col-md-12">
                             <label for="fin_time">完成時間</label>

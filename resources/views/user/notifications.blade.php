@@ -19,13 +19,13 @@
         <tbody>
             @foreach($notifications as $n)
             <tr class="text-center">
-                <td data-th="圖片">
+                <td data-th="圖片" class="align-middle">
                     <img src="{{ $n->data['data']['icon'] }}" alt="" class="avatar-sm">
                 </td>
-                <td data-th="訊息">
+                <td data-th="訊息" class="align-middle">
                     <a href={{ $n->data['data']['link'] }}>{{ $n->data['data']['message'] }}</a>
                 </td>
-                <td data-th="時間">
+                <td data-th="時間" class="align-middle">
                     {{ $n->created_at }}
                 </td>
                 @endforeach
