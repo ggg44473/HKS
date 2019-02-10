@@ -117,7 +117,7 @@
                 </button>
             </div>
             <div class="col-sm-4 align-self-center">
-                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#History{{ $okr['objective']->id }}">
+                <button class="btn btn-link historybtn" type="button" data-toggle="collapse" data-target="#History{{ $okr['objective']->id }} " data-oid={{ $okr['objective']->id }}>
                     <i class="fas fa-chart-line"></i> 歷史數據
                 </button>
             </div>
