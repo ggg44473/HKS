@@ -4,6 +4,7 @@
 <script src="{{ asset('js/tooltip.js') }}" defer></script>
 <script src="{{ asset('js/circle-progress.min.js') }}" defer></script>
 <script src="{{ asset('js/circleProgress.js') }}" defer></script>
+<script src="{{ asset('js/member.js') }}" defer></script>
 @endsection
 @section('title','組織成員')
 @section('content')
@@ -96,8 +97,8 @@
                             </td>
                             <td data-th="權限" class="align-middle"><a href="#" data-toggle="modal" data-target="#changAdmin" class="tooltipBtn" data-placement="top" title="變更擁有者">{{ $member->role($company)->name }}</a></td>
                             <td data-th="設定" class="align-middle">
-                                <a href="#"  onclick="document.getElementById('memberUpdate{{ $member->id }}').submit()" class="pr-2 text-black-50"><i class="fas fa-save"></i></a>
-                                <a href="#" data-toggle="modal" data-target="#deleteAdmin" class="tooltipBtn" data-placement="top" title="變更擁有者後刪除"><i class="fas fa-trash-alt text-danger"></i></a>
+                                <a href="#"  onclick="document.getElementById('memberUpdate{{ $member->id }}').submit()" class="pr-2 store-btn text-black-50"><i class="fas fa-save"></i></a>
+                                <a href="#" data-toggle="modal" data-target="#deleteAdmin" class="tooltipBtn" data-placement="top" title="變更擁有者後刪除"><i class="fas fa-trash-alt text-black-50"></i></a>
                             </td>
                         {{-- 管理者，可以設定比自己低的人 --}}
                         @elsecan('permissionCange', [$member, $company])
@@ -124,8 +125,8 @@
                                 </select>
                             </td>
                             <td data-th="設定" class="align-middle">
-                                <a href="#"  onclick="document.getElementById('memberUpdate{{ $member->id }}').submit()" class="pr-2 text-black-50"><i class="fas fa-save"></i></a>
-                                <a href="#" data-toggle="dropdown"><i class="fas fa-trash-alt text-danger"></i></a>
+                                <a href="#"  onclick="document.getElementById('memberUpdate{{ $member->id }}').submit()" class="pr-2 store-btn text-black-50"><i class="fas fa-save"></i></a>
+                                <a href="#" data-toggle="dropdown"><i class="fas fa-trash-alt text-black-50"></i></a>
                                 <div class="dropdown-menu u-padding-16">
                                     <div class="row justify-content-center mb-2">
                                         <div class="col-auto text-danger"><i class="fas fa-exclamation-triangle"></i></div>
@@ -187,7 +188,7 @@
                             @can('memberSetting', $company)
                             <td data-th="設定" class="align-middle">
                                 <a href="#" onclick="document.getElementById('memberDelete{{ $member->id }}').submit()">
-                                    <i class="fas fa-trash-alt text-danger"></i>
+                                    <i class="fas fa-trash-alt text-black-50"></i>
                                 </a href="#">
                                 <form name="memberDelete{{ $member->id }}" method="POST" id="memberDelete{{ $member->id }}"
                                     action="{{ route('company.member.invite.destroy', [$company, $member]) }}">

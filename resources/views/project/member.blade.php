@@ -4,6 +4,7 @@
 <script src="{{ asset('js/tooltip.js') }}" defer></script>
 <script src="{{ asset('js/circle-progress.min.js') }}" defer></script>
 <script src="{{ asset('js/circleProgress.js') }}" defer></script>
+<script src="{{ asset('js/member.js') }}" defer></script>
 @endsection
 @section('title','專案成員')
 @section('content')
@@ -90,8 +91,8 @@
                                     </select>
                                 </td>
                                 <td data-th="設定" class="align-middle">
-                                    <a href="#"  onclick="document.getElementById('memberUpdate{{ $member->id }}').submit()" class="pr-2 text-black-50"><i class="fas fa-save"></i></a>
-                                    <a href="#" data-toggle="dropdown"><i class="fas fa-trash-alt text-danger"></i></a>
+                                    <a href="#"  onclick="document.getElementById('memberUpdate{{ $member->id }}').submit()" class="pr-2 store-btn text-black-50"><i class="fas fa-save"></i></a>
+                                    <a href="#" data-toggle="dropdown"><i class="fas fa-trash-alt text-black-50"></i></a>
                                     <div class="dropdown-menu u-padding-16">
                                         <div class="row justify-content-center mb-2">
                                             <div class="col-auto text-danger"><i class="fas fa-exclamation-triangle"></i></div>
@@ -161,7 +162,7 @@
                             @can('memberSetting', $project)                            
                             <td data-th="設定" class="align-middle">
                                 <a href="#" onclick="document.getElementById('memberDelete{{ $member->id }}').submit()"><i
-                                        class="fas fa-trash-alt text-danger"></i></a href="#">
+                                        class="fas fa-trash-alt text-black-50"></i></a href="#">
                                 <form name="memberDelete{{ $member->id }}" method="POST" id="memberDelete{{ $member->id }}"
                                     action="{{ route('project.member.invite.destroy', [$project, $member]) }}">
                                     @csrf
