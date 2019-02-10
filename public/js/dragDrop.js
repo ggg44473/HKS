@@ -20,7 +20,6 @@ dragulaCards.on('drop', function (el, target) {
 });
 
 $(function () {
-    // console.log(getCookie('sort').split(','));
     sort = getCookie('sort') ? getCookie('sort').split(',') : [];
     var elements = [];
     $.each(sort, function (i, position) {
@@ -34,6 +33,19 @@ $(function () {
         elements2.push(document.getElementById(position));
     });
     $('#dragCarddone').append(elements2);
+});
+
+$('.projectDone').on('click', function () {
+    var index = getCookie('sort') ? getCookie('sort').split(',').indexOf($(this).parents('.projectCard').attr('id')) : -1;
+    if (index > -1) {
+        sort.splice(index, 1);
+        setCookie('sort', sort);
+    }
+    var indexDone = getCookie('sortDone') ? getCookie('sortDone').split(',').indexOf($(this).parents('.projectCard').attr('id')) : -1;
+    if (indexDone > -1) {
+        sortDone.splice(indexDone, 1);
+        setCookie('sortDone', sortDone);
+    }
 });
 
 function setCookie(key, value) {

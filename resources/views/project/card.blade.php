@@ -1,4 +1,4 @@
-<div id="{{ $project->id }}" class="col-md-4 col-sm-6 u-mb-16">
+<div id="{{ $project->id }}" class="col-md-4 col-sm-6 u-mb-16 projectCard">
     <div class="card u-margin-8">
         <div class="card-header">
             {{-- 追蹤 --}}
@@ -81,7 +81,7 @@
         <div class="row pr-4">
             <div class="col-12 text-right pb-2">&nbsp
                 @can('done', $project)
-                <a href="{{ route('project.done', $project) }}" data-toggle="tooltip" data-placement="bottom" title="{{ $project->isdone?'取消關閉':'關閉專案'}}" class="tooltipBtn text-info" ><i class="far fa-check-square u-margin-4"></i></a>                    
+                <a href="{{ route('project.done', $project) }}" data-toggle="tooltip" data-placement="bottom" title="{{ $project->isdone?'取消關閉':'關閉專案'}}" class="tooltipBtn text-info projectDone" ><i class="far fa-check-square u-margin-4"></i></a>                    
                 @endcan
                 @can('memberSetting', $project)
                 <a href="#" data-toggle="modal" data-target="#inviteMember" class="tooltipBtn text-info" data-placement="bottom" title="新增成員"><i class="fas fa-user-plus u-margin-4"></i></a>
