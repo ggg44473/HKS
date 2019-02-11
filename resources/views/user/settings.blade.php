@@ -171,11 +171,8 @@
             <hr class="u-mt-8">
         </h4>
         <div class="col-md-10 text-center">
-            @for ($i = 0; $i < 31 && count($user->follower); $i++)
+            @for ($i = 0; $i < count($user->follower); $i++)
                 <img src="{{ $user->follower[$i]->user->getAvatar() }}" alt="" class="avatar-sm m-2">
-                @if ($i==30)
-                    <img src="{{ asset('img/icon/more/gray.svg') }}" alt="" class="avatar-sm m-2">
-                @endif
             @endfor
         </div>
     </div>
