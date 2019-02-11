@@ -70,7 +70,10 @@ class ActionsController extends Controller
     {
         $user = User::where('id', '=', auth()->user()->id)->first();
         $files = $action->getRelatedFiles();
+        $obj = $action->objective;
+        $backLink = $obj->model->getOKrRoute() . '#oid-' . $obj->id;
         $data = [
+            'backLink' => $backLink,
             'user' => $user,
             'action' => $action,
             'files' => $files,
@@ -154,7 +157,7 @@ class ActionsController extends Controller
         $this->authorize('update', $action);
 
         $act = Action::find($action->id);
-        if($act->isdone) $act->isdone = null;
+        if ($act->isdone) $act->isdone = null;
         else $act->isdone = now();
         $act->save();
         return redirect()->back();
@@ -193,6 +196,7 @@ class ActionsController extends Controller
         $action->update($attr);
         return redirect()->route('user.action', $member->id);
     }
+
 
 
 }
