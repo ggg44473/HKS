@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col-sm form-group">
                 <label for="message">請留下您的寶貴建議:</label>
-                <textarea class="form-control @if($errors->has('message')) is-invalid @endif mt-0 mb-0" name="message" rows="1" style="resize : none;"></textarea>
+                <textarea class="form-control @if($errors->has('message')) is-invalid @endif mt-0 mb-0 textareaForm" name="message" rows="1" style="resize : none;"></textarea>
                 <div class="invalid-feedback ml-4">
                     Your message is required.
                 </div>

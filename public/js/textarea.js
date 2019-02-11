@@ -1,6 +1,4 @@
-var textarea = document.querySelector('textarea');
-
-textarea.addEventListener('keydown', autosize);
+$('.textareaForm').on('keydown', autosize);
              
 function autosize(){
   var el = this;
