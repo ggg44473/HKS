@@ -8,6 +8,7 @@
 
     <ul class="list-unstyled pr-sm-4">
         @foreach($model->comments->where('parent', null) as $comment)
+        <hr class="mb-3 ml-5 mr-5"/>
         @include('comments::_comment')
         @endforeach
     </ul>
