@@ -1,6 +1,19 @@
-$('.historybtn').click(function (e) {
+$(function(){
+    var keyValue = document.cookie.match('(^|;) ?' + "open" + '=([^;]*)(;|$)');
+    var id = keyValue ? keyValue[2] : null;
+    console.log();
+    if(id.match('History')){
+        var oid = $('#'+id).parents('.card-footer').find('.historybtn').attr("data-oid");
+        openChart(oid);
+    }
+})
 
+$('.historybtn').click(function (e) {
     var oid = $(this).attr("data-oid");
+    openChart(oid);
+});
+
+function openChart(oid){
     var speedCanvas = document.getElementById("speedChart" + oid);
 
     // console.log(speedCanvas);
@@ -74,4 +87,4 @@ $('.historybtn').click(function (e) {
         document.getElementById("speedChart" + oid).style.display = "none";
         document.getElementById("ChartShow" + oid).style.display = "";
     }
-});
+}

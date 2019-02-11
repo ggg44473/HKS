@@ -1,10 +1,15 @@
 $(function () {
     $('#'+getCookie("open")).addClass('show');
+
 });
 
 $('.collapse').on('show.bs.collapse', function () {
     setCookie("open", $(this).attr("id"));
-})
+});
+
+$('.collapse').on('hide.bs.collapse',function () {
+    if(getCookie('open') == $(this).attr("id")) setCookie("open",'');
+});
 
 function setCookie(key, value) {
     var expires = new Date();

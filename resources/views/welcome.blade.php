@@ -215,25 +215,27 @@
                 </div>
                 <span class="introduction" id="customer">
                     <h4 class="pt-5">推薦文章</h4>
-                    <div class="row primarycircle align-items-center justify-content-center mt-2">
+                    {{-- <div class="row primarycircle align-items-center justify-content-center mt-2">
                         <h4 class="text-center">
                             <a href="https://drive.google.com/file/d/0Bxa3IMI9mGh9aXdBQkZNcEFaRGs/view">
                                 OKR 案例故事
                             </a>
                         </h4>
-                    </div>
+                    </div> --}}
                 </span>
                 <div class="introduction" id="afford">
-                    <h4 class="pt-5">升級方案(FREE!)</h4>
+                    <h4 class="pt-5">升級方案</h4>
                     <div class="row mt-5">
                         <div class="col-md-4 mb-5">
                             <ul class="price">
-                                <li class="header">Basic</li>
-                                <li class="grey">$ 9.99 / year</li>
-                                <li>10GB Storage</li>
-                                <li>10 Emails</li>
-                                <li>10 Domains</li>
-                                <li>1GB Bandwidth</li>
+                                <li class="header">免費方案</li>
+                                <li class="grey">$ 0.00 / year</li>
+                                <li>個人OKR</li>
+                                <li>完整推播功能</li>
+                                <li>個人行事曆</li>
+                                <li>--</li>
+                                <li>--</li>
+                                <li>--</li>
                                 <li class="grey price-bottom"><a href="{{ route('register') }}" class="btn btn-primary">Sign
                                         Up</a></li>
                             </ul>
@@ -241,12 +243,14 @@
 
                         <div class="col-md-4 mb-5">
                             <ul class="price">
-                                <li class="header">Pro</li>
-                                <li class="grey">$ 24.99 / year</li>
-                                <li>25GB Storage</li>
-                                <li>25 Emails</li>
-                                <li>25 Domains</li>
-                                <li>2GB Bandwidth</li>
+                                <li class="header">專家方案</li>
+                                <li class="grey"><del>$ 24.99 / year</del> 限時免費</li>
+                                <li>個人OKR</li>
+                                <li>完整推播功能</li>
+                                <li>個人行事曆</li>
+                                <li>組織與專案OKR</li>
+                                <li>搜尋功能</li>
+                                <li>--</li>
                                 <li class="grey price-bottom"><a href="{{ route('register') }}" class="btn btn-primary">Sign
                                         Up</a></li>
                             </ul>
@@ -254,12 +258,14 @@
 
                         <div class="col-md-4 mb-5">
                             <ul class="price">
-                                <li class="header">Premium</li>
-                                <li class="grey">$ 49.99 / year</li>
-                                <li>50GB Storage</li>
-                                <li>50 Emails</li>
-                                <li>50 Domains</li>
-                                <li>5GB Bandwidth</li>
+                                <li class="header">企業方案</li>
+                                <li class="grey"><del>$ 49.99 / year</del> 限時免費</li>
+                                <li>個人OKR</li>
+                                <li>完整推播功能</li>
+                                <li>個人行事曆</li>
+                                <li>組織與專案OKR</li>
+                                <li>搜尋功能</li>
+                                <li>24小時到府服務專屬客服</li>
                                 <li class="grey price-bottom"><a href="{{ route('register') }}" class="btn btn-primary">Sign
                                         Up</a></li>
                             </ul>

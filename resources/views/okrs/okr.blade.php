@@ -148,12 +148,12 @@
         <div id="History{{ $okr['objective']->id }}" class="collapse" data-parent="#objective{{ $okr['objective']->id }}">
             <div class="row">
                 <div class="col-12">
-                    <div class="card card-body" style="position: relative;">
+                    {{-- <div class="card card-body" style="position: relative;"> --}}
                         <canvas id="speedChart{{$okr['objective']->id}}"></canvas>
                         <div class="alert alert-info" role="alert" style="display: none;" id="ChartShow{{ $okr['objective']->id }}">
                             此目標尚未有歷史紀錄，故無圖表。
                         </div>
-                    </div>
+                    {{-- </div> --}}
                 </div>
             </div>
         </div>
