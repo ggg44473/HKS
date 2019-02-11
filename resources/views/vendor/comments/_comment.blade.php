@@ -17,7 +17,7 @@
                 <h5 class="mt-0 mb-1 text-black-50 pt-2 text-truncate">{{ $comment->commenter->name }} </h5>
             </div>
             <div class="col-md align-self-baseline">
-                <div class="pr-2 pl-2" style="white-space: pre-wrap;">{!! $markdown->line($comment->comment) !!}</div>
+                <div class="pr-2 pl-2 pt-2" style="white-space: pre-wrap;">{!! $markdown->line($comment->comment) !!}</div>
                 @can('reply-to-comment', $comment)
                     <button data-toggle="modal" data-target="#reply-modal-{{ $comment->id }}" class="btn btn-sm btn-link text-uppercase">回覆</button>
                 @endcan
@@ -96,9 +96,7 @@
                 </div>
             </div>
         @endcan
-
-        <hr class="mb-3 mt-2"/>{{-- Margin bottom --}}
-
+        <div class="mb-2"></div>
         @foreach($comment->children as $child)
             @include('comments::_comment', [
                 'comment' => $child,

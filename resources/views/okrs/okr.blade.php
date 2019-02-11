@@ -253,17 +253,17 @@
 
     <div id="objective{{ $okr['objective']->id }}" class="card-footer text-muted mt-3">
         <div class="row text-center mb-3">
-            <div class="col-sm-4 align-self-center">
+            <div class="col-4 align-self-center pl-0 pr-0">
                 <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#Action{{ $okr['objective']->id }}">
-                    <i class="fas fa-bullseye"></i> 查看 Actions
+                    <i class="fas fa-bullseye"></i> Actions
                 </button>
             </div>
-            <div class="col-sm-4 align-self-center">
+            <div class="col-4 align-self-center pl-0 pr-0">
                 <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#Msg{{ $okr['objective']->id }}">
-                    <i class="far fa-comments"></i> 查看留言
+                    <i class="far fa-comments"></i> 留言
                 </button>
             </div>
-            <div class="col-sm-4 align-self-center">
+            <div class="col-4 align-self-center pl-0 pr-0">
                 <button class="btn btn-link historybtn" type="button" data-toggle="collapse" data-target="#History{{ $okr['objective']->id }} " data-oid={{ $okr['objective']->id }}>
                     <i class="fas fa-chart-line"></i> 歷史數據
                 </button>
