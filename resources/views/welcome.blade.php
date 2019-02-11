@@ -174,7 +174,7 @@
                                 </ol>
                                 <div class="carousel-inner">
                                     <div class="carousel-item active">
-                                        <img src="img/icon/welcome/200.svg" class="rounded d-block w-100" alt="First slide">
+                                        <img src="img/icon/welcome/201.png" class="rounded d-block w-100" alt="First slide">
                                         <div class="carousel-caption d-none d-md-block alphadark">
                                             <h6>組織架構</h6>
                                             <p class="text-left">不限層級。公司、部門皆可設定OKR。</p>
@@ -215,13 +215,39 @@
                 </div>
                 <span class="introduction" id="customer">
                     <h4 class="pt-5">推薦文章</h4>
-                    {{-- <div class="row primarycircle align-items-center justify-content-center mt-2">
-                        <h4 class="text-center">
-                            <a href="https://drive.google.com/file/d/0Bxa3IMI9mGh9aXdBQkZNcEFaRGs/view">
-                                OKR 案例故事
-                            </a>
-                        </h4>
-                    </div> --}}
+                    <div class="introduction" id="afford">
+                        <div class="row">
+                            <div class="col-md-4 mb-5">
+                                <ul class="price">
+                                    <li class="header">OKR 案例故事</li>
+                                    <li class="grey"> <a href="https://drive.google.com/file/d/0Bxa3IMI9mGh9aXdBQkZNcEFaRGs/view">
+                                        新創公司 TeaBee 
+                                        </a></li>
+                                    <li>如何利用OKR目標管理法，這篇故事會清楚的把整個執行過程。</li>
+                                </ul>
+                            </div>
+
+                            <div class="col-md-4 mb-5">
+                                <ul class="price">
+                                    <li class="header">OKR 概念</li>
+                                    <li class="grey"><a href="https://drive.google.com/file/d/1NaHYSDjrA2wfPqjbWlcyfm5tEe0Q2V7A/view?usp=sharing">
+                                        HKS 團隊提供
+                                        </a></li>
+                                    <li>淺談結合Action的使用方法，支援本平台採用的OKR方式。</li>
+                                </ul>
+                            </div>
+
+                            <div class="col-md-4 mb-5">
+                                <ul class="price">
+                                    <li class="header">設定 OKR 範例</li>
+                                    <li class="grey"><a href="https://drive.google.com/open?id=1nFY08PLmDsEdbHsULNym2Ywf82Quy2pq">
+                                        軟體工程師範例
+                                        </a></li>
+                                    <li>提供使用者參考設定目標、關鍵指標的範例。</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                 </span>
                 <div class="introduction" id="afford">
                     <h4 class="pt-5">升級方案</h4>
