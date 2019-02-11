@@ -15,25 +15,25 @@ class UsersTableSeeder extends Seeder
     {
         User::truncate(); //清空資料庫
         User::create([
-            'name' => 'Enyun',
+            'name' => 'Ken',
             'password' => bcrypt('hkshks'),
             'email' => 'GoalCareHKS@gmail.com',
-            'position' => '董事長',
+            'position' => '老闆',
             'company_id' => 1,
             'email_verified_at' => now(),
         ]);
         User::create([
-            'name' => 'Karen',
+            'name' => 'Tiffany',
             'password' => bcrypt('hkshks'),
-            'email' => 'huangkaiyun1@gmail.com',
-            'position' => '總經理',
+            'email' => 'ggg44473@gmail.com',
+            'position' => '專案經理',
             'email_verified_at' => now(),
         ]);
         User::create([
-            'name' => 'Sean',
+            'name' => 'Stan',
             'password' => bcrypt('hkshks'),
-            'email' => 'ggg44473@gmail.com',
-            'position' => '總經理小弟',
+            'email' => 'huangkaiyun1@gmail.com',
+            'position' => '工程師',
             'email_verified_at' => now(),
         ]);
         User::create([
