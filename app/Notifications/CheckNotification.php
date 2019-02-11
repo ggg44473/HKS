@@ -49,6 +49,7 @@ class CheckNotification extends Notification implements ShouldQueue
     {
         return [
             'id' => $this->id,
+            'created_at' => now()->toDateTimeString(),
             'data' => [
                 'message' => '您當前的目標 [ ' . $this->objective->title . '  ] 已超過七天沒更新關鍵指標 ! 請填上最新的達成值、信心指數。',
                 'icon' => $this->model->getAvatar(),
