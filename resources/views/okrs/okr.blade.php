@@ -286,10 +286,8 @@
         </div>
         {{-- 留言內容 --}}
         <div id="Msg{{ $okr['objective']->id }}" class="collapse comment" data-parent="#objective{{ $okr['objective']->id }}">
-            <div class="card-body">
-                @comments(['model' => $okr['objective']])
-                @endcomments
-            </div>
+            @comments(['model' => $okr['objective']])
+            @endcomments
         </div>
         {{-- 歷史圖表內容 --}}
         <div id="History{{ $okr['objective']->id }}" class="collapse" data-parent="#objective{{ $okr['objective']->id }}">
