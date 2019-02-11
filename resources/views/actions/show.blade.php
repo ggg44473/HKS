@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row mb-2">
         <div class="col">
-            <a href="{{url()->previous()}}" class="text-black-50"><i class="fas fa-chevron-left"></i> 返回</a>
+            <a href="{{$backLink}}" class="text-black-50"><i class="fas fa-chevron-left"></i> 回到目標</a>
         </div>
     </div>
     <div class="row justify-content-center">

@@ -7,7 +7,7 @@ use App\User;
 use App\Department;
 use App\Company;
 use App\Permission;
-use Illuminate\Notifications\Notification;
+use Notification;
 use App\Notifications\DepartmentNotification;
 
 trait HasMemberTrait

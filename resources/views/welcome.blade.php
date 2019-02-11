@@ -270,9 +270,8 @@
         </div>
         <footer class="footer bg-dark">
             <div class="container">
-                <p class="final-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores ea,
-                    voluptate accusamus pariatur quidem est odio saepe itaque. Debitis cumque voluptatibus nihil
-                    quibusdam nisi, consequatur odit qui ratione excepturi dolore.</p>
+                <p class="final-text">
+                    當您開始使用 Goal Care 服務，即表示您信賴我們對您個人資訊的處理方式。我們深知這份責任重大，因此會盡力保護您的資訊，並為您提供相關的管理功能。.</p>
                 <p class="copyright">Copyright © 2019 HKS</p>
             </div>
         </footer>
