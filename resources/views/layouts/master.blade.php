@@ -20,6 +20,7 @@
     <script src="{{ asset('js/slider.js') }}" defer></script>
     {{-- <script src="https://js.pusher.com/3.1/pusher.min.js" defer></script> --}}
     <script src="{{ asset('js/notification.js') }}" defer></script>
+    <script src="{{ asset('js/textarea.js') }}" defer></script>
     @yield('script')
 
     <!-- Fonts -->
