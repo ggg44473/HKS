@@ -9,6 +9,7 @@ var notifications = notificationsWrapper.find('ul.dropdown-content');
 function addNotification(notification, read_at) {
     var existingNotifications = notifications.html();
     var avatar = notification.data.icon;
+    var link = notification.data.link.split("#");
     var newNotificationHtml = `
       <li class="notification active">
     `;
@@ -16,7 +17,7 @@ function addNotification(notification, read_at) {
       <li class="notification">
     `;
     var contentNotification = `
-        <a href="${notification.data.link}?readNid=${notification.id}">
+        <a href="${link[0]}?readNid=${notification.id}${link[1] != "undefined" ? "#"+link[1] : ''}">
           <div class="row pt-2 pb-2 w-100">
             <div class="col-auto align-self-center text-center ml-md-4">
               <div class="media-object">
