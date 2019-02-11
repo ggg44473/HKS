@@ -43,3 +43,25 @@ $('#filter_finished_at').datepicker({
         return $('#filter_finish').val();
     }
 });
+
+$('.started_at').datepicker({
+    uiLibrary: 'bootstrap4',
+    icons: {
+        rightIcon: '<i class="far fa-calendar-alt"></i>'
+    },
+    format: 'yyyy/mm/dd',
+    maxDate: function () {
+        return $(this).parents('.modal-body').find('.finished_at').val();
+    }
+});
+
+$('.finished_at').datepicker({
+    uiLibrary: 'bootstrap4',
+    icons: {
+        rightIcon: '<i class="far fa-calendar-alt"></i>'
+    },
+    format: 'yyyy/mm/dd',
+    minDate: function () {
+        return $(this).parents('.modal-body').find('.started_at').val();
+    }
+});

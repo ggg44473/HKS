@@ -147,9 +147,8 @@ trait HasObjectiveTrait
             foreach ($complianceRate as $index => $item) {
                 $complianceRate[$index] = $item / $sum;
             }
+            return $complianceRate;
         }
-
-        return $complianceRate;
     }
 
     public function complianceRateAvg()
