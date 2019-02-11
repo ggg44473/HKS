@@ -39,25 +39,28 @@ class OkrController extends Controller
     {
         $this->authorize('storeObjective', $objective->model);
 
-        $objAttr['title'] = $request->input('obj_title');
-        $objAttr['started_at'] = $request->input('st_date');
-        $objAttr['finished_at'] = $request->input('fin_date');
+        $objAttr = [];
+        if($request->exists('obj_title')) $objAttr['title'] = $request->input('obj_title');
+        if($request->exists('st_date')) $objAttr['started_at'] = $request->input('st_date');
+        if($request->exists('fin_date')) $objAttr['finished_at'] = $request->input('fin_date');
         $objective->update($objAttr);
 
         $keyresults = KeyResult::where('objective_id', '=', $objective->id)->get();
         foreach ($keyresults as $keyresult) {
-            $krAttr['title'] = $request->input('krs_title' . $keyresult->id);
-            $krAttr['confidence'] = $request->input('krs_conf' . $keyresult->id);
-            $krAttr['initial_value'] = $request->input('krs_init' . $keyresult->id);
-            $krAttr['target_value'] = $request->input('krs_tar' . $keyresult->id);
-            $krAttr['current_value'] = $request->input('krs_now' . $keyresult->id);
-            $krAttr['weight'] = $request->input('krs_weight' . $keyresult->id);
-            // if( $krAttr['current_value']!=$keyresult->current_value ||$krAttr['confidence']!=$keyresult->confidence){
-            $oldAttr['key_results_id'] = $keyresult->id;
-            $oldAttr['history_confidence'] = $keyresult->confidence;
-            $oldAttr['history_value'] = $keyresult->current_value;
-            KeyResultRecord::create($oldAttr);
-            $keyresult->update($krAttr);
+            if($request->exists('krs_title' . $keyresult->id)){
+                $krAttr['title'] = $request->input('krs_title' . $keyresult->id);
+                $krAttr['confidence'] = $request->input('krs_conf' . $keyresult->id);
+                $krAttr['initial_value'] = $request->input('krs_init' . $keyresult->id);
+                $krAttr['target_value'] = $request->input('krs_tar' . $keyresult->id);
+                $krAttr['current_value'] = $request->input('krs_now' . $keyresult->id);
+                $krAttr['weight'] = $request->input('krs_weight' . $keyresult->id);
+                // if( $krAttr['current_value']!=$keyresult->current_value ||$krAttr['confidence']!=$keyresult->confidence){
+                $oldAttr['key_results_id'] = $keyresult->id;
+                $oldAttr['history_confidence'] = $keyresult->confidence;
+                $oldAttr['history_value'] = $keyresult->current_value;
+                KeyResultRecord::create($oldAttr);
+                $keyresult->update($krAttr);
+            }
         }
 
         return redirect()->to($objective->model->getOKrRoute() . '#oid-' . $objective->id);

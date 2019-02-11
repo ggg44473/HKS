@@ -1,18 +1,21 @@
 @auth
     @if($model->comments->count() < 1)
-        <p class="lead">目前沒有任何回饋</p>
+        {{-- <p class="lead">目前沒有任何回饋</p> --}}
+        <div class="alert alert-info text-center" role="alert">目前沒有任何回饋</div>
     @endif
 
     @include('comments::_form')
 
-    <ul class="list-unstyled">
+    <ul class="list-unstyled pr-sm-4">
         @foreach($model->comments->where('parent', null) as $comment)
+        <hr class="mb-3 ml-5 mr-5"/>
         @include('comments::_comment')
         @endforeach
     </ul>
 @else
     @if($model->comments->count() < 1)
-        <p class="lead">目前沒有任何回饋</p>
+        {{-- <p class="lead">目前沒有任何回饋</p> --}}
+        <div class="alert alert-info text-center" role="alert">目前沒有任何回饋</div>
     @endif
 
     <div class="card">

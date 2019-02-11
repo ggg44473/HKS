@@ -157,8 +157,8 @@
                     @foreach ($user->projects as $project)
                     <tr>
                         <td class="align-middle">專案</td>
-                        <td class="align-middle">{{ isset($project->name) }}</td>
-                        <td class="align-middle">{{ isset($project->name)?$user->role($project)->name:'' }}</td>
+                        <td class="align-middle">{{ isset($project->name)?$project->name:'-' }}</td>
+                        <td class="align-middle">{{ isset($project->name)?$user->role($project)->name:'-' }}</td>
                     </tr>
                     @endforeach
 
