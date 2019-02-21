@@ -71,6 +71,7 @@ class Department extends Model implements HasObjectiveInterface
         foreach ($this->users as $user) {
             $user->update(['department_id' => null]);
         }
+        Permission::where(['model_type'=>Department::class, 'model_id'=>$this->id])->delete();
         $this->delete();
 
     }

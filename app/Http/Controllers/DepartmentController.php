@@ -176,7 +176,7 @@ class DepartmentController extends Controller
      */
     public function updateMember(Request $request, Department $department, User $member)
     {
-        $this->authorize('memberSetting', $department);
+        $this->authorize('permissionCange', $member, $department);
 
         $department->updateMember($request, $member);
 

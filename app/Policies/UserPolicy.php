@@ -3,6 +3,7 @@
 namespace App\Policies;
 
 use App\User;
+use App\Company;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class UserPolicy
@@ -69,11 +70,18 @@ class UserPolicy
      */
     public function permissionCange(User $current_user, User $user, $model)
     {
-        if ($current_user->role($current_user->company)->id <= 2) return true;
-        $current_user_role = $current_user->role($model)->id;
-        if ($current_user_role == 1) return true;
-        elseif ($current_user_role > 2) return false;
-        return $current_user_role < $user->role($model)->id;
+        if (get_class($model) == Company::class) {
+            if ($current_user->role($current_user->company)->id == 1) return true;
+            if ($current_user->role($current_user->company)->id == 2 && $current_user->role($current_user->company)->id < $user->role($current_user->company)->id) return true;
+        } else {
+            if ($current_user->role($current_user->company)->id <= 2) return true;
+        }
+        if ($current_user->role($model) != null) {
+            $current_user_role = $current_user->role($model)->id;
+            if ($current_user_role == 1) return true;
+            elseif ($current_user_role > 2) return false;
+            return $current_user_role < $user->role($model)->id;
+        }
     }
 
     /**
@@ -86,7 +94,7 @@ class UserPolicy
      */
     public function memberDelete(User $current_user, User $user, $model)
     {
-        if ($current_user->role($current_user->company)->id == 1) return true;
+        if ($current_user->role($current_user->company)->id <= 2) return true;
         $current_user_role = $current_user->role($model)->id;
         if ($current_user_role == 1) return true;
         elseif ($current_user_role > 2) return false;

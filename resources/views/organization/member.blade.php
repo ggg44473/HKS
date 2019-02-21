@@ -104,7 +104,7 @@
                         @elsecan('permissionCange', [$member, $company])
                             <td data-th="部門" class="align-middle">
                                 <select name="department" id="department" class="form-control" form="memberUpdate{{ $member->id }}">
-                                    <option value="{{$company->id}}">{{ $company->name }}</option>
+                                    <option value="">{{ $company->name }}</option>
                                     @foreach ($company->departments as $department)
                                     @if ($department->id == $member->department_id)
                                     <option value="{{ $department->id }}" selected>{{ $department->name }}</option>

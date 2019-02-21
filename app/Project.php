@@ -49,4 +49,12 @@ class Project extends Model implements HasObjectiveInterface, HasInvitationInter
     {
         return route('project');
     }
+
+    public function delete()
+    {
+        $this->users()->detach();
+        $this->invitation()->delete();
+        $this->permissions()->delete();
+        return parent::delete();
+    }
 }
