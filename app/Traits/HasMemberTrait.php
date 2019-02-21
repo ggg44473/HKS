@@ -30,7 +30,7 @@ trait HasMemberTrait
         }
         if (isset($request->department)) $member->update(['department_id' => $request->department]);
         if (isset($request->position)) $member->update(['position' => $request->position]);
-        if ($member->id != auth()->user()->id && isset($request->permission)) $member->permissions()->where(['model_type' => get_class($this), 'model_id' => $this->id])->update(['role_id' => $request->permission]);
+        if (isset($request->permission)) $member->permissions()->where(['model_type' => get_class($this), 'model_id' => $this->id])->update(['role_id' => $request->permission]);
     }
 
     public function sortMember($request)
