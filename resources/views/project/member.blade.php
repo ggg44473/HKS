@@ -79,7 +79,7 @@
                                 <td data-th="權限" class="align-middle"><a href="#" data-toggle="modal" data-target="#changAdmin" class="tooltipBtn" data-placement="top" title="變更擁有者">{{ $member->role($project)->name }}</a></td>
                                 <td data-th="設定" class="align-middle">
                                     <a href="#"  onclick="document.getElementById('memberUpdate{{ $member->id }}').submit()" class="pr-2 text-black-50"><i class="fas fa-save"></i></a>
-                                    <a href="#" data-toggle="modal" data-target="#deleteAdmin" class="tooltipBtn" data-placement="top" title="變更擁有者後刪除"><i class="fas fa-trash-alt text-danger"></i></a>
+                                    <a href="#" data-toggle="modal" data-target="#deleteAdmin" class="tooltipBtn" data-placement="top" title="變更擁有者後刪除"><i class="fas fa-trash-alt text-black-50"></i></a>
                                 </td>
                             {{-- 管理者，可以設定比自己低的人 --}}
                             @elsecan('permissionCange', [$member, $project])
