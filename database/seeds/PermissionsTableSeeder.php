@@ -20,13 +20,13 @@ class PermissionsTableSeeder extends Seeder
             'model_id'=>1,
             'role_id'=>1
         ]);
-        collect(range(5, 124))->each(function (int $userId) {
-            factory(Permission::class)->create([
-                'user_id' => $userId,
-                'model_type'=>Company::class,
-                'model_id'=>1,
-                'role_id'=>4
-            ]);
-        });
+        // collect(range(5, 124))->each(function (int $userId) {
+        //     factory(Permission::class)->create([
+        //         'user_id' => $userId,
+        //         'model_type'=>Company::class,
+        //         'model_id'=>1,
+        //         'role_id'=>4
+        //     ]);
+        // });
     }
 }

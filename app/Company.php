@@ -60,15 +60,16 @@ class Company extends Model implements HasObjectiveInterface, HasInvitationInter
 
     public function delete()
     {   
-        // foreach ($this->projects as $project) {
-        //     $project->delete();
-        // }
+        foreach ($this->projects as $project) {
+            $project->delete();
+        }
         foreach ($this->users as $user) {
             $user->update(['company_id' => null, 'department_id' => null]);
         }
         foreach ($this->departments as $department) {
-            $department->delete();
+            $department->preDelete();
         }
+        Permission::where(['model_type'=>Company::class, 'model_id'=>$this->id])->delete();
         $this->follower()->delete();
 
         return parent::delete();
