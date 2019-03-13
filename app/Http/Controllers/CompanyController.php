@@ -370,12 +370,10 @@ class CompanyController extends Controller
         $file = $request->file('file');
         $csvData = file_get_contents($file);
         $rows = array_map('str_getcsv',explode("\n",$csvData));
-        //$header = array_shift($rows);
+        $header = array_shift($rows);
         $user = auth()->user();
-        foreach($rows as $row){
-            //$row = array_combine($header,$row);
+        foreach($rows as $row){  
             // 註冊設定
-            if($row[0]="") break;
             User::create([
                 'name' => $row[0], 
                 'email' => $row[1],
