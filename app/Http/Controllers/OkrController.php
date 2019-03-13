@@ -55,10 +55,10 @@ class OkrController extends Controller
                 $krAttr['current_value'] = $request->input('krs_now' . $keyresult->id);
                 $krAttr['weight'] = $request->input('krs_weight' . $keyresult->id);
                 // if( $krAttr['current_value']!=$keyresult->current_value ||$krAttr['confidence']!=$keyresult->confidence){
-                $oldAttr['key_results_id'] = $keyresult->id;
-                $oldAttr['history_confidence'] = $keyresult->confidence;
-                $oldAttr['history_value'] = $keyresult->current_value;
-                KeyResultRecord::create($oldAttr);
+                // $oldAttr['key_results_id'] = $keyresult->id;
+                // $oldAttr['history_confidence'] = $keyresult->confidence;
+                // $oldAttr['history_value'] = $keyresult->current_value;
+                // KeyResultRecord::create($oldAttr);
                 $keyresult->update($krAttr);
             }
         }

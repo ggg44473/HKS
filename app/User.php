@@ -21,7 +21,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasObjectiveInter
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'company_id', 'department_id', 'position', 'description', 'enable'
+        'name', 'email', 'password','email_verified_at', 'company_id', 'department_id', 'position', 'description', 'enable'
     ];
 
     /**
