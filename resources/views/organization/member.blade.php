@@ -22,6 +22,30 @@
                 aria-selected="false">成員</a>
         </li>
     </ul>
+
+    @can('memberSetting', $company)
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h5 class="box-title mt-2">匯入會員資料</h5>
+            </div>
+            <div class="box-body">
+                <form action="{{route('company.bulk.import.user')}}" method="post" enctype="multipart/form-data">
+                    @csrf
+                    <div class="form-group">
+                        <label for="title">選擇CSV輸入</label>
+                        <input type="file" name="file" id="file" class="form-control mb-2 float-right">
+                    </div>
+                    <div class="form group">
+                        <button class="btn btn-primary">
+                            <i class="fa fa-upload"></i> 上傳檔案
+                        </button>    
+                    <div>
+                </form>
+            </div>
+        </div>
+    @endcan
+
+        
     {{-- 分頁＋搜尋 --}}
     <div class="row justify-content-md-center">
         <div class="col-sm-10 mt-4">

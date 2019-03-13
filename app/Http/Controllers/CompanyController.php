@@ -15,6 +15,7 @@ use App\Permission;
 use App\Follow;
 use Notification;
 use App\Notifications\DepartmentNotification;
+use Aws\Api\Validator;
 
 class CompanyController extends Controller
 {
@@ -352,5 +353,52 @@ class CompanyController extends Controller
 
         return redirect()->back();
     }
+
+    public function importUser(){
+        return view('organization.company.import');
+    }
+
+    public function handleImportUser(Request $request){
+        // $validator = Validator::make($request->all(),[
+        //     'file'=>'required',
+        // ]);
+
+        // if($validator->fails()){
+        //     return redirect()->back()->withErrors($validator);
+        // }
+
+        $file = $request->file('file');
+        $csvData = file_get_contents($file);
+        $rows = array_map('str_getcsv',explode("\n",$csvData));
+        //$header = array_shift($rows);
+        $user = auth()->user();
+        foreach($rows as $row){
+            //$row = array_combine($header,$row);
+            // 註冊設定
+            if($row[0]="") break;
+            User::create([
+                'name' => $row[0], 
+                'email' => $row[1],
+                'email_verified_at' => now(),
+                'password' => bcrypt('cmoney'),
+                'company_id' => $user->company_id,
+                //'department_id' => $row['department'], 
+                'position' =>$row[2], 
+                'enable' =>true,             
+            ]);
+
+            // 權限設定
+            $newmember = User::where('email', $row[1])->first();
+            Permission::create([
+                'user_id' => $newmember->id, 
+                'model_type' => Company::class, 
+                'model_id' => $user->company_id,
+                'role_id' => 4
+            ]);
+        }
+
+        //flash('已匯入會員清單');
+        return redirect()->back();
+    }    
 
 }

@@ -74,4 +74,5 @@ class Company extends Model implements HasObjectiveInterface, HasInvitationInter
 
         return parent::delete();
     }
+
 }

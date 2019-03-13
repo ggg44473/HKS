@@ -117,6 +117,10 @@ Route::middleware(['verified'])->group(function () {
     Route::patch('organization/company/admin/change', 'CompanyController@changeAdmin')->name('company.admin.change');
     //刪除公司管理者
     Route::patch('organization/company/admin/delete', 'CompanyController@deleteAdmin')->name('company.admin.delete');
+    //
+    Route::get('organization/company/admin/import','CompanyController@importUser')->name('company.import.user');
+    //
+    Route::post('organization/company/admin/import','CompanyController@handleImportUser')->name('company.bulk.import.user');
 
     //顯示子部門頁面
     Route::get('organization/department/{department}', 'DepartmentController@index')->name('department.index');
