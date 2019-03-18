@@ -259,7 +259,7 @@ class CompanyController extends Controller
 
         $member->company->updateMember($request, $member);
         
-        return redirect()->route('company.member');
+        return redirect()->back();
     }
 
     /**
