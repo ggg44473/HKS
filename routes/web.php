@@ -110,7 +110,7 @@ Route::middleware(['verified'])->group(function () {
     //同意邀請
     Route::get('organization/company/{company}/member/{member}/invite/agree', 'CompanyController@agreeInvite')->name('company.member.invite.agree');
     //更新公司成員
-    Route::patch('organization/company/member/{member}/update', 'CompanyController@updateMember')->name('company.member.update');
+    Route::patch('organization/company/member/update', 'CompanyController@updateMember')->name('company.member.update');
     //刪除公司成員
     Route::patch('organization/company/member/{member}/destroy', 'CompanyController@destroyMember')->name('company.member.destroy');
     //變更公司管理者

@@ -253,13 +253,13 @@ class CompanyController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function updateMember(Request $request, User $member)
+    public function updateMember(Request $request)
     {
-        $this->authorize('memberSetting', $member->company);
+        $this->authorize('memberSetting', auth()->user()->company);
 
-        $member->company->updateMember($request, $member);
+        auth()->user()->company->updateMember($request);
         
-        return redirect()->route('company.member');
+        return redirect()->back();
     }
 
     /**

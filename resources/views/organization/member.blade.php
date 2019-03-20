@@ -64,8 +64,17 @@
         </div>
     </div>
     {{-- 成員表 --}}
+    <form name="memberUpdate" method="POST" id="memberUpdate" action="{{ route('company.member.update') }}">
+        @csrf
+        {{ method_field('PATCH') }}
     <div class="row justify-content-md-center">
-        <div class="col-sm-10 mt-4">公司成員
+        <div class="col-sm-10 mt-4">
+            <div class="row justify-content-between mb-2">
+                <div class="col-auto">公司成員</div>
+                @can('memberSetting', $company)
+                <div class="col-auto btn btn-info btn-sm text-white mr-4" onclick="getElementById('memberUpdate').submit();"><i class="fas fa-save"></i> 儲存全部變更</div>
+                @endcan
+            </div>
             <table class="rwd-table table table-hover">
                 <thead>
                     <tr class="bg-primary text-light text-center">
@@ -105,7 +114,7 @@
                         {{-- 權限最高，設定自己 --}}
                         @can('adminCange', [$member, $company])
                             <td data-th="部門" class="align-middle">
-                                <select name="department" id="department" class="form-control" form="memberUpdate{{ $member->id }}">
+                                <select name="department{{ $member->id }}" id="department" class="form-control">
                                     <option value="{{$company->id}}">{{ $company->name }}</option>
                                     @foreach ($company->departments as $department)
                                         @if ($department->id == $member->department_id)
@@ -117,17 +126,17 @@
                                 </select>
                             </td>
                             <td data-th="職稱" class="align-middle">
-                                <input name="position" type="text" class="form-control" value="{{ $member->position }}" form="memberUpdate{{ $member->id }}">
+                                <input name="position{{ $member->id }}" type="text" class="form-control" value="{{ $member->position }}">
                             </td>
                             <td data-th="權限" class="align-middle"><a href="#" data-toggle="modal" data-target="#changAdmin" class="tooltipBtn" data-placement="top" title="變更擁有者">{{ $member->role($company)->name }}</a></td>
                             <td data-th="設定" class="align-middle">
-                                <a href="#"  onclick="document.getElementById('memberUpdate{{ $member->id }}').submit()" class="pr-2 store-btn text-black-50"><i class="fas fa-save"></i></a>
+                                <a href="#"  onclick="document.getElementById('memberUpdate').submit()" class="pr-2 store-btn text-black-50"><i class="fas fa-save"></i></a>
                                 {{-- <a href="#" data-toggle="modal" data-target="#deleteAdmin" class="tooltipBtn" data-placement="top" title="變更擁有者後刪除"><i class="fas fa-trash-alt text-black-50"></i></a> --}}
                             </td>
                         {{-- 管理者，可以設定比自己低的人 --}}
                         @elsecan('permissionCange', [$member, $company])
                             <td data-th="部門" class="align-middle">
-                                <select name="department" id="department" class="form-control" form="memberUpdate{{ $member->id }}">
+                                <select name="department{{ $member->id }}" id="department" class="form-control">
                                     <option value="">{{ $company->name }}</option>
                                     @foreach ($company->departments as $department)
                                     @if ($department->id == $member->department_id)
@@ -139,17 +148,17 @@
                                 </select>
                             </td>
                             <td data-th="職稱" class="align-middle">
-                                <input name="position" type="text" class="form-control" value="{{ $member->position }}" form="memberUpdate{{ $member->id }}">
+                                <input name="position{{ $member->id }}" type="text" class="form-control" value="{{ $member->position }}">
                             </td>
                             <td data-th="權限" class="align-middle">
-                                <select name="permission" id="permission" class="form-control" form="memberUpdate{{ $member->id }}">
+                                <select name="permission{{ $member->id }}" id="permission" class="form-control">
                                     <option value="2">管理者</option>
                                     <option value="3" {{ $member->role($company)->id == 3?'selected':''}}>編輯</option>
                                     <option value="4" {{ $member->role($company)->id == 4?'selected':''}}>成員</option>
                                 </select>
                             </td>
                             <td data-th="設定" class="align-middle">
-                                <a href="#"  onclick="document.getElementById('memberUpdate{{ $member->id }}').submit()" class="pr-2 store-btn text-black-50"><i class="fas fa-save"></i></a>
+                                <a href="#"  onclick="document.getElementById('memberUpdate').submit()" class="pr-2 store-btn text-black-50"><i class="fas fa-save"></i></a>
                                 {{-- <a href="#" data-toggle="dropdown"><i class="fas fa-trash-alt text-black-50"></i></a>
                                 <div class="dropdown-menu u-padding-16">
                                     <div class="row justify-content-center mb-2">
@@ -186,6 +195,7 @@
             </table>
         </div>
     </div>
+    </form>
     {{-- 邀請中的成員 --}}
     @if ($company->getInvitationUsers())
         <div class="row justify-content-md-center">
@@ -230,12 +240,12 @@
     @endif
 </div>
 @foreach($members as $member)
-@can('memberSetting', $company)
+{{-- @can('memberSetting', $company)
     <form name="memberUpdate{{ $member->id }}" method="POST" id="memberUpdate{{ $member->id }}" action="{{ route('company.member.update', $member ) }}">
         @csrf
         {{ method_field('PATCH') }}
     </form>    
-@endcan
+@endcan --}}
 @can('memberDelete', [$member, $company])
     <form name="memberDelete{{ $member->id }}" method="POST" id="memberDelete{{ $member->id }}" action="{{ route('company.member.destroy', $member ) }}">
         @csrf

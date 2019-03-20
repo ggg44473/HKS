@@ -12,25 +12,29 @@ use App\Notifications\DepartmentNotification;
 
 trait HasMemberTrait
 {
-    public function updateMember(Request $request, User $member)
+    public function updateMember(Request $request)
     {
-        if (isset($request->department) && $request->department != $member->department_id) {
-            if ($request->department != null) {
-                if ($permission = $member->permissions()->where('model_type', Department::class)->first()) {
-                    $permission->update(['role_id' => 4, 'model_id' => $request->department]);
-                } else {
-                    Permission::create(['user_id' => $member->id, 'model_type' => Department::class, 'model_id' => $request->department, 'role_id' => 4]);
+        foreach(auth()->user()->company->users as $member){
+            if($request->exists('department' . $member->id)){
+                if($request->input('department'.$member->id) != $member->department_id){
+                    if ($request->input('department'.$member->id) != null) {
+                        if ($permission = $member->permissions()->where('model_type', Department::class)->first()) {
+                            $permission->update(['role_id' => 4, 'model_id' => $request->input('department'.$member->id)]);
+                        } else {
+                            Permission::create(['user_id' => $member->id, 'model_type' => Department::class, 'model_id' => $request->input('department'.$member->id), 'role_id' => 4]);
+                        }
+                        Notification::send($member, new DepartmentNotification(Department::find($request->input('department'.$member->id))));
+                    } else {
+                        Notification::send($member, new DepartmentNotification($member->department, 'out'));
+                        Permission::where(['user_id' => $member->id, 'model_type' => Department::class])->delete();
+                        $member->update(['department_id' => null, 'position' => null]);
+                    }
                 }
-                Notification::send($member, new DepartmentNotification(Department::find($request->department)));
-            } else {
-                Notification::send($member, new DepartmentNotification($member->department, 'out'));
-                Permission::where(['user_id' => $member->id, 'model_type' => Department::class])->delete();
-                $member->update(['department_id' => null, 'position' => null]);
             }
+            if ($request->exists('department' . $member->id)) $member->update(['department_id' => $request->input('department'.$member->id)]);
+            if ($request->exists('position' . $member->id)) $member->update(['position' => $request->input('position'.$member->id)]);
+            if ($request->exists('permission' . $member->id)) $member->permissions()->where(['model_type' => get_class($this), 'model_id' => $this->id])->update(['role_id' => $request->input('permission'.$member->id)]);
         }
-        if (isset($request->department)) $member->update(['department_id' => $request->department]);
-        if (isset($request->position)) $member->update(['position' => $request->position]);
-        if (isset($request->permission)) $member->permissions()->where(['model_type' => get_class($this), 'model_id' => $this->id])->update(['role_id' => $request->permission]);
     }
 
     public function sortMember($request)
