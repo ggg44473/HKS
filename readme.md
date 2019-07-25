@@ -1,4 +1,4 @@
-<p align="center"><img src="https://www.goalcare.ga/img/logo/Welcome%20to%20Vectr%20(9).png" width="150px" height="auto"></p>
+<p align="center"><img src="https://github.com/ggg44473/HKS/blob/master/public/img/logo/Welcome%20to%20Vectr%20(9).png?raw=true" width="150px" height="auto"></p>
 
 ## About HKS
 
